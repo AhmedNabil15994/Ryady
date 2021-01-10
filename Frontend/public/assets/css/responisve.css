@@ -1,0 +1,592 @@
+@media(max-width:1560px) 
+{
+	.slider .title
+	{
+	    font-size: 40px;
+    	line-height: 65px;
+    	margin-top:150px;
+	}
+	
+	.slider img
+	{
+		width:530px;
+	}
+	
+	.getCard .owl-theme .owl-controls .owl-buttons
+	 {
+	 	left:0
+	 }
+	 
+	 .contactUs
+	 {
+	 	padding-bottom:270px;
+	 }
+}
+
+/*Big Size Screens*/
+@media (max-width: 1200px)
+{
+	.slider .title
+	{
+	    font-size: 30px;
+    	line-height: 45px;
+    	margin-top:110px;
+	}
+	
+	.slider img
+	{
+		width:400px;
+	}
+	
+	.header .links li a
+	{
+		padding:0 10px;
+	}
+	
+	.header .login,
+	.header .iconMenu
+	{
+		margin-right:20px;
+	}
+	
+	.getCard .itemCard
+	{
+		padding-left:0;
+		text-align:center
+	}
+	
+	.getCard .itemCard .details
+	{
+		width:100%;
+		float:none;
+		max-width:100%;
+	}
+	
+	.getCard .itemCard img
+	{
+		float:none;
+		margin-bottom:20px;
+		max-width:100%;
+	}
+	
+	.getCard .itemCard .details .title,
+	.getCard .itemCard .details .desc
+	{
+		margin:0 auto 20px;
+		display:block
+	}
+	
+	.getCard .itemCard .details .btnStyle
+	{
+		margin:0 auto
+	}
+	
+	.getCard .owl-theme .owl-controls .owl-buttons
+	{
+		position:static
+	}
+	
+	.getCard .owl-theme .owl-controls .owl-buttons div
+	{
+		position:absolute;
+		right:0;
+		top:calc(50% - 30px)
+	}
+	.getCard .owl-theme .owl-controls .owl-buttons div.owl-prev
+	{
+		right:auto;
+		left:0;
+	}
+	
+	.contactUs
+	{
+		padding-bottom:380px
+	}
+	
+	.sliderMore .owl-theme .owl-controls .owl-buttons div
+	{
+		right:0;
+	}
+	.sliderMore .owl-theme .owl-controls .owl-buttons div.owl-prev
+	{
+		left:0;
+	}
+	
+	.methodology .imgDiv
+	{
+		display:none;
+	}
+	
+	.methodology .details
+	{
+		width:100%;
+	}
+	
+	.profile .profileDetails .cardHead .memberStyle
+	{
+		margin-top:0;
+	}
+	
+}
+
+/* small Screens & tablets & Smart phone */
+@media (max-width: 991px) 
+{
+	.header.headerFixed
+	{
+		padding:15px 0;
+		height:70px
+	}
+	.header .links
+	{
+		display:none;
+	}
+	
+	.header .login
+	{
+		display:none;
+	}
+	
+	.header.headerFixed .logo
+	{
+		margin-top:0;
+	}
+	
+	.header.headerFixed .iconMenu
+	{
+		margin-top:8px;
+	}
+	
+	.slider
+	{
+		text-align:center
+	}
+	
+	.slider img
+	{
+		float:none;
+		max-width:100%;
+		margin-bottom:20px;
+	}
+	
+	.slider .title
+	{
+		display:block;
+		float:none;
+		margin:0 auto
+	}
+	
+	
+	.plans .item
+	{
+		margin-bottom:70px;
+	}
+	
+	.addProject .item
+	{
+		margin-bottom:30px;
+		width:100%;
+	}
+
+	.transformPage.active
+	{
+	    -webkit-transform: translateX(0);
+	    transform: translateX(0);
+	}
+	
+	.contactUs
+	{
+		padding-bottom:100px;
+	}
+	
+	.mapSec .infoMap
+	{
+		position:static;
+		width:100%;
+	}
+	.searchSelect
+	{
+		padding:0 15px;
+	}
+	
+	.searchSelect .searchStyle
+	{
+		padding-left:0;
+	}
+	
+	.searchSelect .searchStyle input, .searchSelect .selectStyle .ui-selectmenu-button.ui-button,
+	.searchSelect .selectStyle
+	{
+		width:100%;
+		float:none;
+	}
+	
+	.searchSelect .selectStyle
+	{
+		border-bottom:1px solid #e5e5e5
+	}
+	
+	.searchSelect .searchStyle input
+	{
+		border-left:none;
+		border-bottom:1px solid #e5e5e5
+	}
+	
+	.searchSelect .searchStyle .btnSearch
+	{
+		position:static;
+		width:100%;
+	}
+	
+	.formMembers .row .col-md-5,
+	.formMembers .row .col-md-7
+	{
+		float:none;
+	}
+	
+	.formMembers .formStyle
+	{
+		width:100%;
+		margin-bottom:30px;
+	}
+	
+	.profile .titleStyle
+	{
+		right:calc(50% - 87.5px)
+	}
+
+}
+
+/* Small Screens */
+@media (min-width: 768px) and (max-width: 991px) 
+{
+	
+	
+}
+
+/* Mobile & Tablets */
+@media (max-width: 767px) 
+{
+	
+	.membersVip
+	{
+		text-align:center
+	}
+	
+	.membersVip .details
+	{
+		float:none;
+		margin-bottom:20px;
+	}
+	.membersVip .details .btnStyle
+	{
+		margin:0 auto
+	}
+	
+	.membersVip .left
+	{
+		float:none;
+		display:inline-block
+	}
+	.membersVip .left .desc
+	{
+		margin-left:-60px;
+	}
+	
+	.footer .linksFooter li
+	{
+		width:50%;
+		text-align:center
+	}
+	.footer .followUs
+	{
+		float:none;
+		text-align:center
+	}
+	
+	.footer .followUs .socialFooter
+	{
+		display:inline-block
+	}
+	
+	.footer .footerDown
+	{
+		text-align:center
+	}
+	
+	.footer .footerDown .dowloadTitle,
+	.footer .footerDown .mob,
+	.footer .footerDown .copyRights,
+	.footer .footerDown .logoServers
+	{
+		float:none;
+		display:block;
+		margin:0;
+		margin-bottom:20px;
+	}
+	
+	.footer .footerDown .mob
+	{
+		display:inline-block
+	}
+	
+	.containerSlider
+	{
+		padding:0 13px;
+	}
+	
+	.pagiDiv .next,
+	.pagiDiv .prev
+	{
+		display:none;
+	}
+	
+	.postDetails .authorDetails
+	{
+		padding-left:15px;
+		padding-right:15px;
+	}
+
+	.postDetails .authorDetails .user
+	{
+		float:none;
+		margin-bottom:20px;
+		padding-right:60px;
+	}
+	
+	.postDetails .authorDetails .date
+	{
+		position:absolute;
+		left:15px;
+		top:4px;
+	}
+	
+	.postDetails .authorDetails .share
+	{
+		float:none;
+		position:absolute;
+		left:15px;
+		bottom:20px;
+	}
+	
+	.postDetails .authorDetails .btnProj
+	{
+		display:inline-block;
+		margin:0;
+		float:none;
+	}
+	
+	.listSocial
+	{
+		left:0
+	}
+	
+	.methodology .details .listLinks li
+	{
+		min-width:50%
+	}
+	
+	.groupMembers .item
+	{
+		max-width:100%;
+		float:none;
+	}
+	
+	.groupMembers .item:not(:last-of-type)
+	{
+		margin-left:0;
+	}
+	
+	.PartProjects .item .details img
+	{
+		top:-85px
+	}
+	
+	.formMembers .formStyle,
+	.formMembers .details .content
+	{
+		padding:25px;
+	}
+	
+	.formMembers .memberStyle
+	{
+		position:static;
+		margin-top:20px;
+		width:100%;
+	}
+	
+	.formMembers .details .content .titleContent
+	{
+		line-height:35px;
+	}
+	
+	.profile .profileDetails .cardHead .memberStyle
+	{
+		margin-top:20px;
+	}
+	
+	.profile .profileDetails .tabs
+	{
+		padding:30px 20px;
+	}
+	
+	.profile .profileDetails .btnsTabs li
+	{
+		width:100%;
+	}
+	
+	.profile .profileDetails .btnsTabs li:not(:last-of-type)
+	{
+		margin-left:0;
+	}
+	
+	.project .author
+	{
+		padding-left:30px;
+		padding-top:50px;
+		padding-bottom:30px;
+	}
+	
+	.project .author .title
+	{
+		font-size:25px;
+	}
+	
+}
+
+/* Tablets */
+@media (min-width:480px) and (max-width: 767px)
+{
+
+}
+
+/* Mobile */
+@media (max-width: 479px) 
+{
+	
+	.membersVip .left
+	{
+		padding-left:45px;
+	}
+	
+	.membersVip .left .desc
+	{
+		font-size:20px;
+		margin-left:-45px;
+	}
+	
+	.membersVip .left .divImgs .imgs li img
+	{
+		width:80px;
+		height:80px
+	}
+	
+	.membersVip .left .divImgs .iconPlus
+	{
+	    bottom: 20px;
+    	font-size: 30px;
+	}
+	
+	.members .title,
+	.membersVip .details .title,
+	.addProject .title,
+	.getCard .itemCard .details .title,
+	.plans .item .price
+	{
+		font-size:35px;
+	}
+
+	.getCard .itemCard .details .title
+	{
+		line-height:50px;
+	}
+	
+	.breadcrumbs h2
+	{
+		font-size:35px;
+		margin-bottom:45px;
+	}
+	
+	.breadcrumbs ul li
+	{
+		font-size:16px;
+	}
+	
+	.join .desc
+	{
+		font-size:30px;
+	}
+	
+	.postDetails .authorDetails .user span
+	{
+		font-size:18px;
+	}
+	
+	.postDetails .titlePost
+	{
+		font-size:20px;
+	}
+	
+	#video iframe
+	{
+		height:300px;
+	}
+	
+	.checkStyle
+	{
+		font-size:18px;
+	}
+	
+	.owl-pagination
+	{
+		display:none;
+	}
+	
+	.project .author
+	{
+		text-align:center
+	}
+	
+	.project .author img
+	{
+		position:static;
+		display:inline-block;
+		margin-bottom:20px;
+	}
+	
+	.project .author
+	{
+		padding-right:30px;
+	}
+	
+	.projectDetails .tabsHead .btnsTabs li
+	{
+		width:100%;
+		margin:0!important
+	}
+	
+	.projectDetails .tabs .tab .discount
+	{
+		text-align:center;
+		padding-bottom:30px;
+	}
+	
+	.projectDetails .tabs .tab .discount span
+	{
+		float:none;
+		display:inline-block;
+		font-size:25px;
+		margin-bottom:20px;
+	}
+	
+	.projectDetails .tabs .tab .discount a
+	{
+		display:block;
+		float:none;
+		margin:0 auto
+	}
+	
+	
+	
+	
+}
