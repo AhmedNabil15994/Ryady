@@ -104,7 +104,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 						if(data != ''){
 							var designElem = '<img src="'+data+'" class="topics-img">';
 							if(full.fileType == 'video'){
-								designElem = '<video width="100" height="100" controls>'+
+								designElem = '<video width="100" height="70" controls>'+
 		                                          '<source src="'+data+'" type="video/mp4">'+
 		                                      '</video>';
 							}
