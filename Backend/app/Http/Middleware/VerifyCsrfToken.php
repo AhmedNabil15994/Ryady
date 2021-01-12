@@ -22,6 +22,12 @@ class VerifyCsrfToken extends Middleware
         '/sliders/add/uploadImage',
         '/sliders/edit/*/editImage',
 
+        '/projects/add/uploadImage',
+        '/projects/edit/*/editImage',
+
+        '/blogs/add/uploadImage',
+        '/blogs/edit/*/editImage',
+
         '/panelSettings/editImage/*/',
 
         '/users/add/uploadImage',

@@ -19,4 +19,7 @@ $(function(){
 		e.stopPropagation();
 		$('input[type="checkbox"]').attr('checked',false);
 	});
+
+	
+	
 });

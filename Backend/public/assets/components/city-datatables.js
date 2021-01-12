@@ -58,6 +58,16 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				sSearch: "  البحث: ",
 				sInfo: 'يتم العرض من  _START_ الي _END_ (العدد الكلي للسجلات _TOTAL_ )',
 				sLengthMenu: 'عرض _MENU_ سجلات',
+				sEmptyTable: "لا يوجد نتائج مسجلة",
+				sProcessing: "جاري التحميل",
+				sInfoEmpty: "لا يوجد نتائج مسجلة",
+				select:{
+					rows: {
+                    	_: "لقد قمت باختيار %d عناصر",
+	                    0: "",
+	                    1: "لقد قمت باختيار عنصر واحد"
+	                }
+				}
 			},
 			responsive: true,
 			searchDelay: 500,

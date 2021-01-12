@@ -115,6 +115,26 @@ return [
             'viewTitle'=>'تصنيفات المشاريع',
             'modulePermissions' => 'edit-project-category,add-project-category,delete-project-category,sort-project-category,charts-project-category',
         ],
+        'ProjectControllers@index' => [
+            'title'=>'list-projects',
+            'viewTitle'=>'مشاريع الاعضاء',
+            'modulePermissions' => 'edit-project,add-project,delete-project,sort-project,charts-project,uploadImage-project,deleteImage-project',
+        ],
+        'CouponControllers@index' => [
+            'title'=>'list-coupons',
+            'viewTitle'=>'كوبونات الخصم',
+            'modulePermissions' => 'edit-coupon,add-coupon,delete-coupon,sort-coupon,charts-coupon',
+        ],
+        'BlogCategoryControllers@index' => [
+            'title'=>'list-blog-categories',
+            'viewTitle'=>'تصنيفات المدونة',
+            'modulePermissions' => 'edit-blog-category,add-blog-category,delete-blog-category,sort-blog-category,charts-blog-category',
+        ],
+        'BlogControllers@index' => [
+            'title'=>'list-blogs',
+            'viewTitle'=>'المدونة',
+            'modulePermissions' => 'edit-blog,add-blog,delete-blog,sort-blog,charts-blog,uploadImage-blog,deleteImage-blog',
+        ],
 
     ],
 

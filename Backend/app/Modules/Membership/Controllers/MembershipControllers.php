@@ -80,6 +80,7 @@ class MembershipControllers extends Controller {
         $menuObj->price = doubleval($input['price']);
         $menuObj->period = (int) $input['period'];
         $menuObj->features = isset($input['features']) ? serialize($input['features']) : ''; 
+        $menuObj->color = $input['color'];
         $menuObj->status = $input['status'];
         $menuObj->updated_at = DATE_TIME;
         $menuObj->updated_by = USER_ID;
@@ -122,6 +123,7 @@ class MembershipControllers extends Controller {
         $menuObj->price = doubleval($input['price']);
         $menuObj->period = (int) $input['period'];
         $menuObj->features = isset($input['features']) ? serialize($input['features']) : ''; 
+        $menuObj->color = $input['color'];
         $menuObj->status = $input['status'];
         $menuObj->sort = Membership::newSortIndex();
         $menuObj->created_at = DATE_TIME;

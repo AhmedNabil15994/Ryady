@@ -61,6 +61,13 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				sEmptyTable: "لا يوجد نتائج مسجلة",
 				sProcessing: "جاري التحميل",
 				sInfoEmpty: "لا يوجد نتائج مسجلة",
+				select:{
+					rows: {
+                    	_: "لقد قمت باختيار %d عناصر",
+	                    0: "",
+	                    1: "لقد قمت باختيار عنصر واحد"
+	                }
+				}
 			},
 			responsive: true,
 			searchDelay: 500,

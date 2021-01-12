@@ -51,6 +51,16 @@ class ImagesHelper {
                 $checkFile = $checkFile . '/memberships/' . $id . '/' . $filename;
                 return is_file($checkFile) ? URL::to($fullPath) : $default;
                 break;
+            case "projects":
+                $fullPath = $path.'uploads' . '/projects/' . $id . '/' . $filename;
+                $checkFile = $checkFile . '/projects/' . $id . '/' . $filename;
+                return is_file($checkFile) ? URL::to($fullPath) : $default;
+                break;
+            case "blogs":
+                $fullPath = $path.'uploads' . '/blogs/' . $id . '/' . $filename;
+                $checkFile = $checkFile . '/blogs/' . $id . '/' . $filename;
+                return is_file($checkFile) ? URL::to($fullPath) : $default;
+                break;
         }
 
         return $default;
@@ -72,7 +82,7 @@ class ImagesHelper {
             $fileObj = Request::file($fieldInput);
         }
 
-        if ($fileObj->getSize() >= 2000000) {
+        if ($fileObj->getSize() >= 10000000) {
             return false;
         }
 
@@ -81,10 +91,10 @@ class ImagesHelper {
         $extensionExplode = array_values($extensionExplode);
         $extension = $extensionExplode[0];
 
-        if (!in_array($extension, ['jpg', 'jpeg', 'JPG', 'JPEG', 'png', 'PNG', 'gif', 'GIF','zip','rar','docx','pdf','dwg'])) {
+        if (!in_array($extension, ['jpg', 'jpeg', 'JPG', 'JPEG', 'png', 'PNG', 'gif', 'GIF','zip','rar','docx','pdf','dwg','.3gp','.3g2','.avi','.uvh','.uvm','.uvu','.uvp','.uvs','.uaa','.fvt','.f4v','.flv','.fli','.h261','.h263','.h264','.jpgv','.m4v','.asf','.pyv','.wm','.wmx','.wmv','.wvx','.mj2','.mxu','.mpeg','.mp4','.ogv','.webm','.qt','.movie','.viv','.wav','.avi','.mkv','x-m4v'])) {
             return false;
         }
-            
+        
         $rand = rand() . date("YmdhisA");
         $fileName = 'ryady' . '-' . $rand;
         $directory = '';
@@ -105,6 +115,14 @@ class ImagesHelper {
 
         if ($strAction == 'memberships') {
             $directory = $path . 'memberships/' . $id;
+        }
+
+        if ($strAction == 'projects') {
+            $directory = $path . 'projects/' . $id;
+        }
+
+        if ($strAction == 'blogs') {
+            $directory = $path . 'blogs/' . $id;
         }
 
         if ($strAction == 'variables') {

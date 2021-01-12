@@ -83,6 +83,7 @@ $('.quickEdit').on('click',function(e){
             }
             $(item).append(myElem);
             oldText = myText;
+            i++;
         }else{
             var myText = '';
             var newVal = 0;
@@ -139,6 +140,28 @@ $('#kt_dropzone_1').dropzone({
     url: myURL + "/uploadImage", // Set the url for your upload script location
     paramName: "file", // The name that will be used to transfer the file
     maxFiles: 1,
+    maxFilesize: 10, // MB
+    addRemoveLinks: true,
+    accept: function(file, done) {
+        if (file.name == "justinbieber.jpg") {
+            done("Naha, you don't.");
+        } else {
+            done();
+        }
+    },
+    success:function(file,data){
+        if(data){
+            if(data.status.status != 1){
+                errorNotification(data.status.message);
+            }
+        }
+    },
+});
+
+$('#kt_dropzone_100').dropzone({
+    url: myURL + "/uploadImage", // Set the url for your upload script location
+    paramName: "photos", // The name that will be used to transfer the file
+    maxFiles: 10,
     maxFilesize: 5, // MB
     addRemoveLinks: true,
     accept: function(file, done) {
@@ -162,7 +185,7 @@ $('#kt_dropzone_11').dropzone({
     url: myURL + "/editImage", // Set the url for your upload script location
     paramName: "file", // The name that will be used to transfer the file
     maxFiles: 1,
-    maxFilesize: 5, // MB
+    maxFilesize: 10, // MB
     addRemoveLinks: true,
     accept: function(file, done) {
         if (file.name == "justinbieber.jpg") {
@@ -178,6 +201,13 @@ $('#kt_dropzone_11').dropzone({
             }
         }
     },
+});
+
+$('.select2').select2({
+  placeholder: {
+    id: '-1', // the value of the option
+    text: 'حدد اختيارك'
+  }
 });
 
 $('a.DeletePhoto').on('click',function(e){
@@ -199,6 +229,50 @@ $('a.DeletePhoto').on('click',function(e){
             }else{
                 errorNotification(data.status.message);
             }
+        },
+    });
+});
+
+$('a.DeletePhotoS').on('click',function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    var elemParent = $(this).parents('.dz-preview');
+    var id = $(this).data('area');
+    var name = $(this).data('name');
+    $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+    $.ajax({
+        type: 'POST',
+        url: myURL+'/deleteImages',
+        data:{
+            '_token': $('meta[name="csrf-token"]').attr('content'),
+            'id': id,
+            'name': name,
+        },
+        success:function(data){
+            if(data.status.status == 1){
+                successNotification(data.status.message);
+                elemParent.remove();
+            }else{
+                errorNotification(data.status.message);
+            }
+        },
+    });
+});
+
+$('p.locations').on('click',function(){
+    var src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27826.0525286967!2d48.04979106123634!3d29.333475770514568!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf7621ccb0f409%3A0xd67b8473125207f7!2sSalmiya%2C%20Kuwait!5e0!3m2!1sen!2seg!4v1582183042782!5m2!1sen!2seg";
+    $('.modal-location #somecomponent').removeClass('hidden');
+    $('.modal-location .modal-content button').show();
+    $('.modal-location iframe').addClass('hidden');
+    $('.modal-location #somecomponent').locationpicker({
+        location: {
+            latitude: $('input[name="lat"]').val() ,
+            longitude: $('input[name="lng"]').val()
+        },
+        onchanged: function (currentLocation, radius, isMarkerDropped) {
+            var addressComponents = $(this).locationpicker('map').location.addressComponents;
+            $('input[name="lat"]').val(currentLocation.latitude);
+            $('input[name="lng"]').val(currentLocation.longitude);
         },
     });
 });
@@ -253,6 +327,7 @@ $('.pageReset').on('click',function(){
 $('#kt_datetimepicker_7_1').datetimepicker({
     format: 'YYYY-MM-DD'
 });
+
 $('#kt_datetimepicker_7_2').datetimepicker({
     useCurrent: false,
     format: 'YYYY-MM-DD'
@@ -278,4 +353,15 @@ $('#kt_datetimepicker_7_3').on('change.datetimepicker', function (e) {
 });
 $('#kt_datetimepicker_7_4').on('change.datetimepicker', function (e) {
     $('#kt_datetimepicker_7_3').datetimepicker('maxDate', e.date);
+});
+
+$('select[name="valid_type"]').on('change',function(){
+    $('input[name="valid_value"]').val('');
+    if($(this).val() == 1){
+        $('input[name="valid_value"]').attr('data-toggle','');
+        $('input[name="valid_value"]').removeClass('datetimepicker-input');
+    }else{
+        $('input[name="valid_value"]').addClass('datetimepicker-input');
+        $('input[name="valid_value"]').attr('data-toggle','datetimepicker');
+    }
 });
