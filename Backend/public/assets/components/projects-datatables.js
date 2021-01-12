@@ -100,6 +100,10 @@ var KTDatatablesAdvancedMultipleControls = function() {
 			
 			columnDefs: [
 				{
+					targets:0,
+					orderable: false,
+				},
+				{
 					targets: 1,
 					title: 'الصورة',
 					render: function(data, type, full, meta) {

@@ -41,7 +41,7 @@ class Order extends Model{
         if($status != null){
             $source->where('status',$status);
         }
-        $source->orderBy('sort','ASC');
+        $source->orderBy('id','DESC');
         return self::getObj($source);
     }
 

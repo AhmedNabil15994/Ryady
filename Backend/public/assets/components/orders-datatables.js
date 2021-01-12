@@ -104,6 +104,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				{
 					targets: 0,
 					width: 75,
+					orderable: false,
 				},
 				{
 					targets: 1,

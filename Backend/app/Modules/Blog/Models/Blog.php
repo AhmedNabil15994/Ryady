@@ -54,7 +54,7 @@ class Blog extends Model{
                     if($ids != null){
                         $query->whereIn('id',$ids);
                     }
-                })->orderBy('sort','ASC');
+                })->orderBy('id','DESC');
 
         return self::generateObj($source);
     }
