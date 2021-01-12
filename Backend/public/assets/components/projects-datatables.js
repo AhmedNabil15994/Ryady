@@ -77,6 +77,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				url: '/projects',
 				type: 'GET',
 				data:function(dtParms){
+			       	dtParms.status = $('select[name="status"]').val();
 			       	dtParms.created_at = $('input[name="created_at"]').val();
 			        dtParms.columnsDef= [
 						'id', 'logo' ,'title','address','phone','city','category','briefs','creator','statusText','created_at'];

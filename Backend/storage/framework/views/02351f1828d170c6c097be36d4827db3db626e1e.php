@@ -169,10 +169,20 @@
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <label>الحالة:</label>
+                                    <select name="status" class="form-control m-input">
+                                        <option value="">حدد اختيارك</option>
+                                        <option value="1">مفعلة</option>
+                                        <option value="2">تم ارسال الطلب</option>
+                                        <option value="3">تم الرفض</option>
+                                    </select>
+                                    <br>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>تاريخ الارسال:</label>
                                     <div class="row">
                                         <div class="col">
-                                            <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_1" placeholder="تاريخ الارسال"  name="created_at" value="<?php echo e(Request::get('created_at')); ?>" data-col-index="6" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_1" />
+                                            <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_1" placeholder="تاريخ الارسال"  name="created_at" value="<?php echo e(Request::get('created_at')); ?>" data-col-index="7" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_1" />
                                         </div>
                                     </div>
                                 </div>
@@ -211,6 +221,7 @@
                     <th>العنوان عربي</th>
                     <th>التصنيف</th>
                     <th>عدد المشاهدات</th>
+                    <th>الحالة</th>
                     <th>المنشئ</th>
                     <th>التاريخ</th>
                     <th>الاجراءات</th>
@@ -223,6 +234,7 @@
                     <th>العنوان عربي</th>
                     <th>التصنيف</th>
                     <th>عدد المشاهدات</th>
+                    <th>الحالة</th>
                     <th>المنشئ</th>
                     <th>التاريخ</th>
                     <th>الاجراءات</th>

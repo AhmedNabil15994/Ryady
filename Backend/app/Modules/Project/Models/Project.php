@@ -52,6 +52,9 @@ class Project extends Model{
                     if (isset($input['phone']) && !empty($input['phone'])) {
                         $query->where('phone',  $input['phone']);
                     } 
+                    if (isset($input['status']) && !empty($input['status'])) {
+                        $query->where('status',  $input['status']);
+                    } 
                     if (isset($input['category_id']) && !empty($input['category_id'])) {
                         $query->where('category_id',  $input['category_id']);
                     }

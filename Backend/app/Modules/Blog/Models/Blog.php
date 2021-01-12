@@ -45,6 +45,9 @@ class Blog extends Model{
                     if (isset($input['category_id']) && !empty($input['category_id'])) {
                         $query->where('category_id',  $input['category_id']);
                     } 
+                    if (isset($input['status']) && !empty($input['status'])) {
+                        $query->where('status',  $input['status']);
+                    } 
                     if (isset($input['created_at']) && !empty($input['created_at'])) {
                         $query->where('created_at','>=', $input['created_at'].' 00:00:00')->where('created_at','<=',$input['created_at']. ' 23:59:59');
                     }
@@ -84,7 +87,7 @@ class Blog extends Model{
         $data->description = $source->description;
         $data->sort = $source->sort;
         $data->status = $source->status;
-        $data->statusText = $source->status == 0 ? 'مسودة' : 'مفعلة';
+        $data->statusText = self::getStatus($source->status);
         $data->fileType = $source->fileType;
         $data->photo = self::getPhotoPath($source->id, $source->file);
         $data->photo_name = $source->file;
@@ -92,6 +95,20 @@ class Blog extends Model{
         $data->creator = $source->created_by ? $source->Creator->username : '';
         $data->created_at = \Helper::formatDate($source->created_at);
         return $data;
+    }
+
+    static function getStatus($status){
+        $text = '';
+        if($status == 0){
+            $text =  'مسودة';
+        }elseif ($status == 1) {
+            $text = 'مفعلة';
+        }elseif ($status == 2) {
+            $text = 'تم ارسال الطلب';
+        }elseif ($status == 3) {
+            $text = 'تم الرفض';
+        }
+        return $text;
     }
 
     static function getPhotoSize($url){

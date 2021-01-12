@@ -78,9 +78,10 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				type: 'GET',
 				data:function(dtParms){
 			       	dtParms.category_id = $('select[name="category_id"]').val();
+			       	dtParms.status = $('select[name="status"]').val();
 			       	dtParms.created_at = $('input[name="created_at"]').val();
 			        dtParms.columnsDef= [
-						'id', 'photo' ,'title','category','views','creator','created_at'];
+						'id', 'photo' ,'title','category','views','statusText','creator','created_at'];
 			        return dtParms
 			    }
 			},
@@ -90,6 +91,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				{data: 'title'},
 				{data: 'category'},
 				{data: 'views'},
+				{data: 'statusText'},
 				{data: 'creator'},
 				{data: 'created_at', type: 'date'},
 				{data: 'id', responsivePriority: -1},
@@ -143,6 +145,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				{
 					targets: 4,
 					title: 'عدد المشاهدات',
+					width: 100,
 					className: 'edits',
 					render: function(data, type, full, meta) {
 						return '<a class="editable" data-col="views" data-id="'+full.id+'">'+data+'</a>';
@@ -150,10 +153,18 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				},
 				{
 					targets: 5,
-					title: 'المنشئ',
+					title: 'الحالة',
+					className: 'edits selects',
+					render: function(data, type, full, meta) {
+						return '<a class="editable" data-col="status" data-id="'+full.id+'">'+data+'</a>';
+					},
 				},
 				{
 					targets: 6,
+					title: 'المنشئ',
+				},
+				{
+					targets: 7,
 					title: 'التاريخ',
 					className: 'edits dates',
 					render: function(data, type, full, meta) {
