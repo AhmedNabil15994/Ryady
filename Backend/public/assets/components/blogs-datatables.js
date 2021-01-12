@@ -156,7 +156,17 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					title: 'الحالة',
 					className: 'edits selects',
 					render: function(data, type, full, meta) {
-						return '<a class="editable" data-col="status" data-id="'+full.id+'">'+data+'</a>';
+						var labelText = '';
+						if(full.status == 0){
+							labelText = 'dark';
+						}else if(full.status == 1){
+							labelText = 'success';
+						}else if(full.status == 2){
+							labelText = 'warning';
+						}else if(full.status == 3){
+							labelText = 'danger';
+						}
+						return '<a class="editable" data-col="status" data-id="'+full.id+'"><label class="label label-wide label-inline label-'+labelText+'">'+data+'</label></a>';
 					},
 				},
 				{

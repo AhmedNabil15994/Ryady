@@ -128,6 +128,7 @@ $('.quickEdit').on('click',function(e){
             success:function(data){
                 if(data.status.status == 1){
                     successNotification(data.status.message);
+                    $('#kt_datatable').DataTable().ajax.reload();
                 }else{
                     errorNotification(data.status.message);
                 }
