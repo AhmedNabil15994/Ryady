@@ -7,8 +7,10 @@
 
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <div class="desc">
-                	
-                    {!! $data->privacyContent->description !!}
+                	@php
+                    $privacyContent = \App\Models\Page::NotDeleted()->where('status',1)->where('title','سياسة الخصوصية')->first();
+                    @endphp
+                    {!! $privacyContent->description !!}
                 </div>
 
             </div>

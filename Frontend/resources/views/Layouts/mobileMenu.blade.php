@@ -6,7 +6,10 @@
 			<i class="fa fa-close closeX"></i>
 		</div>
 		<ul class="menuRes">
-			@foreach($data->sideMenu as $key => $item)
+			@php
+			$sideMenu = \App\Models\SideMenu::NotDeleted()->where('status',1)->orderBy('sort','ASC')->get();
+			@endphp
+			@foreach($sideMenu as $key => $item)
 		        @if($item->link != '')
 		          <li><a href="#" data-toggle="modal" data-target="{{ $item->link }}">{{ $item->title }}</a></li>
 		        @else

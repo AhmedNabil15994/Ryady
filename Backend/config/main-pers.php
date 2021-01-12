@@ -85,7 +85,36 @@ return [
             'viewTitle'=>'الاعضاء المحظورة',
             'modulePermissions' => 'edit-blockedUser,delete-blockedUser,sort-blockedUser,charts-blockedUser',
         ],  
-
+        'TargetGroupControllers@index' => [
+            'title'=>'list-targets',
+            'viewTitle'=>'الفئة المستهدفة',
+            'modulePermissions' => 'edit-target,add-target,delete-target,sort-target,charts-target',
+        ],
+        'MembershipControllers@index' => [
+            'title'=>'list-memberships',
+            'viewTitle'=>'العضويات',
+            'modulePermissions' => 'edit-membership,add-membership,delete-membership,sort-membership,charts-membership,uploadImage-membership,deleteImage-membership',
+        ],
+        'FeatureGroupControllers@index' => [
+            'title'=>'list-features',
+            'viewTitle'=>'مميزات العضويات',
+            'modulePermissions' => 'edit-feature,add-feature,delete-feature,sort-feature,charts-feature',
+        ],
+        'OrderCategoryControllers@index' => [
+            'title'=>'list-order-categories',
+            'viewTitle'=>'تصنيفات الطلبات',
+            'modulePermissions' => 'edit-order-category,add-order-category,delete-order-category,sort-order-category,charts-order-category',
+        ],
+        'OrderControllers@index' => [
+            'title'=>'list-orders',
+            'viewTitle'=>'طلبات الخدمات',
+            'modulePermissions' => 'edit-order,delete-order,sort-order,charts-order',
+        ],
+        'ProjectCategoryControllers@index' => [
+            'title'=>'list-project-categories',
+            'viewTitle'=>'تصنيفات المشاريع',
+            'modulePermissions' => 'edit-project-category,add-project-category,delete-project-category,sort-project-category,charts-project-category',
+        ],
 
     ],
 

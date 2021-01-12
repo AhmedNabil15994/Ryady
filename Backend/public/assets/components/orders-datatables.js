@@ -78,13 +78,14 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				selector: 'td:nth-child(2) .checkable',
 			},
 			ajax: {
-				url: '/backend/'+$('input.url').val(),
+				url: '/'+$('input.url').val(),
 				type: 'GET',
 				data:function(dtParms){
 			       	dtParms.created_at = $('#kt_datetimepicker_7_1').val();
 			       	dtParms.status = $('select[name="status"]').val();
+			       	dtParms.category_id = $('select[name="category_id"]').val();
 			        dtParms.columnsDef= [
-						'id', 'name','identity','phone','city','address','statusText','created_at','notes'];
+						'id', 'name','email','phone','categoryText','statusText','created_at'];
 			        return dtParms
 			    }
 			},
@@ -92,13 +93,11 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				{data: 'id'},
 				{data: 'id'},
 				{data: 'name'},
-				{data: 'identity',},
+				{data: 'email',},
 				{data: 'phone',},
-				{data: 'city',},
-				{data: 'address',},
+				{data: 'categoryText',},
 				{data: 'statusText',},
 				{data: 'created_at', type: 'date'},
-				{data: 'notes',},
 				{data: 'id', responsivePriority: -1},
 			],
 			columnDefs: [
@@ -126,10 +125,10 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				},
 				{
 					targets: 3,
-					title: 'رقم الهوية او جواز السفر',
+					title: 'البريد الالكتروني',
 					className: 'edits',
 					render: function(data, type, full, meta) {
-						return '<a class="editable" data-col="identity" data-id="'+full.id+'">'+data+'</a>';
+						return '<a class="editable" data-col="email" data-id="'+full.id+'">'+data+'</a>';
 					},
 				},
 				{
@@ -142,22 +141,14 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				},
 				{
 					targets: 5,
-					title: 'المدينة',
-					className: 'edits',
+					title: 'التصنيف',
+					className: 'edits selects',
 					render: function(data, type, full, meta) {
-						return '<a class="editable" data-col="city" data-id="'+full.id+'">'+data+'</a>';
+						return '<a class="editable" data-col="category_id" data-id="'+full.id+'"><div class="btn btn-raised btn-info waves-effect">'+data+'</div></a>';
 					},
 				},
 				{
 					targets: 6,
-					title: 'العنوان',
-					className: 'edits',
-					render: function(data, type, full, meta) {
-						return '<a class="editable" data-col="address" data-id="'+full.id+'">'+data+'</a>';
-					},
-				},
-				{
-					targets: 7,
 					title: 'الحالة',
 					className: 'edits selects',
 					render: function(data, type, full, meta) {
@@ -165,19 +156,11 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					},
 				},
 				{
-					targets: 8,
+					targets: 7,
 					title: 'تاريخ الارسال',
 					className: 'edits dates',
 					render: function(data, type, full, meta) {
 						return '<a class="editable" data-col="created_at" data-id="'+full.id+'">'+data+'</a>';
-					},
-				},
-				{
-					targets: 9,
-					title: 'ملاحظات ادارية',
-					className: 'edits',
-					render: function(data, type, full, meta) {
-						return '<a class="editable" data-col="notes" data-id="'+full.id+'">'+data+'</a>';
 					},
 				},
 				{
@@ -248,35 +231,99 @@ var KTDatatablesAdvancedMultipleControls = function() {
 jQuery(document).ready(function() {
 	KTDatatablesAdvancedMultipleControls.init();
 
-	$('.print-but').on('click',function(e){
+	$('.moveToTrash').on('click',function(e){
 	    e.preventDefault();
 	    e.stopPropagation();
-	    $('.buttons-print')[0].click();
+	    if($('table tr.selected').length){
+	        var myArrs = [];
+	        $('table tr.selected').each(function(index,item){
+	            myArrs.push($(item).find('input[type="checkbox"]:checked').data('cols'));
+	        });
+	        $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+	        $.ajax({
+	            type: 'POST',
+	            url: myURL+'/changeStatus/7',
+	            data:{
+	                '_token': $('meta[name="csrf-token"]').attr('content'),
+	                'data': myArrs,
+	            },
+	            success:function(data){
+	                if(data.status.original.status.status == 1){
+	                    successNotification(data.status.original.status.message);
+	                    setTimeout(function(){
+	                        $('#kt_datatable').DataTable().ajax.reload();
+	                    },2500)
+	                }else{
+	                    errorNotification(data.status.original.status.message);
+	                }
+	            },
+	        });
+	    }else{
+	        errorNotification('من فضلك قم باختيار الطلبات');      
+	    }
 	});
 
-	$('.copy-but').on('click',function(e){
+	$('.delete').on('click',function(e){
 	    e.preventDefault();
 	    e.stopPropagation();
-	    $('.buttons-copy')[0].click();
+	    if($('table tr.selected').length){
+	        var myArrs = [];
+	        $('table tr.selected').each(function(index,item){
+	            myArrs.push($(item).find('input[type="checkbox"]:checked').data('cols'));
+	        });
+	        $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+	        $.ajax({
+	            type: 'POST',
+	            url: myURL+'/delete',
+	            data:{
+	                '_token': $('meta[name="csrf-token"]').attr('content'),
+	                'data': myArrs,
+	            },
+	            success:function(data){
+	                if(data.status.original.status.status == 1){
+	                    successNotification(data.status.original.status.message);
+	                    setTimeout(function(){
+	                        $('#kt_datatable').DataTable().ajax.reload();
+	                    },2500)
+	                }else{
+	                    errorNotification(data.status.original.status.message);
+	                }
+	            },
+	        });
+	    }else{
+	        errorNotification('من فضلك قم باختيار الطلبات');      
+	    }
 	});
 
-	$('.excel-but').on('click',function(e){
+	$('.backToNew').on('click',function(e){
 	    e.preventDefault();
 	    e.stopPropagation();
-	    $('.buttons-excel')[0].click();
+	    if($('table tr.selected').length){
+	        var myArrs = [];
+	        $('table tr.selected').each(function(index,item){
+	            myArrs.push($(item).find('input[type="checkbox"]:checked').data('cols'));
+	        });
+	        $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+	        $.ajax({
+	            type: 'POST',
+	            url: myURL+'/changeStatus/1',
+	            data:{
+	                '_token': $('meta[name="csrf-token"]').attr('content'),
+	                'data': myArrs,
+	            },
+	            success:function(data){
+	                if(data.status.original.status.status == 1){
+	                    successNotification(data.status.original.status.message);
+	                    setTimeout(function(){
+	                        $('#kt_datatable').DataTable().ajax.reload();
+	                    },2500)
+	                }else{
+	                    errorNotification(data.status.original.status.message);
+	                }
+	            },
+	        });
+	    }else{
+	        errorNotification('من فضلك قم باختيار الطلبات');      
+	    }
 	});
-
-	$('.csv-but').on('click',function(e){
-	    e.preventDefault();
-	    e.stopPropagation();
-	    $('.buttons-csv')[0].click();
-	});
-
-	$('.pdf-but').on('click',function(e){
-	    e.preventDefault();
-	    e.stopPropagation();
-	    $('.buttons-pdf')[0].click();
-	});
-
-
 });

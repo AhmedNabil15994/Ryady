@@ -55,7 +55,9 @@ $('.quickEdit').on('click',function(e){
                         '</span>';
             if($(this).hasClass('selects')){
                 var selectOptions = '';
-                $("select[name='status'] option").each(function(){
+                var selectName = $(this).children('a.editable').data('col');
+                var elem = $("select[name='"+selectName+"'] option");
+                elem.each(function(){
                     var selected = '';
                     if($(this).text() == myText){
                         selected = ' selected';

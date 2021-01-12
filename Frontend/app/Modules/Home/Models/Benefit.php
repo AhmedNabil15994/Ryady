@@ -56,7 +56,7 @@ class Benefit extends Model{
         $data = new  \stdClass();
         $data->id = $source->id;
         $data->title = $source->title;
-        $data->icon = $source->icon;
+        $data->icon = $source->icon != null ? $source->icon : '';
         $data->sort = $source->sort;
         $data->status = $source->status;
         $data->statusText = $source->status == 0 ? 'مسودة' : 'مفعلة';

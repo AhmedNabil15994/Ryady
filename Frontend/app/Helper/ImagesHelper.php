@@ -36,6 +36,11 @@ class ImagesHelper {
                 $fullPath = $path.'uploads' . '/variables/' . $id . '/' . $filename;
                 return $fullPath;
                 break;   
+
+            case "memberships":
+                $fullPath = $path.'uploads' . '/memberships/' . $id . '/' . $filename;
+                return $fullPath;
+                break;   
             case "photos":
                 $fullPath = $path.'uploads' . '/photos/' . $filename;
                 return $fullPath;

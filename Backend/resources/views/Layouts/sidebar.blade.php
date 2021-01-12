@@ -36,32 +36,9 @@
                         <span class="menu-text">الرئيسية</span>
                     </a>
                 </li>
-                @if(\Helper::checkRules('list-topMenus'))
-                <li class="menu-item {{ Active(URL::to('/topMenu*')) }}" aria-haspopup="true">
-                    <a href="{{ URL::to('/topMenu') }}" class="menu-link ">
-                        <i class="menu-icon flaticon-menu-1"></i>
-                        <span class="menu-text">القوائم العلوية</span>
-                    </a>
-                </li>
-                @endif
-                @if(\Helper::checkRules('list-bottomMenus'))
-                <li class="menu-item {{ Active(URL::to('/bottomMenu*')) }}" aria-haspopup="true">
-                    <a href="{{ URL::to('/bottomMenu') }}" class="menu-link ">
-                        <i class="menu-icon flaticon-menu-2"></i>
-                        <span class="menu-text">القوائم السفلية</span>
-                    </a>
-                </li>
-                @endif
-                @if(\Helper::checkRules('list-sideMenus'))
-                <li class="menu-item {{ Active(URL::to('/sideMenu*')) }}" aria-haspopup="true">
-                    <a href="{{ URL::to('/sideMenu') }}" class="menu-link ">
-                        <i class="menu-icon flaticon-menu-2"></i>
-                        <span class="menu-text">القوائم الجانبية</span>
-                    </a>
-                </li>
-                @endif
-                @if(\Helper::checkRules('list-pages,list-sliders,list-advantages,list-benefits,list-cities'))
-                <li class="menu-item menu-item-submenu {{ Active(URL::to('/ourAdvantages*'),'menu-item-open active') }} {{ Active(URL::to('/benefits*'),'menu-item-open active') }} {{ Active(URL::to('/cities*'),'menu-item-open active') }} {{ Active(URL::to('/pages*'),'menu-item-open active') }} {{ Active(URL::to('/slider*'),'menu-item-open active') }}" aria-haspopup="true" data-menu-toggle="hover">
+
+                @if(\Helper::checkRules('list-pages,list-sliders,list-advantages,list-benefits,list-cities,list-targets'))
+                <li class="menu-item menu-item-submenu {{ Active(URL::to('/ourAdvantages*'),'menu-item-open active') }} {{ Active(URL::to('/benefits*'),'menu-item-open active') }} {{ Active(URL::to('/cities*'),'menu-item-open active') }} {{ Active(URL::to('/pages*'),'menu-item-open active') }} {{ Active(URL::to('/slider*'),'menu-item-open active') }} {{ Active(URL::to('/targets*'),'menu-item-open active') }}" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="#" class="menu-link menu-toggle">
                         <i class="menu-icon flaticon-home-2"></i>
                         <span class="menu-text">الواجهة الرئيسية</span>
@@ -107,11 +84,63 @@
                                 </a>
                             </li>
                             @endif
+                            @if(\Helper::checkRules('list-targets'))
+                            <li class="menu-item {{ Active(URL::to('/targets*')) }} " aria-haspopup="true">
+                                <a href="{{ URL::to('/targets') }}" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">الفئة المستهدفة</span>
+                                </a>
+                            </li>
+                            @endif
                             @if(\Helper::checkRules('list-cities'))
                             <li class="menu-item {{ Active(URL::to('/cities*')) }} " aria-haspopup="true">
                                 <a href="{{ URL::to('/cities') }}" class="menu-link ">
                                     <i class="menu-bullet menu-bullet-dot"></i>
                                     <span class="menu-text">المدن</span>
+                                </a>
+                            </li>
+                            @endif
+                        </ul>
+                    </div>
+                </li>
+                @endif
+
+                @if(\Helper::checkRules('list-topMenus,list-bottomMenus,list-sideMenus'))
+                <li class="menu-item menu-item-submenu {{ Active(URL::to('/topMenu*'),'menu-item-open active') }} {{ Active(URL::to('/bottomMenu*'),'menu-item-open active') }} {{ Active(URL::to('/sideMenu*'),'menu-item-open active') }}" aria-haspopup="true" data-menu-toggle="hover">
+                    <a href="#" class="menu-link menu-toggle">
+                        <i class="menu-icon flaticon-menu-1"></i>
+                        <span class="menu-text">القوائم</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="menu-submenu" kt-hidden-height="80">
+                        <span class="menu-arrow"></span>
+                        <ul class="menu-subnav">
+                            <li class="menu-item  menu-item-parent" aria-haspopup="true">
+                                <span class="menu-link">
+                                    <span class="menu-text">القوائم</span>
+                                </span>
+                            </li>
+                            @if(\Helper::checkRules('list-topMenus'))
+                            <li class="menu-item {{ Active(URL::to('/topMenu*')) }}" aria-haspopup="true">
+                                <a href="{{ URL::to('/topMenu') }}" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">القوائم العلوية</span>
+                                </a>
+                            </li>
+                            @endif
+                            @if(\Helper::checkRules('list-bottomMenus'))
+                            <li class="menu-item {{ Active(URL::to('/bottomMenu*')) }}" aria-haspopup="true">
+                                <a href="{{ URL::to('/bottomMenu') }}" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">القوائم السفلية</span>
+                                </a>
+                            </li>
+                            @endif
+                            @if(\Helper::checkRules('list-sideMenus'))
+                            <li class="menu-item {{ Active(URL::to('/sideMenu*')) }}" aria-haspopup="true">
+                                <a href="{{ URL::to('/sideMenu') }}" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">القوائم الجانبية</span>
                                 </a>
                             </li>
                             @endif
@@ -145,6 +174,115 @@
                     </div>
                 </li>
                 @endif
+
+                @if(\Helper::checkRules('list-memberships,list-features'))
+                <li class="menu-item menu-item-submenu {{ Active(URL::to('/memberships*'),'menu-item-open active') }} {{ Active(URL::to('/features*'),'menu-item-open active') }}" aria-haspopup="true" data-menu-toggle="hover">
+                    <a href="#" class="menu-link menu-toggle">
+                        <i class="menu-icon far fa-id-card"></i>
+                        <span class="menu-text">العضويات</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="menu-submenu" kt-hidden-height="80">
+                        <span class="menu-arrow"></span>
+                        <ul class="menu-subnav">
+                            <li class="menu-item  menu-item-parent" aria-haspopup="true">
+                                <span class="menu-link">
+                                    <span class="menu-text">العضويات</span>
+                                </span>
+                            </li>
+                            @if(\Helper::checkRules('list-memberships'))
+                            <li class="menu-item {{ Active(URL::to('/memberships*')) }}" aria-haspopup="true">
+                                <a href="{{ URL::to('/memberships') }}" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">العضويات</span>
+                                </a>
+                            </li>
+                            @endif
+                            @if(\Helper::checkRules('list-features'))
+                            <li class="menu-item {{ Active(URL::to('/features*')) }}" aria-haspopup="true">
+                                <a href="{{ URL::to('/features') }}" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">مميزات العضويات</span>
+                                </a>
+                            </li>
+                            @endif
+                        </ul>
+                    </div>
+                </li>
+                @endif
+
+                @if(\Helper::checkRules('list-orders,list-order-categories'))
+                <li class="menu-item menu-item-submenu {{ Active(URL::to('/orders*'),'menu-item-open active') }} {{ Active(URL::to('/orderCategories*'),'menu-item-open active') }}" aria-haspopup="true" data-menu-toggle="hover">
+                    <a href="#" class="menu-link menu-toggle">
+                        <i class="menu-icon flaticon2-rectangular"></i>
+                        <span class="menu-text">طلبات الخدمات</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="menu-submenu" kt-hidden-height="80">
+                        <span class="menu-arrow"></span>
+                        <ul class="menu-subnav">
+                            <li class="menu-item  menu-item-parent" aria-haspopup="true">
+                                <span class="menu-link">
+                                    <span class="menu-text">طلبات الخدمات</span>
+                                </span>
+                            </li>
+                            @if(\Helper::checkRules('list-orders'))
+                            <li class="menu-item {{ Active(URL::to('/orders*')) }}" aria-haspopup="true">
+                                <a href="{{ URL::to('/orders') }}" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">طلبات خدمات الاعضاء</span>
+                                </a>
+                            </li>
+                            @endif
+                            @if(\Helper::checkRules('list-order-categories'))
+                            <li class="menu-item {{ Active(URL::to('/orderCategories*')) }}" aria-haspopup="true">
+                                <a href="{{ URL::to('/orderCategories') }}" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">تصنيفات الخدمات</span>
+                                </a>
+                            </li>
+                            @endif
+                        </ul>
+                    </div>
+                </li>
+                @endif
+
+                @if(\Helper::checkRules('list-projects,list-project-categories'))
+                <li class="menu-item menu-item-submenu {{ Active(URL::to('/projects*'),'menu-item-open active') }} {{ Active(URL::to('/projectCategories*'),'menu-item-open active') }}" aria-haspopup="true" data-menu-toggle="hover">
+                    <a href="#" class="menu-link menu-toggle">
+                        <i class="menu-icon fas fa-project-diagram"></i>
+                        <span class="menu-text">مشاريع الاعضاء</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="menu-submenu" kt-hidden-height="80">
+                        <span class="menu-arrow"></span>
+                        <ul class="menu-subnav">
+                            <li class="menu-item  menu-item-parent" aria-haspopup="true">
+                                <span class="menu-link">
+                                    <span class="menu-text">مشاريع الاعضاء</span>
+                                </span>
+                            </li>
+                            @if(\Helper::checkRules('list-projects'))
+                            <li class="menu-item {{ Active(URL::to('/projects*')) }}" aria-haspopup="true">
+                                <a href="{{ URL::to('/projects') }}" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">مشاريع الاعضاء</span>
+                                </a>
+                            </li>
+                            @endif
+                            @if(\Helper::checkRules('list-project-categories'))
+                            <li class="menu-item {{ Active(URL::to('/projectCategories*')) }}" aria-haspopup="true">
+                                <a href="{{ URL::to('/projectCategories') }}" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">تصنيفات المشاريع</span>
+                                </a>
+                            </li>
+                            @endif
+                        </ul>
+                    </div>
+                </li>
+                @endif
+
                 @if(\Helper::checkRules('list-groups,list-users,list-logs'))
                 <li class="menu-item menu-item-submenu {{ Active(URL::to('/groups*'),'menu-item-open active') }} {{ Active(URL::to('/users*'),'menu-item-open active') }} {{ Active(URL::to('/logs*'),'menu-item-open active') }}" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="#" class="menu-link menu-toggle">

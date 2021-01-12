@@ -17,7 +17,7 @@ class ImagesHelper {
             return $default;
         }
 
-        $path = asset('/').'/';
+        $path = asset('/');
         $checkFile = public_path() . '/uploads';
 
         switch ($strAction) {
@@ -46,9 +46,9 @@ class ImagesHelper {
                 $checkFile = $checkFile . '/photos/' . $filename;
                 return is_file($checkFile) ? URL::to($fullPath) : $default;
                 break;
-            case "files":
-                $fullPath = $path.'uploads' . '/files/'. $filename;
-                $checkFile = $checkFile . '/files/'. $filename;
+            case "memberships":
+                $fullPath = $path.'uploads' . '/memberships/' . $id . '/' . $filename;
+                $checkFile = $checkFile . '/memberships/' . $id . '/' . $filename;
                 return is_file($checkFile) ? URL::to($fullPath) : $default;
                 break;
         }
@@ -101,6 +101,10 @@ class ImagesHelper {
 
         if ($strAction == 'sliders') {
             $directory = $path . 'sliders/' . $id;
+        }
+
+        if ($strAction == 'memberships') {
+            $directory = $path . 'memberships/' . $id;
         }
 
         if ($strAction == 'variables') {

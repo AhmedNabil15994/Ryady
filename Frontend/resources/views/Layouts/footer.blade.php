@@ -3,7 +3,10 @@
 		<div class="row">
 			<div class="col-md-9">
 				<ul class="linksFooter clearfix">
-					@foreach($data->bottomMenu as $key => $item)
+					@php 
+				    $bottomMenu = \App\Models\BottomMenu::NotDeleted()->where('status',1)->orderBy('sort','ASC')->get();
+				    @endphp
+					@foreach($bottomMenu as $key => $item)
 				        @if($item->link != '')
 				          <li><a href="#" data-toggle="modal" data-target="{{ $item->link }}">{{ $item->title }}</a></li>
 				        @else

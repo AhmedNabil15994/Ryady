@@ -36,32 +36,9 @@
                         <span class="menu-text">الرئيسية</span>
                     </a>
                 </li>
-                <?php if(\Helper::checkRules('list-topMenus')): ?>
-                <li class="menu-item <?php echo e(Active(URL::to('/topMenu*'))); ?>" aria-haspopup="true">
-                    <a href="<?php echo e(URL::to('/topMenu')); ?>" class="menu-link ">
-                        <i class="menu-icon flaticon-menu-1"></i>
-                        <span class="menu-text">القوائم العلوية</span>
-                    </a>
-                </li>
-                <?php endif; ?>
-                <?php if(\Helper::checkRules('list-bottomMenus')): ?>
-                <li class="menu-item <?php echo e(Active(URL::to('/bottomMenu*'))); ?>" aria-haspopup="true">
-                    <a href="<?php echo e(URL::to('/bottomMenu')); ?>" class="menu-link ">
-                        <i class="menu-icon flaticon-menu-2"></i>
-                        <span class="menu-text">القوائم السفلية</span>
-                    </a>
-                </li>
-                <?php endif; ?>
-                <?php if(\Helper::checkRules('list-sideMenus')): ?>
-                <li class="menu-item <?php echo e(Active(URL::to('/sideMenu*'))); ?>" aria-haspopup="true">
-                    <a href="<?php echo e(URL::to('/sideMenu')); ?>" class="menu-link ">
-                        <i class="menu-icon flaticon-menu-2"></i>
-                        <span class="menu-text">القوائم الجانبية</span>
-                    </a>
-                </li>
-                <?php endif; ?>
-                <?php if(\Helper::checkRules('list-pages,list-sliders,list-advantages,list-benefits,list-cities')): ?>
-                <li class="menu-item menu-item-submenu <?php echo e(Active(URL::to('/ourAdvantages*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/benefits*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/cities*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/pages*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/slider*'),'menu-item-open active')); ?>" aria-haspopup="true" data-menu-toggle="hover">
+
+                <?php if(\Helper::checkRules('list-pages,list-sliders,list-advantages,list-benefits,list-cities,list-targets')): ?>
+                <li class="menu-item menu-item-submenu <?php echo e(Active(URL::to('/ourAdvantages*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/benefits*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/cities*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/pages*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/slider*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/targets*'),'menu-item-open active')); ?>" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="#" class="menu-link menu-toggle">
                         <i class="menu-icon flaticon-home-2"></i>
                         <span class="menu-text">الواجهة الرئيسية</span>
@@ -107,11 +84,63 @@
                                 </a>
                             </li>
                             <?php endif; ?>
+                            <?php if(\Helper::checkRules('list-targets')): ?>
+                            <li class="menu-item <?php echo e(Active(URL::to('/targets*'))); ?> " aria-haspopup="true">
+                                <a href="<?php echo e(URL::to('/targets')); ?>" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">الفئة المستهدفة</span>
+                                </a>
+                            </li>
+                            <?php endif; ?>
                             <?php if(\Helper::checkRules('list-cities')): ?>
                             <li class="menu-item <?php echo e(Active(URL::to('/cities*'))); ?> " aria-haspopup="true">
                                 <a href="<?php echo e(URL::to('/cities')); ?>" class="menu-link ">
                                     <i class="menu-bullet menu-bullet-dot"></i>
                                     <span class="menu-text">المدن</span>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                </li>
+                <?php endif; ?>
+
+                <?php if(\Helper::checkRules('list-topMenus,list-bottomMenus,list-sideMenus')): ?>
+                <li class="menu-item menu-item-submenu <?php echo e(Active(URL::to('/topMenu*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/bottomMenu*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/sideMenu*'),'menu-item-open active')); ?>" aria-haspopup="true" data-menu-toggle="hover">
+                    <a href="#" class="menu-link menu-toggle">
+                        <i class="menu-icon flaticon-menu-1"></i>
+                        <span class="menu-text">القوائم</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="menu-submenu" kt-hidden-height="80">
+                        <span class="menu-arrow"></span>
+                        <ul class="menu-subnav">
+                            <li class="menu-item  menu-item-parent" aria-haspopup="true">
+                                <span class="menu-link">
+                                    <span class="menu-text">القوائم</span>
+                                </span>
+                            </li>
+                            <?php if(\Helper::checkRules('list-topMenus')): ?>
+                            <li class="menu-item <?php echo e(Active(URL::to('/topMenu*'))); ?>" aria-haspopup="true">
+                                <a href="<?php echo e(URL::to('/topMenu')); ?>" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">القوائم العلوية</span>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                            <?php if(\Helper::checkRules('list-bottomMenus')): ?>
+                            <li class="menu-item <?php echo e(Active(URL::to('/bottomMenu*'))); ?>" aria-haspopup="true">
+                                <a href="<?php echo e(URL::to('/bottomMenu')); ?>" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">القوائم السفلية</span>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                            <?php if(\Helper::checkRules('list-sideMenus')): ?>
+                            <li class="menu-item <?php echo e(Active(URL::to('/sideMenu*'))); ?>" aria-haspopup="true">
+                                <a href="<?php echo e(URL::to('/sideMenu')); ?>" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">القوائم الجانبية</span>
                                 </a>
                             </li>
                             <?php endif; ?>
@@ -145,6 +174,115 @@
                     </div>
                 </li>
                 <?php endif; ?>
+
+                <?php if(\Helper::checkRules('list-memberships,list-features')): ?>
+                <li class="menu-item menu-item-submenu <?php echo e(Active(URL::to('/memberships*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/features*'),'menu-item-open active')); ?>" aria-haspopup="true" data-menu-toggle="hover">
+                    <a href="#" class="menu-link menu-toggle">
+                        <i class="menu-icon far fa-id-card"></i>
+                        <span class="menu-text">العضويات</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="menu-submenu" kt-hidden-height="80">
+                        <span class="menu-arrow"></span>
+                        <ul class="menu-subnav">
+                            <li class="menu-item  menu-item-parent" aria-haspopup="true">
+                                <span class="menu-link">
+                                    <span class="menu-text">العضويات</span>
+                                </span>
+                            </li>
+                            <?php if(\Helper::checkRules('list-memberships')): ?>
+                            <li class="menu-item <?php echo e(Active(URL::to('/memberships*'))); ?>" aria-haspopup="true">
+                                <a href="<?php echo e(URL::to('/memberships')); ?>" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">العضويات</span>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                            <?php if(\Helper::checkRules('list-features')): ?>
+                            <li class="menu-item <?php echo e(Active(URL::to('/features*'))); ?>" aria-haspopup="true">
+                                <a href="<?php echo e(URL::to('/features')); ?>" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">مميزات العضويات</span>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                </li>
+                <?php endif; ?>
+
+                <?php if(\Helper::checkRules('list-orders,list-order-categories')): ?>
+                <li class="menu-item menu-item-submenu <?php echo e(Active(URL::to('/orders*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/orderCategories*'),'menu-item-open active')); ?>" aria-haspopup="true" data-menu-toggle="hover">
+                    <a href="#" class="menu-link menu-toggle">
+                        <i class="menu-icon flaticon2-rectangular"></i>
+                        <span class="menu-text">طلبات الخدمات</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="menu-submenu" kt-hidden-height="80">
+                        <span class="menu-arrow"></span>
+                        <ul class="menu-subnav">
+                            <li class="menu-item  menu-item-parent" aria-haspopup="true">
+                                <span class="menu-link">
+                                    <span class="menu-text">طلبات الخدمات</span>
+                                </span>
+                            </li>
+                            <?php if(\Helper::checkRules('list-orders')): ?>
+                            <li class="menu-item <?php echo e(Active(URL::to('/orders*'))); ?>" aria-haspopup="true">
+                                <a href="<?php echo e(URL::to('/orders')); ?>" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">طلبات خدمات الاعضاء</span>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                            <?php if(\Helper::checkRules('list-order-categories')): ?>
+                            <li class="menu-item <?php echo e(Active(URL::to('/orderCategories*'))); ?>" aria-haspopup="true">
+                                <a href="<?php echo e(URL::to('/orderCategories')); ?>" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">تصنيفات الخدمات</span>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                </li>
+                <?php endif; ?>
+
+                <?php if(\Helper::checkRules('list-projects,list-project-categories')): ?>
+                <li class="menu-item menu-item-submenu <?php echo e(Active(URL::to('/projects*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/projectCategories*'),'menu-item-open active')); ?>" aria-haspopup="true" data-menu-toggle="hover">
+                    <a href="#" class="menu-link menu-toggle">
+                        <i class="menu-icon fas fa-project-diagram"></i>
+                        <span class="menu-text">مشاريع الاعضاء</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="menu-submenu" kt-hidden-height="80">
+                        <span class="menu-arrow"></span>
+                        <ul class="menu-subnav">
+                            <li class="menu-item  menu-item-parent" aria-haspopup="true">
+                                <span class="menu-link">
+                                    <span class="menu-text">مشاريع الاعضاء</span>
+                                </span>
+                            </li>
+                            <?php if(\Helper::checkRules('list-projects')): ?>
+                            <li class="menu-item <?php echo e(Active(URL::to('/projects*'))); ?>" aria-haspopup="true">
+                                <a href="<?php echo e(URL::to('/projects')); ?>" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">مشاريع الاعضاء</span>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                            <?php if(\Helper::checkRules('list-project-categories')): ?>
+                            <li class="menu-item <?php echo e(Active(URL::to('/projectCategories*'))); ?>" aria-haspopup="true">
+                                <a href="<?php echo e(URL::to('/projectCategories')); ?>" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">تصنيفات المشاريع</span>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                </li>
+                <?php endif; ?>
+
                 <?php if(\Helper::checkRules('list-groups,list-users,list-logs')): ?>
                 <li class="menu-item menu-item-submenu <?php echo e(Active(URL::to('/groups*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/users*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/logs*'),'menu-item-open active')); ?>" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="#" class="menu-link menu-toggle">

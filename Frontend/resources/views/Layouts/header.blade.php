@@ -14,7 +14,10 @@
     </i>
     <a href="#" class="login"  data-toggle="modal" data-target="#login">تسجيل الدخول</a>
     <ul class="links">
-      @foreach($data->topMenu as $key => $item)
+      @php 
+      $topMenu = \App\Models\TopMenu::NotDeleted()->where('status',1)->orderBy('sort','ASC')->get();
+      @endphp
+      @foreach($topMenu as $key => $item)
         @if($item->link != '')
           @if($item->link != '#login')
           <li><a href="#" data-toggle="modal" data-target="{{ $item->link }}">{{ $item->title }}</a></li>

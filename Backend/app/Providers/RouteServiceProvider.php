@@ -80,7 +80,6 @@ class RouteServiceProvider extends ServiceProvider
             require app_path('Modules/Dashboard/routes.php');
             require app_path('Modules/TopMenu/routes.php');
             require app_path('Modules/BottomMenu/routes.php');
-            require app_path('Modules/SideMenu/routes.php');
             require app_path('Modules/Advantage/routes.php');
             require app_path('Modules/Benefit/routes.php');
             require app_path('Modules/Page/routes.php');
@@ -92,6 +91,15 @@ class RouteServiceProvider extends ServiceProvider
             require app_path('Modules/User/routes.php');
             require app_path('Modules/Group/routes.php');
             require app_path('Modules/Variables/routes.php');
+
+            require app_path('Modules/SideMenu/routes.php');
+            require app_path('Modules/TargetGroup/routes.php');
+            require app_path('Modules/OrderCategory/routes.php');
+            require app_path('Modules/Order/routes.php');
+            require app_path('Modules/ProjectCategory/routes.php');
+            require app_path('Modules/Feature/routes.php');
+            require app_path('Modules/Membership/routes.php');
+
         });
     }
 

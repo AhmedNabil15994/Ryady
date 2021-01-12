@@ -115,7 +115,7 @@ class AuthControllers extends Controller {
             ]);
         }
 
-        \Session::flash('success', "اهلا بك في تكافل " . $userObj->username);
+        \Session::flash('success', "اهلا بك في ".Variable::getVar('العنوان عربي') .' ' . $userObj->username);
         return redirect('/');
 	}
 
@@ -171,7 +171,7 @@ class AuthControllers extends Controller {
         }
         
         $emailData['firstName'] = $userObj->username;
-        $emailData['subject'] = "تكافل - استعادة كلمة المرور";
+        $emailData['subject'] = Variable::getVar('العنوان عربي')." - استعادة كلمة المرور";
         $emailData['to'] = $email;
         $emailData['template'] = "emailUsers.resetPassword";
         $emailData['content'] = \URL::to('/changePassword').'/'.encrypt($userObj->id);

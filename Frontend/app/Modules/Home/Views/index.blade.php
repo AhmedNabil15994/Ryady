@@ -62,33 +62,17 @@
     <div class="plans">
     	<div class="container">
     		<div class="row wow zoomInDown">
-    			<div class="col-md-4">
-    				<div class="item">
-    					<img src="{{ asset('/assets/images/plan1.png') }}" />
-    					<h2 class="title">عضوية منتسب</h2>
-    					<span class="price">175 ريال</span>
-    					<span class="time">لمدة سنة</span>
-    					<a href="{{ URL::to('/requestMemberShip') }}" class="btnStyle">اطلبها الآن</a>
-    				</div>
-    			</div>
-    			<div class="col-md-4">
-    				<div class="item">
-    					<img src="{{ asset('/assets/images/plan2.png') }}" />
-    					<h2 class="title">عضوية طموح</h2>
-    					<span class="price">250 ريال</span>
-    					<span class="time">لمدة سنة</span>
-    					<a href="{{ URL::to('/requestMemberShip') }}" class="btnStyle">اطلبها الآن</a>
-    				</div>
-    			</div>
-    			<div class="col-md-4">
-    				<div class="item">
-    					<img src="{{ asset('/assets/images/plan3.png') }}" />
-    					<h2 class="title">عضوية ريادي</h2>
-    					<span class="price">357 ريال</span>
-    					<span class="time">لمدة سنة</span>
-    					<a href="{{ URL::to('/requestMemberShip') }}" class="btnStyle">اطلبها الآن</a>
-    				</div>
-    			</div>
+    			@foreach($data->memberships as $membership)
+                <div class="col-md-4">
+                    <div class="item">
+                        <img src="{{ $membership->photo }}" />
+                        <h2 class="title">عضوية {{ $membership->title }}</h2>
+                        <span class="price">{{ $membership->price }} ريال</span>
+                        <span class="time">لمدة {{ $membership->periodText }}</span>
+                        <a href="{{ URL::to('/requestMemberShip') }}" class="btnStyle">اطلبها الآن</a>
+                    </div>
+                </div>
+                @endforeach
     		</div>
     	</div>
     </div>

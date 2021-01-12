@@ -195,7 +195,7 @@ class PageControllers extends Controller {
     }
 
     public function addImage($images,$nextID=false) {
-        $lastID = Slider::orderBy('id','DESC')->first();
+        $lastID = Page::orderBy('id','DESC')->first();
         if($lastID){
             if(! $nextID){
                 $nextID = $lastID->id + 1;
