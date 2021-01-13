@@ -37,6 +37,26 @@ class UsersControllers extends Controller {
         return $validate;
     }
 
+    protected function validateGroup2($input){
+        $rules = [
+            'group_id' => 'required',
+            'username' => 'required',
+            'email' => 'required',
+            'lang' => 'required',
+        ];
+
+        $message = [
+            'group_id.required' => "يرجي اختيار المجموعة",
+            'username.required' => "يرجي ادخال اسم المستخدم",
+            'email.required' => "يرجي ادخال الترتيب",
+            'lang.required' => "يرجي اختيار اللغة",
+        ];
+
+        $validate = \Validator::make($input, $rules, $message);
+
+        return $validate;
+    }
+
     public function index(Request $request) {
         if($request->ajax()){
             $data = User::dataList();
@@ -70,15 +90,39 @@ class UsersControllers extends Controller {
             return Redirect('404');
         }
 
-        $validate = $this->validateGroup($input);
+        $validate = $this->validateGroup2($input);
         if($validate->fails()){
             \Session::flash('error', $validate->messages()->first());
             return redirect()->back();
         }
 
+        $userObj = User::checkUserByEmail($input['email'],$id);
+        if($userObj){
+            \Session::flash('error', 'هذا البريد الالكتروني مستخدم من قبل');
+            return redirect()->back()->withInput();
+        }
+
+        $userObj = User::checkUserByUserName($input['username'],$id);
+        if($userObj){
+            \Session::flash('error', 'هذا اسم المستخدم مستخدم من قبل');
+            return redirect()->back()->withInput();
+        }
+
+        if(isset($input['phone']) && !empty($input['phone'])){
+            $userObj = User::checkUserByPhone($input['phone'],$id);
+            if($userObj){
+                \Session::flash('error', 'هذا رقم الجوال مستخدم من قبل');
+                return redirect()->back()->withInput();
+            }
+        }
+
         $groupObj->username = $input['username'];
         $groupObj->group_id = $input['group_id'];
         $groupObj->email = $input['email'];
+        $groupObj->address = $input['address'];
+        $groupObj->phone = $input['phone'];
+        $groupObj->brief = $input['brief'];
+        $groupObj->show_details = $input['show_details'];
         $groupObj->lang = $input['lang'];
         $groupObj->session_time = $input['session_time'];
         $groupObj->password = \Hash::make($input['password']);
@@ -137,10 +181,22 @@ class UsersControllers extends Controller {
             return redirect()->back()->withInput();
         }
 
+        if(isset($input['phone']) && !empty($input['phone'])){
+            $userObj = User::checkUserByPhone($input['phone']);
+            if($userObj){
+                \Session::flash('error', 'هذا رقم الجوال مستخدم من قبل');
+                return redirect()->back()->withInput();
+            }
+        }
+
         $groupObj = new User;
         $groupObj->username = $input['username'];
         $groupObj->group_id = $input['group_id'];
         $groupObj->email = $input['email'];
+        $groupObj->address = $input['address'];
+        $groupObj->phone = $input['phone'];
+        $groupObj->brief = $input['brief'];
+        $groupObj->show_details = $input['show_details'];
         $groupObj->lang = $input['lang'];
         $groupObj->session_time = $input['session_time'];
         $groupObj->password = \Hash::make($input['password']);

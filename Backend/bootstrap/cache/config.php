@@ -38,10 +38,11 @@
       21 => 'Illuminate\\View\\ViewServiceProvider',
       22 => 'Watson\\Active\\ActiveServiceProvider',
       23 => 'Yajra\\DataTables\\DataTablesServiceProvider',
-      24 => 'App\\Providers\\AppServiceProvider',
-      25 => 'App\\Providers\\AuthServiceProvider',
-      26 => 'App\\Providers\\EventServiceProvider',
-      27 => 'App\\Providers\\RouteServiceProvider',
+      24 => 'Barryvdh\\Snappy\\ServiceProvider',
+      25 => 'App\\Providers\\AppServiceProvider',
+      26 => 'App\\Providers\\AuthServiceProvider',
+      27 => 'App\\Providers\\EventServiceProvider',
+      28 => 'App\\Providers\\RouteServiceProvider',
     ),
     'aliases' => 
     array (
@@ -83,6 +84,7 @@
       'View' => 'Illuminate\\Support\\Facades\\View',
       'Active' => 'Watson\\Active\\Facades\\Active',
       'DataTables' => 'Yajra\\DataTables\\Facades\\DataTables',
+      'PDF' => 'Barryvdh\\Snappy\\Facades\\SnappyPdf',
     ),
   ),
   'auth' => 
@@ -730,6 +732,18 @@
         'viewTitle' => 'المدونة',
         'modulePermissions' => 'edit-blog,add-blog,delete-blog,sort-blog,charts-blog,uploadImage-blog,deleteImage-blog',
       ),
+      'UserCardControllers@index' => 
+      array (
+        'title' => 'list-user-cards',
+        'viewTitle' => 'بطاقات الاعضاء',
+        'modulePermissions' => 'edit-user-card,add-user-card,delete-user-card,sort-user-card,charts-user-card',
+      ),
+      'UserRequestControllers@index' => 
+      array (
+        'title' => 'list-user-requests',
+        'viewTitle' => 'طلبات البطاقة المطبوعة',
+        'modulePermissions' => 'edit-user-request,delete-user-request,sort-user-request,charts-user-request',
+      ),
     ),
   ),
   'permissions' => 
@@ -973,6 +987,21 @@
     'BlogControllers@charts' => 'charts-blog',
     'BlogControllers@uploadImage' => 'uploadImage-blog',
     'BlogControllers@deleteImage' => 'deleteImage-blog',
+    'UserCardControllers@index' => 'list-user-cards',
+    'UserCardControllers@edit' => 'edit-user-card',
+    'UserCardControllers@update' => 'edit-user-card',
+    'UserCardControllers@fastEdit' => 'edit-user-card',
+    'UserCardControllers@add' => 'add-user-card',
+    'UserCardControllers@create' => 'add-user-card',
+    'UserCardControllers@delete' => 'delete-user-card',
+    'UserCardControllers@arrange' => 'sort-user-card',
+    'UserCardControllers@sort' => 'sort-user-card',
+    'UserCardControllers@charts' => 'charts-user-card',
+    'UserRequestControllers@index' => 'list-user-requests',
+    'UserRequestControllers@softDelete' => 'delete-user-request',
+    'UserRequestControllers@delete' => 'delete-user-request',
+    'UserRequestControllers@fastEdit' => 'edit-user-request',
+    'UserRequestControllers@charts' => 'charts-user-request',
   ),
   'queue' => 
   array (
@@ -1064,6 +1093,33 @@
     'secure' => NULL,
     'http_only' => true,
     'same_site' => 'lax',
+  ),
+  'snappy' => 
+  array (
+    'pdf' => 
+    array (
+      'enabled' => true,
+      'binary' => '/usr/local/bin/wkhtmltopdf-amd64',
+      'timeout' => false,
+      'options' => 
+      array (
+      ),
+      'env' => 
+      array (
+      ),
+    ),
+    'image' => 
+    array (
+      'enabled' => true,
+      'binary' => '/usr/local/bin/wkhtmltoimage-amd64',
+      'timeout' => false,
+      'options' => 
+      array (
+      ),
+      'env' => 
+      array (
+      ),
+    ),
   ),
   'view' => 
   array (

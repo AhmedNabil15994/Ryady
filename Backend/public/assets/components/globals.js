@@ -62,7 +62,7 @@ $('.quickEdit').on('click',function(e){
                     if($(this).text() == myText){
                         selected = ' selected';
                     }
-                    if($(this).val() > 0){
+                    if($(this).val() >= 0){
                         selectOptions+= '<option value="'+$(this).val()+'" '+selected+'>'+$(this).text()+'</option>';
                     }
                 });

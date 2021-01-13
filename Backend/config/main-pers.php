@@ -135,6 +135,26 @@ return [
             'viewTitle'=>'المدونة',
             'modulePermissions' => 'edit-blog,add-blog,delete-blog,sort-blog,charts-blog,uploadImage-blog,deleteImage-blog',
         ],
+        'UserCardControllers@index' => [
+            'title'=>'list-user-cards',
+            'viewTitle'=>'بطاقات الاعضاء',
+            'modulePermissions' => 'edit-user-card,add-user-card,delete-user-card,sort-user-card,charts-user-card',
+        ],
+        'UserRequestControllers@index' => [
+            'title'=>'list-user-requests',
+            'viewTitle'=>'طلبات البطاقة المطبوعة',
+            'modulePermissions' => 'edit-user-request,delete-user-request,sort-user-request,charts-user-request',
+        ],
+        'UserCertificateControllers@index' => [
+            'title'=>'list-user-certificate',
+            'viewTitle'=>'شهادات العضوية',
+            'modulePermissions' => 'download-user-certificate',
+        ],
+        'UserMemberControllers@index' => [
+            'title'=>'list-user-members',
+            'viewTitle'=>'اعضاء الشاب الريادي',
+            'modulePermissions' => 'edit-user-member,add-user-member,delete-user-member,sort-user-member,charts-user-member',
+        ],
 
     ],
 

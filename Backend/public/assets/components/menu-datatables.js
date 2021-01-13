@@ -163,35 +163,4 @@ var KTDatatablesAdvancedMultipleControls = function() {
 
 jQuery(document).ready(function() {
 	KTDatatablesAdvancedMultipleControls.init();
-
-	$('.print-but').on('click',function(e){
-	    e.preventDefault();
-	    e.stopPropagation();
-	    $('.buttons-print')[0].click();
-	});
-
-	$('.copy-but').on('click',function(e){
-	    e.preventDefault();
-	    e.stopPropagation();
-	    $('.buttons-copy')[0].click();
-	});
-
-	$('.excel-but').on('click',function(e){
-	    e.preventDefault();
-	    e.stopPropagation();
-	    $('.buttons-excel')[0].click();
-	});
-
-	$('.csv-but').on('click',function(e){
-	    e.preventDefault();
-	    e.stopPropagation();
-	    $('.buttons-csv')[0].click();
-	});
-
-	$('.pdf-but').on('click',function(e){
-	    e.preventDefault();
-	    e.stopPropagation();
-	    $('.buttons-pdf')[0].click();
-	});
-
 });

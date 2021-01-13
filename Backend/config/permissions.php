@@ -270,6 +270,35 @@ return [
     'BlogControllers@uploadImage' => 'uploadImage-blog',
     'BlogControllers@deleteImage' => 'deleteImage-blog',
     
+    'UserCardControllers@index' => 'list-user-cards',
+    'UserCardControllers@edit' => 'edit-user-card',
+    'UserCardControllers@update' => 'edit-user-card',
+    'UserCardControllers@fastEdit' => 'edit-user-card',
+    'UserCardControllers@add' => 'add-user-card',
+    'UserCardControllers@create' => 'add-user-card',
+    'UserCardControllers@delete' => 'delete-user-card',
+    'UserCardControllers@arrange' => 'sort-user-card',
+    'UserCardControllers@sort' => 'sort-user-card',
+    'UserCardControllers@charts' => 'charts-user-card',
 
+    'UserRequestControllers@index' => 'list-user-requests',
+    'UserRequestControllers@softDelete' => 'delete-user-request',
+    'UserRequestControllers@delete' => 'delete-user-request',
+    'UserRequestControllers@fastEdit' => 'edit-user-request',
+    'UserRequestControllers@charts' => 'charts-user-request',
+
+    'UserCertificateControllers@index' => 'list-user-certificates',
+    'UserCertificateControllers@download' => 'download-user-certificate',
+
+    'UserMemberControllers@index' => 'list-user-members',
+    'UserMemberControllers@edit' => 'edit-user-member',
+    'UserMemberControllers@update' => 'edit-user-member',
+    'UserMemberControllers@fastEdit' => 'edit-user-member',
+    'UserMemberControllers@add' => 'add-user-member',
+    'UserMemberControllers@create' => 'add-user-member',
+    'UserMemberControllers@delete' => 'delete-user-member',
+    'UserMemberControllers@arrange' => 'sort-user-member',
+    'UserMemberControllers@sort' => 'sort-user-member',
+    'UserMemberControllers@charts' => 'charts-user-member',
 
 ];

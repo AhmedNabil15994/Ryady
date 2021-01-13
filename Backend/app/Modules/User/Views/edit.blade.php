@@ -133,6 +133,37 @@
                     </div>  
                     <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
                         <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">العنوان: </label>
+                            <input class="form-control mb-5" type="text" name="address" value="{{ $data->data->address }}" maxlength="" placeholder="">
+                            <span class="m-form__help LastUpdate">تم الحفظ فى :  {{ $data->data->created_at }}</span>
+                        </div>
+                    </div> 
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رقم الجوال: </label>
+                            <input class="form-control mb-5" type="text" name="phone" value="{{ $data->data->phone }}" maxlength="" placeholder="">
+                            <span class="m-form__help LastUpdate">تم الحفظ فى :  {{ $data->data->created_at }}</span>
+                        </div>
+                    </div>  
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">اظهار البيانات: </label>
+                            <select name="show_details" class="form-control mb-5 select2" id="kt_select2_2">
+                                <option value="0" {{ $data->data->show_details == 0 ? 'selected' : '' }}>لا</option>
+                                <option value="1" {{ $data->data->show_details == 1 ? 'selected' : '' }}>نعم</option>
+                            </select>
+                            <span class="m-form__help LastUpdate">تم الحفظ فى :  {{ $data->data->created_at }}</span>
+                        </div>
+                    </div>     
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">نبذة تعريفية</label>
+                            <textarea class="summernote mb-5" id="kt_summernote_1" name="brief">{{ $data->data->brief }}</textarea>
+                            <span class="m-form__help LastUpdate">تم الحفظ فى :  {{ $data->data->created_at }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
                             <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">وقت قفل الشاشة: </label>
                             <input class="form-control mb-5" type="number" name="session_time" value="{{ $data->data->session_time }}" maxlength="" placeholder="">
                             <span class="m-form__help LastUpdate">تم الحفظ فى :  {{ $data->data->created_at }}</span>
@@ -210,7 +241,7 @@
 {{-- Scripts Section --}}
 @section('scripts')
 <script src="{{ asset('/assets/js/photoswipe.min.js') }}"></script>
+<script src="{{ asset('/assets/js/pages/crud/forms/editors/summernote.js') }}"></script>
 <script src="{{ asset('/assets/js/photoswipe-ui-default.min.js') }}"></script>
 <script src="{{ asset('/assets/components/myPhotoSwipe.js') }}"></script>      
 @endsection
-

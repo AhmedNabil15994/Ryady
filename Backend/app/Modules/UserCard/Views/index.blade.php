@@ -1,12 +1,13 @@
-<?php $__env->startSection('title','المدونة'); ?>
+{{-- Extends layout --}}
+@extends('Layouts.master')
+@section('title','بطاقات الاعضاء')
 
-<?php $__env->startSection('styles'); ?>
-<link rel="stylesheet" type="text/css" href="<?php echo e(asset('/assets/css/default-skin.css')); ?>">
-<link rel="stylesheet" type="text/css" href="<?php echo e(asset('/assets/css/photoswipe.css')); ?>">
-<?php $__env->stopSection(); ?>
+{{-- Content --}}
+@section('sub-header')
 
+@endsection
 
-<?php $__env->startSection('content'); ?>
+@section('content')
 <div class="py-2 py-lg-6 subheader-transparent" id="kt_subheader">
     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
         <!--begin::Info-->
@@ -14,15 +15,15 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">المدونة</h3>
+                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">بطاقات الاعضاء</h3>
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                     <li class="breadcrumb-item">
-                        <a href="<?php echo e(URL::to('/')); ?>" class="text-muted"><i class="m-nav__link-icon la la-home"></i></a>
+                        <a href="{{ URL::to('/') }}" class="text-muted"><i class="m-nav__link-icon la la-home"></i></a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="<?php echo e(URL::to('/blogs')); ?>" class="text-muted">المدونة</a>
+                        <a href="{{ URL::to('/userCards') }}" class="text-muted">بطاقات الاعضاء</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -38,27 +39,27 @@
                     <i class="ki ki-bold-more-hor"></i>
                 </button>
                 <div class="dropdown-menu" dropdown-toggle="hover">
-                    <?php if(\Helper::checkRules('add-blog')): ?>
-                    <a href="<?php echo e(URL::to('/blogs/add')); ?>" class="dropdown-item">
+                    @if(\Helper::checkRules('add-user-card'))
+                    <a href="{{ URL::to('/userCards/add') }}" class="dropdown-item">
                         <i class="m-nav__link-icon fa fa-plus"></i>
                         <span class="m-nav__link-text">اضافة</span>
                     </a>
-                    <?php endif; ?>
-                    <?php if(\Helper::checkRules('sort-blog')): ?>
-                    <a href="<?php echo e(URL::to('/blogs/arrange')); ?>" class="dropdown-item">
+                    @endif
+                    @if(\Helper::checkRules('sort-user-card'))
+                    <a href="{{ URL::to('/userCards/arrange') }}" class="dropdown-item">
                         <i class="m-nav__link-icon fa fa-sort-numeric-up"></i>
                         <span class="m-nav__link-text">ترتيب</span>
                     </a>
-                    <?php endif; ?>
-                    <?php if(\Helper::checkRules('charts-blog')): ?>
-                    <a href="<?php echo e(URL::to('/blogs/charts')); ?>" class="dropdown-item">
+                    @endif
+                    @if(\Helper::checkRules('charts-user-card'))
+                    <a href="{{ URL::to('/userCards/charts') }}" class="dropdown-item">
                         <i class="m-nav__link-icon flaticon-graph"></i>
                         <span class="m-nav__link-text">الاحصائيات</span>
                     </a>
-                    <?php endif; ?>
+                    @endif
                     <div class="dropdown-divider"></div>
                     <div href="#" class="dropdown-item">
-                        <a href="<?php echo e(URL::to('/logout')); ?>" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">تسجيل الخروج</a>
+                        <a href="{{ URL::to('/logout') }}" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">تسجيل الخروج</a>
                     </div>
                 </div>
             </div>
@@ -74,14 +75,14 @@
             <span class="card-icon">
                 <i class="menu-icon flaticon-menu-1"></i>
             </span>
-            <h3 class="card-label">المدونة</h3>
+            <h3 class="card-label">بطاقات الاعضاء</h3>
         </div>
         <div class="card-toolbar">
-            <?php if(\Helper::checkRules('edit-blog')): ?>
+            @if(\Helper::checkRules('edit-user-card'))
             <a href="#" class="btn btn-outline-success quickEdit m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill " data-toggle="tooltip" data-placement="top" data-original-title="تعديل سريع">
                 <i class="la la-edit"></i>
             </a>
-            <?php endif; ?>
+            @endif
             <a href="#" class="btn btn-outline-danger search-mode m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill " data-toggle="tooltip" data-placement="top" data-original-title="معلومات عن البحث المتقدم">
                 <i class="flaticon-questions-circular-button"></i>
             </a>
@@ -140,32 +141,52 @@
                 </div>
                 <div id="collapseTwo6" class="collapse" data-parent="#accordionExample6" style="">
                     <div class="card-body">
-                        <form class="m-form m-form--fit m--margin-bottom-20" method="get" action="<?php echo e(URL::current()); ?>">
-                            
+                        <form class="m-form m-form--fit m--margin-bottom-20" method="get" action="{{ URL::current() }}">
+                            {{-- @csrf --}}
                             <div class="row">
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>ID:</label>
-                                    <input type="text" class="form-control m-input" data-col-index="0" name="id" value="<?php echo e(Request::get('id')); ?>">
+                                    <input type="text" class="form-control m-input" name="id" value="{{ Request::get('id') }}" data-col-index="0">
                                     <br>
                                 </div>  
                                 <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>العنوان عربي:</label>
-                                    <input type="text" class="form-control m-input" data-col-index="2" name="title" value="<?php echo e(Request::get('title')); ?>">
+                                    <label>الكود:</label>
+                                    <input type="text" class="form-control m-input" name="code" value="{{ Request::get('code') }}" data-col-index="1">
+                                    <br>
+                                </div>  
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <label>المستخدم:</label>
+                                    <input type="text" class="form-control m-input" name="username" value="{{ Request::get('username') }}" data-col-index="2">
+                                    <br>
+                                </div>  
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <label>الاسم عربي:</label>
+                                    <input type="text" class="form-control m-input" name="name_en" value="{{ Request::get('name_en') }}" data-col-index="3">
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>التصنيف:</label>
-                                    <select name="category_id" class="form-control m-input">
+                                    <label>الاسم انجليزي:</label>
+                                    <input type="text" class="form-control m-input" name="name_en" value="{{ Request::get('name_en') }}" data-col-index="4">
+                                    <br>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <label>العضوية:</label>
+                                    <select name="membership_id" class="form-control m-input">
                                         <option value="">حدد اختيارك</option>
-                                        <?php $__currentLoopData = $data->categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($category->id); ?>"><?php echo e($category->title); ?></option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        @foreach($data->memberships as $membership)
+                                        <option value="{{ $membership->id }}">{{ $membership->title }}</option>
+                                        @endforeach
                                     </select>
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>عدد المشاهدات:</label>
-                                    <input type="number" class="form-control m-input" data-col-index="4" name="views" value="<?php echo e(Request::get('views')); ?>">
+                                    <label>تاريخ البدء:</label>
+                                    <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_1" placeholder="تاريخ البدء"  name="start_date" value="{{ Request::get('start_date') }}" data-col-index="6" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_1" />
+                                    <br>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <label>تاريخ الانتهاء:</label>
+                                    <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_3" placeholder="تاريخ الانتهاء"  name="end_date" value="{{ Request::get('end_date') }}" data-col-index="7" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_3" />
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
@@ -178,14 +199,6 @@
                                     </select>
                                     <br>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>تاريخ الارسال:</label>
-                                    <div class="row">
-                                        <div class="col">
-                                            <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_1" placeholder="تاريخ الارسال"  name="created_at" value="<?php echo e(Request::get('created_at')); ?>" data-col-index="7" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_1" />
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <div class="m-separator m-separator--md m-separator--dashed"></div>
                             <div class="row">
@@ -197,7 +210,7 @@
                                         </span>
                                     </button>
                                     &nbsp;&nbsp;
-                                    <a href="<?php echo e(URL::to('/blogs')); ?>" class="btn btn-secondary m-btn m-btn--icon" id="m_reset">
+                                    <a href="{{ URL::to('/userCards') }}" class="btn btn-secondary m-btn m-btn--icon" id="m_reset">
                                         <span>
                                             <i class="la la-close"></i>
                                             <span>الغاء</span>
@@ -210,33 +223,35 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" name="data-area" value="<?php echo e(\Helper::checkRules('edit-blog')); ?>">
-        <input type="hidden" name="data-cols" value="<?php echo e(\Helper::checkRules('delete-blog')); ?>">
+        <input type="hidden" name="data-area" value="{{ \Helper::checkRules('edit-user-card') }}">
+        <input type="hidden" name="data-cols" value="{{ \Helper::checkRules('delete-user-card') }}">
         <!--begin: Datatable-->
         <table class="table table-separate  table-hover table-bordered table-head-custom table-foot-custom table-checkable" id="kt_datatable">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>المرفقات</th>
-                    <th>العنوان عربي</th>
-                    <th>التصنيف</th>
-                    <th>عدد المشاهدات</th>
+                    <th>الكود</th>
+                    <th>اسم المستخدم</th>
+                    <th>الاسم عربي</th>
+                    <th>الاسم انجليزي</th>
+                    <th>العضوية</th>
+                    <th>تاريخ البدء</th>
+                    <th>تاريخ الانتهاء</th>
                     <th>الحالة</th>
-                    <th>المنشئ</th>
-                    <th>التاريخ</th>
                     <th>الاجراءات</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
                     <th>ID</th>
-                    <th>المرفقات</th>
-                    <th>العنوان عربي</th>
-                    <th>التصنيف</th>
-                    <th>عدد المشاهدات</th>
+                    <th>الكود</th>
+                    <th>اسم المستخدم</th>
+                    <th>الاسم عربي</th>
+                    <th>الاسم انجليزي</th>
+                    <th>العضوية</th>
+                    <th>تاريخ البدء</th>
+                    <th>تاريخ الانتهاء</th>
                     <th>الحالة</th>
-                    <th>المنشئ</th>
-                    <th>التاريخ</th>
                     <th>الاجراءات</th>
                 </tr>
             </tfoot>
@@ -245,19 +260,13 @@
     </div>
 </div>
 <!--end::Card-->
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('modals'); ?>
-<?php echo $__env->make('Partials.search_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<?php echo $__env->make('Partials.photoswipe_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<?php $__env->stopSection(); ?>
+@section('modals')
+@include('Partials.search_modal')
+@endsection
 
-
-<?php $__env->startSection('scripts'); ?>
-<script src="<?php echo e(asset('/assets/components/blogs-datatables.js')); ?>"></script>           
-<script src="<?php echo e(asset('/assets/js/photoswipe.min.js')); ?>"></script>
-<script src="<?php echo e(asset('/assets/js/photoswipe-ui-default.min.js')); ?>"></script>
-<script src="<?php echo e(asset('/assets/components/myPhotoSwipe.js')); ?>"></script>       
-<?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('Layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/Server/Projects/Ryady/Backend/app/Modules/Blog/Views/index.blade.php ENDPATH**/ ?>
+{{-- Scripts Section --}}
+@section('scripts')
+<script src="{{ asset('/assets/components/userCards-datatables.js')}}"></script>           
+@endsection

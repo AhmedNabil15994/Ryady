@@ -107,7 +107,6 @@
                     <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
                         <div class="col-lg-12">
                             <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">العنوان</label>
-                            <input type="hidden" name="status" value="{{ $data->data->status }}">
                             <input type="hidden" name="lat" value="{{ $data->data->lat != '' ? $data->data->lat : 24.774265  }}">
                             <input type="hidden" name="lng" value="{{ $data->data->lng != '' ? $data->data->lng : 46.738586  }}">
                             <input class="form-control mb-5 m-input" type="text" name="address" value="{{ $data->data->address }}" maxlength="" placeholder="">
@@ -142,6 +141,18 @@
                                 @foreach($data->categories as $category)
                                 <option value="{{ $category->id }}" {{ $data->data->category_id == $category->id ? 'selected' : '' }}>{{ $category->title }}</option>
                                 @endforeach
+                            </select>
+                            <span class="m-form__help LastUpdate">تم الحفظ فى :  {{ $data->data->created_at }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">الحالة</label>
+                            <select name="status" class="form-control select2">
+                                <option value="" disabled>حدد اختيارك</option>
+                                <option value="1" {{ $data->data->status == 1 ? 'selected' : '' }}>مفعلة</option>
+                                <option value="2" {{ $data->data->status == 2 ? 'selected' : '' }}>تم ارسال الطلب</option>
+                                <option value="3" {{ $data->data->status == 3 ? 'selected' : '' }}>تم الرفض</option>
                             </select>
                             <span class="m-form__help LastUpdate">تم الحفظ فى :  {{ $data->data->created_at }}</span>
                         </div>
@@ -234,7 +245,6 @@
             <div class="col-lg-2"></div>
             <div class="col-lg-6">
                 <input name="Submit" type="submit" class="btn btn-success AddBTN " value="حفظ" id="SubmitBTN">
-                <input name="Submit" type="submit" class="btn btn-primary AddBTN " value="حفظ كمسودة" id="SaveBTN">
                 <input type="reset" class="btn btn-danger Reset pageReset" value="مسح الحقول">
                 <input name="Add" type="hidden" value="TRUE" id="SaveBTN">
             </div>

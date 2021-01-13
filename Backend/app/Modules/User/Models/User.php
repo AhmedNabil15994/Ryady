@@ -23,7 +23,7 @@ class User extends Model{
         return \ImagesHelper::GetImagePath('users', $id, $photo);
     }
 
-    static function dataList() {
+    static function dataList($status=null) {
         $input = \Request::all();
 
         $source = self::NotDeleted();
@@ -33,6 +33,9 @@ class User extends Model{
         }
         if (isset($input['group_id']) && !empty($input['group_id'])) {
             $source->where('group_id',  $input['group_id']);
+        }
+        if($status != null){
+            $source->where('status',1)->where('is_active',1);
         }
 
         $source->orderBy('sort', 'ASC');
@@ -72,6 +75,10 @@ class User extends Model{
         $data->group = $source->Group != null ? $source->Group->title : '';
         $data->group_id = $source->group_id;
         $data->email = $source->email;
+        $data->address = $source->address;
+        $data->phone = $source->phone;
+        $data->brief = $source->brief;
+        $data->show_details = $source->show_details;
         $data->username = $source->username;
         $data->session_time = $source->session_time;
         $data->lang = $source->lang;
@@ -139,6 +146,18 @@ class User extends Model{
     static function checkUserByEmail($email, $notId = false){
         $dataObj = self::NotDeleted()
             ->where('email', $email)->where('is_active', 1)
+            ->where('status', 1);
+
+        if ($notId != false) {
+            $dataObj->whereNotIn('id', [$notId]);
+        }
+
+        return $dataObj->first();
+    }
+
+    static function checkUserByPhone($phone, $notId = false){
+        $dataObj = self::NotDeleted()
+            ->where('phone', $phone)->where('is_active', 1)
             ->where('status', 1);
 
         if ($notId != false) {

@@ -125,7 +125,34 @@
                             <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">البريد الالكتروني: </label>
                             <input class="form-control mb-5" type="email" name="email" value="{{ old('email') }}" maxlength="" placeholder="">
                         </div>
+                    </div> 
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">العنوان: </label>
+                            <input class="form-control mb-5" type="text" name="address" value="{{ old('address') }}" maxlength="" placeholder="">
+                        </div>
+                    </div> 
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رقم الجوال: </label>
+                            <input class="form-control mb-5" type="text" name="phone" value="{{ old('phone') }}" maxlength="" placeholder="">
+                        </div>
                     </div>  
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">اظهار البيانات: </label>
+                            <select name="show_details" class="form-control mb-5 select2" id="kt_select2_2">
+                                <option value="0" {{ old('show_details') == 0 ? 'selected' : '' }}>لا</option>
+                                <option value="1" {{ old('show_details') == 1 ? 'selected' : '' }}>نعم</option>
+                            </select>
+                        </div>
+                    </div>     
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">نبذة تعريفية</label>
+                            <textarea class="summernote mb-5" id="kt_summernote_1" name="brief">{{ old('brief') }}</textarea>
+                        </div>
+                    </div>
                     <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
                         <div class="col-lg-12">
                             <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">وقت قفل الشاشة: </label>
@@ -150,7 +177,7 @@
                                 <option value="0" {{ old('lang') == 0 ? 'selected' : '' }}>ar</option>
                             </select>
                         </div>
-                    </div>     
+                    </div> 
                 </form>
             </div>
         </div>
@@ -169,3 +196,9 @@
 </div>
 <!--end::Card-->
 @endsection
+
+{{-- Scripts Section --}}
+@section('scripts')
+<script src="{{ asset('/assets/js/pages/crud/forms/editors/summernote.js') }}"></script>
+@endsection
+

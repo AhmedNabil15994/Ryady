@@ -207,7 +207,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 		    e.preventDefault();
 		    e.stopPropagation();
 		    DataTable.rows().select();
-    		$('table input[type="checkbox"]').attr('checked','checked');
+		    $('table input[type="checkbox"]').attr('checked','checked');
 		    $('table input[type="checkbox"]').parents('tr').addClass('selected');
 		});
 
@@ -215,9 +215,10 @@ var KTDatatablesAdvancedMultipleControls = function() {
 		    e.preventDefault();
 		    e.stopPropagation();
 		    DataTable.rows().deselect();
-    		$('table input[type="checkbox"]').attr('checked', false);
+		    $('table input[type="checkbox"]').attr('checked', false);
 		    $('input[type="checkbox"]').parents('tr').removeClass('selected');
 		});
+
 	};
 
 	return {
@@ -327,4 +328,5 @@ jQuery(document).ready(function() {
 	        errorNotification('من فضلك قم باختيار الطلبات');      
 	    }
 	});
+	
 });

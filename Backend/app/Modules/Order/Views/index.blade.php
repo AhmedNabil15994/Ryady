@@ -251,10 +251,7 @@
         </div>
         @if($data->url == 'orders')
         <div class="row mt-5">
-            <div class="col-lg-6">
-                <button type="button" class="btn btn-block btn-warning moveToTrash" style="color: #000;">ترحيل لسلة المهملات</button>
-            </div>
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <button type="button" class="btn btn-block btn-danger delete">حذف نهائي</button>
             </div>
         </div>

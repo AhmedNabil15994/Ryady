@@ -211,6 +211,76 @@
                 </li>
                 @endif
 
+                @if(\Helper::checkRules('list-user-cards,list-user-requests,list-user-certificates'))
+                <li class="menu-item menu-item-submenu {{ Active(URL::to('/userCards*'),'menu-item-open active') }} {{ Active(URL::to('/userRequests*'),'menu-item-open active') }} {{ Active(URL::to('/userCertificates*'),'menu-item-open active') }}" aria-haspopup="true" data-menu-toggle="hover">
+                    <a href="#" class="menu-link menu-toggle">
+                        <i class="menu-icon far fa-credit-card"></i>
+                        <span class="menu-text">بطاقات الاعضاء</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="menu-submenu" kt-hidden-height="80">
+                        <span class="menu-arrow"></span>
+                        <ul class="menu-subnav">
+                            <li class="menu-item  menu-item-parent" aria-haspopup="true">
+                                <span class="menu-link">
+                                    <span class="menu-text">بطاقات الاعضاء</span>
+                                </span>
+                            </li>
+                            @if(\Helper::checkRules('list-user-cards'))
+                            <li class="menu-item {{ Active(URL::to('/userCards*')) }}" aria-haspopup="true">
+                                <a href="{{ URL::to('/userCards') }}" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">بطاقات الاعضاء</span>
+                                </a>
+                            </li>
+                            @endif
+                            @if(\Helper::checkRules('list-user-requests'))
+                            <li class="menu-item {{ Active(URL::to('/userRequests*')) }}" aria-haspopup="true">
+                                <a href="{{ URL::to('/userRequests') }}" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">طلبات البطاقة المطبوعة</span>
+                                </a>
+                            </li>
+                            @endif
+                            @if(\Helper::checkRules('list-user-certificates'))
+                            <li class="menu-item {{ Active(URL::to('/userCertificates*')) }}" aria-haspopup="true">
+                                <a href="{{ URL::to('/userCertificates') }}" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">شهادات العضوية</span>
+                                </a>
+                            </li>
+                            @endif
+                        </ul>
+                    </div>
+                </li>
+                @endif
+
+                @if(\Helper::checkRules('list-user-members'))
+                <li class="menu-item menu-item-submenu {{ Active(URL::to('/userMembers*'),'menu-item-open active') }}" aria-haspopup="true" data-menu-toggle="hover">
+                    <a href="#" class="menu-link menu-toggle">
+                        <i class="menu-icon fa fa-user-tie"></i>
+                        <span class="menu-text">اعضاء الشاب الريادي</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="menu-submenu" kt-hidden-height="80">
+                        <span class="menu-arrow"></span>
+                        <ul class="menu-subnav">
+                            <li class="menu-item  menu-item-parent" aria-haspopup="true">
+                                <span class="menu-link">
+                                    <span class="menu-text">اعضاء الشاب الريادي</span>
+                                </span>
+                            </li>
+                            <li class="menu-item {{ Active(URL::to('/userMembers*')) }}" aria-haspopup="true">
+                                <a href="{{ URL::to('/userMembers') }}" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">اعضاء الشاب الريادي</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                @endif
+
                 @if(\Helper::checkRules('list-orders,list-order-categories'))
                 <li class="menu-item menu-item-submenu {{ Active(URL::to('/orders*'),'menu-item-open active') }} {{ Active(URL::to('/orderCategories*'),'menu-item-open active') }}" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="#" class="menu-link menu-toggle">

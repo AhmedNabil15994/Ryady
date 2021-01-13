@@ -1,10 +1,9 @@
-<?php $__env->startSection('title','مشاريع الاعضاء'); ?>
+<?php $__env->startSection('title','المشرفين والاداريين'); ?>
 
-<?php $__env->startSection('styles'); ?>
-<link rel="stylesheet" type="text/css" href="<?php echo e(asset('/assets/css/default-skin.css')); ?>">
-<link rel="stylesheet" type="text/css" href="<?php echo e(asset('/assets/css/photoswipe.css')); ?>">
+
+<?php $__env->startSection('sub-header'); ?>
+
 <?php $__env->stopSection(); ?>
-
 
 <?php $__env->startSection('content'); ?>
 <div class="py-2 py-lg-6 subheader-transparent" id="kt_subheader">
@@ -14,7 +13,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">مشاريع الاعضاء</h3>
+                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">المشرفين والاداريين</h3>
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -22,7 +21,7 @@
                         <a href="<?php echo e(URL::to('/')); ?>" class="text-muted"><i class="m-nav__link-icon la la-home"></i></a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="<?php echo e(URL::to('/projects')); ?>" class="text-muted">مشاريع الاعضاء</a>
+                        <a href="<?php echo e(URL::to('/users')); ?>" class="text-muted">المشرفين والاداريين</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -38,20 +37,20 @@
                     <i class="ki ki-bold-more-hor"></i>
                 </button>
                 <div class="dropdown-menu" dropdown-toggle="hover">
-                    <?php if(\Helper::checkRules('add-project')): ?>
-                    <a href="<?php echo e(URL::to('/projects/add')); ?>" class="dropdown-item">
+                    <?php if(\Helper::checkRules('add-user')): ?>
+                    <a href="<?php echo e(URL::to('/users/add')); ?>" class="dropdown-item">
                         <i class="m-nav__link-icon fa fa-plus"></i>
                         <span class="m-nav__link-text">اضافة</span>
                     </a>
                     <?php endif; ?>
-                    <?php if(\Helper::checkRules('sort-project')): ?>
-                    <a href="<?php echo e(URL::to('/projects/arrange')); ?>" class="dropdown-item">
+                    <?php if(\Helper::checkRules('sort-user')): ?>
+                    <a href="<?php echo e(URL::to('/users/arrange')); ?>" class="dropdown-item">
                         <i class="m-nav__link-icon fa fa-sort-numeric-up"></i>
                         <span class="m-nav__link-text">ترتيب</span>
                     </a>
                     <?php endif; ?>
-                    <?php if(\Helper::checkRules('charts-project')): ?>
-                    <a href="<?php echo e(URL::to('/projects/charts')); ?>" class="dropdown-item">
+                    <?php if(\Helper::checkRules('charts-user')): ?>
+                    <a href="<?php echo e(URL::to('/users/charts')); ?>" class="dropdown-item">
                         <i class="m-nav__link-icon flaticon-graph"></i>
                         <span class="m-nav__link-text">الاحصائيات</span>
                     </a>
@@ -72,12 +71,12 @@
     <div class="card-header">
         <div class="card-title">
             <span class="card-icon">
-                <i class="menu-icon flaticon-menu-1"></i>
+                <i class="menu-icon flaticon-users"></i>
             </span>
-            <h3 class="card-label">مشاريع الاعضاء</h3>
+            <h3 class="card-label">المشرفين والاداريين</h3>
         </div>
         <div class="card-toolbar">
-            <?php if(\Helper::checkRules('edit-project')): ?>
+            <?php if(\Helper::checkRules('edit-user')): ?>
             <a href="#" class="btn btn-outline-success quickEdit m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill " data-toggle="tooltip" data-placement="top" data-original-title="تعديل سريع">
                 <i class="la la-edit"></i>
             </a>
@@ -145,66 +144,28 @@
                             <div class="row">
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>ID:</label>
-                                    <input type="text" class="form-control m-input" data-col-index="0" name="id" value="<?php echo e(Request::get('id')); ?>">
+                                    <input type="text" class="form-control m-input" name="id" value="<?php echo e(Request::get('id')); ?>" data-col-index="0">
                                     <br>
                                 </div>  
                                 <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>اسم المشروع:</label>
-                                    <input type="text" class="form-control m-input" data-col-index="2" name="title" value="<?php echo e(Request::get('title')); ?>">
+                                    <label>اسم المستخدم:</label>
+                                    <input type="text" class="form-control m-input" name="title" value="<?php echo e(Request::get('title')); ?>" data-col-index="1">
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>العنوان:</label>
-                                    <input type="text" class="form-control m-input" data-col-index="3" name="address" value="<?php echo e(Request::get('address')); ?>">
+                                    <label>البريد الالكتروني:</label>
+                                    <input type="text" class="form-control m-input" name="title" value="<?php echo e(Request::get('title')); ?>" data-col-index="2">
                                     <br>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>رقم الجوال:</label>
-                                    <input type="text" class="form-control m-input" data-col-index="4" name="phone" value="<?php echo e(Request::get('phone')); ?>">
-                                    <br>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>المدينة:</label>
-                                    <select name="city_id" class="form-control m-input">
-                                        <option value="">حدد اختيارك</option>
-                                        <?php $__currentLoopData = $data->cities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($city->id); ?>"><?php echo e($city->title); ?></option>
+                                <div class="col-lg-3 col-md-4 col-sm-6" data-col-index="3">
+                                    <label>النوع:</label>
+                                    <select class="form-control" name="group_id">
+                                        <option value="0">حدد اختيارك</option>
+                                        <?php $__currentLoopData = $data->groups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($group->id); ?>" <?php echo e(Request::get('group_id')  == $group->id ? 'selected' : ''); ?>><?php echo e($group->title); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                     <br>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>التصنيف:</label>
-                                    <select name="category_id" class="form-control m-input">
-                                        <option value="">حدد اختيارك</option>
-                                        <?php $__currentLoopData = $data->categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($category->id); ?>"><?php echo e($category->title); ?></option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </select>
-                                    <br>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>نبذة عن المشروع:</label>
-                                    <input type="text" class="form-control m-input" data-col-index="7" name="brief" value="<?php echo e(Request::get('brief')); ?>">
-                                    <br>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>الحالة:</label>
-                                    <select name="status" class="form-control m-input">
-                                        <option value="">حدد اختيارك</option>
-                                        <option value="1">مفعلة</option>
-                                        <option value="2">تم ارسال الطلب</option>
-                                        <option value="3">تم الرفض</option>
-                                    </select>
-                                    <br>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>تاريخ الارسال:</label>
-                                    <div class="row">
-                                        <div class="col">
-                                            <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_1" placeholder="تاريخ الارسال"  name="created_at" value="<?php echo e(Request::get('created_at')); ?>" data-col-index="10" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_1" />
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="m-separator m-separator--md m-separator--dashed"></div>
@@ -217,7 +178,7 @@
                                         </span>
                                     </button>
                                     &nbsp;&nbsp;
-                                    <a href="<?php echo e(URL::to('/projects')); ?>" class="btn btn-secondary m-btn m-btn--icon" id="m_reset">
+                                    <a href="<?php echo e(URL::to('/users')); ?>" class="btn btn-secondary m-btn m-btn--icon" id="m_reset">
                                         <span>
                                             <i class="la la-close"></i>
                                             <span>الغاء</span>
@@ -230,39 +191,25 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" name="data-area" value="<?php echo e(\Helper::checkRules('edit-project')); ?>">
-        <input type="hidden" name="data-cols" value="<?php echo e(\Helper::checkRules('delete-project')); ?>">
+        <input type="hidden" name="data-area" value="<?php echo e(\Helper::checkRules('edit-user')); ?>">
+        <input type="hidden" name="data-cols" value="<?php echo e(\Helper::checkRules('delete-user')); ?>">
         <!--begin: Datatable-->
         <table class="table table-separate  table-hover table-bordered table-head-custom table-foot-custom table-checkable" id="kt_datatable">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>الصورة</th>
-                    <th>اسم المشروع</th>
-                    <th>العنوان</th>
-                    <th>رقم الجوال</th>
-                    <th>المدينة</th>
-                    <th>التصنيف</th>
-                    <th>نبذة عن المشروع</th>
-                    <th>المنشئ</th>
-                    <th>الحالة</th>
-                    <th>التاريخ</th>
+                    <th>اسم المستخدم</th>
+                    <th>البريد الالكتروني</th>
+                    <th>النوع</th>
                     <th>الاجراءات</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
                     <th>ID</th>
-                    <th>الصورة</th>
-                    <th>اسم المشروع</th>
-                    <th>العنوان</th>
-                    <th>رقم الجوال</th>
-                    <th>المدينة</th>
-                    <th>التصنيف</th>
-                    <th>نبذة عن المشروع</th>
-                    <th>المنشئ</th>
-                    <th>الحالة</th>
-                    <th>التاريخ</th>
+                    <th>اسم المستخدم</th>
+                    <th>البريد الالكتروني</th>
+                    <th>النوع</th>
                     <th>الاجراءات</th>
                 </tr>
             </tfoot>
@@ -275,15 +222,11 @@
 
 <?php $__env->startSection('modals'); ?>
 <?php echo $__env->make('Partials.search_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<?php echo $__env->make('Partials.photoswipe_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
 
 
 <?php $__env->startSection('scripts'); ?>
-<script src="<?php echo e(asset('/assets/components/projects-datatables.js')); ?>"></script>           
-<script src="<?php echo e(asset('/assets/js/photoswipe.min.js')); ?>"></script>
-<script src="<?php echo e(asset('/assets/js/photoswipe-ui-default.min.js')); ?>"></script>
-<script src="<?php echo e(asset('/assets/components/myPhotoSwipe.js')); ?>"></script>       
+<script src="<?php echo e(asset('/assets/components/user-datatables.js')); ?>"></script>           
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('Layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/Server/Projects/Ryady/Backend/app/Modules/Project/Views/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('Layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/Server/Projects/Ryady/Backend/app/Modules/User/Views/index.blade.php ENDPATH**/ ?>

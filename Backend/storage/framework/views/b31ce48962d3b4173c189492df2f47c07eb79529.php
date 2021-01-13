@@ -1,4 +1,4 @@
-<?php $__env->startSection('title',$data->title); ?>
+<?php $__env->startSection('title','اعضاء الشاب الريادي'); ?>
 
 
 <?php $__env->startSection('sub-header'); ?>
@@ -13,7 +13,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator"><?php echo e($data->title); ?></h3>
+                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">اعضاء الشاب الريادي</h3>
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -21,7 +21,7 @@
                         <a href="<?php echo e(URL::to('/')); ?>" class="text-muted"><i class="m-nav__link-icon la la-home"></i></a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="<?php echo e(URL::to('/'.$data->url)); ?>" class="text-muted"><?php echo e($data->title); ?></a>
+                        <a href="<?php echo e(URL::to('/userMembers')); ?>" class="text-muted">اعضاء الشاب الريادي</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -37,8 +37,20 @@
                     <i class="ki ki-bold-more-hor"></i>
                 </button>
                 <div class="dropdown-menu" dropdown-toggle="hover">
-                    <?php if(\Helper::checkRules('charts-'.$data->name)): ?>
-                    <a href="<?php echo e(URL::to('/'.$data->url.'/charts')); ?>" class="dropdown-item">
+                    <?php if(\Helper::checkRules('add-user-member')): ?>
+                    <a href="<?php echo e(URL::to('/userMembers/add')); ?>" class="dropdown-item">
+                        <i class="m-nav__link-icon fa fa-plus"></i>
+                        <span class="m-nav__link-text">اضافة</span>
+                    </a>
+                    <?php endif; ?>
+                    <?php if(\Helper::checkRules('sort-user-member')): ?>
+                    <a href="<?php echo e(URL::to('/userMembers/arrange')); ?>" class="dropdown-item">
+                        <i class="m-nav__link-icon fa fa-sort-numeric-up"></i>
+                        <span class="m-nav__link-text">ترتيب</span>
+                    </a>
+                    <?php endif; ?>
+                    <?php if(\Helper::checkRules('charts-user-member')): ?>
+                    <a href="<?php echo e(URL::to('/userMembers/charts')); ?>" class="dropdown-item">
                         <i class="m-nav__link-icon flaticon-graph"></i>
                         <span class="m-nav__link-text">الاحصائيات</span>
                     </a>
@@ -59,12 +71,12 @@
     <div class="card-header">
         <div class="card-title">
             <span class="card-icon">
-                <i class="menu-icon flaticon-users"></i>
+                <i class="menu-icon flaticon-menu-1"></i>
             </span>
-            <h3 class="card-label"><?php echo e($data->title); ?></h3>
+            <h3 class="card-label">اعضاء الشاب الريادي</h3>
         </div>
         <div class="card-toolbar">
-            <?php if(\Helper::checkRules('edit-'.$data->name)): ?>
+            <?php if(\Helper::checkRules('edit-user-member')): ?>
             <a href="#" class="btn btn-outline-success quickEdit m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill " data-toggle="tooltip" data-placement="top" data-original-title="تعديل سريع">
                 <i class="la la-edit"></i>
             </a>
@@ -132,56 +144,27 @@
                             <div class="row">
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>ID:</label>
-                                    <input type="text" class="form-control m-input" data-col-index="0" name="id" value="<?php echo e(Request::get('id')); ?>">
+                                    <input type="text" class="form-control m-input" name="id" value="<?php echo e(Request::get('id')); ?>" data-col-index="0">
                                     <br>
                                 </div>  
                                 <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>الاسم:</label>
-                                    <input type="text" class="form-control m-input" data-col-index="2" name="name" value="<?php echo e(Request::get('name')); ?>">
+                                    <label>المستخدم:</label>
+                                    <input type="text" class="form-control m-input" name="username" value="<?php echo e(Request::get('username')); ?>" data-col-index="1">
                                     <br>
-                                </div>
+                                </div>  
                                 <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>البريد الالكتروني:</label>
-                                    <input type="text" class="form-control m-input" data-col-index="3" name="email" value="<?php echo e(Request::get('email')); ?>">
-                                    <br>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>رقم الجوال:</label>
-                                    <input type="text" class="form-control m-input" data-col-index="4" name="phone" value="<?php echo e(Request::get('phone')); ?>">
-                                    <br>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>التصنيف:</label>
-                                    <select name="category_id" class="form-control m-input">
-                                        <option value="">حدد اختيارك</option>
-                                        <?php $__currentLoopData = $data->categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($category->id); ?>"><?php echo e($category->title); ?></option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </select>
-                                    <br>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <input type="hidden" class="url" value="<?php echo e($data->url); ?>">
                                     <label>الحالة:</label>
                                     <select name="status" class="form-control m-input">
                                         <option value="">حدد اختيارك</option>
-                                        <option value="1">طلب جديد</option>
-                                        <option value="2">تم الارسال</option>
-                                        <option value="3">تأجيل</option>
-                                        <option value="4">تم التسليم</option>
-                                        <option value="5">عدم الرد</option>
-                                        <option value="6">ملغية</option>
-                                        <option value="7">المهملات</option>
+                                        <option value="0">غير مفعل</option>
+                                        <option value="1">مفعلة</option>
                                     </select>
                                     <br>
                                 </div>
-                                <div class="col-lg-3 col-md-9 col-sm-12">
-                                    <label>تاريخ الارسال:</label>
-                                    <div class="row">
-                                        <div class="col">
-                                            <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_1" placeholder="تاريخ الارسال"  name="created_at" value="<?php echo e(Request::get('created_at')); ?>" data-col-index="8" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_1" />
-                                        </div>
-                                    </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <label>التاريخ:</label>
+                                    <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_3" placeholder="تاريخ التاريخ"  name="created_at" value="<?php echo e(Request::get('created_at')); ?>" data-col-index="3" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_3" />
+                                    <br>
                                 </div>
                             </div>
                             <div class="m-separator m-separator--md m-separator--dashed"></div>
@@ -194,7 +177,7 @@
                                         </span>
                                     </button>
                                     &nbsp;&nbsp;
-                                    <a href="<?php echo e(URL::to('/'.$data->url)); ?>" class="btn btn-secondary m-btn m-btn--icon" id="m_reset">
+                                    <a href="<?php echo e(URL::to('/userMembers')); ?>" class="btn btn-secondary m-btn m-btn--icon" id="m_reset">
                                         <span>
                                             <i class="la la-close"></i>
                                             <span>الغاء</span>
@@ -207,71 +190,30 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" name="data-area" value="<?php echo e(\Helper::checkRules('edit-'.$data->name)); ?>">
-        <input type="hidden" name="data-cols" value="<?php echo e(\Helper::checkRules('delete-'.$data->name)); ?>">
+        <input type="hidden" name="data-area" value="<?php echo e(\Helper::checkRules('edit-user-member')); ?>">
+        <input type="hidden" name="data-cols" value="<?php echo e(\Helper::checkRules('delete-user-member')); ?>">
         <!--begin: Datatable-->
-        <table class="table table-separate table-hover table-bordered table-head-custom table-foot-custom table-checkable" id="kt_datatable">
+        <table class="table table-separate  table-hover table-bordered table-head-custom table-foot-custom table-checkable" id="kt_datatable">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>اختيار</th>
-                    <th>الاسم</th>
-                    <th>البريد الالكتروني</th>
-                    <th>رقم الجوال</th>
-                    <th>التصنيف</th>
+                    <th>المستخدم</th>
                     <th>الحالة</th>
-                    <th>تاريخ الارسال</th>
+                    <th>التاريخ</th>
                     <th>الاجراءات</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
                     <th>ID</th>
-                    <th>اختيار</th>
-                    <th>الاسم</th>
-                    <th>البريد الالكتروني</th>
-                    <th>رقم الجوال</th>
-                    <th>التصنيف</th>
+                    <th>المستخدم</th>
                     <th>الحالة</th>
-                    <th>تاريخ الارسال</th>
+                    <th>التاريخ</th>
                     <th>الاجراءات</th>
                 </tr>
             </tfoot>
         </table>
         <!--end: Datatable-->
-        <div class="row mt-5">
-            <div class="col-lg-6">
-                <button type="button" class="btn btn-block btn-success selectAll">تحديد الكل</button>
-            </div>
-            <div class="col-lg-6">
-                <button type="button" class="btn btn-block btn-danger deselectAll">الغاء تحديد الكل</button>
-            </div>
-        </div>
-        <?php if($data->url == 'orders'): ?>
-        <div class="row mt-5">
-            <div class="col-lg-6">
-                <button type="button" class="btn btn-block btn-warning moveToTrash" style="color: #000;">ترحيل لسلة المهملات</button>
-            </div>
-            <div class="col-lg-6">
-                <button type="button" class="btn btn-block btn-danger delete">حذف نهائي</button>
-            </div>
-        </div>
-        <?php elseif($data->url == 'trashes'): ?>
-        <div class="row mt-5">
-            <div class="col-lg-6">
-                <button type="button" class="btn btn-block btn-danger delete">حذف نهائي</button>
-            </div>
-            <div class="col-lg-6">
-                <button type="button" class="btn btn-block btn-primary backToNew">اخراج من السلة (كطلب جديد)</button>
-            </div>
-        </div>
-        <?php else: ?>
-        <div class="row mt-5">
-            <div class="col-lg-12">
-                <button type="button" class="btn btn-block btn-success delete">حذف</button>
-            </div>
-        </div>
-        <?php endif; ?>
     </div>
 </div>
 <!--end::Card-->
@@ -283,7 +225,7 @@
 
 
 <?php $__env->startSection('scripts'); ?>
-<script src="<?php echo e(asset('/assets/components/orders-datatables.js')); ?>"></script>           
+<script src="<?php echo e(asset('/assets/components/userMembers-datatables.js')); ?>"></script>           
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('Layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/Server/Projects/Ryady/Backend/app/Modules/Order/Views/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('Layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/Server/Projects/Ryady/Backend/app/Modules/UserMember/Views/index.blade.php ENDPATH**/ ?>
