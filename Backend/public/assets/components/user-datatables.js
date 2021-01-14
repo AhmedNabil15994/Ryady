@@ -79,7 +79,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				data:function(dtParms){
 			       	dtParms.group_id = $('select[name="group_id"]').val();
 			        dtParms.columnsDef= [
-						'id', 'username','email','group'];
+						'id', 'username','email','address','phone','group'];
 			        return dtParms
 			    }
 			},
@@ -87,6 +87,8 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				{data: 'id'},
 				{data: 'username',},
 				{data: 'email',},
+				{data: 'address',},
+				{data: 'phone',},
 				{data: 'group',},
 				{data: 'id', responsivePriority: -1},
 			],
@@ -109,6 +111,22 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				},
 				{
 					targets: 3,
+					title: 'العنوان',
+					className: 'edits',
+					render: function(data, type, full, meta) {
+						return '<a class="editable" data-col="address" data-id="'+full.id+'">'+data+'</a>';
+					},
+				},
+				{
+					targets: 4,
+					title: 'رقم الجوال',
+					className: 'edits',
+					render: function(data, type, full, meta) {
+						return '<a class="editable" data-col="phone" data-id="'+full.id+'">'+data+'</a>';
+					},
+				},
+				{
+					targets: 5,
 					title: 'النوع',
 					className: 'edits selects',
 					render: function(data, type, full, meta) {

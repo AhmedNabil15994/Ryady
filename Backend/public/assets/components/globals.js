@@ -131,6 +131,7 @@ $('.quickEdit').on('click',function(e){
                     $('#kt_datatable').DataTable().ajax.reload();
                 }else{
                     errorNotification(data.status.message);
+                    $('#kt_datatable').DataTable().ajax.reload();
                 }
             },
         });

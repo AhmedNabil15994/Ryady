@@ -157,6 +157,16 @@
                                     <input type="text" class="form-control m-input" name="title" value="<?php echo e(Request::get('title')); ?>" data-col-index="2">
                                     <br>
                                 </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <label>العنوان:</label>
+                                    <input type="text" class="form-control m-input" name="address" value="<?php echo e(Request::get('address')); ?>" data-col-index="3">
+                                    <br>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <label>رقم الجوال:</label>
+                                    <input type="text" class="form-control m-input" name="phone" value="<?php echo e(Request::get('phone')); ?>" data-col-index="4">
+                                    <br>
+                                </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6" data-col-index="3">
                                     <label>النوع:</label>
                                     <select class="form-control" name="group_id">
@@ -200,6 +210,8 @@
                     <th>ID</th>
                     <th>اسم المستخدم</th>
                     <th>البريد الالكتروني</th>
+                    <th>العنوان</th>
+                    <th>رقم الجوال</th>
                     <th>النوع</th>
                     <th>الاجراءات</th>
                 </tr>
@@ -209,6 +221,8 @@
                     <th>ID</th>
                     <th>اسم المستخدم</th>
                     <th>البريد الالكتروني</th>
+                    <th>العنوان</th>
+                    <th>رقم الجوال</th>
                     <th>النوع</th>
                     <th>الاجراءات</th>
                 </tr>

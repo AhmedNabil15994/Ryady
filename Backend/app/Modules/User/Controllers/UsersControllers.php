@@ -259,6 +259,26 @@ class UsersControllers extends Controller {
         $input = \Request::all();
         foreach ($input['data'] as $item) {
             $col = $item[1];
+            if($col == 'email'){
+                $userObj = User::checkUserByEmail($item[2],$item[0]);
+                if($userObj){
+                    return \TraitsFunc::ErrorMessage("هذا البريد الالكتروني (".$item[2].") مستخدم من قبل");;
+                }
+            }
+
+            if($col == 'username'){
+                $userObj = User::checkUserByUserName($item[2],$item[0]);
+                if($userObj){
+                    return \TraitsFunc::ErrorMessage("هذا اسم المستخدم (".$item[2].") مستخدم من قبل");;
+                }
+            }
+            if($col == 'phone'){
+                $userObj = User::checkUserByPhone($item[2],$item[0]);
+                if($userObj){
+                    return \TraitsFunc::ErrorMessage("هذا رقم الجوال (".$item[2].") مستخدم من قبل");;
+                }
+            }
+
             $menuObj = User::find($item[0]);
             $menuObj->$col = $item[2];
             $menuObj->updated_at = DATE_TIME;

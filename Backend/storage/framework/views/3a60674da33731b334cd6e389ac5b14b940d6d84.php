@@ -1,13 +1,11 @@
-{{-- Extends layout --}}
-@extends('Layouts.master')
-@section('title','المشرفين والاداريين')
+<?php $__env->startSection('title','سجلات الدخول للنظام'); ?>
 
-{{-- Content --}}
-@section('sub-header')
 
-@endsection
+<?php $__env->startSection('sub-header'); ?>
 
-@section('content')
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
 <div class="py-2 py-lg-6 subheader-transparent" id="kt_subheader">
     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
         <!--begin::Info-->
@@ -15,15 +13,15 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">المشرفين والاداريين</h3>
+                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">سجلات الدخول للنظام</h3>
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                     <li class="breadcrumb-item">
-                        <a href="{{ URL::to('/') }}" class="text-muted"><i class="m-nav__link-icon la la-home"></i></a>
+                        <a href="<?php echo e(URL::to('/')); ?>" class="text-muted"><i class="m-nav__link-icon la la-home"></i></a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ URL::to('/users') }}" class="text-muted">المشرفين والاداريين</a>
+                        <a href="<?php echo e(URL::to('/logs')); ?>" class="text-muted">سجلات الدخول للنظام</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -39,27 +37,15 @@
                     <i class="ki ki-bold-more-hor"></i>
                 </button>
                 <div class="dropdown-menu" dropdown-toggle="hover">
-                    @if(\Helper::checkRules('add-user'))
-                    <a href="{{ URL::to('/users/add') }}" class="dropdown-item">
-                        <i class="m-nav__link-icon fa fa-plus"></i>
-                        <span class="m-nav__link-text">اضافة</span>
-                    </a>
-                    @endif
-                    @if(\Helper::checkRules('sort-user'))
-                    <a href="{{ URL::to('/users/arrange') }}" class="dropdown-item">
+                    <?php if(\Helper::checkRules('sort-log')): ?>
+                    <a href="<?php echo e(URL::to('/logs/arrange')); ?>" class="dropdown-item">
                         <i class="m-nav__link-icon fa fa-sort-numeric-up"></i>
                         <span class="m-nav__link-text">ترتيب</span>
                     </a>
-                    @endif
-                    @if(\Helper::checkRules('charts-user'))
-                    <a href="{{ URL::to('/users/charts') }}" class="dropdown-item">
-                        <i class="m-nav__link-icon flaticon-graph"></i>
-                        <span class="m-nav__link-text">الاحصائيات</span>
-                    </a>
-                    @endif
+                    <?php endif; ?>
                     <div class="dropdown-divider"></div>
                     <div href="#" class="dropdown-item">
-                        <a href="{{ URL::to('/logout') }}" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">تسجيل الخروج</a>
+                        <a href="<?php echo e(URL::to('/logout')); ?>" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">تسجيل الخروج</a>
                     </div>
                 </div>
             </div>
@@ -75,14 +61,14 @@
             <span class="card-icon">
                 <i class="menu-icon flaticon-users"></i>
             </span>
-            <h3 class="card-label">المشرفين والاداريين</h3>
+            <h3 class="card-label">سجلات الدخول للنظام</h3>
         </div>
         <div class="card-toolbar">
-            @if(\Helper::checkRules('edit-user'))
+            <?php if(\Helper::checkRules('edit-log')): ?>
             <a href="#" class="btn btn-outline-success quickEdit m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill " data-toggle="tooltip" data-placement="top" data-original-title="تعديل سريع">
                 <i class="la la-edit"></i>
             </a>
-            @endif
+            <?php endif; ?>
             <a href="#" class="btn btn-outline-danger search-mode m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill " data-toggle="tooltip" data-placement="top" data-original-title="معلومات عن البحث المتقدم">
                 <i class="flaticon-questions-circular-button"></i>
             </a>
@@ -141,43 +127,40 @@
                 </div>
                 <div id="collapseTwo6" class="collapse" data-parent="#accordionExample6" style="">
                     <div class="card-body">
-                        <form class="m-form m-form--fit m--margin-bottom-20" method="get" action="{{ URL::current() }}">
-                            {{-- @csrf --}}
+                        <form class="m-form m-form--fit m--margin-bottom-20" method="get" action="<?php echo e(URL::current()); ?>">
+                            
                             <div class="row">
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>ID:</label>
-                                    <input type="text" class="form-control m-input" name="id" value="{{ Request::get('id') }}" data-col-index="0">
+                                    <input type="text" class="form-control m-input" data-col-index="0" name="id" value="<?php echo e(Request::get('id')); ?>" data-col-index="0">
                                     <br>
                                 </div>  
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>اسم المستخدم:</label>
-                                    <input type="text" class="form-control m-input" name="title" value="{{ Request::get('title') }}" data-col-index="1">
+                                    <input type="text" class="form-control m-input" data-col-index="1" name="username" value="<?php echo e(Request::get('username')); ?>" data-col-index="1">
                                     <br>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>البريد الالكتروني:</label>
-                                    <input type="text" class="form-control m-input" name="title" value="{{ Request::get('title') }}" data-col-index="2">
-                                    <br>
+                                <div class="col-lg-3 col-md-9 col-sm-12">
+                                    <label>تاريخ الدخول:</label>
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_1" placeholder="من"  name="from" value="<?php echo e(Request::get('from')); ?>" data-col-index="2" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_1" />
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_2" placeholder="الي"  name="to" value="<?php echo e(Request::get('to')); ?>" data-col-index="2" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_2" />
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>العنوان:</label>
-                                    <input type="text" class="form-control m-input" name="address" value="{{ Request::get('address') }}" data-col-index="3">
-                                    <br>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>رقم الجوال:</label>
-                                    <input type="text" class="form-control m-input" name="phone" value="{{ Request::get('phone') }}" data-col-index="4">
-                                    <br>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6" data-col-index="3">
-                                    <label>النوع:</label>
-                                    <select class="form-control" name="group_id">
-                                        <option value="0">حدد اختيارك</option>
-                                        @foreach($data->groups as $group)
-                                        <option value="{{ $group->id }}" {{ Request::get('group_id')  == $group->id ? 'selected' : '' }}>{{ $group->title }}</option>
-                                        @endforeach
-                                    </select>
-                                    <br>
+                                <div class="col-lg-3 col-md-9 col-sm-12">
+                                    <label>تاريخ الخروج:</label>
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_3" placeholder="من"  name="from" value="<?php echo e(Request::get('from')); ?>" data-col-index="3" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_3" />
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_4" placeholder="الي"  name="to" value="<?php echo e(Request::get('to')); ?>" data-col-index="3" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_4" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="m-separator m-separator--md m-separator--dashed"></div>
@@ -190,7 +173,7 @@
                                         </span>
                                     </button>
                                     &nbsp;&nbsp;
-                                    <a href="{{ URL::to('/users') }}" class="btn btn-secondary m-btn m-btn--icon" id="m_reset">
+                                    <a href="<?php echo e(URL::to('/logs')); ?>" class="btn btn-secondary m-btn m-btn--icon" id="m_reset">
                                         <span>
                                             <i class="la la-close"></i>
                                             <span>الغاء</span>
@@ -203,18 +186,17 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" name="data-area" value="{{ \Helper::checkRules('edit-user') }}">
-        <input type="hidden" name="data-cols" value="{{ \Helper::checkRules('delete-user') }}">
+        <input type="hidden" name="data-area" value="<?php echo e(\Helper::checkRules('edit-log')); ?>">
+        <input type="hidden" name="data-cols" value="<?php echo e(\Helper::checkRules('delete-log')); ?>">
         <!--begin: Datatable-->
         <table class="table table-separate  table-hover table-bordered table-head-custom table-foot-custom table-checkable" id="kt_datatable">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>اسم المستخدم</th>
-                    <th>البريد الالكتروني</th>
-                    <th>العنوان</th>
-                    <th>رقم الجوال</th>
-                    <th>النوع</th>
+                    <th>تاريخ الدخول</th>
+                    <th>تاريخ الخروج</th>
+                    <th>مدة التواجد</th>
                     <th>الاجراءات</th>
                 </tr>
             </thead>
@@ -222,10 +204,9 @@
                 <tr>
                     <th>ID</th>
                     <th>اسم المستخدم</th>
-                    <th>البريد الالكتروني</th>
-                    <th>العنوان</th>
-                    <th>رقم الجوال</th>
-                    <th>النوع</th>
+                    <th>تاريخ الدخول</th>
+                    <th>تاريخ الخروج</th>
+                    <th>مدة التواجد</th>
                     <th>الاجراءات</th>
                 </tr>
             </tfoot>
@@ -234,13 +215,15 @@
     </div>
 </div>
 <!--end::Card-->
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('modals')
-@include('Partials.search_modal')
-@endsection
+<?php $__env->startSection('modals'); ?>
+<?php echo $__env->make('Partials.search_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php $__env->stopSection(); ?>
 
-{{-- Scripts Section --}}
-@section('scripts')
-<script src="{{ asset('/assets/components/user-datatables.js')}}"></script>           
-@endsection
+
+<?php $__env->startSection('scripts'); ?>
+<script src="<?php echo e(asset('/assets/components/logs-datatables.js')); ?>"></script>           
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('Layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/Server/Projects/Ryady/Backend/app/Modules/Log/Views/index.blade.php ENDPATH**/ ?>

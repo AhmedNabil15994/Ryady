@@ -75,8 +75,8 @@ class User extends Model{
         $data->group = $source->Group != null ? $source->Group->title : '';
         $data->group_id = $source->group_id;
         $data->email = $source->email;
-        $data->address = $source->address;
-        $data->phone = $source->phone;
+        $data->address = $source->address != null ? $source->address : '';
+        $data->phone = $source->phone != null ? $source->phone : '';
         $data->brief = $source->brief;
         $data->show_details = $source->show_details;
         $data->username = $source->username;
