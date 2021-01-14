@@ -28,6 +28,7 @@ class UsersControllers extends Controller {
             'group_id.required' => "يرجي اختيار المجموعة",
             'username.required' => "يرجي ادخال اسم المستخدم",
             'password.required' => "يرجي ادخال كلمة المرور",
+            'password.min' => "يجب ان تتكون كلمة المرور فيما لا يقل عن 6 حروف",
             'email.required' => "يرجي ادخال الترتيب",
             'lang.required' => "يرجي اختيار اللغة",
         ];
@@ -116,6 +117,25 @@ class UsersControllers extends Controller {
             }
         }
 
+        if(isset($input['password']) && !empty($input['password'])){
+            $rules = [
+                'password' => 'required|min:6',
+            ];
+
+            $message = [
+                'password.required' => "يرجي ادخال كلمة المرور",
+                'password.min' => "يجب ان تتكون كلمة المرور فيما لا يقل عن 6 حروف",
+            ];
+
+            $validate = \Validator::make($input, $rules, $message);
+            if($validate->fails()){
+                \Session::flash('error', $validate->messages()->first());
+                return redirect()->back();
+            }
+
+            $groupObj->password = \Hash::make($input['password']);
+        }
+
         $groupObj->username = $input['username'];
         $groupObj->group_id = $input['group_id'];
         $groupObj->email = $input['email'];
@@ -125,7 +145,6 @@ class UsersControllers extends Controller {
         $groupObj->show_details = $input['show_details'];
         $groupObj->lang = $input['lang'];
         $groupObj->session_time = $input['session_time'];
-        $groupObj->password = \Hash::make($input['password']);
         $groupObj->sort = User::newSortIndex();
         $groupObj->status = $input['status'];
         $groupObj->is_active = $input['status'];
