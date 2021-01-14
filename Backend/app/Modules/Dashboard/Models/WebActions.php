@@ -79,9 +79,13 @@ class WebActions extends Model{
     static function getPageTitle($name){
         $text = '';
         if($name == 'TopMenu'){
-            $text = 'القوائم العليوة';
+            $text = 'القوائم العلوية';
         }elseif($name == 'BottomMenu'){
             $text = 'القوائم السفلية';
+        }elseif($name == 'SideMenu'){
+            $text = 'القوائم الجانبية';
+        }elseif($name == 'Target'){
+            $text = 'الفئة المستهدفة';
         }elseif($name == 'Advantage'){
             $text = 'مميزاتنا';
         }elseif($name == 'Benefit'){
@@ -96,10 +100,6 @@ class WebActions extends Model{
             $text = 'الاتصال بنا';
         }elseif($name == 'Variable'){
             $text = 'الاعدادات';
-        }elseif($name == 'Photo'){
-            $text = 'مكتبة الصور';
-        }elseif($name == 'File'){
-            $text = 'مكتبة الملفات';
         }elseif($name == 'Group'){
             $text = 'مجموعات المشرفين';
         }elseif($name == 'User'){
@@ -109,8 +109,31 @@ class WebActions extends Model{
         }elseif($name == 'BlockedUser'){
             $text = 'الاغضاء المحظورة';
         }elseif($name == 'Order'){
-            $text = 'الطلبات';
+            $text = 'طلبات خدمات الاعضاء';
+        }elseif($name == 'OrderCategory'){
+            $text = 'تصنيفات الخدمات';
+        }elseif($name == 'UserCard'){
+            $text = 'بطاقات الاعضاء';
+        }elseif($name == 'UserRequest'){
+            $text = 'طلبات البطاقة المطبوعة';
+        }elseif($name == 'UserMember'){
+            $text = 'اعضاء الشاب الريادي';
+        }elseif($name == 'ProjectCategory'){
+            $text = 'تصنيفات المشاريع';
+        }elseif($name == 'Project'){
+            $text = 'مشاريع الاعضاء';
+        }elseif($name == 'BlogCategory'){
+            $text = 'تصنيفات المدونة';
+        }elseif($name == 'Blog'){
+            $text = 'المدونة';
+        }elseif($name == 'Membership'){
+            $text = 'العضويات';
+        }elseif($name == 'Feature'){
+            $text = 'مميزات العضويات';
+        }elseif($name == 'Coupon'){
+            $text = 'كوبونات الخصم';
         }
+
 
         return $text;
     }

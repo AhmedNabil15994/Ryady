@@ -1,4 +1,4 @@
-<?php $__env->startSection('title','اعضاء الشاب الريادي'); ?>
+<?php $__env->startSection('title','الفئة المستهدفة'); ?>
 
 
 <?php $__env->startSection('sub-header'); ?>
@@ -13,7 +13,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">اعضاء الشاب الريادي</h3>
+                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">الفئة المستهدفة</h3>
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -21,7 +21,7 @@
                         <a href="<?php echo e(URL::to('/')); ?>" class="text-muted"><i class="m-nav__link-icon la la-home"></i></a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="<?php echo e(URL::to('/userMembers')); ?>" class="text-muted">اعضاء الشاب الريادي</a>
+                        <a href="<?php echo e(URL::to('/targets')); ?>" class="text-muted">الفئة المستهدفة</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -37,20 +37,20 @@
                     <i class="ki ki-bold-more-hor"></i>
                 </button>
                 <div class="dropdown-menu" dropdown-toggle="hover">
-                    <?php if(\Helper::checkRules('add-user-member')): ?>
-                    <a href="<?php echo e(URL::to('/userMembers/add')); ?>" class="dropdown-item">
+                    <?php if(\Helper::checkRules('add-target')): ?>
+                    <a href="<?php echo e(URL::to('/targets/add')); ?>" class="dropdown-item">
                         <i class="m-nav__link-icon fa fa-plus"></i>
                         <span class="m-nav__link-text">اضافة</span>
                     </a>
                     <?php endif; ?>
-                    <?php if(\Helper::checkRules('sort-user-member')): ?>
-                    <a href="<?php echo e(URL::to('/userMembers/arrange')); ?>" class="dropdown-item">
+                    <?php if(\Helper::checkRules('sort-target')): ?>
+                    <a href="<?php echo e(URL::to('/targets/arrange')); ?>" class="dropdown-item">
                         <i class="m-nav__link-icon fa fa-sort-numeric-up"></i>
                         <span class="m-nav__link-text">ترتيب</span>
                     </a>
                     <?php endif; ?>
-                    <?php if(\Helper::checkRules('charts-user-member')): ?>
-                    <a href="<?php echo e(URL::to('/userMembers/charts')); ?>" class="dropdown-item">
+                    <?php if(\Helper::checkRules('charts-target')): ?>
+                    <a href="<?php echo e(URL::to('/targets/charts')); ?>" class="dropdown-item">
                         <i class="m-nav__link-icon flaticon-graph"></i>
                         <span class="m-nav__link-text">الاحصائيات</span>
                     </a>
@@ -73,10 +73,10 @@
             <span class="card-icon">
                 <i class="menu-icon flaticon-menu-1"></i>
             </span>
-            <h3 class="card-label">اعضاء الشاب الريادي</h3>
+            <h3 class="card-label">الفئة المستهدفة</h3>
         </div>
         <div class="card-toolbar">
-            <?php if(\Helper::checkRules('edit-user-member')): ?>
+            <?php if(\Helper::checkRules('edit-target')): ?>
             <a href="#" class="btn btn-outline-success quickEdit m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill " data-toggle="tooltip" data-placement="top" data-original-title="تعديل سريع">
                 <i class="la la-edit"></i>
             </a>
@@ -148,22 +148,13 @@
                                     <br>
                                 </div>  
                                 <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>المستخدم:</label>
-                                    <input type="text" class="form-control m-input" name="username" value="<?php echo e(Request::get('username')); ?>" data-col-index="1">
-                                    <br>
-                                </div>  
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>الحالة:</label>
-                                    <select name="status" class="form-control m-input">
-                                        <option value="">حدد اختيارك</option>
-                                        <option value="0">غير مفعل</option>
-                                        <option value="1">مفعلة</option>
-                                    </select>
+                                    <label>العنوان عربي:</label>
+                                    <input type="text" class="form-control m-input" name="title" value="<?php echo e(Request::get('title')); ?>" data-col-index="1">
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>التاريخ:</label>
-                                    <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_3" placeholder="تاريخ التاريخ"  name="created_at" value="<?php echo e(Request::get('created_at')); ?>" data-col-index="3" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_3" />
+                                    <label>الايقونة:</label>
+                                    <input type="text" class="form-control m-input" name="icon" value="<?php echo e(Request::get('icon')); ?>" data-col-index="2">
                                     <br>
                                 </div>
                             </div>
@@ -177,7 +168,7 @@
                                         </span>
                                     </button>
                                     &nbsp;&nbsp;
-                                    <a href="<?php echo e(URL::to('/userMembers')); ?>" class="btn btn-secondary m-btn m-btn--icon" id="m_reset">
+                                    <a href="<?php echo e(URL::to('/targets')); ?>" class="btn btn-secondary m-btn m-btn--icon" id="m_reset">
                                         <span>
                                             <i class="la la-close"></i>
                                             <span>الغاء</span>
@@ -190,25 +181,23 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" name="data-area" value="<?php echo e(\Helper::checkRules('edit-user-member')); ?>">
-        <input type="hidden" name="data-cols" value="<?php echo e(\Helper::checkRules('delete-user-member')); ?>">
+        <input type="hidden" name="data-area" value="<?php echo e(\Helper::checkRules('edit-target')); ?>">
+        <input type="hidden" name="data-cols" value="<?php echo e(\Helper::checkRules('delete-target')); ?>">
         <!--begin: Datatable-->
         <table class="table table-separate  table-hover table-bordered table-head-custom table-foot-custom table-checkable" id="kt_datatable">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>اسم المستخدم</th>
-                    <th>الحالة</th>
-                    <th>التاريخ</th>
+                    <th>العنوان عربي</th>
+                    <th>الايقونة</th>
                     <th>الاجراءات</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
                     <th>ID</th>
-                    <th>اسم المستخدم</th>
-                    <th>الحالة</th>
-                    <th>التاريخ</th>
+                    <th>العنوان عربي</th>
+                    <th>الايقونة</th>
                     <th>الاجراءات</th>
                 </tr>
             </tfoot>
@@ -225,7 +214,7 @@
 
 
 <?php $__env->startSection('scripts'); ?>
-<script src="<?php echo e(asset('/assets/components/userMembers-datatables.js')); ?>"></script>           
+<script src="<?php echo e(asset('/assets/components/targets-datatables.js')); ?>"></script>           
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('Layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/Server/Projects/Ryady/Backend/app/Modules/UserMember/Views/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('Layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/Server/Projects/Ryady/Backend/app/Modules/TargetGroup/Views/index.blade.php ENDPATH**/ ?>
