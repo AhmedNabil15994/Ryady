@@ -79,13 +79,15 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				data:function(dtParms){
 			       	dtParms.group_id = $('select[name="group_id"]').val();
 			        dtParms.columnsDef= [
-						'id', 'username','email','address','phone','group'];
+						'id', 'username','name_ar','name_en','email','address','phone','group'];
 			        return dtParms
 			    }
 			},
 			columns: [
 				{data: 'id'},
 				{data: 'username',},
+				{data: 'name_ar',},
+				{data: 'name_en',},
 				{data: 'email',},
 				{data: 'address',},
 				{data: 'phone',},
@@ -103,6 +105,22 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				},
 				{
 					targets: 2,
+					title: 'الاسم عربي',
+					className: 'edits',
+					render: function(data, type, full, meta) {
+						return '<a class="editable" data-col="name_ar" data-id="'+full.id+'">'+data+'</a>';
+					},
+				},
+				{
+					targets: 3,
+					title: 'الاسم انجليزي',
+					className: 'edits',
+					render: function(data, type, full, meta) {
+						return '<a class="editable" data-col="name_en" data-id="'+full.id+'">'+data+'</a>';
+					},
+				},
+				{
+					targets: 4,
 					title: 'البريد الالكتروني',
 					className: 'edits',
 					render: function(data, type, full, meta) {
@@ -110,7 +128,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					},
 				},
 				{
-					targets: 3,
+					targets: 5,
 					title: 'العنوان',
 					className: 'edits',
 					render: function(data, type, full, meta) {
@@ -118,7 +136,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					},
 				},
 				{
-					targets: 4,
+					targets: 6,
 					title: 'رقم الجوال',
 					className: 'edits',
 					render: function(data, type, full, meta) {
@@ -126,7 +144,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					},
 				},
 				{
-					targets: 5,
+					targets: 7,
 					title: 'النوع',
 					className: 'edits selects',
 					render: function(data, type, full, meta) {

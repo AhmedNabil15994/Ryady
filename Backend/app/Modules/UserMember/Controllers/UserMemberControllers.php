@@ -38,7 +38,8 @@ class UserMemberControllers extends Controller {
     }
 
     public function add() {
-        $data['users'] = User::dataList(1)['data'];
+        $joinUser = UserMember::NotDeleted()->where('status',1)->pluck('user_id');
+        $data['users'] = User::dataList(1,$joinUser)['data'];
         return view('UserMember.Views.add')->with('data', (object) $data);
     }
 
@@ -51,7 +52,8 @@ class UserMemberControllers extends Controller {
             return Redirect('404');
         }
 
-        $data['users'] = User::dataList(1)['data'];
+        $joinUser = UserMember::NotDeleted()->where('status',1)->where('user_id','!=',$menuObj->user_id)->pluck('user_id');
+        $data['users'] = User::dataList(1,$joinUser)['data'];
         $data['data'] = UserMember::getData($menuObj);
         return view('UserMember.Views.edit')->with('data', (object) $data);      
     }

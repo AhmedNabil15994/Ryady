@@ -161,8 +161,13 @@
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <label>البريد الالكتروني:</label>
+                                    <input type="email" class="form-control m-input" data-col-index="4" name="email" value="{{ Request::get('email') }}">
+                                    <br>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>رقم الجوال:</label>
-                                    <input type="text" class="form-control m-input" data-col-index="4" name="phone" value="{{ Request::get('phone') }}">
+                                    <input type="text" class="form-control m-input" data-col-index="5" name="phone" value="{{ Request::get('phone') }}">
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
@@ -187,7 +192,7 @@
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>نبذة عن المشروع:</label>
-                                    <input type="text" class="form-control m-input" data-col-index="7" name="brief" value="{{ Request::get('brief') }}">
+                                    <input type="text" class="form-control m-input" data-col-index="8" name="brief" value="{{ Request::get('brief') }}">
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
@@ -242,10 +247,10 @@
                     <th>الصورة</th>
                     <th>اسم المشروع</th>
                     <th>العنوان</th>
+                    <th>البريد الالكتروني</th>
                     <th>رقم الجوال</th>
                     <th>المدينة</th>
                     <th>التصنيف</th>
-                    <th>نبذة عن المشروع</th>
                     <th>المنشئ</th>
                     <th>الحالة</th>
                     <th>التاريخ</th>
@@ -258,10 +263,10 @@
                     <th>الصورة</th>
                     <th>اسم المشروع</th>
                     <th>العنوان</th>
+                    <th>البريد الالكتروني</th>
                     <th>رقم الجوال</th>
                     <th>المدينة</th>
                     <th>التصنيف</th>
-                    <th>نبذة عن المشروع</th>
                     <th>المنشئ</th>
                     <th>الحالة</th>
                     <th>التاريخ</th>

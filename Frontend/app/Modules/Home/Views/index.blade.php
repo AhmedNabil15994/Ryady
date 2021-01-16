@@ -49,7 +49,7 @@
 		            		<div class="desc">
 		            			{{ $slider->description }}
 		            		</div>
-		            		<a href="#" class="btnStyle">اطلبها الآن</a>
+		            		<a href="{{ URL::to('/memberships/requestMemberShip/'.$slider->sort) }}" class="btnStyle">اطلبها الآن</a>
 		            	</div>
 	            	</div>
 	            </div>
@@ -69,7 +69,7 @@
                         <h2 class="title">عضوية {{ $membership->title }}</h2>
                         <span class="price">{{ $membership->price }} ريال</span>
                         <span class="time">لمدة {{ $membership->periodText }}</span>
-                        <a href="{{ URL::to('/requestMemberShip') }}" class="btnStyle">اطلبها الآن</a>
+                        <a href="{{ URL::to('/memberships/requestMemberShip/'.$membership->id) }}" class="btnStyle">اطلبها الآن</a>
                     </div>
                 </div>
                 @endforeach
@@ -81,62 +81,15 @@
     	<div class="container">
     		<h2 class="title">{{ $data->pages[1]->title }}</h2>
     		<div class="row">
+                @foreach($data->userMembers as $key => $userMember)
     			<div class="col-md-3 wow fadeInUp">
     				<div class="memb">
-    					<img src="{{ asset('/assets/images/memb1.png') }}" />
-    					<h2 class="name">أ.عبدالله بن مساعد</h2>
-    					<a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
+    					<img src="{{ $userMember->user->photo }}" />
+    					<h2 class="name">أ.{{ $userMember->user->name_ar }}</h2>
+    					<a href="#" class="btnStyle" data-toggle="modal" data-area="{{ $userMember->user_id }}" data-target="#profile">الملف الشخصي</a>
     				</div>
     			</div>
-    			<div class="col-md-3 wow fadeInUp">
-    				<div class="memb">
-    					<img src="{{ asset('/assets/images/memb2.png') }}" />
-    					<h2 class="name">أ.عبدالله بن مساعد</h2>
-    					<a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-    				</div>
-    			</div>
-      			<div class="col-md-3 wow fadeInUp">
-    				<div class="memb">
-    					<img src="{{ asset('/assets/images/memb3.png') }}" />
-    					<h2 class="name">أ.عبدالله بن مساعد</h2>
-    					<a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-    				</div>
-    			</div>
-    			<div class="col-md-3 wow fadeInUp">
-    				<div class="memb">
-    					<img src="{{ asset('/assets/images/memb4.png') }}" />
-    					<h2 class="name">أ.عبدالله بن مساعد</h2>
-    					<a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-    				</div>
-    			</div>
-    			<div class="col-md-3 wow fadeInUp">
-    				<div class="memb">
-    					<img src="{{ asset('/assets/images/memb5.png') }}" />
-    					<h2 class="name">أ.عبدالله بن مساعد</h2>
-    					<a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-    				</div>
-    			</div>
-    			<div class="col-md-3 wow fadeInUp">
-    				<div class="memb">
-    					<img src="{{ asset('/assets/images/memb6.png') }}" />
-    					<h2 class="name">أ.عبدالله بن مساعد</h2>
-    					<a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-    				</div>
-    			</div>
-      			<div class="col-md-3 wow fadeInUp">
-    				<div class="memb">
-    					<img src="{{ asset('/assets/images/memb7.png') }}" />
-    					<h2 class="name">أ.عبدالله بن مساعد</h2>
-    					<a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-    				</div>
-    			</div>
-    			<div class="col-md-3 wow fadeInUp">
-    				<div class="memb">
-    					<img src="{{ asset('/assets/images/memb8.png') }}" />
-    					<h2 class="name">أ.عبدالله بن مساعد</h2>
-    					<a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-    				</div>
-    			</div>
+                @endforeach
     		</div>
     	</div>
     </div>
@@ -151,11 +104,9 @@
     			<div class="desc">{!! $data->pages[2]->description !!}</div>
     			<div class="divImgs">
     				<ul class="imgs clearfix">
-    					<li><img src="{{ asset('/assets/images/memb1.png') }}" alt="" /></li>
-    					<li><img src="{{ asset('/assets/images/memb2.png') }}" alt="" /></li>
-    					<li><img src="{{ asset('/assets/images/memb3.png') }}" alt="" /></li>
-    					<li><img src="{{ asset('/assets/images/memb4.png') }}" alt="" /></li>
-    					<li><img src="{{ asset('/assets/images/memb5.png') }}" alt="" /></li>
+                        @foreach($data->userMembers2 as $userMember2)
+    					<li><img src="{{ $userMember2->user->photo }}" alt="" /></li>
+                        @endforeach
     				</ul>
     				<a href="#" class="flaticon-plus iconPlus"></a>
     			</div>
@@ -169,64 +120,30 @@
     		<h2 class="title">{{ $data->pages[3]->title }}</h2>
     		<div class="desc">{!! $data->pages[3]->description !!}</div>
     		<div class="clearfix hidden-sm hidden-xs wow bounceIn">
+                @foreach($data->projectCategories as $key => $category)
+                @if(in_array($key, [0,1,2,3,4]))
     			<a href="#" class="itemProject">
-    				<i class="flaticon-hospital"></i>
-    				<h2 class="titleItem">مستشفيات وعيادات</h2>
+    				<i class="{{ $category->icon }}"></i>
+    				<h2 class="titleItem">{{ $category->title }}</h2>
     			</a>
-    			<a href="#" class="itemProject">
-    				<i class="flaticon-restaurant"></i>
-    				<h2 class="titleItem">مطاعم وكافيهات</h2>
-    			</a>
-    			<a href="#" class="itemProject">
-    				<i class="flaticon-running"></i>
-    				<h2 class="titleItem">رياضة وترفيه</h2>
-    			</a>
-    			<a href="#" class="itemProject">
-    				<i class="flaticon-store"></i>
-    				<h2 class="titleItem">متاجر الكترونية</h2>
-    			</a>
-    			<a class="itemProject">
-    				<i class="flaticon-presentation"></i>
-    				<h2 class="titleItem">مدارس ومراكز تعليم</h2>
-    			</a>
+                @endif
+                @endforeach
     		</div>
 			
 	        <div id="OwlProj" class="OwlProj visible-sm visible-xs Owl wow zoomIn">
+                @foreach($data->projectCategories as $key => $category)
 	            <div class="item">
 	    			<a href="#" class="itemProject">
-	    				<i class="flaticon-hospital"></i>
-	    				<h2 class="titleItem">مستشفيات وعيادات</h2>
+	    				<i class="{{ $category->icon }}"></i>
+	    				<h2 class="titleItem">{{ $category->title }}</h2>
 	    			</a>
 	            </div>
-	            <div class="item">
-	    			<a href="#" class="itemProject">
-	    				<i class="flaticon-restaurant"></i>
-	    				<h2 class="titleItem">مطاعم وكافيهات</h2>
-	    			</a>
-	            </div>
-	            <div class="item">
-	    			<a href="#" class="itemProject">
-	    				<i class="flaticon-running"></i>
-	    				<h2 class="titleItem">رياضة وترفيه</h2>
-	    			</a>
-	            </div>
-	            <div class="item">
-	    			<a href="#" class="itemProject">
-	    				<i class="flaticon-store"></i>
-	    				<h2 class="titleItem">متاجر الكترونية</h2>
-	    			</a>
-	            </div>
-	            <div class="item">
-	    			<a href="#" class="itemProject">
-	    				<i class="flaticon-presentation"></i>
-	    				<h2 class="titleItem">مدارس ومراكز تعليم</h2>
-	    			</a>
-	            </div>
+                @endforeach
 	        </div>
     	</div>
     </div>
 @endsection
 
 @section('scripts')
-
+<script src="{{ asset('/assets/js/profile.js') }}"></script>
 @endsection

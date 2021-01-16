@@ -18,6 +18,8 @@ class UsersControllers extends Controller {
     protected function validateGroup($input){
         $rules = [
             'group_id' => 'required',
+            'name_ar' => 'required',
+            'name_en' => 'required',
             'username' => 'required',
             'password' => 'required|min:6',
             'email' => 'required',
@@ -41,6 +43,8 @@ class UsersControllers extends Controller {
     protected function validateGroup2($input){
         $rules = [
             'group_id' => 'required',
+            'name_ar' => 'required',
+            'name_en' => 'required',
             'username' => 'required',
             'email' => 'required',
             'lang' => 'required',
@@ -48,6 +52,8 @@ class UsersControllers extends Controller {
 
         $message = [
             'group_id.required' => "يرجي اختيار المجموعة",
+            'name_ar.required' => "يرجي ادخال الاسم عربي",
+            'name_en.required' => "يرجي ادخال الاسم انجليزي",
             'username.required' => "يرجي ادخال اسم المستخدم",
             'email.required' => "يرجي ادخال الترتيب",
             'lang.required' => "يرجي اختيار اللغة",
@@ -136,6 +142,8 @@ class UsersControllers extends Controller {
             $groupObj->password = \Hash::make($input['password']);
         }
 
+        $groupObj->name_ar = $input['name_ar'];
+        $groupObj->name_en = $input['name_en'];
         $groupObj->username = $input['username'];
         $groupObj->group_id = $input['group_id'];
         $groupObj->email = $input['email'];
@@ -209,6 +217,8 @@ class UsersControllers extends Controller {
         }
 
         $groupObj = new User;
+        $groupObj->name_ar = $input['name_ar'];
+        $groupObj->name_en = $input['name_en'];
         $groupObj->username = $input['username'];
         $groupObj->group_id = $input['group_id'];
         $groupObj->email = $input['email'];

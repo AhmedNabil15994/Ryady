@@ -109,6 +109,18 @@
                     </div> 
                     <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
                         <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">الاسم عربي</label>
+                            <input class="form-control mb-5" type="text" name="name_ar" value="{{ old('name_ar') }}" maxlength="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">الاسم انجليزي</label>
+                            <input class="form-control mb-5" type="text" name="name_en" value="{{ old('name_en') }}" maxlength="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
                             <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">اسم المستخدم</label>
                             <input type="hidden" name="status" value="">
                             <input class="form-control mb-5" type="text" name="username" value="{{ old('username') }}" maxlength="" placeholder="">

@@ -70,6 +70,9 @@ class RouteServiceProvider extends ServiceProvider
         @define('DATE_TIME', date("Y-m-d H:i:s"));
         Route::middleware('general')->namespace($this->namespace)->group(function (){
             require app_path('Modules/Home/routes.php');
+            require app_path('Modules/Membership/routes.php');
+            require app_path('Modules/Blog/routes.php');
+            require app_path('Modules/Project/routes.php');
 
         });
     }
@@ -77,8 +80,9 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapModuleRoutes()
     {
         @define('DATE_TIME', date("Y-m-d H:i:s"));
-        Route::middleware('withAuth')->prefix('dashboard')->namespace($this->namespace)->group(function (){
-
+        Route::middleware('withAuth')->prefix('profile')->namespace($this->namespace)->group(function (){
+            require app_path('Modules/Auth/routes.php');
+            require app_path('Modules/Profile/routes.php');
         });
     }
 

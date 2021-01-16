@@ -164,6 +164,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Watson\Active\ActiveServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Jorenvh\Share\Providers\ShareServiceProvider::class,
+        
         /*
          * Package Service Providers...
          */
@@ -230,6 +232,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Active' => Watson\Active\Facades\Active::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Share' => Jorenvh\Share\ShareFacade::class,
     ],
 
 ];

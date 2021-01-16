@@ -9,15 +9,19 @@ use App\Models\Page;
 use App\Models\BottomMenu;
 use App\Models\SideMenu;
 use App\Models\Membership;
-
+use App\Models\ProjectCategory;
+use App\Models\UserMember;
+use App\Models\UserCard;
+use App\Models\User;
+use App\Models\OrderCategory;
+use App\Models\Variable;
 use App\Models\Slider;
 use App\Models\Benefit;
+use App\Models\Order;
+use App\Models\WebActions;
 use App\Models\ContactUs;
 use App\Models\Advantage;
-use App\Models\Variable;
-use App\Models\WebActions;
-use App\Models\Order;
-use App\Models\City;
+
 
 class HomeControllers extends Controller {
 
@@ -51,18 +55,16 @@ class HomeControllers extends Controller {
         $rules = [
             'name' => 'required',
             'phone' => 'required|min:10',//|regex:/(01)[0-9]{9}/',
-            'identity' => 'required',
-            'address' => 'required',
-            'city' => 'required',
+            'email' => 'required',
+            'category_id' => 'required',
         ];
 
         $message = [
             'name.required' => "يرجي ادخال الاسم بالكامل",
             'phone.required' => "يرجي ادخال رقم الجوال",
             'phone.min' => "رقم الجوال يجب ان يكون 10 خانات",
-            'identity.required' => "يرجي ادخال رقم الهوية او جواز السفر",
-            'address.required' => "يرجي ادخال العنوان",
-            'city.required' => "يرجي اختيار المدينة",
+            'email.required' => "يرجي ادخال البريد الالكتروني",
+            'category_id.required' => "يرجي اختيار نوع الخدمة",
         ];
 
         $validate = \Validator::make($input, $rules, $message);
@@ -76,63 +78,108 @@ class HomeControllers extends Controller {
         $data['slider'] = Slider::dataList(1)['data'];
         $data['advantages'] = Advantage::dataList(1)['data'];
         $data['memberships'] = Membership::dataList(1)['data'];
-        $tele = Variable::getVar('رقم الهاتف:');
-        $tele2 = Variable::getVar('رقم الواتس اب:');
+        $data['projectCategories'] = ProjectCategory::dataList(1)['data'];
+        $data['userMembers'] = UserMember::dataList(1,8)['data'];
+        $data['userMembers2'] = UserMember::dataList(1,5)['data'];
         return view('Home.Views.index')->with('data',(object) $data);
     }
+
+    public function getUserData($id){
+        $id = (int) $id;
+        $userObj = User::getOne($id);
+        if(!$userObj){
+            return '';
+        }else{
+            return \Response::json(User::getData($userObj));
+        }
+    }
     
-    public function memberShip(){
-        $data['benefits'] = Benefit::dataList(1)['data'];
-        return view('Home.Views.memberShip')->with('data',(object) $data);
-    }
-
-    public function requestMemberShip(){
-        return view('Home.Views.requestMemberShip');
-    }
-
-    public function profile(){
-        return view('Home.Views.profile');
-    }
-
     public function members(){
+        $data['data'] = (object) UserMember::dataList(1);
         $data['pages'] = Page::dataList(1,[6])['data'];
         return view('Home.Views.members')->with('data',(object) $data);
     }
 
-    public function membersProjects(){
-        return view('Home.Views.membersProjects');
-    }
-
-    public function project(){
-        return view('Home.Views.project');
-    }
-
-    public function blogs(){        
-        return view('Home.Views.blogs');
-    }
-
-    public function blogDetails(){
-        return view('Home.Views.blogDetails');
-    }
-
-    public function addProject(){
-        return view('Home.Views.addProject');
-    }
-
-    public function contactUs(){
-        return view('Home.Views.contactUs');
-    }
-
     public function vip(){
-        return view('Home.Views.vip');
+        $data['data'] = (object) UserCard::dataList(1,3);
+        $data['pages'] = Page::dataList(1,[7])['data'];
+        return view('Home.Views.vip')->with('data',(object) $data);
     }
 
     public function order(){
-        return view('Home.Views.order');
+        $data['data'] = OrderCategory::dataList(1)['data'];
+        return view('Home.Views.order')->with('data',(object) $data);
     }
 
-    public function packageFeatures(){
-        return view('Home.Views.vip');
+    public function postOrder() {
+        $input = \Request::all();
+
+        $validate = $this->validateOrder($input);
+        if($validate->fails()){
+            \Session::flash('error', $validate->messages()->first());
+            return redirect()->back()->withInput();
+        }
+
+        $categoryObj = OrderCategory::getOne($input['category_id']);
+        if(!$categoryObj){
+            \Session::flash('error', 'نوع الخدمة غير موجودة');
+            return redirect()->back()->withInput();
+        }
+        
+        $menuObj = new Order;
+        $menuObj->name = $input['name'];
+        $menuObj->phone = $input['phone'];
+        $menuObj->email = $input['email'];
+        $menuObj->category_id = $input['category_id'];
+        $menuObj->sort = Order::newSortIndex();
+        $menuObj->status = 1;
+        $menuObj->created_at = DATE_TIME;
+        $menuObj->save();
+
+        WebActions::newType(2,'Order',1);
+        \Session::flash('success', 'تنبيه! تم ارسال الطلب بنجاح');
+        return redirect()->back();
     }
 
+    public function contactUs(){
+        $data['email'] = Variable::getVar('البريد الإلكتروني(للرسائل):');
+        $data['phone'] = Variable::getVar('رقم الهاتف:');
+        $data['address'] = Variable::getVar('العنوان:');
+        $data['lat'] = Variable::getVar('latitude:');
+        $data['lng'] = Variable::getVar('longitude:');
+        return view('Home.Views.contactUs')->with('data',(object) $data);
+    }
+
+    public function postContactUs() {
+        $input = \Request::all();
+
+        $validate = $this->validateObject($input);
+        if($validate->fails()){
+            \Session::flash('error', $validate->messages()->first());
+            return redirect()->back()->withInput();
+        }
+        $ip_address = \Request::ip();
+
+        $faqObj = ContactUs::NotDeleted()->where('ip_address',$ip_address)->where('reply',null)->whereDate('created_at',date('Y-m-d'))->first();
+        if($faqObj != null){
+            \Session::flash('error', 'لقد تم ارسال الرسالة مسبقا');
+            return redirect()->back()->withInput();
+        }
+
+        $menuObj = new ContactUs;
+        $menuObj->name = $input['name'];
+        $menuObj->email = $input['email'];
+        $menuObj->phone = $input['phone'];
+        $menuObj->address = $input['address'];
+        $menuObj->message = $input['message'];
+        $menuObj->ip_address = $ip_address;
+        $menuObj->reply = null;
+        $menuObj->status = 1;
+        $menuObj->created_at = DATE_TIME;
+        $menuObj->save();
+
+        WebActions::newType(2,'ContactUs',1);
+        \Session::flash('success', 'تنبيه! تم الارسال بنجاح');
+        return redirect()->back();
+    }
 }

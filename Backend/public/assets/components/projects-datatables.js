@@ -80,7 +80,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 			       	dtParms.status = $('select[name="status"]').val();
 			       	dtParms.created_at = $('input[name="created_at"]').val();
 			        dtParms.columnsDef= [
-						'id', 'logo' ,'title','address','phone','city','category','briefs','creator','statusText','created_at'];
+						'id', 'logo' ,'title','address','email','phone','city','category','creator','statusText','created_at'];
 			        return dtParms
 			    }
 			},
@@ -89,10 +89,10 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				{data: 'logo'},
 				{data: 'title'},
 				{data: 'address'},
+				{data: 'email'},
 				{data: 'phone'},
 				{data: 'city'},
 				{data: 'category'},
-				{data: 'briefs'},
 				{data: 'creator'},
 				{data: 'statusText'},
 				{data: 'created_at',type:'date'},
@@ -140,6 +140,14 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				},
 				{
 					targets: 4,
+					title: 'البريد الالكتروني',
+					className: 'edits',
+					render: function(data, type, full, meta) {
+						return '<a class="editable" data-col="email" data-id="'+full.id+'">'+data+'</a>';
+					},
+				},
+				{
+					targets: 5,
 					title: 'رقم الجوال',
 					className: 'edits',
 					render: function(data, type, full, meta) {
@@ -147,7 +155,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					},
 				},
 				{
-					targets: 5,
+					targets: 6,
 					title: 'المدينة',
 					className: 'edits selects',
 					render: function(data, type, full, meta) {
@@ -155,19 +163,11 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					},
 				},
 				{
-					targets: 6,
+					targets: 7,
 					title: 'التصنيف',
 					className: 'edits selects',
 					render: function(data, type, full, meta) {
 						return '<a class="editable" data-col="category_id" data-id="'+full.id+'">'+data+'</a>';
-					},
-				},
-				{
-					targets: 7,
-					title: 'نبذة عن المشروع',
-					className: 'edits',
-					render: function(data, type, full, meta) {
-						return '<a class="editable" data-col="brief" data-id="'+full.id+'">'+data+'</a>';
 					},
 				},
 				{

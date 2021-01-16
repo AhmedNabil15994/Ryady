@@ -11,8 +11,8 @@
         <div class="container">
             <h2>أعضاء الشاب الريادي</h2>
             <ul class="list-unstyled">
-                <li class="active"><a href="index.html">الرئيسية</a></li>
-                <li>أعضاء الشاب الريادي</li>
+                <li><a href="{{ URL::to('/') }}">الرئيسية</a></li>
+                <li class="active">أعضاء الشاب الريادي</li>
             </ul>
         </div>
     </div>
@@ -20,64 +20,17 @@
     <div class="members">
         <div class="container">
             <div class="row">
+                @foreach($data->data->data as $member)
                 <div class="col-md-3 wow fadeInUp">
                     <div class="memb">
-                        <img src="{{ asset('/assets/images/memb1.png') }}" />
-                        <h2 class="name">أ.عبدالله بن مساعد</h2>
-                        <a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
+                        <img src="{{ $member->user->photo }}" />
+                        <h2 class="name">أ.{{ $member->user->name_ar }}</h2>
+                        <a href="#" class="btnStyle" data-toggle="modal" data-area="{{ $member->user_id }}" data-target="#profile">الملف الشخصي</a>
                     </div>
                 </div>
-                <div class="col-md-3 wow fadeInUp">
-                    <div class="memb">
-                        <img src="{{ asset('/assets/images/memb2.png') }}" />
-                        <h2 class="name">أ.عبدالله بن مساعد</h2>
-                        <a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-                    </div>
-                </div>
-                <div class="col-md-3 wow fadeInUp">
-                    <div class="memb">
-                        <img src="{{ asset('/assets/images/memb3.png') }}" />
-                        <h2 class="name">أ.عبدالله بن مساعد</h2>
-                        <a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-                    </div>
-                </div>
-                <div class="col-md-3 wow fadeInUp">
-                    <div class="memb">
-                        <img src="{{ asset('/assets/images/memb4.png') }}" />
-                        <h2 class="name">أ.عبدالله بن مساعد</h2>
-                        <a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-                    </div>
-                </div>
-                <div class="col-md-3 wow fadeInUp">
-                    <div class="memb">
-                        <img src="{{ asset('/assets/images/memb5.png') }}" />
-                        <h2 class="name">أ.عبدالله بن مساعد</h2>
-                        <a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-                    </div>
-                </div>
-                <div class="col-md-3 wow fadeInUp">
-                    <div class="memb">
-                        <img src="{{ asset('/assets/images/memb6.png') }}" />
-                        <h2 class="name">أ.عبدالله بن مساعد</h2>
-                        <a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-                    </div>
-                </div>
-                <div class="col-md-3 wow fadeInUp">
-                    <div class="memb">
-                        <img src="{{ asset('/assets/images/memb7.png') }}" />
-                        <h2 class="name">أ.عبدالله بن مساعد</h2>
-                        <a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-                    </div>
-                </div>
-                <div class="col-md-3 wow fadeInUp">
-                    <div class="memb">
-                        <img src="{{ asset('/assets/images/memb8.png') }}" />
-                        <h2 class="name">أ.عبدالله بن مساعد</h2>
-                        <a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-                    </div>
-                </div>
-            
+                @endforeach
             </div>
+            @include('Partials.pagination')
         </div>
     </div>
     
@@ -94,5 +47,5 @@
 
 
 @section('scripts')
-
+<script src="{{ asset('/assets/js/profile.js') }}"></script>
 @endsection

@@ -13,61 +13,36 @@ class AuthControllers extends Controller {
 
     use \TraitsFunc;
 
-    public function __construct(){
-        $this->middleware('withAuth',['except' => ['login','doLogin','resetPassword','changePassword','completeReset']]);
-    }
-
-    public function login() {
-        if(\Session::has('user_id')){
-            return redirect('/dashboard');
-        }
-        return view('Auth.Views.login');
-    }
-
 	public function doLogin() {
 
         $input = \Request::all();
         $attempts = session()->get('login.attempts', 0);
         $rules = array(
-            'username' => 'required',
-            'password' => 'required',
+            'name_ar' => 'required',
+            'phone' => 'required',
         );
-        session()->get('defUsername',$input['username']);
 
         $message = array(
-            'username.required' => "يرجي ادخال اسم المستخدم",
-            'password.required' => "يرجي ادخال كلمة المرور",
+            'name_ar.required' => "يرجي ادخال اسم علي البطاقة بالعربي",
+            'phone.required' => "يرجي ادخال رقم الجوال",
         );
 
         $validate = \Validator::make($input, $rules,$message);
-
-        if($validate->fails()){
-            \Session::flash('error', $validate->messages()->first());
-            $this->checkFailAttempts($attempts,$input['username']);
-            return redirect('/login');
-        }
-
-        $username = $input['username'];
-        $userObj = User::getLoginUser($username);
         
+        if($validate->fails()){
+            return \TraitsFunc::ErrorMessage($validate->messages()->first());
+        }
+       
+        $userObj = User::getLoginUser($input['name_ar'],$input['phone']);
+
         if ($userObj == null) {
-            \Session::flash('error', "هذا البريد الالكتروني غير موجود او غير مفعل");
-            $this->checkFailAttempts($attempts,$input['username']);
-            return redirect('/login');
+            return \TraitsFunc::ErrorMessage("هذا المستخدم غير موجود او غير مفعل");
         }
 
-        $checkPassword = Hash::check($input['password'], $userObj->password);
-
-        if ($checkPassword == null) {
-            \Session::flash('error', "كلمة المرور غير صحيحة");
-            $this->checkFailAttempts($attempts,$input['username']);
-            return redirect('/login');  
-        }
-
+        $username = $userObj->username;
         $blockedUser = BlockedUser::checkForUsername($username,\Request::ip());
         if($blockedUser){
-            \Session::flash('error', "تم حظر هذا المستخدم. يرجي الانتظار حتي: ".$blockedUser->ended_at);
-            return redirect('/login');  
+            return \TraitsFunc::ErrorMessage("تم حظر هذا المستخدم. يرجي الانتظار حتي: ".$blockedUser->ended_at);
         }
 
         $isAdmin = in_array($userObj->group_id, [1,]) ? true : false;
@@ -115,8 +90,8 @@ class AuthControllers extends Controller {
             ]);
         }
 
-        \Session::flash('success', "اهلا بك في تكافل " . $userObj->username);
-        return redirect('/dashboard');
+        \Session::flash('success', "اهلا بك في الشاب الريادي " . $userObj->name_ar);
+        return \TraitsFunc::SuccessResponse("اهلا بك في الشاب الريادي " . $userObj->name_ar);
 	}
 
     public function checkFailAttempts($attempts,$username){
@@ -144,77 +119,6 @@ class AuthControllers extends Controller {
         ]);
         session()->flush();
         \Session::flash('success', "نراك قريبا ;)");
-        return redirect('/logout');
+        return redirect('/');
 	}
-
-    public function resetPassword(){
-        $input = \Request::all();
-        $rules = [
-            'email' => 'required|email',
-        ];
-
-        $message = [
-            'email.required' => "يرجي ادخال البريد الالكتروني",
-            'email.email' => "يرجي ادخال صيغة صحيحة للبريد الالكتروني",
-        ];
-
-        $validate = \Validator::make($input, $rules, $message);
-
-        if($validate->fails()){
-            return \TraitsFunc::ErrorMessage($validate->messages()->first());
-        }
-
-        $email = $input['email'];
-        $userObj = User::checkUserByEmail($email);
-
-        if ($userObj == null) {
-            return \TraitsFunc::ErrorMessage('هذ المستخدم غير موجود او غير مفعل');
-        }
-        
-        $emailData['firstName'] = $userObj->username;
-        $emailData['subject'] = "تكافل - استعادة كلمة المرور";
-        $emailData['to'] = $email;
-        $emailData['template'] = "emailUsers.resetPassword";
-        $emailData['content'] = \URL::to('/changePassword').'/'.encrypt($userObj->id);
-        MailHelper::SendMail($emailData);
-       
-        return \TraitsFunc::SuccessResponse('يرجي التأكد من رسائل البريد الالكتروني لتغيير كلمة المرور');
-    }
-
-    public function changePassword($encrypted_user_id) {
-        return view('Auth.Views.changePassword');
-    }
-
-    public function completeReset($encrypted_user_id) {
-        $input = \Request::all();
-        $rules = [
-            'password' => 'required|confirmed',
-            'password_confirmation' => 'required'
-        ];
-
-        $message = [
-            'password.required' => "يرجي ادخال كلمة المرور الجديدة",
-            'password.confirmed' => "كلمة المرور غير متطابقة",
-            'password_confirmation.required' => "يرجي اعادة كتابة كلمة المرور",
-        ];
-
-        $validate = \Validator::make($input, $rules, $message);
-        if($validate->fails()){
-            \Session::flash('error', $validate->messages()->first());
-            return back()->withInput();
-        }
-
-        $password = $input['password'];
-        $user_id = Crypt::decrypt($encrypted_user_id);
-        if(isset($encrypted_user_id) && $encrypted_user_id != null){
-            $userObj = User::NotDeleted()->find($user_id);
-        }
-
-        $userObj->password = \Hash::make($password);
-        $userObj->save();
-
-        \Session::flash('success', "تم تغيير كلمة المرور بنجاح");
-        return redirect('/login');
-    }
-
 }

@@ -23,7 +23,7 @@ class User extends Model{
         return \ImagesHelper::GetImagePath('users', $id, $photo);
     }
 
-    static function dataList($status=null) {
+    static function dataList($status=null,$userIds= null) {
         $input = \Request::all();
 
         $source = self::NotDeleted();
@@ -37,7 +37,9 @@ class User extends Model{
         if($status != null){
             $source->where('status',1)->where('is_active',1);
         }
-
+        if($userIds != null){
+            $source->whereNotIn('id',$userIds);
+        }
         $source->orderBy('sort', 'ASC');
         return self::generateObj($source);
     }
@@ -75,6 +77,8 @@ class User extends Model{
         $data->group = $source->Group != null ? $source->Group->title : '';
         $data->group_id = $source->group_id;
         $data->email = $source->email;
+        $data->name_ar = $source->name_ar != null ? $source->name_ar : '';
+        $data->name_en = $source->name_en != null ? $source->name_en : '';
         $data->address = $source->address != null ? $source->address : '';
         $data->phone = $source->phone != null ? $source->phone : '';
         $data->brief = $source->brief;

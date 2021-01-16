@@ -18,15 +18,11 @@ class UserCardControllers extends Controller {
     protected function validateObject($input){
         $rules = [
             'user_id' => 'required',
-            'name_ar' => 'required',
-            'name_en' => 'required',
             'membership_id' => 'required',
         ];
 
         $message = [
             'user_id.required' => 'يرجي اختيار المستخدم',
-            'name_ar.required' => "يرجي ادخال الاسم عربي",
-            'name_en.required' => "يرجي ادخال الاسم انجليزي",
             'membership_id.required' => "يرجي اختيار نوع العضوية",
         ];
 
@@ -94,8 +90,6 @@ class UserCardControllers extends Controller {
         }
 
         $menuObj->user_id = $input['user_id'];
-        $menuObj->name_ar = $input['name_ar'];
-        $menuObj->name_en = $input['name_en'];
         $menuObj->code = $input['code'];
         $menuObj->membership_id = $input['membership_id'];
         $menuObj->status = $input['status'];
@@ -124,8 +118,6 @@ class UserCardControllers extends Controller {
         
         $menuObj = new UserCard;
         $menuObj->user_id = $input['user_id'];
-        $menuObj->name_ar = $input['name_ar'];
-        $menuObj->name_en = $input['name_en'];
         $menuObj->code = UserCard::getNewCode();
         $menuObj->membership_id = $input['membership_id'];
         $menuObj->start_date = $start_date;

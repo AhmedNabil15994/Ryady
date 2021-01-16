@@ -12,7 +12,11 @@
         </g>
       </svg>
     </i>
+    @if(\Session::has('user_id'))
+    <a class="login" href="{{ URL::to('/profile/logout') }}" >تسجيل الخروج</a>
+    @else
     <a href="#" class="login"  data-toggle="modal" data-target="#login">تسجيل الدخول</a>
+    @endif
     <ul class="links">
       @php 
       $topMenu = \App\Models\TopMenu::NotDeleted()->where('status',1)->orderBy('sort','ASC')->get();
@@ -26,7 +30,7 @@
           @if($item->id == 1)
           <li><a href="{{ URL::to('/') }}">الرئيسية</a></li>
           @elseif($item->id == 2)
-          <li><a href="{{ URL::to('/memberShip') }}">العضويات</a></li>
+          <li><a href="{{ URL::to('/memberships') }}">العضويات</a></li>
           @elseif($item->id == 3)
           <li><a href="{{ URL::to('/members') }}">الشركاء</a></li>
           @elseif($item->id == 4)
@@ -34,7 +38,9 @@
           @elseif($item->id == 5)
           <li><a href="{{ URL::to('/contactUs') }}">اتصل بنا</a></li>
           @elseif($item->id == 6)
-          <li><a href="{{ URL::to('/addProject') }}">أضف مشروعك</a></li>
+            @if(\Session::has('user_id'))
+            <li><a href="{{ URL::to('/profile/addProject') }}">أضف مشروعك</a></li>
+            @endif
           @endif
         @endif
       @endforeach

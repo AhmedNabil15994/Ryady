@@ -151,22 +151,32 @@
                                 </div>  
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>اسم المستخدم:</label>
-                                    <input type="text" class="form-control m-input" name="title" value="{{ Request::get('title') }}" data-col-index="1">
+                                    <input type="text" class="form-control m-input" name="username" value="{{ Request::get('username') }}" data-col-index="1">
+                                    <br>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <label>الاسم عربي:</label>
+                                    <input type="text" class="form-control m-input" name="name_ar" value="{{ Request::get('name_ar') }}" data-col-index="2">
+                                    <br>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <label>الاسم انجليزي:</label>
+                                    <input type="text" class="form-control m-input" name="name_enm" value="{{ Request::get('name_enm') }}" data-col-index="3">
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>البريد الالكتروني:</label>
-                                    <input type="text" class="form-control m-input" name="title" value="{{ Request::get('title') }}" data-col-index="2">
+                                    <input type="email" class="form-control m-input" name="email" value="{{ Request::get('email') }}" data-col-index="4">
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>العنوان:</label>
-                                    <input type="text" class="form-control m-input" name="address" value="{{ Request::get('address') }}" data-col-index="3">
+                                    <input type="text" class="form-control m-input" name="address" value="{{ Request::get('address') }}" data-col-index="5">
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>رقم الجوال:</label>
-                                    <input type="text" class="form-control m-input" name="phone" value="{{ Request::get('phone') }}" data-col-index="4">
+                                    <input type="text" class="form-control m-input" name="phone" value="{{ Request::get('phone') }}" data-col-index="6">
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6" data-col-index="3">
@@ -211,6 +221,8 @@
                 <tr>
                     <th>ID</th>
                     <th>اسم المستخدم</th>
+                    <th>الاسم عربي</th>
+                    <th>الاسم انجليزي</th>
                     <th>البريد الالكتروني</th>
                     <th>العنوان</th>
                     <th>رقم الجوال</th>
@@ -222,6 +234,8 @@
                 <tr>
                     <th>ID</th>
                     <th>اسم المستخدم</th>
+                    <th>الاسم عربي</th>
+                    <th>الاسم انجليزي</th>
                     <th>البريد الالكتروني</th>
                     <th>العنوان</th>
                     <th>رقم الجوال</th>

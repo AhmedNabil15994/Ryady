@@ -113,6 +113,12 @@
                     </div>
                     <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
                         <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">البريد الالكتروني</label>
+                            <input class="form-control mb-5 m-input" type="email" name="email" value="{{ old('email') }}" maxlength="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
                             <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رقم الجوال</label>
                             <input class="form-control mb-5 m-input" type="text" name="phone" value="{{ old('phone') }}" maxlength="" placeholder="">
                         </div>
@@ -135,6 +141,17 @@
                                 <option value="" disabled selected>حدد اختيارك</option>
                                 @foreach($data->categories as $category)
                                 <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->title }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">كوبونات الخصم</label>
+                            <select class="form-control m-input select2" name="coupons[]" multiple>
+                                <option value="" disabled>حدد اختيارك</option>
+                                @foreach($data->coupons as $coupon)
+                                <option value="{{ $coupon->id }}" {{ Request::has('coupons') && in_array($coupon->id, Request::get('coupons')) ? 'selected' : '' }}>{{ $coupon->code }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -165,6 +182,36 @@
                                     <span class="dropzone-msg-desc">اسحب الملفات هنا أو انقر هنا للرفع .</span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رابط فيسبوك</label>
+                            <input class="form-control mb-5 m-input" type="text" name="facebook_url" value="{{ old('facebook_url') }}" maxlength="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رابط تويتر</label>
+                            <input class="form-control mb-5 m-input" type="text" name="twitter_url" value="{{ old('twitter_url') }}" maxlength="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رابط يوتيوب</label>
+                            <input class="form-control mb-5 m-input" type="text" name="youtube_url" value="{{ old('youtube_url') }}" maxlength="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رابط سناب شات</label>
+                            <input class="form-control mb-5 m-input" type="text" name="snapchat_url" value="{{ old('snapchat_url') }}" maxlength="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رابط انستجرام</label>
+                            <input class="form-control mb-5 m-input" type="text" name="instagram_url" value="{{ old('instagram_url') }}" maxlength="" placeholder="">
                         </div>
                     </div>
                 </form>

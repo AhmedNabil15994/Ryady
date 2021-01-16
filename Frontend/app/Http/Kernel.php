@@ -36,7 +36,6 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \App\Http\Middleware\AuthEngine::class,
-            \App\Http\Middleware\RoutesGate::class,
         ],
 
         'general' => [

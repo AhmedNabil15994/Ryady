@@ -82,7 +82,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 			       	dtParms.start_date = $('input[name="start_date"]').val();
 			       	dtParms.end_date = $('input[name="end_date"]').val();
 			        dtParms.columnsDef= [
-						'id', 'code' ,'username','name_ar','name_en','membership_name','start_date','end_date','statusText'];
+						'id', 'code' ,'username','membership_name','start_date','end_date','statusText'];
 			        return dtParms
 			    }
 			},
@@ -90,8 +90,6 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				{data: 'id'},
 				{data: 'code'},
 				{data: 'username'},
-				{data: 'name_ar'},
-				{data: 'name_en'},
 				{data: 'membership_name'},
 				{data: 'start_date'},
 				{data: 'end_date'},
@@ -106,22 +104,6 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				},
 				{
 					targets: 3,
-					title: 'الاسم عربي',
-					className: 'edits',
-					render: function(data, type, full, meta) {
-						return '<a class="editable" data-col="name_ar" data-id="'+full.id+'">'+data+'</a>';
-					},
-				},
-				{
-					targets: 4,
-					title: 'الاسم انجليزي',
-					className: 'edits',
-					render: function(data, type, full, meta) {
-						return '<a class="editable" data-col="name_en" data-id="'+full.id+'">'+data+'</a>';
-					},
-				},
-				{
-					targets: 5,
 					title: 'العضوية',
 					className: 'edits selects',
 					render: function(data, type, full, meta) {
@@ -129,7 +111,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					},
 				},
 				{
-					targets: 6,
+					targets: 4,
 					title: 'تاريخ البدء',
 					className: 'edits dates',
 					render: function(data, type, full, meta) {
@@ -137,7 +119,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					},
 				},
 				{
-					targets: 7,
+					targets: 5,
 					title: 'تاريخ الانتهاء',
 					className: 'edits dates',
 					render: function(data, type, full, meta) {
@@ -145,7 +127,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					},
 				},
 				{
-					targets: 8,
+					targets: 6,
 					title: 'الحالة',
 					className: 'edits selects',
 					render: function(data, type, full, meta) {

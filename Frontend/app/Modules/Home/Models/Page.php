@@ -25,18 +25,7 @@ class Page extends Model{
     }
 
     static function dataList($status=null,$ids=null) {
-        $input = \Request::all();
-
-        $source = self::NotDeleted()->where(function ($query) use ($input,$status,$ids) {
-                    if (isset($input['title']) && !empty($input['title'])) {
-                        $query->where('title', 'LIKE', '%' . $input['title'] . '%');
-                    } 
-                    if (isset($input['icon']) && !empty($input['icon'])) {
-                        $query->where('icon', 'LIKE', '%' . $input['icon'] . '%');
-                    } 
-                    if (isset($input['id']) && !empty($input['id'])) {
-                        $query->where('id',  $input['id']);
-                    } 
+        $source = self::NotDeleted()->where(function ($query) use ($status,$ids) {
                     if($status != null){
                         $query->where('status',$status);
                     }

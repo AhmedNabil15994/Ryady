@@ -11,8 +11,8 @@
         <div class="container">
             <h2>شبكة VIP</h2>
             <ul class="list-unstyled">
-                <li class="active"><a href="index.html">الرئيسية</a></li>
-                <li>شبكة VIP</li>
+                <li><a href="{{ URL::to('/') }}">الرئيسية</a></li>
+                <li class="active">شبكة VIP</li>
             </ul>
         </div>
     </div>
@@ -20,62 +20,19 @@
     <div class="vipPage">
         <div class="container">
             <div class="row">
+                @foreach($data->data->data as $user)
                 <div class="col-md-4">
                     <div class="itemVip">
-                        <img src="{{ asset('/assets/images/vip1.png') }}" alt="" />
+                        <img src="{{ $user->user->photo }}" alt="" />
                         <div class="mask">
-                            <h2 class="title">أ.عبدالله بن مساعد</h2>
-                            <a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
+                            <h2 class="title">أ.{{ $user->user->name_ar }}</h2>
+                            <a href="#" class="btnStyle" data-toggle="modal" data-area="{{ $user->user_id }}" data-target="#profile">الملف الشخصي</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="itemVip">
-                        <img src="{{ asset('/assets/images/vip2.png') }}" alt="" />
-                        <div class="mask">
-                            <h2 class="title">أ.عبدالله بن مساعد</h2>
-                            <a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="itemVip">
-                        <img src="{{ asset('/assets/images/vip3.png') }}" alt="" />
-                        <div class="mask">
-                            <h2 class="title">أ.عبدالله بن مساعد</h2>
-                            <a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="itemVip">
-                        <img src="{{ asset('/assets/images/vip4.png') }}" alt="" />
-                        <div class="mask">
-                            <h2 class="title">أ.عبدالله بن مساعد</h2>
-                            <a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="itemVip">
-                        <img src="{{ asset('/assets/images/vip5.png') }}" alt="" />
-                        <div class="mask">
-                            <h2 class="title">أ.عبدالله بن مساعد</h2>
-                            <a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="itemVip">
-                        <img src="{{ asset('/assets/images/vip6.png') }}" alt="" />
-                        <div class="mask">
-                            <h2 class="title">أ.عبدالله بن مساعد</h2>
-                            <a href="#" class="btnStyle" data-toggle="modal" data-target="#profile">الملف الشخصي</a>
-                        </div>
-                    </div>
-                </div>
-
+                @endforeach
             </div>
+            @include('Partials.pagination')
         </div>
     </div>
     
@@ -83,8 +40,7 @@
         <img src="{{ asset('/assets/images/bgJoin.png') }}" class="bg" alt="" />
         <div class="container">
             <div class="desc">
-                مجتمع حيوي كبير انضم الآن لأكبر
-                مجموعة من أعضاء الشاب الريادي
+                {{ $data->pages[0]->title }}
             </div>
             <a href="#" class="btnStyle">انضم الينا</a>
         </div>
@@ -92,5 +48,5 @@
 @endsection
 
 @section('scripts')
-
+<script src="{{ asset('/assets/js/profile.js') }}"></script>
 @endsection

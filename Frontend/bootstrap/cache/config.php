@@ -39,10 +39,11 @@
       21 => 'Illuminate\\View\\ViewServiceProvider',
       22 => 'Watson\\Active\\ActiveServiceProvider',
       23 => 'Yajra\\DataTables\\DataTablesServiceProvider',
-      24 => 'App\\Providers\\AppServiceProvider',
-      25 => 'App\\Providers\\AuthServiceProvider',
-      26 => 'App\\Providers\\EventServiceProvider',
-      27 => 'App\\Providers\\RouteServiceProvider',
+      24 => 'Jorenvh\\Share\\Providers\\ShareServiceProvider',
+      25 => 'App\\Providers\\AppServiceProvider',
+      26 => 'App\\Providers\\AuthServiceProvider',
+      27 => 'App\\Providers\\EventServiceProvider',
+      28 => 'App\\Providers\\RouteServiceProvider',
     ),
     'aliases' => 
     array (
@@ -84,6 +85,7 @@
       'View' => 'Illuminate\\Support\\Facades\\View',
       'Active' => 'Watson\\Active\\Facades\\Active',
       'DataTables' => 'Yajra\\DataTables\\Facades\\DataTables',
+      'Share' => 'Jorenvh\\Share\\ShareFacade',
     ),
   ),
   'auth' => 
@@ -1023,6 +1025,52 @@
     'remote_sites_path' => '',
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
+  ),
+  'laravel-share' => 
+  array (
+    'services' => 
+    array (
+      'facebook' => 
+      array (
+        'uri' => 'https://www.facebook.com/sharer/sharer.php?u=',
+      ),
+      'twitter' => 
+      array (
+        'uri' => 'https://twitter.com/intent/tweet',
+        'text' => 'Default share text',
+      ),
+      'linkedin' => 
+      array (
+        'uri' => 'https://www.linkedin.com/sharing/share-offsite',
+        'extra' => 
+        array (
+          'mini' => 'true',
+        ),
+      ),
+      'whatsapp' => 
+      array (
+        'uri' => 'https://wa.me/?text=',
+        'extra' => 
+        array (
+          'mini' => 'true',
+        ),
+      ),
+      'pinterest' => 
+      array (
+        'uri' => 'https://pinterest.com/pin/create/button/?url=',
+      ),
+      'reddit' => 
+      array (
+        'uri' => 'https://www.reddit.com/submit',
+        'text' => 'Default share text',
+      ),
+      'telegram' => 
+      array (
+        'uri' => 'https://telegram.me/share/url',
+        'text' => 'Default share text',
+      ),
+    ),
+    'fontAwesomeVersion' => 5,
   ),
   'active' => 
   array (

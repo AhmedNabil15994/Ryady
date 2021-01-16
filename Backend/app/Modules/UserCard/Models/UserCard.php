@@ -84,8 +84,8 @@ class UserCard extends Model{
         $data->id = $source->id;
         $data->user_id = $source->user_id;
         $data->username = $source->user_id != null ? $source->User->username : '';
-        $data->name_ar = $source->name_ar;
-        $data->name_en = $source->name_en;
+        $data->name_ar = $source->user_id != null ? $source->User->name_ar : '';
+        $data->name_en = $source->user_id != null ? $source->User->name_en : '';
         $data->code = $source->code;
         $data->membership_id = $source->membership_id;
         $data->start_date = $source->start_date;

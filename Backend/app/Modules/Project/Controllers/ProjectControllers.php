@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use App\Models\Project;
+use App\Models\Coupon;
 use App\Models\ProjectCategory;
 use App\Models\City;
 use App\Models\Photo;
@@ -21,6 +22,7 @@ class ProjectControllers extends Controller {
             'title' => 'required',
             'address' => 'required',
             'phone' => 'required',
+            'email' => 'required',
             'city_id' => 'required',
             'category_id' => 'required',
         ];
@@ -29,6 +31,7 @@ class ProjectControllers extends Controller {
             'title.required' => "يرجي ادخال العنوان",
             'address.required' => "يرجي ادخال العنوان",
             'phone.required' => "يرجي ادخال العنوان",
+            'email.required' => "يرجي ادخال البريد الالكتروني",
             'city_id.required' => "يرجي ادخال العنوان",
             'category_id.required' => "يرجي ادخال العنوان",
         ];
@@ -53,6 +56,7 @@ class ProjectControllers extends Controller {
         \Session::put('photos', []);
         $data['cities'] = City::dataList(1)['data'];
         $data['categories'] = ProjectCategory::dataList(1)['data'];
+        $data['coupons'] = Coupon::availableCoupons();
         return view('Project.Views.add')->with('data', (object) $data);
     }
 
@@ -68,6 +72,7 @@ class ProjectControllers extends Controller {
         $data['cities'] = City::dataList(1)['data'];
         $data['categories'] = ProjectCategory::dataList(1)['data'];
         $data['data'] = Project::getData($menuObj);
+        $data['coupons'] = Coupon::availableCoupons();
         return view('Project.Views.edit')->with('data', (object) $data);      
     }
 
@@ -89,10 +94,19 @@ class ProjectControllers extends Controller {
 
         $menuObj->title = $input['title'];
         $menuObj->address = $input['address'];
+        $menuObj->email = $input['email'];
         $menuObj->phone = $input['phone'];
         $menuObj->city_id = $input['city_id'];
         $menuObj->category_id = $input['category_id'];
         $menuObj->brief = $input['brief'];
+        if(isset($input['coupons']) && !empty($input['coupons'])){
+            $menuObj->coupons = serialize($input['coupons']);
+        }
+        $menuObj->facebook_url = $input['facebook_url'];
+        $menuObj->twitter_url = $input['twitter_url'];
+        $menuObj->youtube_url = $input['youtube_url'];
+        $menuObj->snapchat_url = $input['snapchat_url'];
+        $menuObj->instagram_url = $input['instagram_url'];
         $menuObj->lat = isset($input['lat']) ? $input['lat'] : '';
         $menuObj->lng = isset($input['lng']) ? $input['lng'] : '';
         $menuObj->status = $input['status'];
@@ -147,15 +161,25 @@ class ProjectControllers extends Controller {
             return redirect()->back()->withInput();
         }
         
+
         $menuObj = new Project;
         $menuObj->title = $input['title'];
         $menuObj->address = $input['address'];
+        $menuObj->email = $input['email'];
         $menuObj->phone = $input['phone'];
         $menuObj->city_id = $input['city_id'];
         $menuObj->category_id = $input['category_id'];
         $menuObj->brief = $input['brief'];
         $menuObj->lat = isset($input['lat']) ? $input['lat'] : '';
         $menuObj->lng = isset($input['lng']) ? $input['lng'] : '';
+        if(isset($input['coupons']) && !empty($input['coupons'])){
+            $menuObj->coupons = serialize($input['coupons']);
+        }
+        $menuObj->facebook_url = $input['facebook_url'];
+        $menuObj->twitter_url = $input['twitter_url'];
+        $menuObj->youtube_url = $input['youtube_url'];
+        $menuObj->snapchat_url = $input['snapchat_url'];
+        $menuObj->instagram_url = $input['instagram_url'];
         $menuObj->status = $input['status'];
         $menuObj->sort = Project::newSortIndex();
         $menuObj->created_at = DATE_TIME;

@@ -65,6 +65,7 @@ class UserMember extends Model{
         $data->id = $source->id;
         $data->user_id = $source->user_id;
         $data->username = $source->user_id != null ? $source->User->username : '';
+        $data->user = $source->user_id != null ? User::getData($source->User) : '';
         $data->sort = $source->sort;
         $data->status = $source->status;
         $data->statusText = self::getStatus($source->status);

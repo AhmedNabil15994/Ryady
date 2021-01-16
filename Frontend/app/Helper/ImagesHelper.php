@@ -18,33 +18,49 @@ class ImagesHelper {
         }
 
         $path = Config::get('app.IMAGE_BASE');
+        $checkFile = str_replace('Frontend', 'Backend', public_path() . '/uploads');
 
         switch ($strAction) {
             case "users":
-                $fullPath = $path . 'uploads' . '/users/' . $id . '/' . $filename;
-                return $fullPath;
-                break;   
+                $fullPath = $path.'uploads' . '/users/' . $id . '/' . $filename;
+                $checkFile = $checkFile . '/users/' . $id . '/' . $filename;
+                return is_file($checkFile) ? URL::to($fullPath) : $default;
+                break;
             case "pages":
                 $fullPath = $path.'uploads' . '/pages/' . $id . '/' . $filename;
-                return $fullPath;
-                break;   
+                $checkFile = $checkFile . '/pages/' . $id . '/' . $filename;
+                return is_file($checkFile) ? URL::to($fullPath) : $default;
+                break;
             case "sliders":
                 $fullPath = $path.'uploads' . '/sliders/' . $id . '/' . $filename;
-                return $fullPath;
-                break;   
+                $checkFile = $checkFile . '/sliders/' . $id . '/' . $filename;
+                return is_file($checkFile) ? URL::to($fullPath) : $default;
+                break;
             case "variables":
                 $fullPath = $path.'uploads' . '/variables/' . $id . '/' . $filename;
-                return $fullPath;
-                break;   
-
-            case "memberships":
-                $fullPath = $path.'uploads' . '/memberships/' . $id . '/' . $filename;
-                return $fullPath;
-                break;   
+                $checkFile = $checkFile . '/variables/' . $id . '/' . $filename;
+                return is_file($checkFile) ? URL::to($fullPath) : $default;
+                break;
             case "photos":
                 $fullPath = $path.'uploads' . '/photos/' . $filename;
-                return $fullPath;
-                break;   
+                $checkFile = $checkFile . '/photos/' . $filename;
+                return is_file($checkFile) ? URL::to($fullPath) : $default;
+                break;
+            case "memberships":
+                $fullPath = $path.'uploads' . '/memberships/' . $id . '/' . $filename;
+                $checkFile = $checkFile . '/memberships/' . $id . '/' . $filename;
+                return is_file($checkFile) ? URL::to($fullPath) : $default;
+                break;
+            case "projects":
+                $fullPath = $path.'uploads' . '/projects/' . $id . '/' . $filename;
+                $checkFile = $checkFile . '/projects/' . $id . '/' . $filename;
+                return is_file($checkFile) ? URL::to($fullPath) : $default;
+                break;
+            case "blogs":
+                $fullPath = $path.'uploads' . '/blogs/' . $id . '/' . $filename;
+                $checkFile = $checkFile . '/blogs/' . $id . '/' . $filename;
+                return is_file($checkFile) ? URL::to($fullPath) : $default;
+                break;
         }
 
         return $default;
@@ -95,6 +111,18 @@ class ImagesHelper {
 
         if ($strAction == 'sliders') {
             $directory = $path . 'sliders/' . $id;
+        }
+
+        if ($strAction == 'memberships') {
+            $directory = $path . 'memberships/' . $id;
+        }
+
+        if ($strAction == 'projects') {
+            $directory = $path . 'projects/' . $id;
+        }
+
+        if ($strAction == 'blogs') {
+            $directory = $path . 'blogs/' . $id;
         }
 
         if ($strAction == 'variables') {

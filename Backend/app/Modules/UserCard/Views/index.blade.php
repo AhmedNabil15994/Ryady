@@ -160,16 +160,6 @@
                                     <br>
                                 </div>  
                                 <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>الاسم عربي:</label>
-                                    <input type="text" class="form-control m-input" name="name_en" value="{{ Request::get('name_en') }}" data-col-index="3">
-                                    <br>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>الاسم انجليزي:</label>
-                                    <input type="text" class="form-control m-input" name="name_en" value="{{ Request::get('name_en') }}" data-col-index="4">
-                                    <br>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>العضوية:</label>
                                     <select name="membership_id" class="form-control m-input">
                                         <option value="">حدد اختيارك</option>
@@ -181,12 +171,12 @@
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>تاريخ البدء:</label>
-                                    <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_1" placeholder="تاريخ البدء"  name="start_date" value="{{ Request::get('start_date') }}" data-col-index="6" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_1" />
+                                    <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_1" placeholder="تاريخ البدء"  name="start_date" value="{{ Request::get('start_date') }}" data-col-index="4" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_1" />
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>تاريخ الانتهاء:</label>
-                                    <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_3" placeholder="تاريخ الانتهاء"  name="end_date" value="{{ Request::get('end_date') }}" data-col-index="7" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_3" />
+                                    <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_3" placeholder="تاريخ الانتهاء"  name="end_date" value="{{ Request::get('end_date') }}" data-col-index="5" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_3" />
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
@@ -232,8 +222,6 @@
                     <th>ID</th>
                     <th>الكود</th>
                     <th>اسم المستخدم</th>
-                    <th>الاسم عربي</th>
-                    <th>الاسم انجليزي</th>
                     <th>العضوية</th>
                     <th>تاريخ البدء</th>
                     <th>تاريخ الانتهاء</th>
@@ -246,8 +234,6 @@
                     <th>ID</th>
                     <th>الكود</th>
                     <th>اسم المستخدم</th>
-                    <th>الاسم عربي</th>
-                    <th>الاسم انجليزي</th>
                     <th>العضوية</th>
                     <th>تاريخ البدء</th>
                     <th>تاريخ الانتهاء</th>

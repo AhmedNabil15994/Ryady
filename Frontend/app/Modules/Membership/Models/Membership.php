@@ -91,6 +91,9 @@ class Membership extends Model{
         $data->price = $source->price != null ? $source->price : '';
         $data->period = $source->period;
         $data->periodText = self::getYears($source->period); 
+        $data->features = $source->features != null ? unserialize($source->features) : '';
+        $data->featruesText = $source->features != null ? Feature::NotDeleted()->where('status',1)->whereIn('id',unserialize($source->features))->pluck('title') : [];
+        $data->color = $source->color != null ? $source->color : '';
         $data->sort = $source->sort;
         $data->status = $source->status;
         $data->statusText = $source->status == 0 ? 'مسودة' : 'مفعلة';

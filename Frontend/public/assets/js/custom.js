@@ -168,6 +168,34 @@ $(function(){
 	      autoPlay:true,
 	      navigationText:["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"]
 	  });
+
+	  $('#login .btnModal').on('click',function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var name_ar = $('input[name="name_ar"]').val();
+        var phone = $('input[name="phone"]').val();
+        if(name_ar && phone){
+            $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+            $.ajax({
+                type: 'POST',
+                url: '/profile/login',
+                data:{
+                    '_token': $('meta[name="csrf-token"]').attr('content'),
+                    'name_ar': name_ar,
+                    'phone': phone,
+                },
+                success:function(data){
+                    if(data.status.status == 1){
+                        successNotification(data.status.message);
+                        $('#login').modal('hide')
+                        window.location.href = "/profile";
+                    }else{
+                        errorNotification(data.status.message);
+                    }
+                },
+            });
+        }
+    });
 	
 	  
 });
