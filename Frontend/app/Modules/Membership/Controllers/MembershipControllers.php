@@ -89,6 +89,9 @@ class MembershipControllers extends Controller {
             return redirect()->back()->withInput();
         }
 
+        $start_date = date('Y-m-d',strtotime(str_replace('/', '-', $input['start_date'])));
+        $end_date = date('Y-m-d',strtotime(str_replace('/', '-', $input['end_date'])));
+
         $rand = rand(100,100000);
         $username = str_replace(' ', '', $input['name_en']) . '-' . $rand;
         $checkUser = User::checkUserByUserName($username);
@@ -116,8 +119,8 @@ class MembershipControllers extends Controller {
         $menuObj->user_id = $userObj->id;
         $menuObj->code = UserCard::getNewCode();
         $menuObj->membership_id = $input['membership_id'];
-        $menuObj->start_date = date('Y-m-d',strtotime($input['start_date']));
-        $menuObj->end_date = date('Y-m-d',strtotime($input['end_date']));
+        $menuObj->start_date = $start_date;
+        $menuObj->end_date = $end_date;
         $menuObj->status = 2;
         $menuObj->sort = UserCard::newSortIndex();
         $menuObj->created_at = DATE_TIME;
