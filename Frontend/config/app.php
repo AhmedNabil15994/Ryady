@@ -165,6 +165,7 @@ return [
         Watson\Active\ActiveServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Jorenvh\Share\Providers\ShareServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         
         /*
          * Package Service Providers...
@@ -233,6 +234,8 @@ return [
         'Active' => Watson\Active\Facades\Active::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Share' => Jorenvh\Share\ShareFacade::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        
     ],
 
 ];

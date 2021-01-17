@@ -61,7 +61,7 @@
     <div class="card-header">
         <div class="card-title">
             <span class="card-icon">
-                <i class="menu-icon flaticon-users"></i>
+                <i class="menu-icon flaticon2-rectangular"></i>
             </span>
             <h3 class="card-label">{{ $data->title }}</h3>
         </div>

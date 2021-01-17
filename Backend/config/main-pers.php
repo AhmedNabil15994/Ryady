@@ -145,6 +145,11 @@ return [
             'viewTitle'=>'طلبات البطاقة المطبوعة',
             'modulePermissions' => 'edit-user-request,delete-user-request,sort-user-request,charts-user-request',
         ],
+        'CardPromotionsControllers@index' => [
+            'title'=>'list-card-promotions',
+            'viewTitle'=>'ترقيات البطاقات',
+            'modulePermissions' => 'edit-card-promotion,delete-card-promotion,sort-card-promotion,charts-card-promotion',
+        ],
         'UserCertificateControllers@index' => [
             'title'=>'list-user-certificate',
             'viewTitle'=>'شهادات العضوية',

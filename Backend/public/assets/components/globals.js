@@ -330,6 +330,10 @@ $('#kt_datetimepicker_7_1').datetimepicker({
     format: 'YYYY-MM-DD'
 });
 
+$('#kt_datetimepicker_7_5').datetimepicker({
+    format: 'YYYY-MM-DD'
+});
+
 $('#kt_datetimepicker_7_2').datetimepicker({
     useCurrent: false,
     format: 'YYYY-MM-DD'

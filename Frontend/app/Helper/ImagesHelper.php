@@ -82,7 +82,7 @@ class ImagesHelper {
             $fileObj = Request::file($fieldInput);
         }
 
-        if ($fileObj->getSize() >= 2000000) {
+        if ($fileObj->getSize() >= 10000000) {
             return false;
         }
 
@@ -100,6 +100,7 @@ class ImagesHelper {
         $directory = '';
 
         $path = public_path() . '/uploads/';
+        $path = str_replace('Frontend', 'Backend', $path);
 
         if ($strAction == 'users') {
             $directory = $path . 'users/' . $id;

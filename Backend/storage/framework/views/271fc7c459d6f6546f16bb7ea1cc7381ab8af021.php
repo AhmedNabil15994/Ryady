@@ -211,8 +211,8 @@
                 </li>
                 <?php endif; ?>
 
-                <?php if(\Helper::checkRules('list-user-cards,list-user-requests,list-user-certificates')): ?>
-                <li class="menu-item menu-item-submenu <?php echo e(Active(URL::to('/userCards*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/userRequests*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/userCertificates*'),'menu-item-open active')); ?>" aria-haspopup="true" data-menu-toggle="hover">
+                <?php if(\Helper::checkRules('list-user-cards,list-user-requests,list-user-certificates,list-card-promotion')): ?>
+                <li class="menu-item menu-item-submenu <?php echo e(Active(URL::to('/userCards*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/userRequests*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/cardPromotions*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/userCertificates*'),'menu-item-open active')); ?>" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="#" class="menu-link menu-toggle">
                         <i class="menu-icon far fa-credit-card"></i>
                         <span class="menu-text">بطاقات الاعضاء</span>
@@ -239,6 +239,14 @@
                                 <a href="<?php echo e(URL::to('/userRequests')); ?>" class="menu-link ">
                                     <i class="menu-bullet menu-bullet-dot"></i>
                                     <span class="menu-text">طلبات البطاقة المطبوعة</span>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                            <?php if(\Helper::checkRules('list-card-promotions')): ?>
+                            <li class="menu-item <?php echo e(Active(URL::to('/cardPromotions*'))); ?>" aria-haspopup="true">
+                                <a href="<?php echo e(URL::to('/cardPromotions')); ?>" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">ترقيات البطاقات</span>
                                 </a>
                             </li>
                             <?php endif; ?>

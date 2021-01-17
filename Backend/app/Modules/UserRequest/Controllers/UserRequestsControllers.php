@@ -21,7 +21,7 @@ class UserRequestsControllers extends Controller {
             return Datatables::of($data['data'])->make(true);
         }
         $data['title'] = 'طلبات البطاقة المطبوعة';
-        $data['name'] = 'userRequest';
+        $data['name'] = 'user-request';
         $data['url'] = 'userRequests';
         $data['memberships'] = Membership::dataList(1)['data'];
         return view('UserRequest.Views.index')->with('data',(object) $data);

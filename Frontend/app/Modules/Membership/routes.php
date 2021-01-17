@@ -6,6 +6,7 @@ Memberships
 Route::group(['prefix' => '/memberships'] , function () {
     Route::get('/', 'MembershipControllers@index');
     Route::get('/requestMemberShip/{id}', 'MembershipControllers@requestMemberShip');
+    Route::post('/requestMemberShip/{id}', 'MembershipControllers@postRequestMemberShip');
     Route::get('/features', 'MembershipControllers@features');
 
 });

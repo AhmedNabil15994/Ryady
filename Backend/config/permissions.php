@@ -287,6 +287,12 @@ return [
     'UserRequestControllers@fastEdit' => 'edit-user-request',
     'UserRequestControllers@charts' => 'charts-user-request',
 
+    'CardPromotionsControllers@index' => 'list-card-promotions',
+    'CardPromotionsControllers@softDelete' => 'delete-card-promotion',
+    'CardPromotionsControllers@delete' => 'delete-card-promotion',
+    'CardPromotionsControllers@fastEdit' => 'edit-card-promotion',
+    'CardPromotionsControllers@charts' => 'charts-card-promotion',
+
     'UserCertificateControllers@index' => 'list-user-certificates',
     'UserCertificateControllers@download' => 'download-user-certificate',
 

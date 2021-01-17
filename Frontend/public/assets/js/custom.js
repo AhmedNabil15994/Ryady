@@ -77,7 +77,7 @@ $(function(){
 	$( ".selectmenu" ).selectmenu();
 	
     $(".iconAdd").click(function () {
-        $(".coupons").append("<div class='inputSt'><input type='number' class='inputStyle' name='Mobile[]' placeholder='اضف كود اخر'/><i style='cursor: pointer;z-index:3;font-size:16px;top:27px' class='iconLeft fa fa-close remove'></i></div>");
+        $(".coupons").append("<div class='inputSt'><input type='text' class='inputStyle' name='coupons[]' placeholder='اضف كود اخر'/><i style='cursor: pointer;z-index:3;font-size:16px;top:27px' class='iconLeft fa fa-close remove'></i></div>");
         $(".coupons .inputSt .remove").click(function () {
             $(this).parent().remove();
         });

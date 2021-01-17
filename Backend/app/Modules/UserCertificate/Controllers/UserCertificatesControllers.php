@@ -21,7 +21,7 @@ class UserCertificatesControllers extends Controller {
             return Datatables::of($data['data'])->make(true);
         }
         $data['title'] = 'شهادات العضوية';
-        $data['name'] = 'userCertificate';
+        $data['name'] = 'user-certificate';
         $data['url'] = 'userCertificates';
         $data['memberships'] = Membership::dataList(1)['data'];
         return view('UserCertificate.Views.index')->with('data',(object) $data);

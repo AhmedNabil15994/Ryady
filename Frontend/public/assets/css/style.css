@@ -23,7 +23,10 @@ h1,h2,h3,h4,h5,h6
 	margin-top:0;
 	margin-bottom:0
 }
-
+.modal-location .btn-primary{
+	display: block;
+	width: 100%;
+}
 ul
 {
 	margin-bottom:0;
@@ -33,7 +36,6 @@ ul
     -moz-appearance:none;
     appearance:none;
 }
-
 p
 {
 	margin-bottom:0
@@ -1797,7 +1799,9 @@ input[type="number"] {
 
 .inputSt .iconImg
 {
+	cursor: pointer !important;
 	top:18px;
+	z-index: 2;
 }
 
 
@@ -3792,9 +3796,151 @@ a.ui-button:active, .ui-button:active,
 {
 	background-color:#001C54;
 }
+input[name="gmaps"]{
+	font-size: 16px !important;
+}
 
 
+.cardStyle
+{
+	height:360px;
+	border-radius:20px;
+	padding-top:80px;
+	padding-right:50px;
+	padding-left:20px;
+	padding-bottom:50px;
+	margin-bottom:24px;
+	background-color:#000;
+	position:relative;
+	overflow:hidden;
+	z-index:1;
+	padding-left:100px
+}
 
+.cardStyle .logo
+{
+	position:absolute;
+	left:30px;
+	top:25px;
+	width:60px;
+}
+
+.cardStyle .titleAr
+{
+	color:#fff;
+	font-family: "STC-Bold";
+	margin-bottom:10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cardStyle .titleEn
+{
+	color:#fff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cardStyle .details
+{
+	position:absolute;
+	right:30px;
+	bottom:55px;
+	padding-left:110px;
+	text-align:left;
+	padding-top:30px;
+}
+
+.cardStyle .details img,
+.cardStyle .details svg
+{
+	position: absolute;
+	left:0;
+	top:0;
+	width:80px;
+}
+
+.cardStyle .details .date
+{
+	color:#fff;
+	font-size:15px;
+	display:block;
+	margin-bottom:5px;
+}
+
+.cardStyle .details .code
+{
+	color:#E4B0FF;
+	font-size:18px;
+	font-family: "STC-Bold";
+	letter-spacing:10px
+}
+
+
+.cardStyle .code.codePurple
+{
+	color:#E4B0FF;
+}
+
+.cardStyle .code.codeGreen
+{
+	color:#00E5B9;
+}
+
+.cardStyle .code.codeBlue
+{
+	color:#0074E8;
+}
+
+
+.cardStyle .state
+{
+	position:absolute;
+	left:45px;
+	bottom:55px;
+	padding-right:14px;
+	font-family: "STC-Bold";
+	color:#fff;
+	font-size:20px;
+}
+
+.cardStyle .state:before
+{
+	content:"";
+	position:absolute;
+	right:0;
+	top:5px;
+	width:3px;
+	height:20px;
+}
+
+.cardStyle .state.bgPurple:before
+{
+	background-color:#E4B0FF;
+}
+
+.cardStyle .state.bgGreen:before
+{
+	background-color:#00E5B9;
+}
+
+.cardStyle .state.bgBlue:before
+{
+	background-color:#0074E8;
+}
+
+
+.cardStyle .bg
+{
+	position:absolute;
+	right:0;
+	top:0;
+	height:100%;
+	width:100%;
+	z-index:-1
+}
 
 
 

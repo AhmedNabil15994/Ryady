@@ -73,7 +73,7 @@
     <div class="card-header">
         <div class="card-title">
             <span class="card-icon">
-                <i class="menu-icon flaticon-menu-1"></i>
+                <i class="menu-icon far fa-credit-card"></i>
             </span>
             <h3 class="card-label">بطاقات الاعضاء</h3>
         </div>

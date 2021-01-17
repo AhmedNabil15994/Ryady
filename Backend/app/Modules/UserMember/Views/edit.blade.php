@@ -76,7 +76,7 @@
     <div class="card-header">
         <div class="card-title">
             <span class="card-icon">
-                <i class="menu-icon flaticon-menu-1"></i>
+                <i class="menu-icon fa fa-user-tie"></i>
             </span>
             <h3 class="card-label">تعديل</h3>
         </div>

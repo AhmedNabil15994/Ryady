@@ -6,5 +6,6 @@ Profile
 Route::group(['prefix' => '/'] , function () {
     Route::get('/', 'ProfileControllers@profile');
     Route::get('/addProject', 'ProfileControllers@addProject');
+    Route::post('/addProject', 'ProfileControllers@postAddProject');
 
 });

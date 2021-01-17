@@ -1,0 +1,65 @@
+$(function(){
+
+	$('#selectmenu[name="membership_id"]').on('selectmenuchange', function() {
+	    $id = $(this).val();
+		window.location.href = '/memberships/requestMemberShip/'+$id;
+	});
+
+	$('input[name="name_ar"]').on("blur",function(){
+		$('h2.titleAr').html($(this).val());
+	});
+
+	$('input[name="name_en"]').on("blur",function(){
+		$('h2.titleEn').html($(this).val());
+	});
+
+	$('input[name="end_date"]').on("change",function(){
+		$('span.date').html($(this).val());
+	});
+
+	function formatDate(date) {
+	    var d = new Date(date),
+	        month = '' + (d.getMonth() + 1),
+	        day = '' + d.getDate(),
+	        year = d.getFullYear();
+
+	    if (month.length < 2) 
+	        month = '0' + month;
+	    if (day.length < 2) 
+	        day = '0' + day;
+
+	    return [month,year].join('/');
+	}
+
+	$('#fromDate').datepicker({
+	    dateFormat: 'dd/mm/yy',
+	    onSelect: function () {
+            var dt2 = $('#toDate');
+            var startDate = $(this).datepicker('getDate');
+            startDate.setDate(startDate.getDate() + 365);
+            var minDate = $(this).datepicker('getDate');
+            var dt2Date = dt2.datepicker('getDate');
+            dt2.datepicker('setDate', startDate);
+            dt2.datepicker('option','minDate', startDate);
+            var newDate = formatDate(startDate);
+        	$('span.date').html(newDate);
+        }
+    });
+
+	$('#toDate').datepicker({
+	    dateFormat: 'dd/mm/yy',		
+	    onSelect: function () {
+            var dt2 = $('#fromDate');
+            var startDate = $(this).datepicker('getDate');
+            var myDate = startDate.setDate(startDate.getDate());
+            startDate.setDate(startDate.getDate() - 365);
+            var minDate = $(this).datepicker('getDate');
+            var dt2Date = dt2.datepicker('getDate');
+            dt2.datepicker('setDate', startDate);
+            var newDate = formatDate(myDate);
+        	$('span.date').html(newDate);
+        },
+	});
+
+
+});

@@ -40,10 +40,11 @@
       22 => 'Watson\\Active\\ActiveServiceProvider',
       23 => 'Yajra\\DataTables\\DataTablesServiceProvider',
       24 => 'Jorenvh\\Share\\Providers\\ShareServiceProvider',
-      25 => 'App\\Providers\\AppServiceProvider',
-      26 => 'App\\Providers\\AuthServiceProvider',
-      27 => 'App\\Providers\\EventServiceProvider',
-      28 => 'App\\Providers\\RouteServiceProvider',
+      25 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
+      26 => 'App\\Providers\\AppServiceProvider',
+      27 => 'App\\Providers\\AuthServiceProvider',
+      28 => 'App\\Providers\\EventServiceProvider',
+      29 => 'App\\Providers\\RouteServiceProvider',
     ),
     'aliases' => 
     array (
@@ -86,6 +87,7 @@
       'Active' => 'Watson\\Active\\Facades\\Active',
       'DataTables' => 'Yajra\\DataTables\\Facades\\DataTables',
       'Share' => 'Jorenvh\\Share\\ShareFacade',
+      'QrCode' => 'SimpleSoftwareIO\\QrCode\\Facades\\QrCode',
     ),
   ),
   'auth' => 

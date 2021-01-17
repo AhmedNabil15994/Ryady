@@ -12,7 +12,7 @@ class AuthEngine {
             session()->flush();
 
             \Session::flash('error', "يرجي تسجيل الدخول اولا!");
-            return Redirect()->back();
+            return Redirect()->to('/');
         }
 
         if (in_array($request->segment(1), ['profile'])) {
@@ -27,7 +27,7 @@ class AuthEngine {
             session()->flush();
 
             \Session::flash('error', "يرجي تسجيل الدخول اولا!");
-            return Redirect()->back();
+            return Redirect()->to('/');
         }
 
         define('FIRST_NAME', Session::get('first_name'));
