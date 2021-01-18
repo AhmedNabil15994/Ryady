@@ -132,6 +132,8 @@ class WebActions extends Model{
             $text = 'مميزات العضويات';
         }elseif($name == 'Coupon'){
             $text = 'كوبونات الخصم';
+        }elseif($name == 'CardPromotion'){
+            $text = 'ترقيات البطاقات';
         }
 
 

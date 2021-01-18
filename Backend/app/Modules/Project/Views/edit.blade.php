@@ -158,7 +158,7 @@
                             <select class="form-control m-input select2" name="coupons[]" multiple>
                                 <option value="" disabled>حدد اختيارك</option>
                                 @foreach($data->coupons as $coupon)
-                                <option value="{{ $coupon->id }}" {{ in_array($coupon->id, $data->data->coupons) ? 'selected' : '' }}>{{ $coupon->code }}</option>
+                                <option value="{{ $coupon->id }}" {{ in_array($coupon->code, $data->data->coupons) ? 'selected' : '' }}>{{ $coupon->code }}</option>
                                 @endforeach
                             </select>
                             <span class="m-form__help LastUpdate">تم الحفظ فى :  {{ $data->data->created_at }}</span>

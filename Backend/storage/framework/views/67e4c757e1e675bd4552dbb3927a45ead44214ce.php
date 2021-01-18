@@ -80,7 +80,7 @@
     <div class="card-header">
         <div class="card-title">
             <span class="card-icon">
-                <i class="menu-icon flaticon-menu-1"></i>
+                <i class="menu-icon fas fa-project-diagram"></i>
             </span>
             <h3 class="card-label">تعديل</h3>
         </div>
@@ -156,7 +156,7 @@
                             <select class="form-control m-input select2" name="coupons[]" multiple>
                                 <option value="" disabled>حدد اختيارك</option>
                                 <?php $__currentLoopData = $data->coupons; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $coupon): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($coupon->id); ?>" <?php echo e(in_array($coupon->id, $data->data->coupons) ? 'selected' : ''); ?>><?php echo e($coupon->code); ?></option>
+                                <option value="<?php echo e($coupon->id); ?>" <?php echo e(in_array($coupon->code, $data->data->coupons) ? 'selected' : ''); ?>><?php echo e($coupon->code); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                             <span class="m-form__help LastUpdate">تم الحفظ فى :  <?php echo e($data->data->created_at); ?></span>

@@ -137,10 +137,12 @@ class MembershipControllers extends Controller {
             $userRequestObj->created_at = DATE_TIME;
             $userRequestObj->created_by = $userObj->id;
             $userRequestObj->save();
+            WebActions::newType(1,'UserRequest',$userObj->id);
         }
 
 
-        WebActions::newType(2,'UserCard',1);
+        WebActions::newType(1,'UserCard',$userObj->id);
+        WebActions::newType(1,'User',$userObj->id);
         \Session::flash('success', 'تنبيه! تم ارسال الطلب بنجاح');
         return redirect()->back();
         

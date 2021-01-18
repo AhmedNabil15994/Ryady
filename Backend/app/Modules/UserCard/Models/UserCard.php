@@ -112,6 +112,8 @@ class UserCard extends Model{
             $text = 'تم ارسال الطلب';
         }elseif ($status == 3) {
             $text = 'تم الرفض';
+        }elseif ($status == 4) {
+            $text = 'تم الترقية';
         }
         return $text;
     }

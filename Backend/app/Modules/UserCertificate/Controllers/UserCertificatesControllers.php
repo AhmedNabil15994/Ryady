@@ -30,15 +30,37 @@ class UserCertificatesControllers extends Controller {
     public function download($id){
 
         $certificateObj = UserCard::getOne($id);
-
-        $data['title'] = Variable::getVar('العنوان عربي');
+        if($certificateObj == null){
+            return redirect('404');
+        }
+        $certificateObj = UserCard::getData($certificateObj);
+        
+        $data['title'] = Variable::getVar('العنوان عربي') . ' - ' . 'شهادة عضوية';
         $data['code'] = $certificateObj->code;
         $data['user'] = $certificateObj->name_ar;
-        $data['start_date'] = $certificateObj->start_date;
-        $data['end_date'] = $certificateObj->end_date;
-        $data['date'] = now()->format('Y-m-d');
-        $pdf = PDF::loadView('UserCertificate.Views.certificate', $data)->setPaper('a4', 'landscape');
+        $data['membership_name'] = $certificateObj->membership_name;
+        $data['start_date'] = $this->translateDates($certificateObj->start_date);
+        $data['end_date'] = $this->translateDates($certificateObj->end_date);
+
+        $pdf = PDF::loadView('UserCertificate.Views.certificate', $data)
+                ->setPaper('a4', 'landscape')
+                ->setOption('margin-bottom', '0mm')
+                ->setOption('margin-top', '0mm')
+                ->setOption('margin-right', '0mm')
+                ->setOption('margin-left', '0mm');
         return $pdf->download('Certification.pdf');
+    }
+
+    public function translateDates($date){
+        $arabicMonths = ['يناير','فبراير','مارس','ابريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+        $dateDay = date('d',strtotime($date));
+        $month = date('M',strtotime($date));
+        $monthIndex = date('m',strtotime($month)) - 1;
+        $dateMonth = $arabicMonths[$monthIndex].' ';
+
+        $dateYear = date('Y',strtotime($date));
+
+        return [$dateDay,$dateMonth,$dateYear];
     }
 
 }

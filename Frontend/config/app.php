@@ -235,6 +235,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Share' => Jorenvh\Share\ShareFacade::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         
     ],
 

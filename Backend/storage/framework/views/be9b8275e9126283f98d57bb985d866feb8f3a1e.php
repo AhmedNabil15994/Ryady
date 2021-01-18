@@ -1,260 +1,231 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title><?php echo e($title); ?> - شهادة العضوية</title>
-        
-        
-        <link href="<?php echo e(asset('/assets/vendors/bootstrap/dist/css/bootstrap.min.css')); ?>" rel="stylesheet">
-        <style type="text/css" media="screen">
+        <meta charset="UTF-8" />
+        <!-- IE Compatibility Meta -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- First Mobile Meta  -->
+        <meta name="viewport" content="width=device-width, height=device-height ,  maximum-scale=1 , initial-scale=1">
+        <title><?php echo e($title); ?></title>
+        <link rel="stylesheet" href="<?php echo e(asset('/assets/pdf/bootstrap.css')); ?>" />
+        <link rel="stylesheet" href="<?php echo e(asset('/assets/pdf/bootstrap-rtl.css')); ?>" />
+        <!--[if lt IE 9]>
+            <script src="js/html5shiv.min.js"></script>
+            <script src="js/respond.min.js"></script>
+        <![endif]-->
+        <style>
             @font-face {
-                /*font-family: Cairo;*/
-                
-            }
-            body,
-            html {
-                background-color: #fff;
-                font-family: 'Tajawal', sans-serif;
-                position: relative;
-            }
-            p {
-                margin: 0 0 2px !important;
-            }
-             #bannerProp{
-                width: 40px;
-                height: 890px;
-                background-color: #343F80;
-            }
-            #bannerProp2{
-                height: 75px;
-            }
-            .header-large{
-                font-size: 50px;
-                font-weight: 600;
-                color: #6b5316;
+                font-family: "Tajawal-Regular";
+                src:url('<?php echo e(asset("/assets/fonts/Tajawal-Regular.ttf")); ?>') format('truetype');
+                font-weight: normal;
+                font-style: normal;
             }
 
-            .light-bold {
-                font-weight: 500;
-                font-size: 13px;
+            @font-face {
+                font-family: "Tajawal-Bold";
+                src: url('<?php echo e(asset("/assets/fonts/Tajawal-Bold.ttf")); ?>') format('truetype');
+                font-weight: normal;
+                font-style: normal;
             }
 
-            p.certifies,
-            p.details{
-                font-size: 28px;
-                color: #6b5316;
+            @font-face {
+                font-family: "Tajawal-ExtraBold";
+                src: url('<?php echo e(asset('/assets/fonts/Tajawal-ExtraBold.ttf')); ?>') format('truetype');
+                font-weight: normal;
+                font-style: normal;
             }
-
-            p.name{
-                font-size: 40px;
-                font-weight: bold;
-                letter-spacing: 2px;
-                color: #123d4e;
+            /* ------------------------------------------ */
+            /*         certificate
+            /* ------------------------------------------ */
+            .certificate
+            {
                 display: block;
-                width: 500px;
-                margin: auto !important;
-                margin-top: 40px !important;
-                margin-bottom: 40px !important;
-                border-bottom: 1px solid #DDD;
-                padding-bottom: 8px;
-                text-transform: capitalize;
-            }
-
-            p.course{
-                margin-bottom: 0 !important;
-            }
-
-            .medium-font{
-                font-size: 15px!important;
-            }
-
-            .margin-prop{
-                margin-bottom: 20px;
-            }
-
-            #logoProp {
-                width: 85px;
-                height: 75px;
-            }
-
-            #footerLogo {
-                height: 40px;
-                margin-right: 10px;
-            }
-
-            #hospLogo {
-                height: 55px;
-            }
-
-            #signLogo {
-                width: 350px;
-            }
-
-            #smallFont {
-                font-size: 60%;
-            }
-
-            #specMargin {
-                margin-bottom: 10px;
-            }
-
-            b.first{
-                padding-top: 8px;
-                border-top: 1px solid #DDD;
-                display: block;
-                width: 200px;
-                margin: auto;
-                margin-bottom: 10px;
-                font-size: 24px;
-                color: #123d4e;
-            }
-
-            b.second{
-                font-size: 28px;
-                width: 150px;
-                color: #6b5316;
-            }
-
-            .col-xs-1{
-                padding-left: 0;
-            }
-
-            .container-fluid{
-                border-radius: 5px;
-                position: relative;
-                height: 890px;
-                overflow: hidden;
-                position: relative;
-            }
-            .col-xs-1.text-right{
-                padding-right: 0;
-                direction: rtl;
-            }
-            .col-xs-10{
-                height: 890px;
-            }
-
-            .first-row .footer{
-                position: absolute;
-                bottom: 70px;
-            }
-            .row.first{
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                left: 0;
+                width:100%;
+                height:990px;
+                margin: 0;
+                background-color:#081E56;
+                overflow:hidden;
+                position:relative;
                 z-index: 1;
-                margin: 0;
-                color: #FFF;
-                border: 0;
-                top: 80px;
+                text-align:center;
+                padding-top:250px;
+                font-family: "Tajawal-Regular";
             }
-            .row.first img.image{
-                display: block;
-                height: 600px;
-                width: 600px;
-                margin: auto;
-                background-repeat: no-repeat;
-                background-size: contain;
-                opacity: 0.2;
-                border: 0;
-                color: #FFF;
-                border: 0;
-            }
-            .row.main,
-            .row.main2{
-                position: fixed;
-                background-color: #343F80;
-                left: 0;
-                /*z-index: 3;*/
-                width: 100%;
-                height: 40px;
-                background-size: contain;
-                margin: 0;
-            }
-            .row.main{
-                top: 0;
-            }
-            .row.main2{
-                bottom: 25px;
-                background-color: #343F80;
-            }
-            .row.main .col-xs-12{
-                padding: 0;
-            }
-            .row.last{
+
+            .certificate .bgCer
+            {
                 position: absolute;
-                z-index: 2;
-                margin-right: 1px;
-                border: 25px solid #343F80;
-                height: 100%;
+                right:0;
+                top:0;
+                min-width:100%;
+                min-height:100%;
+                z-index: -1;
             }
-            div.data{
-                height: 100px;
+
+            .certificate .logo
+            {
+                position: absolute;
+                right:40px;
+                top:40px;
+                width:265px;
+                height:150px;
+            }
+
+            .certificate .content
+            {
+                color:#fff
+            }
+
+            .certificate .title
+            {
+                font-size:31px;
+                font-family: "STC-Bold";
+                margin-bottom:25px;
+                font-family: "Tajawal-Bold";
+                font-weight: bold;
+            }
+
+            .certificate .subTitle
+            {
+                font-size:25px;
+                margin-bottom:20px;
+            }
+
+            .certificate .name
+            {
+                text-align: center;
+                display:block;
+                font-size:38px;
+                margin-bottom:20px;
+                font-family: "Tajawal-Bold";
+                font-weight: bold;
+            }
+
+            .certificate .name span
+            {
+                margin-left:50px;
+                display:inline-block
+            }
+
+            .certificate .subTitle2
+            {
+                font-size:31px;
+                margin-bottom:23px;
+            }
+
+            .certificate .desc
+            {
+                font-size:20px;
+            }
+
+            .certificate .desc span
+            {
+                display:block;
+                margin-top:15px;
+                font-size:30px;
+            }
+
+            .certificate .ceo
+            {
+                float:left;
+                width:424px;
+                text-align: right;
+                color:#fff;
+                margin-top:45px;
+                margin-bottom:6px;
+            }
+
+            .certificate .ceo .ceoTitle
+            {
+                text-align:center;
+                font-size:15px;
+                margin-bottom:20px;
+                font-family: "Tajawal-Bold";
+                font-weight: bold;
+            }
+
+            .certificate .ceo .ceoName
+            {
+                font-size:13px;
+                margin-bottom:5px;
+                display:block
+            }
+
+            .certificate .ceo .ceoPosition
+            {
+                font-size:13px;
+                display:block
+            }
+
+            .certificate .cerFooter
+            {
+                position: absolute;
                 display: block;
                 width: 100%;
-                margin-top: 20px;
+                left: 0;
+                bottom: 0;
+                color:#fff;
+                font-size:13px;
+                text-align:right;
+                padding:10px 30px 0;
+                display:flex;
+                justify-content:space-between
             }
-            div.data img{
-                width: 75px;
-                height: 75px;
-                display: block;
+
+            .certificate .cerFooter .date
+            {
+                align-self:flex-end
             }
-            div.data .col-xs-6.second{
-                direction: rtl;
+
+            .certificate .cerFooter .text
+            {
+                display:block;
+                margin-bottom:5px;
             }
-            .text-left{
-                text-align: left;
+
+            .certificate .cerFooter .webSite
+            {
+                align-self:flex-end
             }
-            div.code{
-                padding-top: 10px;
-                font-weight: bold;
-                font-size: 22px;
-                color: #6b5316;
+
+            .certificate .cerFooter .copyRights
+            {
+                align-self:flex-end
+            }
+            .certificate .cerFooter .copyRights span
+            {
+                display:block;
             }
         </style>
     </head>
     <body>
-        <div class="container-fluid">
-            <div class="row last">
-                <div class="col-xs-1">
+        <div class="certificate">
+            <center class="content">
+                <img src="<?php echo e(asset('/assets/images/bgCER.png')); ?>" class="bgCer" alt="" />
+                <img src="<?php echo e(asset('/assets/images/logo.svg')); ?>" class="logo" alt="" />
+                <h2 class="title">شهادة عضوية</h2>
+                <h3 class="subTitle">تصادق Business Pro للإستشارات</h3>
+                <h4 class="name"><span>على مـنـح</span>     <?php echo e($user); ?></h4>
+                <h5 class="subTitle2">عضوية  | <?php echo e($membership_name); ?> الشاب الريادي</h5>
+                <div class="desc">وذلك بعد إتمام شروط ومتطلبات العضوية حسب اللوائح والسياسات المعتمدة من <span>Business Pro</span></div>
+            </center>
+            <div class="clearfix">
+                <div class="ceo">
+                    <h2 class="ceoTitle">اعتماد توقيع منح العضوية</h2>
+                    <span class="ceoName">أ. أحمد بن عبدالله المنهبي</span>
+                    <span class="ceoPosition">الرئيس التنفيذي لمجتمع الشاب الريادي</span>
                 </div>
-                <div class="col-xs-10">
-                    <div class="row text-center first-row">
-                        <div class="col-xs-12 data">
-                            <div class="col-xs-6 text-left second" style="direction: ltr">
-                                <img src="<?php echo e(URL::to('/assets/images/logo.png')); ?>" alt="">
-                            </div>
-                            <div class="col-xs-6 text-right code" dir="rtl">
-                                الرقم التسلسلي: <?php echo e($code); ?> # 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 text-center" style="margin-top: 50px">
-                            <p class="header-large">شهادة عضوية</p>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 100px;">
-                        <div class="row first">
-                            <img class="image" src="<?php echo e(URL::to('/assets/images/logo.png')); ?>" alt="">
-                        </div>
-                        <div class="col-xs-12">
-                            <p class="light-bold certifies text-right" dir="rtl">يشهد مكتب محترف الأعمال بأن الأستاذ /</p>
-                        </div>
-                        <div class="col-xs-12 text-center">
-                            <p class="light-bold name"> <?php echo e($user); ?></p>
-                        </div>
-                        <div class="col-xs-12" style="margin-top: 50px;">
-                            <p class="details text-right">عضو في الشاب الريادي للفترة من <?php echo e($start_date); ?> الي <?php echo e($end_date); ?></p>
-                        </div>
-                    </div>
-                    
+            </div>
+            <div class="cerFooter">
+                <div class="col-xs-4 date">
+                    <span class="text">رقـم الاعـتـمـاد # <?php echo e($code); ?>-452673</span>
+                    <span class="text">صلاحـيـة الشهادة الى <?php echo e($end_date[0] . ' ' . $end_date[1] . ' ' . $end_date[2]); ?></span>
+                    <span class="text">معتمدة الشهادة منذ <?php echo e($start_date[0] . ' ' . $start_date[1] . ' ' . $start_date[2]); ?></span>
                 </div>
-                <div class="col-xs-1 text-right">
-                </div>
+                <span class="col-xs-4 webSite text-center">www.alshabalriyadi.com</span>
+                <p class="col-xs-4 copyRights text-left">علامة تجارية مسجلة لـ <span>www.businesspro.sa</span></p>
             </div>
         </div>
     </body>
-</html>
-<?php /**PATH /var/www/Server/Projects/Ryady/Backend/app/Modules/UserCertificate/Views/certificate.blade.php ENDPATH**/ ?>
+
+</html><?php /**PATH /var/www/Server/Projects/Ryady/Backend/app/Modules/UserCertificate/Views/certificate.blade.php ENDPATH**/ ?>

@@ -1,0 +1,25 @@
+/*
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+=     00   00 00 00   00 00 00   00 00 00   00 00 00   00 00    =
+=     00   00    00        00    00    00   00    00   00       =
+=     00   00    00      00      00    00   00    00   00       =
+=     00   00    00    00        00    00   00    00   00       =
+=  00 00   00 00 00   00 00 00   00 00 00   00 00 00   00       =
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+*/
+@font-face {
+    font-family: "ArbFONTS-STC-Regular";
+    src: url('../fonts/ArbFONTS-STC-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+@font-face {
+    font-family: "STC-Bold";
+    src:url('../fonts/STC-Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+

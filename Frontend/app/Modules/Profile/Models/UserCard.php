@@ -16,6 +16,10 @@ class UserCard extends Model{
             ->first();
     }
 
+    static function getAvailableForUser($user_id){
+        return self::NotDeleted()->where('status',1)->where('user_id',$user_id)->where('end_date','>=',now()->format('Y-m-d'))->first();
+    }
+
     public function Creator(){
         return $this->hasOne('App\Models\User','id','created_by');
     }
@@ -94,7 +98,7 @@ class UserCard extends Model{
         $data->membership_id = $source->membership_id;
         $data->start_date = $source->start_date;
         $data->end_date = $source->end_date;
-        $data->membership_name = $source->membership_id != null ? $source->Membership->title : '';
+        $data->membership = $source->membership_id != null ? Membership::getData($source->Membership) : '';
         $data->sort = $source->sort;
         $data->status = $source->status;
         $data->statusText = self::getStatus($source->status);
@@ -116,6 +120,8 @@ class UserCard extends Model{
             $text = 'تم ارسال الطلب';
         }elseif ($status == 3) {
             $text = 'تم الرفض';
+        }elseif ($status == 4) {
+            $text = 'تم الترقية';
         }
         return $text;
     }

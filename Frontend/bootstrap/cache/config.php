@@ -88,6 +88,7 @@
       'DataTables' => 'Yajra\\DataTables\\Facades\\DataTables',
       'Share' => 'Jorenvh\\Share\\ShareFacade',
       'QrCode' => 'SimpleSoftwareIO\\QrCode\\Facades\\QrCode',
+      'PDF' => 'Barryvdh\\Snappy\\Facades\\SnappyPdf',
     ),
   ),
   'auth' => 
@@ -988,6 +989,33 @@
     'secure' => NULL,
     'http_only' => true,
     'same_site' => 'lax',
+  ),
+  'snappy' => 
+  array (
+    'pdf' => 
+    array (
+      'enabled' => true,
+      'binary' => '/usr/local/bin/wkhtmltopdf-amd64',
+      'timeout' => false,
+      'options' => 
+      array (
+      ),
+      'env' => 
+      array (
+      ),
+    ),
+    'image' => 
+    array (
+      'enabled' => true,
+      'binary' => '/usr/local/bin/wkhtmltoimage-amd64',
+      'timeout' => false,
+      'options' => 
+      array (
+      ),
+      'env' => 
+      array (
+      ),
+    ),
   ),
   'view' => 
   array (

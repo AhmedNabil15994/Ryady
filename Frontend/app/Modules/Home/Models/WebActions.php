@@ -167,7 +167,7 @@ class WebActions extends Model{
         $myObj->module_name = $name;
         $myObj->created_at = DATE_TIME;
         if($user != null){
-            $myObj->created_by = 0;
+            $myObj->created_by = $user;
         }else{
             $myObj->created_by = USER_ID;
         }

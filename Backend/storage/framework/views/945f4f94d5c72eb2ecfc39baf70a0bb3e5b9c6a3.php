@@ -38,7 +38,7 @@
     <div class="card-header">
         <div class="card-title">
             <span class="card-icon">
-                <i class="menu-icon flaticon-users"></i>
+                <i class="menu-icon far fa-credit-card"></i>
             </span>
             <h3 class="card-label"><?php echo e($data->title); ?></h3>
         </div>

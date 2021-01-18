@@ -7,8 +7,8 @@
         <!-- First Mobile Meta  -->
         <meta name="viewport" content="width=device-width, height=device-height ,  maximum-scale=1 , initial-scale=1">
         <title>{{ $title }}</title>
-        <link rel="stylesheet" href="{{ asset('/assets/pdf/bootstrap.css') }}" />
-        <link rel="stylesheet" href="{{ asset('/assets/pdf/bootstrap-rtl.css') }}" />
+        <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.css') }}" />
+        <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap-rtl.css') }}" />
         <!--[if lt IE 9]>
             <script src="js/html5shiv.min.js"></script>
             <script src="js/respond.min.js"></script>

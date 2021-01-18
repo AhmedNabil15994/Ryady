@@ -23,10 +23,7 @@ h1,h2,h3,h4,h5,h6
 	margin-top:0;
 	margin-bottom:0
 }
-.modal-location .btn-primary{
-	display: block;
-	width: 100%;
-}
+
 ul
 {
 	margin-bottom:0;
@@ -36,6 +33,7 @@ ul
     -moz-appearance:none;
     appearance:none;
 }
+
 p
 {
 	margin-bottom:0
@@ -297,9 +295,7 @@ input[type="number"] {
 	-o-transition:all 0.3s;
 	transition:all 0.3s;
 }
-.carousel-inner > .item > img, .carousel-inner > .item > a > img{
-	height: 400px;
-}
+
 .menuMobile .menuContent.active
 {
 	right:0
@@ -1437,8 +1433,7 @@ input[type="number"] {
 	display:block
 }
 
-.itemBlog .mask img,
-.itemBlog .mask video
+.itemBlog .mask img
 {
 	min-width:100%;
 	min-height:100%;
@@ -1799,9 +1794,7 @@ input[type="number"] {
 
 .inputSt .iconImg
 {
-	cursor: pointer !important;
 	top:18px;
-	z-index: 2;
 }
 
 
@@ -2822,7 +2815,6 @@ a.ui-button:active, .ui-button:active,
 .PartProjects .item .mask img
 {
 	min-width:100%;
-	height: 218px;
 	min-height:100%;
 }
 
@@ -3265,8 +3257,7 @@ a.ui-button:active, .ui-button:active,
 	font-family: "STC-Bold";
 }
 
-.profile .userProfile .listProfile li a:hover,
-.profile .userProfile .listProfile li a.active
+.profile .userProfile .listProfile li a:hover
 {
 	background-color:#EBF0F3
 }
@@ -3349,11 +3340,6 @@ a.ui-button:active, .ui-button:active,
 .profile .profileDetails .cardHead
 {
 	margin-bottom:45px;
-}
-
-.profile .profileDetails .cardHead img
-{
-	width:100%;
 }
 
 .profile .profileDetails .cardHead .memberStyle
@@ -3493,7 +3479,7 @@ a.ui-button:active, .ui-button:active,
 	position:absolute;
 	left:20px;
 	top:18px;
-	width:120px;
+	width:93px;
 	height:32px;
 	background-color:#FFBB00;
 	color:#000;
@@ -3797,10 +3783,6 @@ a.ui-button:active, .ui-button:active,
 {
 	background-color:#001C54;
 }
-input[name="gmaps"]{
-	font-size: 16px !important;
-}
-
 
 .cardStyle
 {
@@ -3823,7 +3805,7 @@ input[name="gmaps"]{
 	position:absolute;
 	left:30px;
 	top:25px;
-	width:60px !important;
+	width:60px;
 }
 
 .cardStyle .titleAr
@@ -3854,8 +3836,7 @@ input[name="gmaps"]{
 	padding-top:30px;
 }
 
-.cardStyle .details img,
-.cardStyle .details svg
+.cardStyle .details img
 {
 	position: absolute;
 	left:0;
@@ -3942,6 +3923,394 @@ input[name="gmaps"]{
 	width:100%;
 	z-index:-1
 }
+
+.cardProfile
+{
+	padding-top:45px;
+	height:250px;
+	padding-right:40px;
+}
+
+
+.cardProfile .titleAr,
+.cardProfile .titleEn
+{
+	font-size:22px;
+}
+
+.cardProfile .details img
+{
+	width:60px;
+}
+
+.cardProfile .details
+{
+	padding-top: 10px;
+	padding-left:75px;
+	bottom:40px;
+}
+
+.cardProfile .state
+{
+	left:30px;
+	bottom:40px;
+}
+
+.cardProfile .details .code
+{
+	letter-spacing: 2px;
+}
+
+/* ------------------------------------------ */
+/*         certificate
+/* ------------------------------------------ */
+
+.certificate
+{
+	width:900px;
+	height:630px;
+	margin:50px auto 0;
+	background-color:#081E56;
+	overflow:hidden;
+	position:relative;
+	z-index: 1;
+	text-align:center;
+	padding-top:85px;
+	font-family: "Tajawal-Regular";
+}
+
+.certificate .bgCer
+{
+	position: absolute;
+	right:0;
+	top:0;
+	min-width:100%;
+	min-height:100%;
+	z-index: -1;
+}
+
+.certificate .logo
+{
+	position: absolute;
+	right:40px;
+	top:40px;
+	width:65px;
+}
+
+
+.certificate .content
+{
+	color:#fff
+}
+
+.certificate .title
+{
+	font-size:31px;
+	font-family: "STC-Bold";
+	margin-bottom:25px;
+	font-family: "Tajawal-Bold";
+}
+
+.certificate .subTitle
+{
+	font-size:25px;
+	margin-bottom:20px;
+}
+
+.certificate .name
+{
+	text-align: center;
+	display:block;
+	font-size:38px;
+	margin-bottom:20px;
+	font-family: "Tajawal-Bold";
+}
+
+.certificate .name span
+{
+	margin-left:50px;
+	display:inline-block
+}
+
+.certificate .subTitle2
+{
+	font-size:31px;
+	margin-bottom:23px;
+}
+
+.certificate .desc
+{
+	font-size:20px;
+}
+
+.certificate .desc span
+{
+	display:block;
+	margin-top:15px;
+	font-size:30px;
+}
+
+.certificate .ceo
+{
+	float:left;
+	width:424px;
+	text-align: right;
+	color:#fff;
+	margin-top:45px;
+	margin-bottom:6px;
+}
+
+.certificate .ceo .ceoTitle
+{
+	text-align:center;
+	font-size:15px;
+	margin-bottom:20px;
+	font-family: "Tajawal-Bold";
+}
+
+.certificate .ceo .ceoName
+{
+	font-size:13px;
+	margin-bottom:5px;
+	display:block
+}
+
+.certificate .ceo .ceoPosition
+{
+	font-size:13px;
+	display:block
+}
+
+.certificate .cerFooter
+{
+	color:#fff;
+	font-size:13px;
+	text-align:right;
+	padding:10px 30px 0;
+	display:flex;
+	justify-content:space-between
+}
+
+.certificate .cerFooter .date
+{
+	align-self:flex-end
+}
+
+.certificate .cerFooter .text
+{
+	display:block;
+	margin-bottom:5px;
+}
+
+.certificate .cerFooter .webSite
+{
+	align-self:flex-end
+}
+
+.certificate .cerFooter .copyRights
+{
+	align-self:flex-end
+}
+.certificate .cerFooter .copyRights span
+{
+	display:block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -11,7 +11,7 @@
 				        	@if($item->link == '#login')
 				        	
 				        		@if(\Session::has('user_id'))
-				        			<li><a href="{{ URL::to('/profile') }}" >بروفايلي</a></li>
+				        			<li><a href="{{ URL::to('/profile') }}" >الملف الشخصي</a></li>
 				        		@else
 						          	<li><a href="#" data-toggle="modal" data-target="{{ $item->link }}">{{ $item->title }}</a></li>
 				        		@endif

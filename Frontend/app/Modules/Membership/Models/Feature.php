@@ -16,10 +16,10 @@ class Feature extends Model{
             ->first();
     }
 
-    static function dataList($status=null) {
+    static function dataList($status=null,$ids=null) {
         $input = \Request::all();
 
-        $source = self::NotDeleted()->where(function ($query) use ($input,$status) {
+        $source = self::NotDeleted()->where(function ($query) use ($input,$status,$ids) {
                     if (isset($input['title']) && !empty($input['title'])) {
                         $query->where('title', 'LIKE', '%' . $input['title'] . '%');
                     } 
@@ -28,6 +28,9 @@ class Feature extends Model{
                     } 
                     if($status != null){
                         $query->where('status',$status);
+                    }
+                    if($ids != null){
+                        $query->whereIn('id',$ids);
                     }
                 })->orderBy('sort','ASC');
 
