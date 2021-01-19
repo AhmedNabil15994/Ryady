@@ -121,7 +121,8 @@ class MembershipControllers extends Controller {
         $menuObj->membership_id = $input['membership_id'];
         $menuObj->start_date = $start_date;
         $menuObj->end_date = $end_date;
-        $menuObj->status = 2;
+        // $menuObj->status = 2;
+        $menuObj->status = 1;
         $menuObj->sort = UserCard::newSortIndex();
         $menuObj->created_at = DATE_TIME;
         $menuObj->created_by = $userObj->id;
@@ -132,7 +133,8 @@ class MembershipControllers extends Controller {
             $userRequestObj->user_id = $userObj->id;
             $userRequestObj->membership_id = $input['membership_id'];
             $userRequestObj->user_card_id = $menuObj->id;
-            $userRequestObj->status = 2;
+            // $userRequestObj->status = 2;
+            $userRequestObj->status = 1;
             $userRequestObj->sort = UserRequest::newSortIndex();
             $userRequestObj->created_at = DATE_TIME;
             $userRequestObj->created_by = $userObj->id;

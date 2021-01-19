@@ -322,7 +322,8 @@ class ProfileControllers extends Controller {
             $userRequestObj->user_id = $userObj->id;
             $userRequestObj->membership_id = $id;
             $userRequestObj->user_card_id = $menuObj->id;
-            $userRequestObj->status = 2;
+            // $userRequestObj->status = 2;
+            $userRequestObj->status = 1;
             $userRequestObj->sort = UserRequest::newSortIndex();
             $userRequestObj->created_at = DATE_TIME;
             $userRequestObj->created_by = $user_id;
