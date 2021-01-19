@@ -42,7 +42,7 @@
             <div class="desc">
                 {{ $data->pages[0]->title }}
             </div>
-            <a href="#" class="btnStyle">انضم الينا</a>
+            <a class="btnStyle">انضم الينا</a>
         </div>
     </div>
 @endsection

@@ -3,6 +3,12 @@
 @section('title','تفاصيل العضويات')
 
 @section('styles')
+<style type="text/css" media="screen">
+    label{
+        color: #001C54;
+        font-size: 18px;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -24,8 +30,11 @@
                     <form class="formStyle" method="POST" action="{{ URL::current() }}">
                         @csrf
                         <h2 class="title">نموذج طلب عضوية</h2>
+                        <label for="">اسمك على البطاقة بالعربي</label>
                         <input type="text" name="name_ar" class="inputStyle" placeholder="اسمك على البطاقة بالعربي" />
+                        <label for="">اسمك على البطاقة بالإنجليزي</label>
                         <input type="text" name="name_en" class="inputStyle" placeholder="اسمك على البطاقة بالإنجليزي" />
+                        <label for="">اختر العضوية</label>
                         <div class="selectStyle">
                             <select class="selectmenu" id="selectmenu" name="membership_id">
                                 @foreach($data->memberships as $membership)
@@ -34,23 +43,24 @@
                             </select>
                             <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
                         </div>
+                        <label for="">رقم الجوال</label>
                         <input type="text" class="inputStyle" name="phone" placeholder="رقم الجوال" />
-                        <input type="text" class="inputStyle " name="code" value="{{ $data->code }}" readonly placeholder="رقم البطاقة" />
-                        <div class="dateStyle">
+                        {{-- <input type="text" class="inputStyle hidden" name="code" value="{{ $data->code }}" readonly placeholder="رقم البطاقة" /> --}}
+                        {{-- <div class="dateStyle hidden">
                             <input type="text" class="inputStyle" id="fromDate" name="start_date" value="{{ now()->format('d/m/Y') }}" placeholder="بداية من" />
                             <i class="flaticon-school-calendar"></i>
-                        </div>
-                        <div class="dateStyle">
+                        </div> --}}
+                        {{-- <div class="dateStyle hidden">
                             <input type="text" class="inputStyle" id="toDate" name="end_date" value="{{ $data->end_date }}" placeholder="الانتهاء الي" />
                             <i class="flaticon-school-calendar"></i>
                         </div>
-                        <label class="checkStyle">
+                        <label class="checkStyle hidden">
                             <input type="checkbox" name="user_request" checked />
                             <i></i>
                             بطاقة مطبوعة رسوم اضافية 100 ريال
-                        </label>
+                        </label> --}}
                         <label class="checkStyle">
-                            <input type="checkbox" checked />
+                            <input type="checkbox" id="privcy" />
                             <i></i>
                             الشروط والحكام
                         </label>
@@ -92,8 +102,8 @@
                             <ul class="listDetails">
                                 <li class="active">اختر البطاقة المناسبة لك</li>
                                 <li class="active">ادخل معلومات الحقول</li>
-                                <li>اختر طريقة الدفع</li>
-                                <li>ارسال طلب البطاقة</li>
+                                <li class="active">اختر طريقة الدفع</li>
+                                <li class="active">ارسال طلب البطاقة</li>
                             </ul>
                             <div class="memberStyle">
                                 <h2 class="titleMem">عضوية {{ $data->data->title }}</h2>
@@ -107,6 +117,10 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('modals')
+@include('Partials.privacyModal')
 @endsection
 
 @section('scripts')

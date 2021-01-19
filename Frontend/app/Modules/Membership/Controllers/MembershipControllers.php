@@ -25,8 +25,8 @@ class MembershipControllers extends Controller {
             'name_en' => 'required',
             'membership_id' => 'required',
             'phone' => 'required|min:10',//|regex:/(01)[0-9]{9}/',
-            'start_date' => 'required',
-            'end_date' => 'required',
+            // 'start_date' => 'required',
+            // 'end_date' => 'required',
         ];
 
         $message = [
@@ -35,8 +35,8 @@ class MembershipControllers extends Controller {
             'membership_id.required' => "يرجي اختيار نوع العضوية",
             'phone.required' => "يرجي ادخال رقم الجوال",
             'phone.min' => "رقم الجوال يجب ان يكون 10 خانات",
-            'start_date.required' => "يرجي ادخال تاريخ البداية",
-            'end_date.required' => "يرجي ادخال تاريخ النهاية",
+            // 'start_date.required' => "يرجي ادخال تاريخ البداية",
+            // 'end_date.required' => "يرجي ادخال تاريخ النهاية",
 
         ];
 
@@ -89,8 +89,8 @@ class MembershipControllers extends Controller {
             return redirect()->back()->withInput();
         }
 
-        $start_date = date('Y-m-d',strtotime(str_replace('/', '-', $input['start_date'])));
-        $end_date = date('Y-m-d',strtotime(str_replace('/', '-', $input['end_date'])));
+        $start_date = now()->format('Y-m-d');
+        $end_date = date("Y-m-d", strtotime(now()->format('Y-m-d'). " + ".$membershipObj->period." year"));
 
         $rand = rand(100,100000);
         $username = str_replace(' ', '', $input['name_en']) . '-' . $rand;

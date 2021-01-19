@@ -9,7 +9,6 @@
 					@foreach($bottomMenu as $key => $item)
 				        @if($item->link != '')
 				        	@if($item->link == '#login')
-				        	
 				        		@if(\Session::has('user_id'))
 				        			<li><a href="{{ URL::to('/profile') }}" >الملف الشخصي</a></li>
 				        		@else
@@ -63,10 +62,10 @@
 	<div class="footerDown">
 		<div class="container clearfix">
 			<span class="dowloadTitle">حمل التطبيق</span>
-			<a href="{{ \App\Models\Variable::getVar('رابط الاندرويد:') }}" target="_blank" class="mob"><img src="{{ asset('/assets/images/logoApple.png') }}" /></a>
-			<a href="{{ \App\Models\Variable::getVar('رابط ال ios:') }}" target="_blank" class="mob"><img src="{{ asset('/assets/images/logoGoogle.png') }}" /></a>
+			<a href="{{ \App\Models\Variable::getVar('رابط ال ios:') }}" target="_blank" class="mob"><img src="{{ asset('/assets/images/logoApple.png') }}" /></a>
+			<a href="{{ \App\Models\Variable::getVar('رابط الاندرويد:') }}" target="_blank" class="mob"><img src="{{ asset('/assets/images/logoGoogle.png') }}" /></a>
 			<p class="copyRights">© {{ date('Y') }} جميع الحقوق محفوظة للشاب الريادي</p>
-			<a href="#" class="logoServers wow fadeInLeft"><img src="{{ asset('/assets/images/logoServers.png') }}" /></a>
+			<a href="https://servers.com.sa/" class="logoServers wow fadeInLeft"><img src="{{ asset('/assets/images/logoServers.png') }}" /></a>
 		</div>
 	</div>
 </div>	    

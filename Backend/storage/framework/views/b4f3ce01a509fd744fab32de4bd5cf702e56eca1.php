@@ -73,7 +73,6 @@
                             <?php elseif($variable->var_type == 4): ?>
                             <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
                                 <div class="col-lg-12">
-                                    <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">الصورة</label>
                                     <div class="dropzone dropzone-default" id="kt_dropzone_111" data-area="<?php echo e($variable->id); ?>">
                                         <div class="dropzone-msg dz-message needsclick">
                                             <h3 class="dropzone-msg-title"><i class="flaticon-upload-1 fa-4x"></i></h3>

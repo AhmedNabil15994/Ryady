@@ -116,6 +116,9 @@ class User extends Model{
     }
 
     static function getPhotoSize($url){
+        if($url == "" || !is_file($url)){
+            return '';
+        }
         $image = get_headers($url, 1);
         $bytes = $image["Content-Length"];
         $mb = $bytes/(1024 * 1024);

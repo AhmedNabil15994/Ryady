@@ -122,7 +122,7 @@
     		<div class="clearfix hidden-sm hidden-xs wow bounceIn">
                 @foreach($data->projectCategories as $key => $category)
                 @if(in_array($key, [0,1,2,3,4]))
-    			<a href="#" class="itemProject">
+    			<a class="itemProject">
     				<i class="{{ $category->icon }}"></i>
     				<h2 class="titleItem">{{ $category->title }}</h2>
     			</a>
@@ -133,7 +133,7 @@
 	        <div id="OwlProj" class="OwlProj visible-sm visible-xs Owl wow zoomIn">
                 @foreach($data->projectCategories as $key => $category)
 	            <div class="item">
-	    			<a href="#" class="itemProject">
+	    			<a class="itemProject">
 	    				<i class="{{ $category->icon }}"></i>
 	    				<h2 class="titleItem">{{ $category->title }}</h2>
 	    			</a>

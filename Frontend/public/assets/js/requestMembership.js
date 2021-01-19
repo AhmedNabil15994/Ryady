@@ -61,5 +61,10 @@ $(function(){
         },
 	});
 
+	$('#privcy').on('change',function(){
+		if($(this).is(":checked")){
+			$('#ModalPrivacy').modal('toggle');
+		}
+	})
 
 });

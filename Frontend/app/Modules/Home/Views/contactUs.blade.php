@@ -37,7 +37,7 @@
                         <input type="text" class="inputStyle" name="address" value="{{ old('address') }}" placeholder="عنوان الرسالة" />
                     </div>
                     <div class="col-md-12">
-                        <textarea class="textareaStyle" name="message" placeholder="عنوان الرسالة"></textarea>
+                        <textarea class="textareaStyle" name="message" placeholder="محتوي الرسالة"></textarea>
                     </div>
                 </div>
                 <button type="submit" class="btnStyle">ارسال رسالة</button>
