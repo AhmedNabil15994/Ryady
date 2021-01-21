@@ -8,7 +8,7 @@
 @section('content')
 	<div class="slider">
     	<div class="containerSlider clearfix">
-    		<img src="{{ asset('/assets/images/slider.png') }}" class="wow fadeInLeft" alt="" />
+    		<img src="{{ asset('/assets/images/BG.png') }}" class="wow fadeInLeft" alt="" />
     		<h2 class="title wow fadeInRight">
     			{{ $data->pages[0]->title }}
 				{!! $data->pages[0]->description !!}

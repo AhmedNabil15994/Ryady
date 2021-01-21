@@ -56,16 +56,17 @@
 						<li><a href="{{ \App\Models\Variable::getVar('رابط انستجرام:') }}" target="_blank" class="fa fa-instagram"></a></li>
 					</ul>
 				</div>
+				<a href="{{ \App\Models\Variable::getVar('رابط ال ios:') }}" target="_blank" class="mob"><img src="{{ asset('/assets/images/logoApple.png') }}" /></a>
+				<a href="{{ \App\Models\Variable::getVar('رابط الاندرويد:') }}" target="_blank" class="mob"><img src="{{ asset('/assets/images/logoGoogle.png') }}" /></a>
 			</div>
 		</div>
 	</div>
 	<div class="footerDown">
 		<div class="container clearfix">
-			<span class="dowloadTitle">حمل التطبيق</span>
-			<a href="{{ \App\Models\Variable::getVar('رابط ال ios:') }}" target="_blank" class="mob"><img src="{{ asset('/assets/images/logoApple.png') }}" /></a>
-			<a href="{{ \App\Models\Variable::getVar('رابط الاندرويد:') }}" target="_blank" class="mob"><img src="{{ asset('/assets/images/logoGoogle.png') }}" /></a>
-			<p class="copyRights">© {{ date('Y') }} جميع الحقوق محفوظة لبرنامج الشاب الريادي</p>
-			<a href="https://servers.com.sa/" class="logoServers wow fadeInLeft"><img src="{{ asset('/assets/images/logoServers.png') }}" /></a>
+			<a href="https://servers.com.sa/" class="logoServers2 wow fadeInLeft"><img src="{{ asset('/assets/images/logoServers.png') }}" /></a>
+			<p class="copyRights text-center">© {{ date('Y') }} جميع الحقوق محفوظة لبرنامج الشاب الريادي </p>
+			<a href="https://businesspro.sa/" class="logoServers wow fadeInRight"><img src="{{ asset('/assets/images/BP.svg') }}" /></a>
+			<div class="clearfix"></div>
 		</div>
 	</div>
 </div>	    

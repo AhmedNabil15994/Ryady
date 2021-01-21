@@ -1089,12 +1089,26 @@ input[type="number"] {
 	margin-top:10px;
 	color:#B4B4B4;
 	font-size:15.5px;
-	float:right;
+	display: inline-block;
+	width: 30%;
 }
 
 .footer .footerDown .logoServers
 {
 	float:left;
+	width: 30%;
+	display: inline-block;
+	text-align: left;
+}
+.footer .footerDown .logoServers2{
+	float: right;
+	margin-left: 20px;
+	width: 30%;
+	display: inline-block;
+}
+.footer .footerDown .logoServers img{
+	width: 170px;
+	height: 40px;
 }
 
 /* ------------------------------------------ */
