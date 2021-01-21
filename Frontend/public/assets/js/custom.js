@@ -172,16 +172,17 @@ $(function(){
 	  $('#login .btnModal').on('click',function(e){
         e.preventDefault();
         e.stopPropagation();
-        var name_ar = $('input[name="name_ar"]').val();
-        var phone = $('input[name="phone"]').val();
-        if(name_ar && phone){
+        var password = $('#login input[name="password"]').val();
+        var phone = $('#login input[name="phone"].inputStyle').val();
+        
+        if(password && phone){
             $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
             $.ajax({
                 type: 'POST',
                 url: '/profile/login',
                 data:{
                     '_token': $('meta[name="csrf-token"]').attr('content'),
-                    'name_ar': name_ar,
+                    'password': password,
                     'phone': phone,
                 },
                 success:function(data){

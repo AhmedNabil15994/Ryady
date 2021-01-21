@@ -100,9 +100,8 @@ class User extends Model{
     }
 
 
-    static function getLoginUser($name_ar,$phone){
+    static function getLoginUser($phone){
         $userObj = self::NotDeleted()
-            ->where('name_ar', $name_ar)
             ->where('phone', $phone)
             ->where('is_active', 1)
             ->where('status', 1)

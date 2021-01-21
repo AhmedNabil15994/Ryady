@@ -98,7 +98,7 @@
     	<div class="container">
     		<div class="details">
 	    		<h2 class="title">{{ $data->pages[2]->title }}</h2>
-	    		<a href="#" class="btnStyle">انضم الينا الآن</a>
+	    		<a href="{{ URL::to('/joinUs') }}" class="btnStyle">انضم الينا الآن</a>
     		</div>
     		<div class="left  wow fadeInLeft">
     			<div class="desc">{!! $data->pages[2]->description !!}</div>

@@ -40,7 +40,7 @@
             <div class="desc">
                 {{ $data->pages[0]->title }}
             </div>
-            <a href="#" class="btnStyle">{!! $data->pages[0]->description !!}</a>
+            <a href="{{ URL::to('/joinUs') }}" class="btnStyle">{!! $data->pages[0]->description !!}</a>
         </div>
     </div>
 @endsection

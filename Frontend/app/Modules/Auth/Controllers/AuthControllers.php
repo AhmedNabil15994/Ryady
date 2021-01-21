@@ -18,12 +18,12 @@ class AuthControllers extends Controller {
         $input = \Request::all();
         $attempts = session()->get('login.attempts', 0);
         $rules = array(
-            'name_ar' => 'required',
+            'password' => 'required',
             'phone' => 'required',
         );
 
         $message = array(
-            'name_ar.required' => "يرجي ادخال اسم علي البطاقة بالعربي",
+            'password.required' => "يرجي ادخال كلمة المرور",
             'phone.required' => "يرجي ادخال رقم الجوال",
         );
 
@@ -33,10 +33,16 @@ class AuthControllers extends Controller {
             return \TraitsFunc::ErrorMessage($validate->messages()->first());
         }
        
-        $userObj = User::getLoginUser($input['name_ar'],$input['phone']);
+        $userObj = User::getLoginUser($input['phone']);
 
         if ($userObj == null) {
             return \TraitsFunc::ErrorMessage("هذا المستخدم غير موجود او غير مفعل");
+        }
+
+        $checkPassword = Hash::check($input['password'], $userObj->password);
+
+        if ($checkPassword == null) {
+            return \TraitsFunc::ErrorMessage("كلمة المرور غير صحيحة");
         }
 
         $username = $userObj->username;

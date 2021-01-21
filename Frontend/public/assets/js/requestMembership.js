@@ -2,7 +2,10 @@ $(function(){
 
 	$('#selectmenu[name="membership_id"]').on('selectmenuchange', function() {
 	    $id = $(this).val();
-		window.location.href = '/memberships/requestMemberShip/'+$id;
+	    var name_ar = $('input[name="name_ar"]').val();
+	    var name_en = $('input[name="name_en"]').val();
+	    var phone = $('input[name="phone"]').val();
+		window.location.href = '/memberships/requestMemberShip/'+$id+'?name_ar='+name_ar+'&name_en='+name_en+'&phone='+phone;
 	});
 
 	$('input[name="name_ar"]').on("blur",function(){

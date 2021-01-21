@@ -31,9 +31,9 @@
                         @csrf
                         <h2 class="title">نموذج طلب عضوية</h2>
                         <label for="">اسمك على البطاقة بالعربي</label>
-                        <input type="text" name="name_ar" class="inputStyle" placeholder="اسمك على البطاقة بالعربي" />
+                        <input type="text" name="name_ar" value="{{ \Request::get('name_ar') }}" class="inputStyle"/>
                         <label for="">اسمك على البطاقة بالإنجليزي</label>
-                        <input type="text" name="name_en" class="inputStyle" placeholder="اسمك على البطاقة بالإنجليزي" />
+                        <input type="text" name="name_en" value="{{ \Request::get('name_en') }}" class="inputStyle"/>
                         <label for="">اختر العضوية</label>
                         <div class="selectStyle">
                             <select class="selectmenu" id="selectmenu" name="membership_id">
@@ -44,7 +44,9 @@
                             <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
                         </div>
                         <label for="">رقم الجوال</label>
-                        <input type="text" class="inputStyle" name="phone" placeholder="رقم الجوال" />
+                        <input type="text" class="inputStyle" value="{{ \Request::get('phone') }}" name="phone"/>
+                        <label for="">كلمة المرور</label>
+                        <input type="password" class="inputStyle" name="password"/>
                         {{-- <input type="text" class="inputStyle hidden" name="code" value="{{ $data->code }}" readonly placeholder="رقم البطاقة" /> --}}
                         {{-- <div class="dateStyle hidden">
                             <input type="text" class="inputStyle" id="fromDate" name="start_date" value="{{ now()->format('d/m/Y') }}" placeholder="بداية من" />
@@ -76,19 +78,19 @@
                                 $img = '';
                                 $class = '';
                                 if($data->data->id == 1){
-                                    $img = 'Purple.png';
+                                    $img = 'Purple_test.png';
                                     $class = 'bgPurple';
                                 }else if($data->data->id == 2){
-                                    $img = 'green.png';
+                                    $img = 'green_test.png';
                                     $class = 'bgGreen';
                                 }else if($data->data->id == 3){
-                                    $img = 'blue.png';
+                                    $img = 'blue_test.png';
                                     $class = 'bgBlue';
                                 }
                             @endphp    
                             <img src="{{ asset('/assets/images/'.$img) }}" alt="" class="bg" />
-                            <h2 class="titleAr" id="lblValue">خالد بن محمد</h2>
-                            <h2 class="titleEn" id="lblValue2">Khalid bin Mohammed</h2>
+                            <h2 class="titleAr" id="lblValue">{{ \Request::get('name_ar') }}</h2>
+                            <h2 class="titleEn" id="lblValue2">{{ \Request::get('name_en') }}</h2>
                             <img class="logo" src="{{ asset('/assets/images/logo.svg') }}" alt="" />
                             <div class="details">
                                 {!! $data->qrCode !!}

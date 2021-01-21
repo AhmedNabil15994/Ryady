@@ -153,6 +153,7 @@ $('#kt_dropzone_1').dropzone({
     },
     success:function(file,data){
         if(data){
+            data = JSON.parse(data);
             if(data.status.status != 1){
                 errorNotification(data.status.message);
             }
@@ -198,6 +199,7 @@ $('#kt_dropzone_11').dropzone({
     },
     success:function(file,data){
         if(data){
+            data = JSON.parse(data);
             if(data.status.status != 1){
                 errorNotification(data.status.message);
             }
@@ -225,6 +227,7 @@ $('a.DeletePhoto').on('click',function(e){
             'id': id,
         },
         success:function(data){
+            data = JSON.parse(data);
             if(data.status.status == 1){
                 successNotification(data.status.message);
                 $('#my-preview').remove();
@@ -251,6 +254,7 @@ $('a.DeletePhotoS').on('click',function(e){
             'name': name,
         },
         success:function(data){
+            data = JSON.parse(data);
             if(data.status.status == 1){
                 successNotification(data.status.message);
                 elemParent.remove();

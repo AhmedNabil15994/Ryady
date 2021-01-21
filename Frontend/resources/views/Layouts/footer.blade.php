@@ -64,7 +64,7 @@
 			<span class="dowloadTitle">حمل التطبيق</span>
 			<a href="{{ \App\Models\Variable::getVar('رابط ال ios:') }}" target="_blank" class="mob"><img src="{{ asset('/assets/images/logoApple.png') }}" /></a>
 			<a href="{{ \App\Models\Variable::getVar('رابط الاندرويد:') }}" target="_blank" class="mob"><img src="{{ asset('/assets/images/logoGoogle.png') }}" /></a>
-			<p class="copyRights">© {{ date('Y') }} جميع الحقوق محفوظة للشاب الريادي</p>
+			<p class="copyRights">© {{ date('Y') }} جميع الحقوق محفوظة لبرنامج الشاب الريادي</p>
 			<a href="https://servers.com.sa/" class="logoServers wow fadeInLeft"><img src="{{ asset('/assets/images/logoServers.png') }}" /></a>
 		</div>
 	</div>

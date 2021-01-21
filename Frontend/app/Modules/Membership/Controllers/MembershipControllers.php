@@ -25,6 +25,7 @@ class MembershipControllers extends Controller {
             'name_en' => 'required',
             'membership_id' => 'required',
             'phone' => 'required|min:10',//|regex:/(01)[0-9]{9}/',
+            'password' => 'required',
             // 'start_date' => 'required',
             // 'end_date' => 'required',
         ];
@@ -35,6 +36,7 @@ class MembershipControllers extends Controller {
             'membership_id.required' => "يرجي اختيار نوع العضوية",
             'phone.required' => "يرجي ادخال رقم الجوال",
             'phone.min' => "رقم الجوال يجب ان يكون 10 خانات",
+            'password.required' => "يرجي ادخال كلمة المرور",
             // 'start_date.required' => "يرجي ادخال تاريخ البداية",
             // 'end_date.required' => "يرجي ادخال تاريخ النهاية",
 
@@ -62,7 +64,7 @@ class MembershipControllers extends Controller {
         }
         $data['memberships'] = Membership::dataList(1)['data'];
         $data['data'] = Membership::getData($membershipObj);
-        $data['code'] = (string) UserCard::getNewCode(); 
+        $data['code'] = '000000';//(string) UserCard::getNewCode(); 
         $data['qrCode'] = \QrCode::size(80)->generate($data['code']);
         $data['end_date'] = date('d/m/Y',strtotime(date("Y-m-d", strtotime(now()->format('Y-m-d'))) . " + ".$membershipObj->period." year"));
         $data['end_date2'] = date('m/Y',strtotime(date("Y-m-d", strtotime(now()->format('Y-m-d'))) . " + ".$membershipObj->period." year"));
@@ -104,6 +106,7 @@ class MembershipControllers extends Controller {
         $userObj->name_ar = $input['name_ar'];
         $userObj->name_en = $input['name_ar'];
         $userObj->username = $username;
+        $userObj->password = \Hash::make($input['password']);
         $userObj->group_id = 3;
         $userObj->phone = $input['phone'];
         $userObj->show_details = 0;

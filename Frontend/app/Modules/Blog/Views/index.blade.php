@@ -64,7 +64,7 @@
             <div class="desc">
                 {{ $data->pages[0]->title }}
             </div>
-            <a class="btnStyle">انضم الينا</a>
+            <a href="{{ URL::to('/joinUs') }}" class="btnStyle">انضم الينا</a>
         </div>
     </div>
 @endsection

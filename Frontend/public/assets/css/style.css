@@ -239,7 +239,21 @@ input[type="number"] {
 	max-width:100%;
 }
 
-
+#toast-container,.toast{
+	width: 99% !important;
+}
+#toast-container >div {
+    width: 100% !important;
+   	opacity: 1;
+   	box-shadow: none;
+   	padding-right: 15px;
+}
+#toast-container .toast-close-button {
+   top: -10px;
+}
+#toast-container >div:hover{
+   box-shadow: none !important;
+}
 
 .transformPage
 {
@@ -598,6 +612,8 @@ input[type="number"] {
 	box-shadow: 0px 9px 20px 5px rgba(0,0,0,0.09);
 	border-radius: 5px;
 	margin-bottom:35px;
+	width: 292px;
+	height: 174px;
 }
 
 .plans .item .title
@@ -3830,7 +3846,7 @@ input[name="gmaps"]{
 {
 	color:#fff;
 	font-family: "STC-Bold";
-	margin-bottom:10px;
+	padding-bottom:10px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

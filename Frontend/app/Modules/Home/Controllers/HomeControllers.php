@@ -9,6 +9,7 @@ use App\Models\Page;
 use App\Models\BottomMenu;
 use App\Models\SideMenu;
 use App\Models\Membership;
+use App\Models\Feature;
 use App\Models\ProjectCategory;
 use App\Models\UserMember;
 use App\Models\UserCard;
@@ -181,5 +182,11 @@ class HomeControllers extends Controller {
         WebActions::newType(2,'ContactUs',1);
         \Session::flash('success', 'تنبيه! تم الارسال بنجاح');
         return redirect()->back();
+    }
+
+    public function joinUs(){
+        $data['memberships'] = Membership::dataList(1)['data'];
+        $data['features'] = Feature::dataList(1)['data'];
+        return view('Home.Views.joinUs')->with('data',(object) $data);
     }
 }
