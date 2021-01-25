@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header @yield('header-class')">
   <div class="container-fluid">
     <i class="iconMenu">
       <svg xmlns="http://www.w3.org/2000/svg" width="30" height="22" viewBox="0 0 30 22">

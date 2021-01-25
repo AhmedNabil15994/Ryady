@@ -17,7 +17,6 @@
         <meta name="keywords" content="{{ $meta }}">
         <title>{{ $title }} - @yield('title')</title>
         @include('Layouts.head')
-        @include('Partials.notf_messages')
     </head>
     <body>
         @include('Layouts.mobileMenu')    
@@ -34,5 +33,6 @@
         @yield('modals')
         
         @include('Layouts.scripts')
+        @include('Partials.notf_messages')
     </body>
 </html>

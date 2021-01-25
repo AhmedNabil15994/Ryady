@@ -175,13 +175,13 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="dateStyle">
-                                                <input type="text" class="inputStyle" name="start_date" id="fromDate" placeholder="بداية من" value="{{ date('d/m/Y',strtotime($data->membership->start_date)) }}" />
+                                                <input type="text" class="inputStyle" readonly name="start_date" placeholder="بداية من" value="{{ date('d/m/Y',strtotime($data->membership->start_date)) }}" />
                                                 <i class="flaticon-school-calendar"></i>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="dateStyle">
-                                                <input type="text" class="inputStyle" name="end_date" id="toDate" placeholder="الانتهاء الي" value="{{ date('d/m/Y',strtotime($data->membership->end_date)) }}" />
+                                                <input type="text" class="inputStyle" readonly name="end_date" placeholder="الانتهاء الي" value="{{ date('d/m/Y',strtotime($data->membership->end_date)) }}" />
                                                 <i class="flaticon-school-calendar"></i>
                                             </div>
                                         </div>

@@ -47,6 +47,31 @@ class MembershipControllers extends Controller {
         return $validate;
     }
 
+    protected function validatePayment($input){
+        $rules = [
+            'card_no' => 'required',
+            'card_holder' => 'required',
+            'payment_type' => 'required',
+            'year' => 'required',
+            'expire_date' => 'required',
+            'cvc' => 'required',
+        ];
+
+        $message = [
+            'card_no.required' => "يرجي ادخال رقم البطاقة",
+            'card_holder.required' => "يرجي ادخال اسم حامل البطاقة",
+            'payment_type.required' => "يرجي اختيار نوع الدفع",
+            'year.required' => "يرجي ادخال سنة الانتهاء",
+            'expire_date.required' => "يرجي ادخال تاريخ انتهاء البطاقة",
+            'cvc.required' => "يرجي ادخال الرقم السري",
+        ];
+
+        $validate = \Validator::make($input, $rules, $message);
+
+        return $validate;
+    }
+
+
     public function index(){
         $data['advantages'] = Advantage::dataList(1)['data'];
         $data['benefits'] = Benefit::dataList(1)['data'];
@@ -104,15 +129,16 @@ class MembershipControllers extends Controller {
     
         $userObj = new User;
         $userObj->name_ar = $input['name_ar'];
-        $userObj->name_en = $input['name_ar'];
+        $userObj->name_en = $input['name_en'];
         $userObj->username = $username;
+        $userObj->email = $username.'@alshabalriyadi.com';
         $userObj->password = \Hash::make($input['password']);
         $userObj->group_id = 3;
         $userObj->phone = $input['phone'];
         $userObj->show_details = 0;
         $userObj->lang = 0;
-        $userObj->status = 1;
-        $userObj->is_active = 1;
+        $userObj->status = 0;
+        $userObj->is_active = 0;
         $userObj->sort = User::newSortIndex();
         $userObj->created_at = DATE_TIME;
         $userObj->created_by = 0;
@@ -124,8 +150,8 @@ class MembershipControllers extends Controller {
         $menuObj->membership_id = $input['membership_id'];
         $menuObj->start_date = $start_date;
         $menuObj->end_date = $end_date;
-        // $menuObj->status = 2;
-        $menuObj->status = 1;
+        $menuObj->status = 2;
+        // $menuObj->status = 1;
         $menuObj->sort = UserCard::newSortIndex();
         $menuObj->created_at = DATE_TIME;
         $menuObj->created_by = $userObj->id;
@@ -136,21 +162,112 @@ class MembershipControllers extends Controller {
             $userRequestObj->user_id = $userObj->id;
             $userRequestObj->membership_id = $input['membership_id'];
             $userRequestObj->user_card_id = $menuObj->id;
-            // $userRequestObj->status = 2;
-            $userRequestObj->status = 1;
+            $userRequestObj->status = 2;
+            // $userRequestObj->status = 1;
             $userRequestObj->sort = UserRequest::newSortIndex();
             $userRequestObj->created_at = DATE_TIME;
             $userRequestObj->created_by = $userObj->id;
             $userRequestObj->save();
             WebActions::newType(1,'UserRequest',$userObj->id);
+            \Session::put('user_request_id',$userRequestObj->id);
         }
 
-
+        \Session::put('user_id',$userObj->id);
+        \Session::put('user_card_id',$menuObj->id);
         WebActions::newType(1,'UserCard',$userObj->id);
         WebActions::newType(1,'User',$userObj->id);
         \Session::flash('success', 'تنبيه! تم ارسال الطلب بنجاح');
-        return redirect()->back();
-        
+        // return redirect()->back();
+        return redirect('/memberships/payment');
+    }
+
+    public function payment(){
+        $data['url'] = \URL::to('/memberships/payment');
+        return view('Membership.Views.payment')->with('data',(object) $data);
+    }
+
+    public function postPayment(){
+        $input = \Request::all();
+
+        $validate = $this->validatePayment($input);
+        if($validate->fails()){
+            \Session::flash('error', $validate->messages()->first());
+            return redirect()->back()->withInput();
+        }
+
+        if($input['payment_type'] == 1){
+            $company = 'master';
+        }elseif($input['payment_type'] == 2){
+            $company = 'visa';
+        }elseif($input['payment_type'] == 3){
+            $company = 'mada';
+        }
+
+        $userObj = User::getOne(\Session::get('user_id'));
+        $userCardObj = UserCard::getOne(\Session::get('user_card_id'));
+        if(\Session::has('user_request_id')){
+            $userRequestObj = UserRequest::getOne(\Session::get('user_request_id'));
+        }
+
+        $name = explode(' ', $userObj->name_en, 2);
+
+        $data = [
+            'type' => 'credit',
+            'amount' =>  $userCardObj->Membership->price,
+            'currency' => 'SAR',
+            'callback_url' => \URL::to('/profile'),
+            'customer' => [
+                'name' => $userObj->name,
+                'first_name' => isset($name[0]) ? $name[0]  : '',
+                'last_name' => isset($name[1]) ? $name[1]  : '',
+                "email" => $userObj->email,
+                "phone" => $userObj->phone,
+                "ip" => \Request::ip(),
+            ],
+            "source" => [
+                "company" => $company,
+                "card_number" => $input['card_no'],
+                "cvc" =>  $input['cvc'],
+                "month" =>  $input['expire_date'],
+                "year" =>  $input['year'],
+            ]
+        ];
+
+        $paymentObj = new \PaymentHelper();
+        $checkStatus = $paymentObj->payTabs($data);
+        if(!isset($checkStatus['errors']) && empty($checkStatus['errors'])){
+            $userObj->status = 1;
+            $userObj->is_active = 1;
+            $userObj->save();
+            \Session::forget('user_id');
+
+            $userCardObj->status = 1;
+            $userCardObj->save();
+            \Session::forget('user_card_id');
+
+            if(\Session::has('user_request_id')){
+                $userRequestObj->status = 1;
+                $userRequestObj->save();
+                \Session::forget('user_request_id');
+            }
+
+            $isAdmin = in_array($userObj->group_id, [1,]) ? true : false;
+            session(['group_id' => $userObj->group_id]);
+            session(['user_id' => $userObj->id]);
+            session(['email' => $userObj->email]);
+            session(['username' => $userObj->username]);
+            session(['is_admin' => $isAdmin]);
+            session(['group_name' => $userObj->Group->title]);
+
+            \Session::flash('success', 'تم الدفع وتفعيل البطاقة بنجاح');
+            return redirect()->to('/profile');
+        }else{
+            $erros = [];
+            foreach ($checkStatus['errors'] as $key => $error) {
+                \Session::flash('error', $key . ' '. $error[0]);   
+            }
+            return redirect()->back();
+        }   
     }
 
     public function features(){

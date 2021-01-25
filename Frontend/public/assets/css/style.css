@@ -3973,8 +3973,174 @@ input[name="gmaps"]{
 	z-index:-1
 }
 
+/* ------------------------------------------ */
+/*         payment
+/* ------------------------------------------ */
 
+.payment--component {
+	height: 100vh;
+	background-color: #fff;
+	position: relative;
+	display: grid;
+	justify-content: center;
+	align-content: center;
+	justify-items: center;
+	padding-top: 5%;
+	padding-bottom: 5%;
+}
 
+.payment-app {
+	background-color: #F6F8FA;
+	border-radius: 20px;
+	display: grid;
+	grid-auto-flow: row;
+	grid-template-columns: 100%;
+	justify-content: center;
+	align-content: center;
+	justify-items: center;
+}
+
+.payment-app h2 {
+	font-size: 30px;
+	color: #001c54;
+	font-family: "STC-Bold";
+	width: 100%;
+	text-align: center;
+}
+
+.payment-methods {
+	width: 100%;
+	display: grid;
+	grid-auto-flow: column;
+	align-items: center;
+	justify-content: space-between;
+	align-content: center;
+	justify-items: center;
+}
+
+.payment-methods .method {
+	max-height: 60px;
+}
+
+.payment-methods .method.master-card img {
+	align-self: end;
+}
+
+.payment-methods .method.active {
+	border: solid 1px #707070;
+	border-radius: 8px;
+	padding: 15px;
+}
+.payment-methods .method.visa.active{
+	padding: 0 24px;
+}
+.payment-methods .method.visa img {
+	height: 60px;
+}
+
+.payment-form {
+	display: grid;
+	grid-gap: 12px;
+	width: 100%;
+}
+
+.exp-area {
+	display: grid;
+	grid-auto-flow: column;
+	grid-template-columns: 30% calc(70% - 16px);
+	grid-gap: 16px;
+}
+
+.payment-form input {
+	background-color: #FFF;
+	width: 100%;
+	border-style: none;
+	outline: none;
+	text-align: left;
+	font-family: 'Tajawal', sans-serif;
+}
+
+.payment-form select {
+	background-color: #FFF;
+	width: 100%;
+	border-style: none;
+	outline: none;
+	text-align: left;
+	text-align: left;
+}
+
+.payment-form input::placeholder {
+	color: #000;
+	font-size: 16px;
+}
+
+.payment-form .selectStyle .selectmenu {
+	margin: 0;
+
+}
+
+.payment-form .dateStyle {
+	margin: 0;
+	font-size: 16px;
+	height: 55px;
+}
+
+.payment-form .dateStyle label {
+	position: absolute;
+	top: calc(50% - 8px);
+	right: 12px;
+	color: #000;
+	font-weight: bold;
+}
+
+.payment-form .btn {
+	font-size: 22px;
+	color: #A7ABAD;
+	background-color: #001c54;
+	height: 60px;
+}
+
+.payment-form .btn:hover {
+	font-size: 22px;
+	color: #001c54;
+	background-color: #A7ABAD;
+	border: 2px solid #001c54;
+}
+
+@media(max-width:660px) {
+	.payment-app {
+		width: 95%;
+		padding: 12px;
+		grid-gap: 24px;
+	}
+
+	.payment-form input {
+		padding: 12px;
+
+	}
+
+	.payment-form select {
+		padding: 12px;
+
+	}
+}
+
+@media(min-width:661px) {
+	.payment-app {
+
+		width: 54.939vw;
+		padding: 42px 46px;
+		grid-gap: 32px;
+	}
+
+	.payment-form input {
+		padding: 17px;
+	}
+
+	.payment-form select {
+		padding: 17px;
+	}
+}
 
 
 

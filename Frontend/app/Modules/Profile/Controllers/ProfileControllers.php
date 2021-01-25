@@ -96,9 +96,6 @@ class ProfileControllers extends Controller {
             'phone' => 'required|min:10',//|regex:/(01)[0-9]{9}/',
             'start_date' => 'required',
             'end_date' => 'required',
-            'logo' => 'required',
-            'images' => 'required',
-            'brief' => 'required',
         ];
 
         $message = [
@@ -108,10 +105,30 @@ class ProfileControllers extends Controller {
             'phone.min' => "رقم الجوال يجب ان يكون 10 خانات",
             'start_date.required' => "يرجي ادخال تاريخ البداية",
             'end_date.required' => "يرجي ادخال تاريخ النهاية",
-            'logo.required' => "يرجي ارفاق شعار النشاط",
-            'images.required' => "يرجي ارفاق صور عن النشاط",
-            'brief.required' => "يرجي ادخال نبذة عن المشروع",
+        ];
 
+        $validate = \Validator::make($input, $rules, $message);
+
+        return $validate;
+    }
+
+    protected function validatePayment($input){
+        $rules = [
+            'card_no' => 'required',
+            'card_holder' => 'required',
+            'payment_type' => 'required',
+            'year' => 'required',
+            'expire_date' => 'required',
+            'cvc' => 'required',
+        ];
+
+        $message = [
+            'card_no.required' => "يرجي ادخال رقم البطاقة",
+            'card_holder.required' => "يرجي ادخال اسم حامل البطاقة",
+            'payment_type.required' => "يرجي اختيار نوع الدفع",
+            'year.required' => "يرجي ادخال سنة الانتهاء",
+            'expire_date.required' => "يرجي ادخال تاريخ انتهاء البطاقة",
+            'cvc.required' => "يرجي ادخال الرقم السري",
         ];
 
         $validate = \Validator::make($input, $rules, $message);
@@ -266,10 +283,15 @@ class ProfileControllers extends Controller {
         $user_id =  USER_ID;
         $input = \Request::all();
 
+        $userObj = User::getOne($user_id);
         $avail = UserCard::getAvailableForUser($user_id);
         $oldMembership = $avail->membership_id;
         if($oldMembership == 3){
             \Session::flash('error', 'عفوا ! لا يمكنك ترقية البطاقة');
+            $userObj->name_ar = $input['name_ar'];
+            $userObj->name_en = $input['name_en'];
+            $userObj->phone = $input['phone'];
+            $userObj->save();
             return redirect()->back()->withInput();
         }
 
@@ -289,13 +311,10 @@ class ProfileControllers extends Controller {
         $start_date = date('Y-m-d',strtotime(str_replace('/', '-', $input['start_date'])));
         $end_date = date('Y-m-d',strtotime(str_replace('/', '-', $input['end_date'])));
 
-        $userObj = User::getOne($user_id);
 
         $userObj->name_ar = $input['name_ar'];
-        $userObj->name_en = $input['name_ar'];
+        $userObj->name_en = $input['name_en'];
         $userObj->phone = $input['phone'];
-        $userObj->status = 1;
-        $userObj->is_active = 1;
         $userObj->updated_at = DATE_TIME;
         $userObj->updated_by = $user_id;
         $userObj->save();
@@ -311,23 +330,28 @@ class ProfileControllers extends Controller {
         $menuObj->membership_id = $id;
         $menuObj->start_date = $start_date;
         $menuObj->end_date = $end_date;
-        $menuObj->status = 1;
+        // $menuObj->status = 1;
+        $menuObj->status = 2;
         $menuObj->sort = UserCard::newSortIndex();
         $menuObj->created_at = DATE_TIME;
         $menuObj->created_by = $user_id;
         $menuObj->save();
+
+        \Session::put("user_card_id",$menuObj->id);
+        \Session::put("must_paid", $membershipObj->price - $avail->price );
 
         if(isset($input['user_request']) && $input['user_request'] == 'on'){
             $userRequestObj = new UserRequest;
             $userRequestObj->user_id = $userObj->id;
             $userRequestObj->membership_id = $id;
             $userRequestObj->user_card_id = $menuObj->id;
-            // $userRequestObj->status = 2;
-            $userRequestObj->status = 1;
+            $userRequestObj->status = 2;
+            // $userRequestObj->status = 1;
             $userRequestObj->sort = UserRequest::newSortIndex();
             $userRequestObj->created_at = DATE_TIME;
             $userRequestObj->created_by = $user_id;
             $userRequestObj->save();
+            \Session::put("user_request_id",$userRequestObj->id);
             WebActions::newType(1,'UserRequest',$user_id);
         }
 
@@ -335,8 +359,91 @@ class ProfileControllers extends Controller {
         WebActions::newType(1,'UserCard',$user_id);
         WebActions::newType(2,'User',$user_id);
         \Session::flash('success', 'تنبيه! تم ارسال الطلب بنجاح');
-        return redirect()->back();
-        
+        return redirect('/profile/payment');
+        // return redirect()->back();
+    }
+
+    public function payment(){
+        $data['url'] = \URL::to('/profile/payment');
+        return view('Membership.Views.payment')->with('data',(object) $data);
+    }
+
+    public function postPayment(){
+        $input = \Request::all();
+
+        $validate = $this->validatePayment($input);
+        if($validate->fails()){
+            \Session::flash('error', $validate->messages()->first());
+            return redirect()->back()->withInput();
+        }
+
+        if($input['payment_type'] == 1){
+            $company = 'master';
+        }elseif($input['payment_type'] == 2){
+            $company = 'visa';
+        }elseif($input['payment_type'] == 3){
+            $company = 'mada';
+        }
+
+        $userObj = User::getOne(USER_ID);
+        $userCardObj = UserCard::getOne(\Session::get('user_card_id'));
+        if(\Session::has('user_request_id')){
+            $userRequestObj = UserRequest::getOne(\Session::get('user_request_id'));
+        }
+
+        $name = explode(' ', $userObj->name_en, 2);
+
+        $data = [
+            'type' => 'credit',
+            'amount' =>  \Session::get('must_paid'),
+            'currency' => 'SAR',
+            'callback_url' => \URL::to('/profile'),
+            'customer' => [
+                'name' => $userObj->name,
+                'first_name' => isset($name[0]) ? $name[0]  : '',
+                'last_name' => isset($name[1]) ? $name[1]  : '',
+                "email" => $userObj->email,
+                "phone" => $userObj->phone,
+                "ip" => \Request::ip(),
+            ],
+            "source" => [
+                "company" => $company,
+                "card_number" => $input['card_no'],
+                "cvc" =>  $input['cvc'],
+                "month" =>  $input['expire_date'],
+                "year" =>  $input['year'],
+            ]
+        ];
+
+        $paymentObj = new \PaymentHelper();
+        $checkStatus = $paymentObj->payTabs($data);
+        // return $checkStatus;
+        // dd($checkStatus);
+        if(!isset($checkStatus['errors']) && empty($checkStatus['errors'])){
+            $userObj->status = 1;
+            $userObj->is_active = 1;
+            $userObj->save();
+
+            $userCardObj->status = 1;
+            $userCardObj->save();
+            \Session::forget('user_card_id');
+            \Session::forget('must_paid');
+
+            if(\Session::has('user_request_id')){
+                $userRequestObj->status = 1;
+                $userRequestObj->save();
+                \Session::forget('user_request_id');
+            }
+
+            \Session::flash('success', 'تم الدفع وترقية البطاقة بنجاح');
+            return redirect()->to('/profile');
+        }else{
+            $erros = [];
+            foreach ($checkStatus['errors'] as $key => $error) {
+                \Session::flash('error', $key . ' '. $error[0]);   
+            }
+            return redirect()->back();
+        }
     }
 
     public function download($id){

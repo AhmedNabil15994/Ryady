@@ -21,5 +21,6 @@ Route::group(['prefix' => '/'] , function () {
     Route::get('/newOrder', 'ProfileControllers@newOrder');
     Route::post('/postOrder', 'ProfileControllers@postOrder');
 
-
+    Route::get('/payment', 'ProfileControllers@payment');
+    Route::post('/payment', 'ProfileControllers@postPayment');
 });
