@@ -19,6 +19,7 @@ class ImagesHelper {
 
         $path = Config::get('app.IMAGE_BASE');
         $checkFile = str_replace('Frontend', 'Backend', public_path() . '/uploads');
+        // $checkFile = str_replace('public_html', 'public_html/Backend', public_path() . '/uploads');
 
         switch ($strAction) {
             case "users":
@@ -101,6 +102,7 @@ class ImagesHelper {
 
         $path = public_path() . '/uploads/';
         $path = str_replace('Frontend', 'Backend', $path);
+        // $path = str_replace('public_html', 'public_html/Backend', $path);
 
         if ($strAction == 'users') {
             $directory = $path . 'users/' . $id;

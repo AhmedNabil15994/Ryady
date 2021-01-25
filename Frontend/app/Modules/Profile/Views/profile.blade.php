@@ -421,7 +421,7 @@
 @endsection
 
 @section('scripts')
-<script src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
+<script src='https://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
 <script src="{{ asset('/assets/js/locationpicker.jquery.js') }}"></script>
 <script src="{{ asset('/assets/js/profile.js') }}"></script>
 <script src="{{ asset('/assets/js/addProject.js') }}"></script>
