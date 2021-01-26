@@ -387,15 +387,17 @@ class ProfileControllers extends Controller {
 
         $userObj = User::getOne(USER_ID);
         $userCardObj = UserCard::getOne(\Session::get('user_card_id'));
+        $price = \Session::get('must_paid');
         if(\Session::has('user_request_id')){
             $userRequestObj = UserRequest::getOne(\Session::get('user_request_id'));
+            $price += 100;
         }
 
         $name = explode(' ', $userObj->name_en, 2);
 
         $data = [
             'type' => 'credit',
-            'amount' =>  \Session::get('must_paid'),
+            'amount' =>  $price,
             'currency' => 'SAR',
             'callback_url' => \URL::to('/profile'),
             'customer' => [

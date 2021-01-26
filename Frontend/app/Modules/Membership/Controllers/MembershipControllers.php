@@ -205,15 +205,17 @@ class MembershipControllers extends Controller {
 
         $userObj = User::getOne(\Session::get('user_id'));
         $userCardObj = UserCard::getOne(\Session::get('user_card_id'));
+        $price = $userCardObj->Membership->price;
         if(\Session::has('user_request_id')){
             $userRequestObj = UserRequest::getOne(\Session::get('user_request_id'));
+            $price += 100;
         }
 
         $name = explode(' ', $userObj->name_en, 2);
 
         $data = [
             'type' => 'credit',
-            'amount' =>  $userCardObj->Membership->price,
+            'amount' =>  $price,
             'currency' => 'SAR',
             'callback_url' => \URL::to('/profile'),
             'customer' => [
