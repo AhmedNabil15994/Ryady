@@ -744,6 +744,24 @@
         'viewTitle' => 'طلبات البطاقة المطبوعة',
         'modulePermissions' => 'edit-user-request,delete-user-request,sort-user-request,charts-user-request',
       ),
+      'CardPromotionsControllers@index' => 
+      array (
+        'title' => 'list-card-promotions',
+        'viewTitle' => 'ترقيات البطاقات',
+        'modulePermissions' => 'edit-card-promotion,delete-card-promotion,sort-card-promotion,charts-card-promotion',
+      ),
+      'UserCertificateControllers@index' => 
+      array (
+        'title' => 'list-user-certificate',
+        'viewTitle' => 'شهادات العضوية',
+        'modulePermissions' => 'download-user-certificate',
+      ),
+      'UserMemberControllers@index' => 
+      array (
+        'title' => 'list-user-members',
+        'viewTitle' => 'اعضاء الشاب الريادي',
+        'modulePermissions' => 'edit-user-member,add-user-member,delete-user-member,sort-user-member,charts-user-member',
+      ),
     ),
   ),
   'permissions' => 
@@ -1002,6 +1020,23 @@
     'UserRequestControllers@delete' => 'delete-user-request',
     'UserRequestControllers@fastEdit' => 'edit-user-request',
     'UserRequestControllers@charts' => 'charts-user-request',
+    'CardPromotionsControllers@index' => 'list-card-promotions',
+    'CardPromotionsControllers@softDelete' => 'delete-card-promotion',
+    'CardPromotionsControllers@delete' => 'delete-card-promotion',
+    'CardPromotionsControllers@fastEdit' => 'edit-card-promotion',
+    'CardPromotionsControllers@charts' => 'charts-card-promotion',
+    'UserCertificateControllers@index' => 'list-user-certificates',
+    'UserCertificateControllers@download' => 'download-user-certificate',
+    'UserMemberControllers@index' => 'list-user-members',
+    'UserMemberControllers@edit' => 'edit-user-member',
+    'UserMemberControllers@update' => 'edit-user-member',
+    'UserMemberControllers@fastEdit' => 'edit-user-member',
+    'UserMemberControllers@add' => 'add-user-member',
+    'UserMemberControllers@create' => 'add-user-member',
+    'UserMemberControllers@delete' => 'delete-user-member',
+    'UserMemberControllers@arrange' => 'sort-user-member',
+    'UserMemberControllers@sort' => 'sort-user-member',
+    'UserMemberControllers@charts' => 'charts-user-member',
   ),
   'queue' => 
   array (

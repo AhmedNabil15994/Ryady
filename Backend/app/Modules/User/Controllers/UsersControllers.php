@@ -154,8 +154,12 @@ class UsersControllers extends Controller {
         $groupObj->lang = $input['lang'];
         $groupObj->session_time = $input['session_time'];
         $groupObj->sort = User::newSortIndex();
-        $groupObj->status = $input['status'];
-        $groupObj->is_active = $input['status'];
+        $groupObj->is_active = $input['is_active'];
+        if($input['is_active'] == 1){
+            $groupObj->status = 1;
+        }else{
+            $groupObj->status = $input['status'];
+        }
         $groupObj->created_at = DATE_TIME;
         $groupObj->created_by = USER_ID;
         $groupObj->save();
@@ -230,8 +234,12 @@ class UsersControllers extends Controller {
         $groupObj->session_time = $input['session_time'];
         $groupObj->password = \Hash::make($input['password']);
         $groupObj->sort = User::newSortIndex();
-        $groupObj->status = $input['status'];
-        $groupObj->is_active = $input['status'];
+        $groupObj->is_active = $input['is_active'];
+        if($input['is_active'] == 1){
+            $groupObj->status = 1;
+        }else{
+            $groupObj->status = $input['status'];
+        }
         $groupObj->created_at = DATE_TIME;
         $groupObj->created_by = USER_ID;
         $groupObj->save();
@@ -243,7 +251,7 @@ class UsersControllers extends Controller {
 
             foreach ($imagesData->get() as $image) {
                 if($image->link == $image->filename){
-                    $image->link = \URL::to('/uploads').'/users/'.$groupObj->id.'/'.$image->filename;
+                    $image->link = asset('/uploads').'/users/'.$groupObj->id.'/'.$image->filename;
                     $image->save();
 
                     $groupObj->image = $image->filename;

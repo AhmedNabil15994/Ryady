@@ -14,6 +14,7 @@
     </i>
     @if(\Session::has('user_id'))
     <a class="login" href="{{ URL::to('/profile/logout') }}" >تسجيل الخروج</a>
+    <a class="login" href="{{ URL::to('/profile') }}" >الملف الشخصي</a>
     @else
     <a href="#" class="login"  data-toggle="modal" data-target="#login">تسجيل الدخول</a>
     @endif
