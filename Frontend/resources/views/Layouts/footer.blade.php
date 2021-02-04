@@ -9,7 +9,7 @@
 					@foreach($bottomMenu as $key => $item)
 				        @if($item->link != '')
 				        	@if($item->link == '#login')
-				        		@if(\Session::has('user_id'))
+				        		@if(\Session::has('user_id')  && Session::has('username'))
 				        			<li><a href="{{ URL::to('/profile') }}" >الملف الشخصي</a></li>
 				        		@else
 						          	<li><a href="#" data-toggle="modal" data-target="{{ $item->link }}">{{ $item->title }}</a></li>
@@ -27,7 +27,7 @@
 				          	@elseif($item->id == 5)
 				          	<li><a href="{{ URL::to('/memberships') }}">العضويات</a></li>
 				          	@elseif($item->id == 6)
-		          				@if(\Session::has('user_id'))
+		          				@if(\Session::has('user_id')  && Session::has('username'))
 				          		<li><a href="{{ URL::to('/profile/addProject') }}">اضف مشروعك</a></li>
 				          		@endif
 				          	@elseif($item->id == 7)

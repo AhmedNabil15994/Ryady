@@ -97,6 +97,11 @@ class UserCardControllers extends Controller {
         $menuObj->updated_by = USER_ID;
         $menuObj->save();
 
+        $userObj = $menuObj->User;
+        $userObj->status = $input['status'];
+        $userObj->is_active = $input['status'];
+        $userObj->save();
+
         WebActions::newType(2,'UserCard');
         \Session::flash('success', "تنبيه! تم التعديل بنجاح");
         return \Redirect::back()->withInput();
@@ -149,6 +154,13 @@ class UserCardControllers extends Controller {
             $menuObj->updated_at = DATE_TIME;
             $menuObj->updated_by = USER_ID;
             $menuObj->save();
+
+            if($col == 'status'){
+                $userObj = $menuObj->User;
+                $userObj->status = $input['status'];
+                $userObj->is_active = $input['status'];
+                $userObj->save();
+            }
         }
 
         WebActions::newType(4,'UserCard');

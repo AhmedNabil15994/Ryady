@@ -139,7 +139,9 @@ class ProfileControllers extends Controller {
     public function profile(){
         $data['user'] = User::getData(User::getOne(USER_ID));
         $data['membership'] = UserCard::getData(UserCard::getAvailableForUser(USER_ID));
+        $data['memberships'] = Membership::dataList(1)['data'];
         $data['qrCode'] = \QrCode::size(50)->generate($data['membership']->code);
+        $data['points'] = User::getPoints();
         $membership_id = $data['membership']->membership_id;
         $membership = Membership::getData(Membership::getOne($membership_id));
         $data['mainMembership'] = $membership;
@@ -301,11 +303,20 @@ class ProfileControllers extends Controller {
             return redirect()->back()->withInput();
         }
 
-        $id = $oldMembership+1;
-        $membershipObj = Membership::getOne($id);
+        $membershipObj = Membership::getOne($input['new_membership_id']);
         if($membershipObj == null){
             \Session::flash('error', 'هذه العضوية غير موجودة');
             return redirect()->back()->withInput();
+        }
+
+        $availableCoupons = Coupon::availableCoupons();
+        $availableCoupons = reset($availableCoupons);
+        
+        $coupons = $input['coupons'];
+        foreach ($coupons as $coupon) {
+            if(!in_array($coupon, $availableCoupons)){
+                return \Session::flash('error', 'هذا الكود ('.$coupon.') غير متاح حاليا');
+            }
         }
 
         $start_date = date('Y-m-d',strtotime(str_replace('/', '-', $input['start_date'])));
@@ -327,23 +338,25 @@ class ProfileControllers extends Controller {
         $menuObj = new UserCard;
         $menuObj->user_id = $userObj->id;
         $menuObj->code = $input['code'];
-        $menuObj->membership_id = $id;
+        $menuObj->membership_id = $input['new_membership_id'];
         $menuObj->start_date = $start_date;
         $menuObj->end_date = $end_date;
         // $menuObj->status = 1;
         $menuObj->status = 2;
+        if(isset($coupons) && !empty($coupons)){
+            $menuObj->coupons = serialize($coupons);
+        }
         $menuObj->sort = UserCard::newSortIndex();
         $menuObj->created_at = DATE_TIME;
         $menuObj->created_by = $user_id;
         $menuObj->save();
 
         \Session::put("user_card_id",$menuObj->id);
-        \Session::put("must_paid", $membershipObj->price - $avail->price );
 
         if(isset($input['user_request']) && $input['user_request'] == 'on'){
             $userRequestObj = new UserRequest;
             $userRequestObj->user_id = $userObj->id;
-            $userRequestObj->membership_id = $id;
+            $userRequestObj->membership_id = $input['new_membership_id'];
             $userRequestObj->user_card_id = $menuObj->id;
             $userRequestObj->status = 2;
             // $userRequestObj->status = 1;
@@ -355,6 +368,24 @@ class ProfileControllers extends Controller {
             WebActions::newType(1,'UserRequest',$user_id);
         }
 
+        $discounts = 0;
+        foreach ($coupons as $coupon) {
+            if(in_array($coupon, $availableCoupons)){
+                $couponObj = Coupon::getOneByCode($coupon);
+                if($couponObj->discount_type == 1){
+                    $couponVal = $couponObj->discount_value;
+                }else{
+                    $couponVal = round(($couponObj->discount_value * $membershipObj->price ) / 100, 2);
+                }
+                $discounts+= $couponVal;
+                if($couponObj->valid_type == 1){
+                    $oldVal = $couponObj->valid_value;
+                    $couponObj->valid_value = $oldVal - 1;
+                    $couponObj->save();
+                }
+            }
+        }
+        \Session::put("must_paid", $membershipObj->price - $discounts);
 
         WebActions::newType(1,'UserCard',$user_id);
         WebActions::newType(2,'User',$user_id);

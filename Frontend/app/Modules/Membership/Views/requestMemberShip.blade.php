@@ -61,6 +61,12 @@
                             <i></i>
                             بطاقة مطبوعة رسوم اضافية 100 ريال
                         </label> --}}
+                        <div class="coupons">
+                            <div class="inputSt">
+                                <label for="">كوبونات الخصم :</label>
+                                <input type="text" class="inputStyle" name="coupons[]" />
+                            </div>
+                        </div>
                         <label class="checkStyle">
                             <input type="checkbox" id="privcy" />
                             <i></i>

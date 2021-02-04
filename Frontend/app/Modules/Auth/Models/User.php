@@ -67,6 +67,15 @@ class User extends Model{
         }
     }
 
+    static function getPoints(){
+        $userRequestsPrice = UserRequest::NotDeleted()->where('user_id',USER_ID)->where('status',1)->count() * 100;
+        $userCard = UserCard::NotDeleted()->where('user_id',USER_ID)->whereIn('status',[1,4])->get();
+        $cardsPrice = 0;
+        foreach ($userCard as $value) {
+            $cardsPrice+= $value->Membership->price;
+        }
+        return $userRequestsPrice + $cardsPrice;
+    }
 
     static function getData($source) {
         $data = new  \stdClass();

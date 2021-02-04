@@ -16,6 +16,12 @@ class Coupon extends Model{
             ->first();
     }
 
+    static function getOneByCode($code){
+        return self::NotDeleted()
+            ->where('code', $code)
+            ->first();
+    }
+
     static function dataList($status=null,$ids=null) {
         $input = \Request::all();
 

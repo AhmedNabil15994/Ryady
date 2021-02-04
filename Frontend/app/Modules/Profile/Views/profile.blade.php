@@ -108,8 +108,8 @@
                     <div class="profileDetails">
                         <div class="tabsHead">
                             <ul class="btnsTabs clearfix" id="tabs">
-                                <li id="tab1" class="active">ترقية البطاقة</li>
-                                <li id="tab2">تفعيل البطاقة</li>
+                                <li id="tab1" class="active">معلومات العضوية</li>
+                                <li id="tab2">النقاط</li>
                                 <li id="tab3">مميزات العضوية</li>
                             </ul>
                         </div>
@@ -174,6 +174,16 @@
                                             <input type="text" class="inputStyle" name="code" placeholder="رقم البطاقة" readonly value="{{ $data->membership->code }}" />
                                         </div>
                                         <div class="col-md-6">
+                                            <div class="selectStyle">
+                                                <select class="selectmenu" id="selectmenu" name="new_membership_id">
+                                                    @foreach($data->memberships as $membership)
+                                                    <option value="{{ $membership->id }}" {{ $data->membership->membership_id == $membership->id ? 'selected' : '' }}>عضوية {{ $membership->title . ' ' . $membership->price }} ريال</option>
+                                                    @endforeach
+                                                </select>
+                                                <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
                                             <div class="dateStyle">
                                                 <input type="text" class="inputStyle" readonly name="start_date" placeholder="بداية من" value="{{ date('d/m/Y',strtotime($data->membership->start_date)) }}" />
                                                 <i class="flaticon-school-calendar"></i>
@@ -183,6 +193,13 @@
                                             <div class="dateStyle">
                                                 <input type="text" class="inputStyle" readonly name="end_date" placeholder="الانتهاء الي" value="{{ date('d/m/Y',strtotime($data->membership->end_date)) }}" />
                                                 <i class="flaticon-school-calendar"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="coupons">
+                                                <div class="inputSt">
+                                                    <input type="text" class="inputStyle" name="coupons[]" placeholder="كوبونات الخصم :" />
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -206,7 +223,7 @@
 
                             </div>
                             <div class="tab2 tab">
-                                <h2 class="titleMem">البطاقة مفعلة بالفعل</h2>
+                                <h2 class="titleMem">لديك {{ $data->points }} نقطة</h2>
                             </div>
                             <div class="tab3 tab">
                                 <div class="table-responsive">

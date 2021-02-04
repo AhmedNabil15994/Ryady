@@ -1,6 +1,6 @@
 @extends('Layouts.master')
 
-@section('title','شبكة VIP')
+@section('title','شبكة تنفيذية VIP')
 
 @section('styles')
 @endsection
@@ -9,16 +9,17 @@
 	<div class="breadcrumbs">
         <img class="bg" src="{{ asset('/assets/images/breadBg.png') }}" alt="" />
         <div class="container">
-            <h2>شبكة VIP</h2>
+            <h2>شبكة تنفيذية VIP</h2>
             <ul class="list-unstyled">
                 <li><a href="{{ URL::to('/') }}">الرئيسية</a></li>
-                <li class="active">شبكة VIP</li>
+                <li class="active">شبكة تنفيذية VIP</li>
             </ul>
         </div>
     </div>
     
     <div class="vipPage">
         <div class="container">
+            <input type="hidden" name="cols" value="{{ \Session::has('user_id') ? \Session::get('user_id') : 0 }}">
             <div class="row">
                 @foreach($data->data->data as $user)
                 <div class="col-md-4">
@@ -47,6 +48,11 @@
     </div>
 @endsection
 
+@section('modals')
+@include('Partials.joinUsModal')
+@endsection
+
 @section('scripts')
 <script src="{{ asset('/assets/js/profile.js') }}"></script>
+<script src="{{ asset('/assets/js/joinUs.js') }}"></script>
 @endsection

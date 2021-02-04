@@ -1,6 +1,6 @@
 @extends('Layouts.master')
 
-@section('title','مشاريع الاعضاء')
+@section('title','مشاريع الشاب الريادي')
 
 @section('styles')
 @endsection
@@ -9,16 +9,17 @@
 	<div class="breadcrumbs">
         <img class="bg" src="{{ asset('/assets/images/breadBg.png') }}" alt="" />
         <div class="container">
-            <h2>مشاريع الشركاء</h2>
+            <h2>مشاريع الريادي</h2>
             <ul class="list-unstyled">
                 <li><a href="{{ URL::to('/') }}">الرئيسية</a></li>
-                <li class="active">مشاريع الشركاء</li>
+                <li class="active">مشاريع الريادي</li>
             </ul>
         </div>
     </div>
         
     <div class="addProject projectsPageHead">
         <div class="container">
+            <input type="hidden" name="cols" value="{{ \Session::has('user_id') ? \Session::get('user_id') : 0 }}">
             <form class="searchSelect" method="get" action="{{ URL::current() }}">
                 <div class="row">
                     <div class="col-md-8 center-block">
@@ -91,6 +92,10 @@
     </div>
 @endsection
 
-@section('scripts')
+@section('modals')
+@include('Partials.joinUsModal')
+@endsection
 
+@section('scripts')
+<script src="{{ asset('/assets/js/joinUs.js') }}"></script>
 @endsection

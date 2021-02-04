@@ -4142,5 +4142,10 @@ input[name="gmaps"]{
 	}
 }
 
-
+@media(max-width:991px) {
+	.headerFixed.header .logo img{
+		margin-top: -10px;
+		height: 60px;
+	}
+}
 

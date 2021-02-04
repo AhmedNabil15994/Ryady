@@ -19,6 +19,7 @@
         
     <div class="blog">
         <div class="container">
+            <input type="hidden" name="cols" value="{{ \Session::has('user_id') ? \Session::get('user_id') : 0 }}">
             <h2 class="titleBlog">مقالات الأعضاء</h2>
             <div class="row">
                 @foreach($data->data->data as $key => $blog)
@@ -67,4 +68,13 @@
             <a href="{{ URL::to('/joinUs') }}" class="btnStyle">انضم الينا</a>
         </div>
     </div>
+@endsection
+
+@section('modals')
+@include('Partials.joinUsModal')
+@endsection
+
+
+@section('scripts')
+<script src="{{ asset('/assets/js/joinUs.js') }}"></script>
 @endsection

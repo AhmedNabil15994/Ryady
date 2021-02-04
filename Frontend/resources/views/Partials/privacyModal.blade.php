@@ -12,7 +12,8 @@
                     @endphp
                     {!! $privacyContent->description !!}
                 </div>
-
+                <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">اغلاق</button>
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>

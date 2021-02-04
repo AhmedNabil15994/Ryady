@@ -65,7 +65,7 @@ class AuthControllers extends Controller {
         session(['email' => $dataObj->email]);
         session(['username' => $userObj->username]);
         session(['is_admin' => $isAdmin]);
-        session(['group_name' => $userObj->Group->title]);
+        // session(['group_name' => $userObj->Group->title]);
 
         $now = now()->format('Y-m-d H:i:s');
 

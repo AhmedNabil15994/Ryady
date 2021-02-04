@@ -162,7 +162,7 @@
                     <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
                         <div class="col-lg-12">
                             <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">حالة التفعيل: </label>
-                            <select name="is_active" class="form-control mb-5 select2" id="kt_select2_2">
+                            <select name="is_active" class="form-control mb-5 select2" id="kt_select2_3">
                                 <option value="0" {{ $data->data->is_active == 0 ? 'selected' : '' }}>غير مفعل</option>
                                 <option value="1" {{ $data->data->is_active == 1 ? 'selected' : '' }}>مفعل</option>
                             </select>

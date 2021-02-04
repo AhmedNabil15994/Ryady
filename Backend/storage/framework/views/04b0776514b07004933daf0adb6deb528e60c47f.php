@@ -1,13 +1,11 @@
-{{-- Extends layout --}}
-@extends('Layouts.master')
-@section('title','بطاقات الاعضاء')
+<?php $__env->startSection('title','بطاقات الاعضاء'); ?>
 
-{{-- Content --}}
-@section('sub-header')
 
-@endsection
+<?php $__env->startSection('sub-header'); ?>
 
-@section('content')
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
 <div class="py-2 py-lg-6 subheader-transparent" id="kt_subheader">
     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
         <!--begin::Info-->
@@ -20,10 +18,10 @@
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                     <li class="breadcrumb-item">
-                        <a href="{{ URL::to('/') }}" class="text-muted"><i class="m-nav__link-icon la la-home"></i></a>
+                        <a href="<?php echo e(URL::to('/')); ?>" class="text-muted"><i class="m-nav__link-icon la la-home"></i></a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ URL::to('/userCards') }}" class="text-muted">بطاقات الاعضاء</a>
+                        <a href="<?php echo e(URL::to('/userCards')); ?>" class="text-muted">بطاقات الاعضاء</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -39,27 +37,27 @@
                     <i class="ki ki-bold-more-hor"></i>
                 </button>
                 <div class="dropdown-menu" dropdown-toggle="hover">
-                    @if(\Helper::checkRules('add-user-card'))
-                    <a href="{{ URL::to('/userCards/add') }}" class="dropdown-item">
+                    <?php if(\Helper::checkRules('add-user-card')): ?>
+                    <a href="<?php echo e(URL::to('/userCards/add')); ?>" class="dropdown-item">
                         <i class="m-nav__link-icon fa fa-plus"></i>
                         <span class="m-nav__link-text">اضافة</span>
                     </a>
-                    @endif
-                    @if(\Helper::checkRules('sort-user-card'))
-                    <a href="{{ URL::to('/userCards/arrange') }}" class="dropdown-item">
+                    <?php endif; ?>
+                    <?php if(\Helper::checkRules('sort-user-card')): ?>
+                    <a href="<?php echo e(URL::to('/userCards/arrange')); ?>" class="dropdown-item">
                         <i class="m-nav__link-icon fa fa-sort-numeric-up"></i>
                         <span class="m-nav__link-text">ترتيب</span>
                     </a>
-                    @endif
-                    @if(\Helper::checkRules('charts-user-card'))
-                    <a href="{{ URL::to('/userCards/charts') }}" class="dropdown-item">
+                    <?php endif; ?>
+                    <?php if(\Helper::checkRules('charts-user-card')): ?>
+                    <a href="<?php echo e(URL::to('/userCards/charts')); ?>" class="dropdown-item">
                         <i class="m-nav__link-icon flaticon-graph"></i>
                         <span class="m-nav__link-text">الاحصائيات</span>
                     </a>
-                    @endif
+                    <?php endif; ?>
                     <div class="dropdown-divider"></div>
                     <div href="#" class="dropdown-item">
-                        <a href="{{ URL::to('/logout') }}" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">تسجيل الخروج</a>
+                        <a href="<?php echo e(URL::to('/logout')); ?>" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">تسجيل الخروج</a>
                     </div>
                 </div>
             </div>
@@ -78,11 +76,11 @@
             <h3 class="card-label">بطاقات الاعضاء</h3>
         </div>
         <div class="card-toolbar">
-            @if(\Helper::checkRules('edit-user-card'))
+            <?php if(\Helper::checkRules('edit-user-card')): ?>
             <a href="#" class="btn btn-outline-success quickEdit m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill " data-toggle="tooltip" data-placement="top" data-original-title="تعديل سريع">
                 <i class="la la-edit"></i>
             </a>
-            @endif
+            <?php endif; ?>
             <a href="#" class="btn btn-outline-danger search-mode m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill " data-toggle="tooltip" data-placement="top" data-original-title="معلومات عن البحث المتقدم">
                 <i class="flaticon-questions-circular-button"></i>
             </a>
@@ -141,47 +139,47 @@
                 </div>
                 <div id="collapseTwo6" class="collapse" data-parent="#accordionExample6" style="">
                     <div class="card-body">
-                        <form class="m-form m-form--fit m--margin-bottom-20" method="get" action="{{ URL::current() }}">
-                            {{-- @csrf --}}
+                        <form class="m-form m-form--fit m--margin-bottom-20" method="get" action="<?php echo e(URL::current()); ?>">
+                            
                             <div class="row">
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>ID:</label>
-                                    <input type="text" class="form-control m-input" name="id" value="{{ Request::get('id') }}" data-col-index="0">
+                                    <input type="text" class="form-control m-input" name="id" value="<?php echo e(Request::get('id')); ?>" data-col-index="0">
                                     <br>
                                 </div>  
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>الكود:</label>
-                                    <input type="text" class="form-control m-input" name="code" value="{{ Request::get('code') }}" data-col-index="1">
+                                    <input type="text" class="form-control m-input" name="code" value="<?php echo e(Request::get('code')); ?>" data-col-index="1">
                                     <br>
                                 </div>  
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>المستخدم:</label>
-                                    <input type="text" class="form-control m-input" name="username" value="{{ Request::get('username') }}" data-col-index="2">
+                                    <input type="text" class="form-control m-input" name="username" value="<?php echo e(Request::get('username')); ?>" data-col-index="2">
                                     <br>
                                 </div> 
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>الاسم عربي:</label>
-                                    <input type="text" class="form-control m-input" name="name_ar" value="{{ Request::get('name_ar') }}" data-col-index="3">
+                                    <input type="text" class="form-control m-input" name="name_ar" value="<?php echo e(Request::get('name_ar')); ?>" data-col-index="3">
                                     <br>
                                 </div>  
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>العضوية:</label>
                                     <select name="membership_id" class="form-control m-input">
                                         <option value="">حدد اختيارك</option>
-                                        @foreach($data->memberships as $membership)
-                                        <option value="{{ $membership->id }}">{{ $membership->title }}</option>
-                                        @endforeach
+                                        <?php $__currentLoopData = $data->memberships; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $membership): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($membership->id); ?>"><?php echo e($membership->title); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>تاريخ البدء:</label>
-                                    <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_1" placeholder="تاريخ البدء"  name="start_date" value="{{ Request::get('start_date') }}" data-col-index="5" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_1" />
+                                    <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_1" placeholder="تاريخ البدء"  name="start_date" value="<?php echo e(Request::get('start_date')); ?>" data-col-index="5" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_1" />
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>تاريخ الانتهاء:</label>
-                                    <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_3" placeholder="تاريخ الانتهاء"  name="end_date" value="{{ Request::get('end_date') }}" data-col-index="6" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_3" />
+                                    <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_3" placeholder="تاريخ الانتهاء"  name="end_date" value="<?php echo e(Request::get('end_date')); ?>" data-col-index="6" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_3" />
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
@@ -205,7 +203,7 @@
                                         </span>
                                     </button>
                                     &nbsp;&nbsp;
-                                    <a href="{{ URL::to('/userCards') }}" class="btn btn-secondary m-btn m-btn--icon" id="m_reset">
+                                    <a href="<?php echo e(URL::to('/userCards')); ?>" class="btn btn-secondary m-btn m-btn--icon" id="m_reset">
                                         <span>
                                             <i class="la la-close"></i>
                                             <span>الغاء</span>
@@ -218,8 +216,8 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" name="data-area" value="{{ \Helper::checkRules('edit-user-card') }}">
-        <input type="hidden" name="data-cols" value="{{ \Helper::checkRules('delete-user-card') }}">
+        <input type="hidden" name="data-area" value="<?php echo e(\Helper::checkRules('edit-user-card')); ?>">
+        <input type="hidden" name="data-cols" value="<?php echo e(\Helper::checkRules('delete-user-card')); ?>">
         <!--begin: Datatable-->
         <table class="table table-separate  table-hover table-bordered table-head-custom table-foot-custom table-checkable" id="kt_datatable">
             <thead>
@@ -253,13 +251,15 @@
     </div>
 </div>
 <!--end::Card-->
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('modals')
-@include('Partials.search_modal')
-@endsection
+<?php $__env->startSection('modals'); ?>
+<?php echo $__env->make('Partials.search_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php $__env->stopSection(); ?>
 
-{{-- Scripts Section --}}
-@section('scripts')
-<script src="{{ asset('/assets/components/userCards-datatables.js')}}"></script>           
-@endsection
+
+<?php $__env->startSection('scripts'); ?>
+<script src="<?php echo e(asset('/assets/components/userCards-datatables.js')); ?>"></script>           
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('Layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/Server/Projects/Ryady/Backend/app/Modules/UserCard/Views/index.blade.php ENDPATH**/ ?>

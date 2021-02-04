@@ -12,6 +12,7 @@ use App\Models\Target;
 use App\Models\UserCard;
 use App\Models\UserRequest;
 use App\Models\User;
+use App\Models\Coupon;
 use App\Models\WebActions;
 
 
@@ -25,7 +26,7 @@ class MembershipControllers extends Controller {
             'name_en' => 'required',
             'membership_id' => 'required',
             'phone' => 'required|min:10',//|regex:/(01)[0-9]{9}/',
-            'password' => 'required',
+            'password' => 'required|min:6',
             // 'start_date' => 'required',
             // 'end_date' => 'required',
         ];
@@ -35,8 +36,9 @@ class MembershipControllers extends Controller {
             'name_en.required' => "يرجي ادخال الاسم بالانجليزي",
             'membership_id.required' => "يرجي اختيار نوع العضوية",
             'phone.required' => "يرجي ادخال رقم الجوال",
-            'phone.min' => "رقم الجوال يجب ان يكون 10 خانات",
+            'phone.min' => "رقم الجوال يجب ان يكون 10 خانات علي الاقل",
             'password.required' => "يرجي ادخال كلمة المرور",
+            'password.min' => "كلمة المرور يجب ان تكون 6 خانات علي الاقل",
             // 'start_date.required' => "يرجي ادخال تاريخ البداية",
             // 'end_date.required' => "يرجي ادخال تاريخ النهاية",
 
@@ -116,6 +118,12 @@ class MembershipControllers extends Controller {
             return redirect()->back()->withInput();
         }
 
+        $userObj = User::checkUserByPhone($input['phone']);
+        if($userObj != null){
+            \Session::flash('error', 'هذا رقم التليفون مستخدم من قبل');
+            return redirect()->back()->withInput();
+        }
+
         $start_date = now()->format('Y-m-d');
         $end_date = date("Y-m-d", strtotime(now()->format('Y-m-d'). " + ".$membershipObj->period." year"));
 
@@ -126,7 +134,17 @@ class MembershipControllers extends Controller {
             $rand = rand(1000,1000000);
             $username = str_replace(' ', '', $input['name_en']) . '-' . $rand;
         }
-    
+
+        $availableCoupons = Coupon::availableCoupons();
+        $availableCoupons = reset($availableCoupons);
+        // dd($availableCoupons);
+        
+        $coupons = $input['coupons'];
+        foreach ($coupons as $coupon) {
+            if(count($availableCoupons) > 0 && !in_array($coupon, $availableCoupons)){
+                return \Session::flash('error', 'هذا الكود ('.$coupon.') غير متاح حاليا');
+            }
+        }
         $userObj = new User;
         $userObj->name_ar = $input['name_ar'];
         $userObj->name_en = $input['name_en'];
@@ -152,6 +170,9 @@ class MembershipControllers extends Controller {
         $menuObj->end_date = $end_date;
         $menuObj->status = 2;
         // $menuObj->status = 1;
+        if(isset($coupons) && !empty($coupons)){
+            $menuObj->coupons = serialize($coupons);
+        }
         $menuObj->sort = UserCard::newSortIndex();
         $menuObj->created_at = DATE_TIME;
         $menuObj->created_by = $userObj->id;
@@ -172,6 +193,25 @@ class MembershipControllers extends Controller {
             \Session::put('user_request_id',$userRequestObj->id);
         }
 
+        $discounts = 0;
+        foreach ($coupons as $coupon) {
+            if(in_array($coupon, $availableCoupons)){
+                $couponObj = Coupon::getOneByCode($coupon);
+                if($couponObj->discount_type == 1){
+                    $couponVal = $couponObj->discount_value;
+                }else{
+                    $couponVal = round(($couponObj->discount_value * $membershipObj->price ) / 100, 2);
+                }
+                $discounts+= $couponVal;
+                if($couponObj->valid_type == 1){
+                    $oldVal = $couponObj->valid_value;
+                    $couponObj->valid_value = $oldVal - 1;
+                    $couponObj->save();
+                }
+            }
+        }
+
+        \Session::put('discounts',$discounts);
         \Session::put('user_id',$userObj->id);
         \Session::put('user_card_id',$menuObj->id);
         WebActions::newType(1,'UserCard',$userObj->id);
@@ -212,10 +252,9 @@ class MembershipControllers extends Controller {
         }
 
         $name = explode(' ', $userObj->name_en, 2);
-
         $data = [
             'type' => 'credit',
-            'amount' =>  $price,
+            'amount' =>  $price - \Session::get('discounts'),
             'currency' => 'SAR',
             'callback_url' => \URL::to('/profile'),
             'customer' => [
@@ -246,6 +285,7 @@ class MembershipControllers extends Controller {
             $userCardObj->status = 1;
             $userCardObj->save();
             \Session::forget('user_card_id');
+            \Session::forget('discounts');
 
             if(\Session::has('user_request_id')){
                 $userRequestObj->status = 1;

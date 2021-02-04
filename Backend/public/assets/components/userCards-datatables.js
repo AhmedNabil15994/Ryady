@@ -82,7 +82,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 			       	dtParms.start_date = $('input[name="start_date"]').val();
 			       	dtParms.end_date = $('input[name="end_date"]').val();
 			        dtParms.columnsDef= [
-						'id', 'code' ,'username','membership_name','start_date','end_date','statusText'];
+						'id', 'code' ,'username','name_ar','membership_name','start_date','end_date','statusText'];
 			        return dtParms
 			    }
 			},
@@ -90,6 +90,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				{data: 'id'},
 				{data: 'code'},
 				{data: 'username'},
+				{data: 'name_ar'},
 				{data: 'membership_name'},
 				{data: 'start_date'},
 				{data: 'end_date'},
@@ -103,7 +104,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					orderable: false,
 				},
 				{
-					targets: 3,
+					targets: 4,
 					title: 'العضوية',
 					className: 'edits selects',
 					render: function(data, type, full, meta) {
@@ -111,7 +112,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					},
 				},
 				{
-					targets: 4,
+					targets: 5,
 					title: 'تاريخ البدء',
 					className: 'edits dates',
 					render: function(data, type, full, meta) {
@@ -119,7 +120,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					},
 				},
 				{
-					targets: 5,
+					targets: 6,
 					title: 'تاريخ الانتهاء',
 					className: 'edits dates',
 					render: function(data, type, full, meta) {
@@ -127,7 +128,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					},
 				},
 				{
-					targets: 6,
+					targets: 7,
 					title: 'الحالة',
 					className: 'edits selects',
 					render: function(data, type, full, meta) {

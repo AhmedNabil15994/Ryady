@@ -12,7 +12,7 @@
         </g>
       </svg>
     </i>
-    @if(\Session::has('user_id'))
+    @if(\Session::has('user_id')  && Session::has('username'))
     <a class="login" href="{{ URL::to('/profile/logout') }}" >تسجيل الخروج</a>
     <a class="login" href="{{ URL::to('/profile') }}" >الملف الشخصي</a>
     @else
@@ -39,7 +39,7 @@
           @elseif($item->id == 5)
           <li><a href="{{ URL::to('/contactUs') }}">اتصل بنا</a></li>
           @elseif($item->id == 6)
-            @if(\Session::has('user_id'))
+            @if(\Session::has('user_id') && Session::has('username'))
             <li><a href="{{ URL::to('/profile/addProject') }}">أضف مشروعك</a></li>
             @endif
           @endif
