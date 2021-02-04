@@ -3,6 +3,14 @@
 @section('title','شبكة تنفيذية VIP')
 
 @section('styles')
+<style type="text/css" media="screen">
+    .vipPage .itemVip{
+        height: 250px;
+    }
+    .vipPage .itemVip .mask{
+        padding-top: 190px;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -27,7 +35,6 @@
                         <img src="{{ $user->user->photo }}" alt="" />
                         <div class="mask">
                             <h2 class="title">أ.{{ $user->user->name_ar }}</h2>
-                            <a href="#" class="btnStyle" data-toggle="modal" data-area="{{ $user->user_id }}" data-target="#profile">الملف الشخصي</a>
                         </div>
                     </div>
                 </div>

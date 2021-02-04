@@ -9,7 +9,6 @@
                     <h2 class="name"></h2>
                     <h2 class="title">نبذة تعريفية</h2>
                     <div class="desc"></div>
-                    <h2 class="title">نبذة تعريفية</h2>
                     <div class="clearfix">
                         <div class="infoUser">
                             <i class="flaticon-email"></i>

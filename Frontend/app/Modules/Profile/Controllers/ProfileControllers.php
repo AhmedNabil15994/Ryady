@@ -290,10 +290,6 @@ class ProfileControllers extends Controller {
         $oldMembership = $avail->membership_id;
         if($oldMembership == 3){
             \Session::flash('error', 'عفوا ! لا يمكنك ترقية البطاقة');
-            $userObj->name_ar = $input['name_ar'];
-            $userObj->name_en = $input['name_en'];
-            $userObj->phone = $input['phone'];
-            $userObj->save();
             return redirect()->back()->withInput();
         }
 
@@ -321,14 +317,6 @@ class ProfileControllers extends Controller {
 
         $start_date = date('Y-m-d',strtotime(str_replace('/', '-', $input['start_date'])));
         $end_date = date('Y-m-d',strtotime(str_replace('/', '-', $input['end_date'])));
-
-
-        $userObj->name_ar = $input['name_ar'];
-        $userObj->name_en = $input['name_en'];
-        $userObj->phone = $input['phone'];
-        $userObj->updated_at = DATE_TIME;
-        $userObj->updated_by = $user_id;
-        $userObj->save();
 
         $avail->status = 4;
         $avail->updated_at = DATE_TIME;

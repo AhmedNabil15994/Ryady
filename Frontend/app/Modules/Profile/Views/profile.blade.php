@@ -52,6 +52,10 @@
     .textareaStyle{
         padding-top: 20px;
     }
+    label{
+        color: #001C54;
+        font-size: 18px;
+    }
 </style>
 @endsection
 
@@ -161,19 +165,24 @@
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-6">
+                                            <label for="">اسمك على البطاقة بالعربي</label>
                                             <input type="text" class="inputStyle" name="name_ar" placeholder="اسمك على البطاقة بالعربي" value="{{ $data->user->name_ar }}" />
                                         </div>
 
                                         <div class="col-md-6">
+                                            <label for="">رقم الجوال</label>
                                             <input type="text" class="inputStyle" name="phone" placeholder="رقم الجوال" value="{{ $data->user->phone }}" />
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="">اسمك على البطاقة بالإنجليزي</label>
                                             <input type="text" class="inputStyle" name="name_en" placeholder="اسمك على البطاقة بالإنجليزي"  value="{{ $data->user->name_en }}" />
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="">رقم البطاقة</label>
                                             <input type="text" class="inputStyle" name="code" placeholder="رقم البطاقة" readonly value="{{ $data->membership->code }}" />
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="">اختر العضوية</label>
                                             <div class="selectStyle">
                                                 <select class="selectmenu" id="selectmenu" name="new_membership_id">
                                                     @foreach($data->memberships as $membership)
@@ -184,18 +193,21 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="">تاريخ البداية</label>
                                             <div class="dateStyle">
                                                 <input type="text" class="inputStyle" readonly name="start_date" placeholder="بداية من" value="{{ date('d/m/Y',strtotime($data->membership->start_date)) }}" />
                                                 <i class="flaticon-school-calendar"></i>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="">تاريخ الانتهاء</label>
                                             <div class="dateStyle">
                                                 <input type="text" class="inputStyle" readonly name="end_date" placeholder="الانتهاء الي" value="{{ date('d/m/Y',strtotime($data->membership->end_date)) }}" />
                                                 <i class="flaticon-school-calendar"></i>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="">كوبونات الخصم</label>
                                             <div class="coupons">
                                                 <div class="inputSt">
                                                     <input type="text" class="inputStyle" name="coupons[]" placeholder="كوبونات الخصم :" />

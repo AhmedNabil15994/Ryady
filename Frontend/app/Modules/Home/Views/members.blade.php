@@ -3,6 +3,13 @@
 @section('title','الاعضاء')
 
 @section('styles')
+<style type="text/css" media="screen">
+    @foreach($data->memberships as $membership)
+    .membership{{ $membership->id }}:hover{
+        border-color: {{ $membership->color }} !important;
+    }
+    @endforeach
+</style>
 @endsection
 
 @section('content')
@@ -23,9 +30,8 @@
                 @foreach($data->data->data as $member)
                 <div class="col-md-3 wow fadeInUp">
                     <div class="memb">
-                        <img src="{{ $member->user->photo }}" />
+                        <img class="membership{{ $member->membership_id }}" src="{{ $member->user->photo }}" style="" />
                         <h2 class="name">أ.{{ $member->user->name_ar }}</h2>
-                        <a href="#" class="btnStyle" data-toggle="modal" data-area="{{ $member->user_id }}" data-target="#profile">الملف الشخصي</a>
                     </div>
                 </div>
                 @endforeach

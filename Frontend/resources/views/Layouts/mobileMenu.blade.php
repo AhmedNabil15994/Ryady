@@ -23,27 +23,27 @@
 		        	@endif
 		        @else
 		          	@if($item->id == 1)
-		          	<li><a href="{{ URL::to('/') }}">الرئيسية</a></li>
+		          	<li><a href="{{ URL::to('/') }}">{{ $item->title }}</a></li>
 		          	@elseif($item->id == 2)
-					<li><a href="{{ URL::to('/blogs') }}">المدونة</a></li>
+					<li><a href="{{ URL::to('/blogs') }}">{{ $item->title }}</a></li>
 		          	@elseif($item->id == 3)
 		          	<li><a href="{{ URL::to('/vip') }}">شبكة  VIP</a></li>
 		          	@elseif($item->id == 5)
-		          	<li><a href="{{ URL::to('/memberships') }}">العضويات</a></li>
+		          	<li><a href="{{ URL::to('/memberships') }}">{{ $item->title }}</a></li>
 		          	@elseif($item->id == 6)
 		          		@if(\Session::has('user_id')  && Session::has('username') )
-		          		<li><a href="{{ URL::to('/profile/addProject') }}">اضف مشروعك</a></li>
+		          		<li><a href="{{ URL::to('/profile/addProject') }}">{{ $item->title }}</a></li>
 		          		@endif
 		          	@elseif($item->id == 7)
-		          	<li><a href="{{ URL::to('/order') }}">طلب خدمة</a></li>
+		          	<li><a href="{{ URL::to('/order') }}">{{ $item->title }}</a></li>
 		          	@elseif($item->id == 8)
-		          	<li><a href="{{ URL::to('/contactUs') }}">الاتصال بنا</a></li>
+		          	<li><a href="{{ URL::to('/contactUs') }}">{{ $item->title }}</a></li>
 		          	@elseif($item->id == 9)
-		          	<li><a href="{{ URL::to('/memberships/features') }}">مميزات العضوية</a></li>
+		          	<li><a href="{{ URL::to('/memberships/features') }}">{{ $item->title }}</a></li>
 		          	@elseif($item->id == 10)
-					<li><a href="{{ URL::to('/projects') }}">مشاريع الاعضاء</a></li>
+					<li><a href="{{ URL::to('/projects') }}">{{ $item->title }}</a></li>
 		          	@elseif($item->id == 11)
-		          	<li><a href="{{ URL::to('/members') }}">أعضاء الشاب الريادي</a></li>
+		          	<li><a href="{{ URL::to('/members') }}">{{ $item->title }}</a></li>
 		          	@endif
 		        @endif
 		    @endforeach

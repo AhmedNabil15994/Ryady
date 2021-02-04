@@ -10,6 +10,7 @@ use App\Models\Benefit;
 use App\Models\Advantage;
 use App\Models\Target;
 use App\Models\UserCard;
+use App\Models\UserMember;
 use App\Models\UserRequest;
 use App\Models\User;
 use App\Models\Coupon;
@@ -301,6 +302,13 @@ class MembershipControllers extends Controller {
             session(['is_admin' => $isAdmin]);
             session(['group_name' => $userObj->Group->title]);
 
+            $userMemberObj = new UserMember;
+            $userMemberObj->user_id = $userObj->id;
+            $userMemberObj->status = 1;
+            $userMemberObj->sort = UserMember::newSortIndex();
+            $userMemberObj->created_at = DATE_TIME;
+            $userMemberObj->created_by = $userObj->id;
+            $userMemberObj->save();
             \Session::flash('success', 'تم الدفع وتفعيل البطاقة بنجاح');
             return redirect()->to('/profile');
         }else{

@@ -29,18 +29,18 @@
           @endif
         @else
           @if($item->id == 1)
-          <li><a href="{{ URL::to('/') }}">الرئيسية</a></li>
+          <li><a href="{{ URL::to('/') }}">{{ $item->title }}</a></li>
           @elseif($item->id == 2)
-          <li><a href="{{ URL::to('/memberships') }}">العضويات</a></li>
+          <li><a href="{{ URL::to('/memberships') }}">{{ $item->title }}</a></li>
           @elseif($item->id == 3)
-          <li><a href="{{ URL::to('/members') }}">الشركاء</a></li>
+          <li><a href="{{ URL::to('/members') }}">{{ $item->title }}</a></li>
           @elseif($item->id == 4)
-          <li><a href="{{ URL::to('/blogs') }}">المدونة</a></li>
+          <li><a href="{{ URL::to('/blogs') }}">{{ $item->title }}</a></li>
           @elseif($item->id == 5)
-          <li><a href="{{ URL::to('/contactUs') }}">اتصل بنا</a></li>
+          <li><a href="{{ URL::to('/contactUs') }}">{{ $item->title }}</a></li>
           @elseif($item->id == 6)
             @if(\Session::has('user_id') && Session::has('username'))
-            <li><a href="{{ URL::to('/profile/addProject') }}">أضف مشروعك</a></li>
+            <li><a href="{{ URL::to('/profile/addProject') }}">{{ $item->title }}</a></li>
             @endif
           @endif
         @endif

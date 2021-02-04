@@ -66,10 +66,13 @@ class UserMember extends Model{
 
     static function getData($source) {
         $data = new  \stdClass();
+        $memberObj = Membership::getOne(UserCard::NotDeleted()->where('status',1)->first()->membership_id);
         $data->id = $source->id;
         $data->user_id = $source->user_id;
         $data->username = $source->user_id != null ? $source->User->username : '';
         $data->user = $source->user_id != null ? User::getData($source->User) : '';
+        $data->color = $memberObj->color;
+        $data->membership_id = $memberObj->id;
         $data->sort = $source->sort;
         $data->status = $source->status;
         $data->statusText = self::getStatus($source->status);
