@@ -61,5 +61,5 @@
 
 @section('scripts')
 <script src="{{ asset('/assets/js/profile.js') }}"></script>
-<script src="{{ asset('/assets/js/joinUs.js') }}"></script>
+{{-- <script src="{{ asset('/assets/js/joinUs.js') }}"></script> --}}
 @endsection
