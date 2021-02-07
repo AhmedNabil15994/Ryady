@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use App\Models\UserCard;
 use App\Models\User;
+use App\Models\UserMember;
 use App\Models\Membership;
 use App\Models\WebActions;
 use Illuminate\Http\Request;
@@ -157,9 +158,21 @@ class UserCardControllers extends Controller {
 
             if($col == 'status'){
                 $userObj = $menuObj->User;
-                $userObj->status = $input['status'];
-                $userObj->is_active = $input['status'];
+                $userObj->status = $item[2];
+                $userObj->is_active = $item[2];
                 $userObj->save();
+
+                $userMemberObj = UserMember::NotDeleted()->where('user_id',$userObj->id)->first();
+                if($userMemberObj == null){
+                    $userMemberObj = new UserMember;
+                }
+
+                $userMemberObj->user_id = $userObj->id;
+                $userMemberObj->status = $item[2];
+                $userMemberObj->sort = UserMember::newSortIndex();
+                $userMemberObj->created_at = DATE_TIME;
+                $userMemberObj->created_by = $userObj->id;
+                $userMemberObj->save();
             }
         }
 

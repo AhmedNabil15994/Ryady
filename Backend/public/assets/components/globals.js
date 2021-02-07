@@ -81,7 +81,9 @@ $('.quickEdit').on('click',function(e){
                             '</span>'+
                         '</span>';
             }
-            $(item).append(myElem);
+            if(!$(item).find('a.dis').length){
+                $(item).append(myElem);
+            }
             oldText = myText;
             i++;
         }else{

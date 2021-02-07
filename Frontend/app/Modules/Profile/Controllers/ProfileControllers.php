@@ -310,7 +310,7 @@ class ProfileControllers extends Controller {
         
         $coupons = $input['coupons'];
         foreach ($coupons as $coupon) {
-            if(!in_array($coupon, $availableCoupons)){
+            if(count($availableCoupons) > 0 && !in_array($coupon, $availableCoupons)){
                 return \Session::flash('error', 'هذا الكود ('.$coupon.') غير متاح حاليا');
             }
         }

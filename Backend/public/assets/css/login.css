@@ -4,20 +4,27 @@ body,html{
 .toast{
   opacity: 1 !important
 }
-#toast-container > div{
-  padding: 15px !important;
+#toast-container,.toast{
+  width: 99% !important;
 }
-.toast .toast-title{
+.toast{
+  max-width: 100% !important;
+}
+.toast-title{
   text-align: right;
-  direction: rtl;
+  margin-right: 20px;
 }
-.toast .toast-title,
-.toast .toast-message{
-  padding: 0 30px;
+#toast-container >div {
+    width: 100% !important;
+    opacity: 1;
+    box-shadow: none;
+    padding-right: 15px;
 }
-.toast .toast-message{
-  font-weight: bold;
-  font-size: 14px;
+#toast-container .toast-close-button {
+   top: 0;
+}
+#toast-container >div:hover{
+   box-shadow: none !important;
 }
 .font-b{
   font-weight: bold !important;

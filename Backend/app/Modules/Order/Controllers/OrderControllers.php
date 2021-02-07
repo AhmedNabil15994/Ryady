@@ -22,7 +22,7 @@ class OrderControllers extends Controller {
         }
         $data['title'] = 'الطلبات';
         $data['name'] = 'order';
-        $data['url'] = 'Backend/orders';
+        $data['url'] = 'orders';
         $data['categories'] = OrderCategory::dataList(1)['data'];
         return view('Order.Views.index')->with('data',(object) $data);
     }

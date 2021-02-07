@@ -141,6 +141,8 @@ var KTDatatablesAdvancedMultipleControls = function() {
 							labelText = 'warning';
 						}else if(full.status == 3){
 							labelText = 'danger';
+						}else{
+							return '<a class="dis" data-col="" data-id="'+full.id+'"><label class="btn btn-wide btn-inline">'+data+'</label></a>';
 						}
 						return '<a class="editable" data-col="status" data-id="'+full.id+'"><label class="btn btn-wide btn-inline btn-'+labelText+'">'+data+'</label></a>';
 					},

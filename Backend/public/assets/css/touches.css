@@ -545,6 +545,7 @@ label.checkbox{
 #kt_daterangepicker_6 span.my-title{
 	margin-right: 15px;
 }
+
 #kt_aside_menu.aside-menu .menu-nav>.menu-item.active>.menu-link .menu-icon,
 #kt_aside_menu.aside-menu .menu-nav>.menu-item.active>.menu-link .menu-text,
 #kt_aside_menu.aside-menu .menu-nav>.menu-item:hover>.menu-link .menu-icon,
@@ -626,4 +627,26 @@ div.ranges ul li:not(.active):hover{
 	.dataTables_wrapper .dataTable th:before{
 		content: "" !important;
 	}
+}
+#toast-container,.toast{
+	width: 99% !important;
+}
+.toast-title{
+  text-align: right;
+  margin-right: 20px;
+}
+.toast{
+	max-width: 100% !important;
+}
+#toast-container >div {
+    width: 100% !important;
+   	opacity: 1;
+   	box-shadow: none;
+   	padding-right: 15px;
+}
+#toast-container .toast-close-button {
+   top: 0;
+}
+#toast-container >div:hover{
+   box-shadow: none !important;
 }

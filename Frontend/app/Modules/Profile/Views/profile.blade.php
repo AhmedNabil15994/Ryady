@@ -95,9 +95,11 @@
                             <li><a href="{{ URL::to('/profile/addBlog') }}" class="{{ Active( URL::to('/profile/addBlog')) }}">اضف مقالة 
                                 <img src="{{ asset('/assets/images/025-content-writing.svg') }}" />
                             </a></li>
+                            @if($data->membership->membership_id == 3)
                             <li><a href="{{ URL::to('/profile/download/'.$data->membership->id) }}" class="{{ Active( URL::to('/profile/certificate')) }}">شهادة العضوية 
                                 <img src="{{ asset('/assets/images/026-document.svg') }}" />
                             </a></li>
+                            @endif
                             <li><a href="{{ URL::to('/profile/newProject') }}" class="{{ Active( URL::to('/profile/newProject')) }}">اضف مشروعك 
                                 <img src="{{ asset('/assets/images/027-add.svg') }}" />
                             </a></li>
@@ -166,7 +168,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="">اسمك على البطاقة بالعربي</label>
-                                            <input type="text" class="inputStyle" name="name_ar" placeholder="اسمك على البطاقة بالعربي" value="{{ $data->user->name_ar }}" />
+                                            <input type="text" class="inputStyle" readonly name="name_ar" placeholder="اسمك على البطاقة بالعربي" value="{{ $data->user->name_ar }}" />
                                         </div>
 
                                         <div class="col-md-6">
@@ -175,7 +177,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">اسمك على البطاقة بالإنجليزي</label>
-                                            <input type="text" class="inputStyle" name="name_en" placeholder="اسمك على البطاقة بالإنجليزي"  value="{{ $data->user->name_en }}" />
+                                            <input type="text" class="inputStyle" readonly name="name_en" placeholder="اسمك على البطاقة بالإنجليزي"  value="{{ $data->user->name_en }}" />
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">رقم البطاقة</label>

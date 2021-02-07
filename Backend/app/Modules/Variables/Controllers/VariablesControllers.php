@@ -53,7 +53,7 @@ class VariablesControllers extends Controller {
         if($fileName == false){
             return false;
         }
-        Variable::where('id',$nextID)->update(['var_value'=>\URL::to('/').'/uploads/variables/'.$nextID.'/'.$fileName]);
+        Variable::where('id',$nextID)->update(['var_value'=>\URL::to('/').'/public/uploads/variables/'.$nextID.'/'.$fileName]);
         
         return 1;        
     }
