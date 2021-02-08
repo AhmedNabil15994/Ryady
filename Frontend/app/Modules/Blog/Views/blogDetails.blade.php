@@ -36,7 +36,7 @@
                         <div class="user">
                             <img src="{{ $data->data->creator_photo }}" alt="" />
                             <span>نشر بواسطة</span>
-                            <h3 class="name">أ.{{ $data->data->creator }}</h3>
+                            <h3 class="name">{{ $data->data->creator }}</h3>
                         </div>
                         
                         <span class="date">{{ $data->data->created_at }} <i class="flaticon-school-calendar"></i></span>
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="userDetails">
                                     <img src="{{ $blog->creator_photo }}" alt="" />
-                                    <h2 class="author">نشر بواسطة <span>أ.{{ $blog->creator }}</span></h2>
+                                    <h2 class="author">نشر بواسطة <span>{{ $blog->creator }}</span></h2>
                                 </div>
                                 <div class="date clearfix">
                                     <span class="time"><i class="flaticon-school-calendar"></i> {{ $blog->created_at }}</span>

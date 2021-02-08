@@ -14,7 +14,7 @@
     </i>
     @if(\Session::has('user_id')  && Session::has('username'))
     <a class="login" href="{{ URL::to('/profile/logout') }}" >تسجيل الخروج</a>
-    <a class="login" href="{{ URL::to('/profile') }}" >الملف الشخصي</a>
+    <a class="login" href="{{ URL::to('/profile') }}" >{{ \App\Models\User::getOne(\Session::get('user_id'))->name_ar }}</a>
     @else
     <a href="#" class="login"  data-toggle="modal" data-target="#login">تسجيل الدخول</a>
     @endif
@@ -40,7 +40,7 @@
           <li><a href="{{ URL::to('/contactUs') }}">{{ $item->title }}</a></li>
           @elseif($item->id == 6)
             @if(\Session::has('user_id') && Session::has('username'))
-            <li><a href="{{ URL::to('/profile/addProject') }}">{{ $item->title }}</a></li>
+            <li><a href="{{ URL::to('/projects') }}">مشاريع الشاب الريادي</a></li>
             @endif
           @endif
         @endif

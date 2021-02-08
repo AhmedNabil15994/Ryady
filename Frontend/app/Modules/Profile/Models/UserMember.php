@@ -40,25 +40,31 @@ class UserMember extends Model{
                     if($status != null){
                         $query->where('status',$status);
                     }
-                })->orderBy('sort','ASC');
+                });
 
         if($count != null){
             $source->take($count)->inRandomOrder();
+            return self::generateObj($source,'true');
         }
-
+        $source->orderBy('sort','ASC');
         return self::generateObj($source);
     }
 
-    static function generateObj($source){
-        $sourceArr = $source->paginate(15);
+    static function generateObj($source,$withPaginate=null){
+        if($withPaginate != null){
+            $sourceArr = $source->get();
+        }else{
+            $sourceArr = $source->paginate(15);
+        }
 
         $list = [];
         foreach($sourceArr as $key => $value) {
             $list[$key] = new \stdClass();
             $list[$key] = self::getData($value);
         }
-
-        $data['pagination'] = \Helper::GeneratePagination($sourceArr);
+        if($withPaginate == null){
+            $data['pagination'] = \Helper::GeneratePagination($sourceArr);
+        }
         $data['data'] = $list;
 
         return $data;
@@ -66,7 +72,8 @@ class UserMember extends Model{
 
     static function getData($source) {
         $data = new  \stdClass();
-        $userCardObj = UserCard::NotDeleted()->where('status',1)->first();
+        $userCardObj = UserCard::NotDeleted()->where('user_id',$source->user_id)->where('status',1)->first();
+        // dd($userCardObj);
         $memberObj =  $userCardObj != null ? Membership::getOne($userCardObj->membership_id) : [];
         $data->id = $source->id;
         $data->user_id = $source->user_id;
@@ -74,7 +81,7 @@ class UserMember extends Model{
         $data->user = $source->user_id != null ? User::getData($source->User) : '';
         if($userCardObj != null){
             $data->color = $memberObj->color;
-            $data->membership_id = $memberObj->id;
+            $data->membership_id = $userCardObj->membership_id;
         }
         $data->sort = $source->sort;
         $data->status = $source->status;

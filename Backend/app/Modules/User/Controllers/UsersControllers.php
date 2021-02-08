@@ -66,10 +66,23 @@ class UsersControllers extends Controller {
 
     public function index(Request $request) {
         if($request->ajax()){
-            $data = User::dataList();
+            $data = User::dataList(null,null);
             return Datatables::of($data['data'])->make(true);
         }
         $data['groups'] = Group::dataList()['data'];
+        $data['title'] = 'المستخدمين';
+        $data['url'] = 'users';
+        return view('User.Views.index')->with('data', (object) $data);
+    }
+
+    public function admins(Request $request) {
+        if($request->ajax()){
+            $data = User::dataList(null,null,1);
+            return Datatables::of($data['data'])->make(true);
+        }
+        $data['groups'] = Group::dataList()['data'];
+        $data['title'] = 'المشرفين والاداريين';
+        $data['url'] = 'admins';
         return view('User.Views.index')->with('data', (object) $data);
     }
 

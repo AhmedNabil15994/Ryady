@@ -423,8 +423,8 @@
                 </li>
                 <?php endif; ?>
 
-                <?php if(\Helper::checkRules('list-groups,list-users,list-logs')): ?>
-                <li class="menu-item menu-item-submenu <?php echo e(Active(URL::to('/groups*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/users*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/logs*'),'menu-item-open active')); ?>" aria-haspopup="true" data-menu-toggle="hover">
+                <?php if(\Helper::checkRules('list-groups,list-users,list-admins,list-logs')): ?>
+                <li class="menu-item menu-item-submenu <?php echo e(Active(URL::to('/groups*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/admins*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/users*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/logs*'),'menu-item-open active')); ?>" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="#" class="menu-link menu-toggle">
                         <i class="menu-icon flaticon-users"></i>
                         <span class="menu-text">المشرفين والاداريين</span>
@@ -446,11 +446,19 @@
                                 </a>
                             </li>
                             <?php endif; ?>
+                            <?php if(\Helper::checkRules('list-admins')): ?>
+                            <li class="menu-item <?php echo e(Active(URL::to('/admins*'))); ?>" aria-haspopup="true">
+                                <a href="<?php echo e(URL::to('/admins')); ?>" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">المشرفين والاداريين</span>
+                                </a>
+                            </li>
+                            <?php endif; ?>
                             <?php if(\Helper::checkRules('list-users')): ?>
                             <li class="menu-item <?php echo e(Active(URL::to('/users*'))); ?>" aria-haspopup="true">
                                 <a href="<?php echo e(URL::to('/users')); ?>" class="menu-link ">
                                     <i class="menu-bullet menu-bullet-dot"></i>
-                                    <span class="menu-text">المشرفين والاداريين</span>
+                                    <span class="menu-text">المستخدمين</span>
                                 </a>
                             </li>
                             <?php endif; ?>

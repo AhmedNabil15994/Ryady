@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Session;
 class AuthEngine {
 
     public function handle($request, Closure $next){
-        // dd($request->segment(1));
         if ($request->segment(1) == null && !(USER_ID && USER_ID != '')) {
             \Auth::logout();
             session()->flush();

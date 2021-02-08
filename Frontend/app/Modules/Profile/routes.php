@@ -5,6 +5,8 @@ Profile
 ----------------------------------------------------------*/
 Route::group(['prefix' => '/'] , function () {
     Route::get('/', 'ProfileControllers@profile');
+    Route::post('/update', 'ProfileControllers@update');
+    Route::get('/membership', 'ProfileControllers@membership');
 
     Route::post('/uploadLogo', 'ProfileControllers@uploadLogo');
     Route::post('/upgrade', 'ProfileControllers@upgrade');

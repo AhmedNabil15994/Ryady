@@ -89,29 +89,6 @@ class ProfileControllers extends Controller {
         return $validate;
     }
 
-    protected function validateUpgradeObj($input){
-        $rules = [
-            'name_ar' => 'required',
-            'name_en' => 'required',
-            'phone' => 'required|min:10',//|regex:/(01)[0-9]{9}/',
-            'start_date' => 'required',
-            'end_date' => 'required',
-        ];
-
-        $message = [
-            'name_ar.required' => "يرجي ادخال الاسم بالعربي",
-            'name_en.required' => "يرجي ادخال الاسم بالانجليزي",
-            'phone.required' => "يرجي ادخال رقم الجوال",
-            'phone.min' => "رقم الجوال يجب ان يكون 10 خانات",
-            'start_date.required' => "يرجي ادخال تاريخ البداية",
-            'end_date.required' => "يرجي ادخال تاريخ النهاية",
-        ];
-
-        $validate = \Validator::make($input, $rules, $message);
-
-        return $validate;
-    }
-
     protected function validatePayment($input){
         $rules = [
             'card_no' => 'required',
@@ -140,6 +117,95 @@ class ProfileControllers extends Controller {
         $data['user'] = User::getData(User::getOne(USER_ID));
         $data['membership'] = UserCard::getData(UserCard::getAvailableForUser(USER_ID));
         $data['memberships'] = Membership::dataList(1)['data'];
+        return view('Profile.Views.profile')->with('data',(object) $data);
+    }
+
+    public function update(){
+        $input = \Request::all();
+        $userObj = User::getOne(USER_ID);
+        if(isset($input['name_ar']) && !empty($input['name_ar'])){
+            $userObj->name_ar = $input['name_ar'];
+        }
+        if(isset($input['name_en']) && !empty($input['name_en'])){
+            $userObj->name_en = $input['name_en'];
+        }
+        if(isset($input['show_details']) && !empty($input['show_details'])){
+            $userObj->show_details = $input['show_details'];
+        }
+        if(isset($input['brief']) && !empty($input['brief'])){
+            $userObj->brief = $input['brief'];
+        }
+        if(isset($input['password']) && !empty($input['password'])){
+            $rules = [
+                'password' => 'min:6',
+            ];
+
+            $message = [
+                'password.min' => "كلمة المرور يجب ان تكون 6 خانات علي الاقل",
+            ];
+
+            $validate = \Validator::make($input, $rules, $message);
+            if($validate->fails()){
+                \Session::flash('error', $validate->messages()->first());
+                return redirect()->back()->withInput();
+            }
+            $userObj->password = \Hash::make($input['password']);
+        }
+        if(isset($input['email']) && !empty($input['email'])){
+            $rules = [
+                'email' => 'email',
+            ];
+
+            $message = [
+                'email.email' => "يرجي ادخال صيغة صحيحة للبريد الالكتروني",
+            ];
+
+            $validate = \Validator::make($input, $rules, $message);
+            if($validate->fails()){
+                \Session::flash('error', $validate->messages()->first());
+                return redirect()->back()->withInput();
+            }
+            $checkUser = User::checkUserByEmail($input['email'],$userObj->id);
+            if($checkUser != null){
+                \Session::flash('error', 'هذا البريد الالكتروني مستخدم من قبل');
+                return redirect()->back()->withInput();
+            }
+            $userObj->email = $input['email'];
+        }
+        if(isset($input['email']) && !empty($input['email'])){
+            $rules = [
+                'phone' => 'min:10',
+            ];
+
+            $message = [
+                'phone.min' => "رقم الجوال يجب ان يكون 10 خانات علي الاقل",
+            ];
+
+            $validate = \Validator::make($input, $rules, $message);
+            if($validate->fails()){
+                \Session::flash('error', $validate->messages()->first());
+                return redirect()->back()->withInput();
+            }
+            $checkUser = User::checkUserByPhone($input['phone'],$userObj->id);
+            if($checkUser != null){
+                \Session::flash('error', 'هذا رقم الجوال مستخدم من قبل');
+                return redirect()->back()->withInput();
+            }
+            $userObj->phone = $input['phone'];
+        }
+
+        $userObj->updated_by = USER_ID;
+        $userObj->updated_at = DATE_TIME;
+        $userObj->save();
+
+        \Session::flash('success', 'تم تحديث البيانات الشخصية');
+        return redirect()->back();
+    }
+
+    public function membership(){
+        $data['user'] = User::getData(User::getOne(USER_ID));
+        $data['membership'] = UserCard::getData(UserCard::getAvailableForUser(USER_ID));
+        $data['memberships'] = Membership::dataList(1)['data'];
         $data['qrCode'] = \QrCode::size(50)->generate($data['membership']->code);
         $data['points'] = User::getPoints();
         $membership_id = $data['membership']->membership_id;
@@ -161,7 +227,7 @@ class ProfileControllers extends Controller {
     public function addBlog(){
         $data['user'] = User::getData(User::getOne(USER_ID));
         $data['membership'] = UserCard::getData(UserCard::getAvailableForUser(USER_ID));
-        $data['categories'] = OrderCategory::dataList(1)['data'];
+        $data['categories'] = BlogCategory::dataList(1)['data'];
         return view('Profile.Views.profile')->with('data',(object) $data);
     }
 
@@ -293,9 +359,8 @@ class ProfileControllers extends Controller {
             return redirect()->back()->withInput();
         }
 
-        $validate = $this->validateUpgradeObj($input);
-        if($validate->fails()){
-            \Session::flash('error', $validate->messages()->first());
+        if($input['new_membership_id'] <= $oldMembership){
+            \Session::flash('error', 'عفوا ! يجب اختيار بطاقة اعلي من بطاقتك الحالية');
             return redirect()->back()->withInput();
         }
 
@@ -309,14 +374,16 @@ class ProfileControllers extends Controller {
         $availableCoupons = reset($availableCoupons);
         
         $coupons = $input['coupons'];
-        foreach ($coupons as $coupon) {
-            if(count($availableCoupons) > 0 && !in_array($coupon, $availableCoupons)){
-                return \Session::flash('error', 'هذا الكود ('.$coupon.') غير متاح حاليا');
+        if(!empty($coupons[0])){
+            foreach ($coupons as $coupon) {
+                if(count($availableCoupons) > 0 && !in_array($coupon, $availableCoupons)){
+                    return \Session::flash('error', 'هذا الكود ('.$coupon.') غير متاح حاليا');
+                }
             }
         }
 
-        $start_date = date('Y-m-d',strtotime(str_replace('/', '-', $input['start_date'])));
-        $end_date = date('Y-m-d',strtotime(str_replace('/', '-', $input['end_date'])));
+        $start_date = date('Y-m-d',strtotime(str_replace('/', '-', $avail->start_date)));
+        $end_date = date('Y-m-d',strtotime(str_replace('/', '-', $avail->end_date)));
 
         $avail->status = 4;
         $avail->updated_at = DATE_TIME;
@@ -325,7 +392,7 @@ class ProfileControllers extends Controller {
 
         $menuObj = new UserCard;
         $menuObj->user_id = $userObj->id;
-        $menuObj->code = $input['code'];
+        $menuObj->code = $avail->code;
         $menuObj->membership_id = $input['new_membership_id'];
         $menuObj->start_date = $start_date;
         $menuObj->end_date = $end_date;
@@ -357,19 +424,21 @@ class ProfileControllers extends Controller {
         }
 
         $discounts = 0;
-        foreach ($coupons as $coupon) {
-            if(in_array($coupon, $availableCoupons)){
-                $couponObj = Coupon::getOneByCode($coupon);
-                if($couponObj->discount_type == 1){
-                    $couponVal = $couponObj->discount_value;
-                }else{
-                    $couponVal = round(($couponObj->discount_value * $membershipObj->price ) / 100, 2);
-                }
-                $discounts+= $couponVal;
-                if($couponObj->valid_type == 1){
-                    $oldVal = $couponObj->valid_value;
-                    $couponObj->valid_value = $oldVal - 1;
-                    $couponObj->save();
+        if(!empty($coupons[0])){
+            foreach ($coupons as $coupon) {
+                if(in_array($coupon, $availableCoupons)){
+                    $couponObj = Coupon::getOneByCode($coupon);
+                    if($couponObj->discount_type == 1){
+                        $couponVal = $couponObj->discount_value;
+                    }else{
+                        $couponVal = round(($couponObj->discount_value * $membershipObj->price ) / 100, 2);
+                    }
+                    $discounts+= $couponVal;
+                    if($couponObj->valid_type == 1){
+                        $oldVal = $couponObj->valid_value;
+                        $couponObj->valid_value = $oldVal - 1;
+                        $couponObj->save();
+                    }
                 }
             }
         }
@@ -441,6 +510,7 @@ class ProfileControllers extends Controller {
         // return $checkStatus;
         // dd($checkStatus);
         if(!isset($checkStatus['errors']) && empty($checkStatus['errors'])){
+            // dd($checkStatus);
             $userObj->status = 1;
             $userObj->is_active = 1;
             $userObj->save();
@@ -522,10 +592,12 @@ class ProfileControllers extends Controller {
         $availableCoupons = reset($availableCoupons);
         
         $coupons = explode(',', $input['coupons']);
-        foreach ($coupons as $coupon) {
-        	if(!in_array($coupon, $availableCoupons)){
-        		return \TraitsFunc::ErrorMessage('هذا الكود ('.$coupon.') غير متاح حاليا');
-        	}
+        if(!empty($coupons[0])){
+            foreach ($coupons as $coupon) {
+            	if(!in_array($coupon, $availableCoupons)){
+            		return \TraitsFunc::ErrorMessage('هذا الكود ('.$coupon.') غير متاح حاليا');
+            	}
+            }
         }
 
 

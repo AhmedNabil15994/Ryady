@@ -527,11 +527,11 @@
       'smtp' => 
       array (
         'transport' => 'smtp',
-        'host' => 'mail.3z9.org',
+        'host' => 'mail.alshabalriyadi.com',
         'port' => '465',
         'encryption' => 'SSL',
-        'username' => 'board@servers.com.sa',
-        'password' => 'nBvt[42hgw.s',
+        'username' => 'noreply@alshabalriyadi.com',
+        'password' => 'ylRsd3ASaBqQ',
         'timeout' => NULL,
         'auth_mode' => NULL,
       ),
@@ -564,7 +564,7 @@
     ),
     'from' => 
     array (
-      'address' => 'noreply@board.servers.com.sa',
+      'address' => 'noreply@alshabalriyadi.com',
       'name' => 'تكافل',
     ),
     'markdown' => 
@@ -995,7 +995,7 @@
     'pdf' => 
     array (
       'enabled' => true,
-      'binary' => '/usr/local/bin/wkhtmltopdf-amd64',
+      'binary' => '/usr/local/bin/wkhtmltopdf',
       'timeout' => false,
       'options' => 
       array (
@@ -1007,7 +1007,7 @@
     'image' => 
     array (
       'enabled' => true,
-      'binary' => '/usr/local/bin/wkhtmltoimage-amd64',
+      'binary' => '/usr/local/bin/wkhtmltoimage',
       'timeout' => false,
       'options' => 
       array (

@@ -74,12 +74,12 @@ var KTDatatablesAdvancedMultipleControls = function() {
 			processing: true,
 			serverSide: true,
 			ajax: {
-				url: '/users',
+				url: '/'+$('input.url').val(),
 				type: 'GET',
 				data:function(dtParms){
 			       	dtParms.group_id = $('select[name="group_id"]').val();
 			        dtParms.columnsDef= [
-						'id', 'username','name_ar','name_en','email','address','phone','group'];
+						'id', 'username','name_ar','name_en','email','address','phone'];
 			        return dtParms
 			    }
 			},
@@ -91,7 +91,6 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				{data: 'email',},
 				{data: 'address',},
 				{data: 'phone',},
-				{data: 'group',},
 				{data: 'id', responsivePriority: -1},
 			],
 			columnDefs: [
@@ -144,14 +143,6 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					},
 				},
 				{
-					targets: 7,
-					title: 'النوع',
-					className: 'edits selects',
-					render: function(data, type, full, meta) {
-						return '<a class="editable" data-col="group_id" data-id="'+full.id+'">'+data+'</a>';
-					},
-				},
-				{
 					targets: -1,
 					title: 'الاجراءات',
 					orderable: false,
@@ -159,7 +150,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 						var editButton = '';
 						var deleteButton = '';
 						if($('input[name="data-area"]').val() == 1){
-							editButton = '<a href="/users/edit/'+data+'" class="dropdown-item">'+
+							editButton = '<a href="/"'+$('input.url').val()+'"/edit/'+data+'" class="dropdown-item">'+
 		                                    '<i class="m-nav__link-icon fa fa-pencil-alt"></i>'+
 		                                    '<span class="m-nav__link-text">تعديل</span>'+
 		                                '</a>';

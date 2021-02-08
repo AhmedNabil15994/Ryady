@@ -23,3 +23,25 @@ Route::group(['prefix' => '/users'] , function () {
     Route::post('/edit/{id}/editImage', 'UsersControllers@uploadImage');
     Route::post('/edit/{id}/deleteImage', 'UsersControllers@deleteImage');
 });
+
+
+Route::group(['prefix' => '/admins'] , function () {
+    Route::get('/', 'UsersControllers@admins');
+    Route::get('/add', 'UsersControllers@add');
+    Route::get('/arrange', 'UsersControllers@arrange');
+    Route::post('/arrange/sort', 'UsersControllers@sort');
+    Route::get('/charts', 'UsersControllers@charts');
+    Route::get('/edit/{id}', 'UsersControllers@edit');
+    Route::post('/update/{id}', 'UsersControllers@update');
+    Route::post('/fastEdit', 'UsersControllers@fastEdit');
+    Route::post('/create', 'UsersControllers@create');
+    Route::get('/delete/{id}', 'UsersControllers@delete');
+
+    /*----------------------------------------------------------
+    Images
+    ----------------------------------------------------------*/
+
+    Route::post('/add/uploadImage', 'UsersControllers@uploadImage');
+    Route::post('/edit/{id}/editImage', 'UsersControllers@uploadImage');
+    Route::post('/edit/{id}/deleteImage', 'UsersControllers@deleteImage');
+});

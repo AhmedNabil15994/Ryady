@@ -12,6 +12,7 @@ return [
     'DashboardControllers@Dashboard' => 'list-dashboard',
 
     'UsersControllers@index' => 'list-users',
+    'UsersControllers@admins' => 'list-admins',
     'UsersControllers@edit' => 'edit-user',
     'UsersControllers@update' => 'edit-user',
     'UsersControllers@fastEdit' => 'edit-user',

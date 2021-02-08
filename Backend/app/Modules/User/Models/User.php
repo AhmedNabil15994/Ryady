@@ -23,7 +23,7 @@ class User extends Model{
         return \ImagesHelper::GetImagePath('users', $id, $photo);
     }
 
-    static function dataList($status=null,$userIds= null) {
+    static function dataList($status=null,$userIds= null,$group_id=null) {
         $input = \Request::all();
 
         $source = self::NotDeleted();
@@ -36,6 +36,11 @@ class User extends Model{
         }
         if($status != null){
             $source->where('status',1)->where('is_active',1);
+        }
+        if($group_id != null){
+            $source->where('group_id',1);
+        }else{
+            $source->where('group_id','!=',1);
         }
         if($userIds != null){
             $source->whereNotIn('id',$userIds);

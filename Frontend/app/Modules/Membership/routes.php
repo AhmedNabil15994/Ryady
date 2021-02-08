@@ -10,5 +10,6 @@ Route::group(['prefix' => '/memberships'] , function () {
     Route::get('/features', 'MembershipControllers@features');
     Route::get('/payment', 'MembershipControllers@payment');
     Route::post('/payment', 'MembershipControllers@postPayment');
+    Route::get('/activate/{id}', 'MembershipControllers@activate');
 
 });

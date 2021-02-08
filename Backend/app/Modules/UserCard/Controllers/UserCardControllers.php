@@ -98,10 +98,33 @@ class UserCardControllers extends Controller {
         $menuObj->updated_by = USER_ID;
         $menuObj->save();
 
-        $userObj = $menuObj->User;
-        $userObj->status = $input['status'];
-        $userObj->is_active = $input['status'];
-        $userObj->save();
+        if(in_array($input['status'], [1,3])){
+            if($input['status'] == 3){
+                $input['status'] = 0;
+            }
+
+            $userObj = $menuObj->User;
+            $userObj->status = $input['status'];
+            $userObj->is_active = $input['status'];
+            $userObj->save();
+
+            if($input['status'] == 1){
+                $userMemberObj = UserMember::NotDeleted()->where('user_id',$userObj->id)->first();
+                if($userMemberObj == null){
+                    $userMemberObj = new UserMember;
+                }
+
+                $userMemberObj->user_id = $userObj->id;
+                $userMemberObj->status = $input['status'];
+                $userMemberObj->sort = UserMember::newSortIndex();
+                $userMemberObj->created_at = DATE_TIME;
+                $userMemberObj->created_by = $userObj->id;
+                $userMemberObj->save();
+            }else{
+                UserMember::where('user_id',$userObj->user_id)->delete();
+            }
+
+        }
 
         WebActions::newType(2,'UserCard');
         \Session::flash('success', "تنبيه! تم التعديل بنجاح");
@@ -142,6 +165,11 @@ class UserCardControllers extends Controller {
     public function delete($id) {
         $id = (int) $id;
         $menuObj = UserCard::getOne($id);
+        UserMember::where('user_id',$menuObj->user_id)->delete();
+        $userObj = User::getOne($menuObj->user_id);
+        $userObj->status = 0;
+        $userObj->is_active = 0;
+        $userObj->save();
         WebActions::newType(3,'UserCard');
         return \Helper::globalDelete($menuObj);
     }
@@ -162,17 +190,21 @@ class UserCardControllers extends Controller {
                 $userObj->is_active = $item[2];
                 $userObj->save();
 
-                $userMemberObj = UserMember::NotDeleted()->where('user_id',$userObj->id)->first();
-                if($userMemberObj == null){
-                    $userMemberObj = new UserMember;
-                }
+                if($item[2] == 3){
+                    UserMember::where('user_id',$userObj->user_id)->delete();
+                }else{
+                    $userMemberObj = UserMember::NotDeleted()->where('user_id',$userObj->id)->first();
+                    if($userMemberObj == null){
+                        $userMemberObj = new UserMember;
+                    }
 
-                $userMemberObj->user_id = $userObj->id;
-                $userMemberObj->status = $item[2];
-                $userMemberObj->sort = UserMember::newSortIndex();
-                $userMemberObj->created_at = DATE_TIME;
-                $userMemberObj->created_by = $userObj->id;
-                $userMemberObj->save();
+                    $userMemberObj->user_id = $userObj->id;
+                    $userMemberObj->status = $item[2];
+                    $userMemberObj->sort = UserMember::newSortIndex();
+                    $userMemberObj->created_at = DATE_TIME;
+                    $userMemberObj->created_by = $userObj->id;
+                    $userMemberObj->save();
+                }
             }
         }
 

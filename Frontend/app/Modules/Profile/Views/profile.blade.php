@@ -86,23 +86,28 @@
                                 </label>
                             </form>
                         </center>
-                        <h2 class="name">أ.{{ $data->user->name_ar }}</h2>
+                        <h2 class="name">{{ $data->user->name_ar }}</h2>
                         <span style="color: {{ $data->membership->membership->color }}">{{ $data->membership->membership->title }}</span>
                         <ul class="listProfile">
-                            <li><a href="{{ URL::to('/profile/') }}" class="{{ Active( URL::to('/profile/')) }}">العضوية 
+                            <li><a href="{{ URL::to('/profile') }}" class="{{ Active( URL::to('/profile')) }}">البيانات الشخصية 
                                 <img src="{{ asset('/assets/images/024-name.svg') }}" />
                                 </a></li>
+                            <li><a href="{{ URL::to('/profile/membership') }}" class="{{ Active( URL::to('/profile/membership')) }}">العضوية 
+                                <img src="{{ asset('/assets/images/024-name.svg') }}" />
+                                </a></li>
+                            @if($data->membership->membership_id != 1)
                             <li><a href="{{ URL::to('/profile/addBlog') }}" class="{{ Active( URL::to('/profile/addBlog')) }}">اضف مقالة 
                                 <img src="{{ asset('/assets/images/025-content-writing.svg') }}" />
                             </a></li>
+                            @endif
                             @if($data->membership->membership_id == 3)
                             <li><a href="{{ URL::to('/profile/download/'.$data->membership->id) }}" class="{{ Active( URL::to('/profile/certificate')) }}">شهادة العضوية 
                                 <img src="{{ asset('/assets/images/026-document.svg') }}" />
                             </a></li>
-                            @endif
                             <li><a href="{{ URL::to('/profile/newProject') }}" class="{{ Active( URL::to('/profile/newProject')) }}">اضف مشروعك 
                                 <img src="{{ asset('/assets/images/027-add.svg') }}" />
                             </a></li>
+                            @endif
                             <li><a href="{{ URL::to('/profile/newOrder') }}" class="{{ Active( URL::to('/profile/newOrder')) }}">اطلب خدمة 
                                 <img src="{{ asset('/assets/images/028-support.svg') }}" />    
                             </a></li>
@@ -112,9 +117,64 @@
                 @if(Request::segment(2) == null)
                 <div class="col-md-8">
                     <div class="profileDetails">
+                        <div class="tabs">
+                            <div class="tab1 tab">
+                                
+                                <form class="formStyle" method="POST" action="{{ URL::to('/profile/update') }}">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="">الاسم عربي</label>
+                                            <input type="text" class="inputStyle" name="name_ar" placeholder="الاسم عربي" value="{{ $data->user->name_ar }}" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">الاسم إنجليزي</label>
+                                            <input type="text" class="inputStyle" name="name_en" placeholder="الاسم إنجليزي"  value="{{ $data->user->name_en }}" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">رقم الجوال</label>
+                                            <input type="text" class="inputStyle" name="phone" placeholder="رقم الجوال" value="{{ $data->user->phone }}" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">البريد الالكتروني</label>
+                                            <input type="email" class="inputStyle" name="email" placeholder="البريد الالكتروني" value="{{ $data->user->email }}" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">كلمة المرور</label>
+                                            <input type="password" class="inputStyle" name="password" placeholder="كلمة المرور"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">اظهار البيانات :</label>
+                                            <div class="selectStyle">
+                                                <select class="selectmenu" name="show_details" id="selectmenu">
+                                                    <option value="0" {{ $data->user->show_details == 0 ? 'selected' : '' }}>لا</option>
+                                                    <option value="1" {{ $data->user->show_details == 1 ? 'selected' : '' }}>نعم</option>
+                                                </select>
+                                                <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="">نبذة تعريفية</label>
+                                            <textarea name="brief" class="textareaStyle" placeholder="نبذة تعريفية">{{ $data->user->brief }}</textarea>
+                                        </div>
+                                    </div>
+                                    <button class="btnForm">تحديث البيانات</button>
+                                    
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @elseif(Request::segment(2) == 'membership')
+                <div class="col-md-8">
+                    <div class="profileDetails">
                         <div class="tabsHead">
                             <ul class="btnsTabs clearfix" id="tabs">
                                 <li id="tab1" class="active">معلومات العضوية</li>
+                                @if($data->membership->membership_id != 3)
+                                <li id="tab4">ترقية العضوية</li>
+                                @endif
                                 <li id="tab2">النقاط</li>
                                 <li id="tab3">مميزات العضوية</li>
                             </ul>
@@ -155,8 +215,6 @@
                                             <center>
                                                 <div class="memberStyle">
                                                     <h2 class="titleMem">عضوية {{ $data->membership->membership->title }}</h2>
-                                                    <span class="price">{{ $data->membership->membership->price }} ريال</span>
-                                                    <span class="time">لمدة {{ $data->membership->membership->periodText }}</span>
                                                 </div>
                                             </center>
                                         </div>
@@ -170,29 +228,9 @@
                                             <label for="">اسمك على البطاقة بالعربي</label>
                                             <input type="text" class="inputStyle" readonly name="name_ar" placeholder="اسمك على البطاقة بالعربي" value="{{ $data->user->name_ar }}" />
                                         </div>
-
-                                        <div class="col-md-6">
-                                            <label for="">رقم الجوال</label>
-                                            <input type="text" class="inputStyle" name="phone" placeholder="رقم الجوال" value="{{ $data->user->phone }}" />
-                                        </div>
                                         <div class="col-md-6">
                                             <label for="">اسمك على البطاقة بالإنجليزي</label>
                                             <input type="text" class="inputStyle" readonly name="name_en" placeholder="اسمك على البطاقة بالإنجليزي"  value="{{ $data->user->name_en }}" />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="">رقم البطاقة</label>
-                                            <input type="text" class="inputStyle" name="code" placeholder="رقم البطاقة" readonly value="{{ $data->membership->code }}" />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="">اختر العضوية</label>
-                                            <div class="selectStyle">
-                                                <select class="selectmenu" id="selectmenu" name="new_membership_id">
-                                                    @foreach($data->memberships as $membership)
-                                                    <option value="{{ $membership->id }}" {{ $data->membership->membership_id == $membership->id ? 'selected' : '' }}>عضوية {{ $membership->title . ' ' . $membership->price }} ريال</option>
-                                                    @endforeach
-                                                </select>
-                                                <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
-                                            </div>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">تاريخ البداية</label>
@@ -209,10 +247,72 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="">كوبونات الخصم</label>
+                                            <label for="">رقم البطاقة</label>
+                                            <input type="text" class="inputStyle" name="code" placeholder="رقم البطاقة" readonly value="{{ $data->membership->code }}" />
+                                        </div>
+                                    </div>                                    
+                                </form>
+                            </div>
+                            <div class="tab4 tab">
+                                <div class="cardHead">
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <div class="cardStyle">
+                                                @php 
+                                                    $img = '';
+                                                    $class = '';
+                                                    if($data->membership->membership->id == 1){
+                                                        $img = 'Purple.png';
+                                                        $class = 'bgPurple';
+                                                    }else if($data->membership->membership->id == 2){
+                                                        $img = 'green.png';
+                                                        $class = 'bgGreen';
+                                                    }else if($data->membership->membership->id == 3){
+                                                        $img = 'blue.png';
+                                                        $class = 'bgBlue';
+                                                    }
+                                                @endphp    
+                                                <img src="{{ asset('/assets/images/'.$img) }}" alt="" class="bg" />
+                                                <h2 class="titleAr" id="lblValue">{{ $data->user->name_ar }}</h2>
+                                                <h2 class="titleEn" id="lblValue2">{{ $data->user->name_en }}</h2>
+                                                <img class="logo" src="{{ asset('/assets/images/logo.svg') }}" alt="" />
+                                                <div class="details">
+                                                    {!! $data->qrCode !!}
+                                                    <span class="date">{{ date('m/Y',strtotime($data->membership->end_date)) }}</span>
+                                                    <span class="code" style="color: {{ $data->membership->membership->color }}">{{ $data->membership->code }}</span>
+                                                </div>
+                                                <span class="state {{ $class }}">{{ $data->membership->membership->title }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <center>
+                                                <div class="memberStyle">
+                                                    <h2 class="titleMem">عضوية {{ $data->membership->membership->title }}</h2>
+                                                </div>
+                                            </center>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <form class="formStyle" method="POST" action="{{ URL::to('/profile/upgrade') }}">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="">اختر العضوية</label>
+                                            <div class="selectStyle">
+                                                <select class="selectmenu" id="selectmenu" name="new_membership_id">
+                                                    @foreach($data->memberships as $membership)
+                                                    <option value="{{ $membership->id }}" {{ $data->membership->membership_id == $membership->id ? 'selected' : '' }}>عضوية {{ $membership->title . ' ' . $membership->price }} ريال</option>
+                                                    @endforeach
+                                                </select>
+                                                <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">كود الخصم</label>
                                             <div class="coupons">
                                                 <div class="inputSt">
-                                                    <input type="text" class="inputStyle" name="coupons[]" placeholder="كوبونات الخصم :" />
+                                                    <input type="text" class="inputStyle" name="coupons[]" placeholder="كود الخصم :" />
                                                 </div>
                                             </div>
                                         </div>
@@ -272,7 +372,7 @@
                     
                     </div>
                 </div>
-                @elseif(Request::segment(2) == 'addBlog')
+                @elseif(Request::segment(2) == 'addBlog' && $data->membership->membership_id != 1)
                 <div class="col-md-8">
                     <div class="profileDetails">
                         <div class="tabs">
@@ -280,9 +380,11 @@
                                 <form class="center-block">
                                     <div class="row">
                                         <div class="col-md-6">
+                                            <label for="">العنوان عربي :</label>
                                             <input type="text" class="inputStyle" name="title" placeholder="العنوان عربي :" />
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="">التصنيف :</label>
                                             <div class="selectStyle">
                                                 <select class="selectmenu" name="order_category_id" id="selectmenu">
                                                     <option value="" disabled selected>اختر التصنيف :</option>
@@ -295,7 +397,8 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
+                                            <label for="">المرفقات :</label>
                                             <div class="labelFile">
                                                 <label>
                                                     <span>المرفقات :</span>
@@ -305,6 +408,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <label for="">الوصف عربي :</label>
                                     <textarea class="textareaStyle" name="description" placeholder="الوصف عربي :"></textarea>
                                     
                                     <button class="btnStyle addBlog">ارسل الآن</button>
@@ -313,7 +417,7 @@
                         </div>
                     </div>
                 </div>
-                @elseif(Request::segment(2) == 'newProject')
+                @elseif(Request::segment(2) == 'newProject' && $data->membership->membership_id == 3)
                 <div class="col-md-8">
                     <div class="profileDetails">
                         <div class="tabs">
@@ -321,18 +425,23 @@
                                 <form class="center-block">
                                     <div class="row">
                                         <div class="col-md-6">
+                                            <label for="">اسم المشروع :</label>
                                             <input type="text" class="inputStyle" name="title" placeholder="اسم المشروع :" />
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="">رقم الجوال :</label>
                                             <input type="text" class="inputStyle" name="phone" placeholder="رقم الجوال :" />
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="">البريد الالكتروني :</label>
                                             <input type="email" class="inputStyle" name="email" placeholder="البريد الالكتروني :" />
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="">العنوان :</label>
                                             <input type="text" class="inputStyle" name="address" placeholder="العنوان :" />
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="">التصنيف :</label>
                                             <div class="selectStyle">
                                                 <select class="selectmenu" name="category_id" id="selectmenu">
                                                     <option value="" disabled selected>اختر التصنيف :</option>
@@ -344,6 +453,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="">المدينة :</label>
                                             <div class="selectStyle">
                                                 <select class="selectmenu" name="city_id" id="selectmenu2">
                                                     <option value="" disabled selected>اختر المدينة :</option>
@@ -357,6 +467,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
+                                            <label for="">حدد موقعك :</label>
                                             <div class="inputSt">
                                                 <input type="text" class="inputStyle" name="gmaps" placeholder="خرائط جوجل :" />
                                                 <img class="iconImg locations" data-toggle="modal" data-target=".modal-location" src="{{ asset('/assets/images/google-maps (2).png') }}" />
@@ -366,16 +477,17 @@
                                         </div>
                                     
                                         <div class="col-md-6">
+                                            <label for="">كود الخصم :</label>
                                             <div class="coupons">
                                                 <div class="inputSt">
-                                                    <input type="text" class="inputStyle" name="coupons[]" placeholder="كوبونات الخصم :" />
-                                                    <i class="iconImg flaticon-plus iconAdd"></i>
+                                                    <input type="text" class="inputStyle" name="coupons[]" placeholder="كود الخصم :" />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
+                                            <label for="">شعار النشاط :</label>
                                             <div class="labelFile">
                                                 <label>
                                                     <span>شعار النشاط :</span>
@@ -385,6 +497,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="">صور عن النشاط :</label>
                                             <div class="labelFile">
                                                 <label>
                                                     <span>صور عن النشاط :</span>
@@ -397,6 +510,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <label for="">نبذة عن المشروع :</label>
                                     <textarea class="textareaStyle" name="brief" placeholder="نبذة عن المشروع :"></textarea>
                                     
                                     <button class="btnStyle perform-btn">ارسل الآن</button>
@@ -414,15 +528,19 @@
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <input type="text" class="inputStyle" name="name" value="{{ old('name') }}" placeholder="الاسم :" />
+                                            <label for="">الاسم :</label>
+                                            <input type="text" class="inputStyle" name="name" readonly value="{{ $data->user->name_ar }}" placeholder="الاسم :" />
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="number" class="inputStyle" name="phone" value="{{ old('phone') }}" placeholder="رقم الجوال :" />
+                                            <label for="">رقم الجوال :</label>
+                                            <input type="number" class="inputStyle" name="phone" value="{{ $data->user->phone }}" placeholder="رقم الجوال :" />
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="email" class="inputStyle" name="email" value="{{ old('email') }}" placeholder="البريد الالكتروني :" />
+                                            <label for="">البريد الالكتروني :</label>
+                                            <input type="email" class="inputStyle" name="email" value="{{ $data->user->email }}" placeholder="البريد الالكتروني :" />
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="">نوع الخدمة :</label>
                                             <div class="selectStyle">
                                                 <select class="selectmenu" id="selectmenu" name="category_id">
                                                     <option value="" selected disabled>حدد نوع الخدمة :</option>

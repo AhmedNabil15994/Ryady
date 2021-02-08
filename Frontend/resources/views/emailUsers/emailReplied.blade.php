@@ -7,9 +7,9 @@
 
             <p>{{ $subject }}</p>
             <br />
-            {{ $content }}
+            {!! $content !!}
             <p>شكرا جزيلا,</p>
-            <p>تكافل</p>
+            <p>الشاب الريادي</p>
         </td>
     </tr>
     </tbody>

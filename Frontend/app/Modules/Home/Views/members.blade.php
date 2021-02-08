@@ -5,7 +5,7 @@
 @section('styles')
 <style type="text/css" media="screen">
     @foreach($data->memberships as $membership)
-    .membership{{ $membership->id }}:hover{
+    .membership{{ $membership->id }}{
         border-color: {{ $membership->color }} !important;
     }
     @endforeach
@@ -31,7 +31,7 @@
                 <div class="col-md-3 wow fadeInUp">
                     <div class="memb">
                         <img class="membership{{ $member->membership_id }}" src="{{ $member->user->photo }}" style="" />
-                        <h2 class="name">أ.{{ $member->user->name_ar }}</h2>
+                        <h2 class="name">{{ $member->user->name_ar }}</h2>
                     </div>
                 </div>
                 @endforeach

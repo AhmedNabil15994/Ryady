@@ -13,7 +13,7 @@
 		        @if($item->link != '')
 		          	@if($item->link == '#login')
 		        		@if(\Session::has('user_id')  && Session::has('username'))
-		        			<li><a href="{{ URL::to('/profile') }}" >الملف الشخصي</a></li>
+		        			<li><a href="{{ URL::to('/profile') }}" >{{ \App\Models\User::getOne(\Session::get('user_id'))->name_ar }}</a></li>
 		        			<li><a href="{{ URL::to('/profile/logout') }}" >تسجيل الخروج</a></li>
 		        		@else
 				          	<li><a href="#" data-toggle="modal" data-target="{{ $item->link }}">{{ $item->title }}</a></li>

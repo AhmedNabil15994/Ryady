@@ -43,6 +43,8 @@
                             </select>
                             <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
                         </div>
+                        <label for="">البريد الالكتروني</label>
+                        <input type="email" class="inputStyle" value="{{ \Request::get('email') }}" name="email"/>
                         <label for="">رقم الجوال</label>
                         <input type="text" class="inputStyle" value="{{ \Request::get('phone') }}" name="phone"/>
                         <label for="">كلمة المرور</label>
@@ -63,7 +65,7 @@
                         </label> --}}
                         <div class="coupons">
                             <div class="inputSt">
-                                <label for="">كوبونات الخصم :</label>
+                                <label for="">كود الخصم :</label>
                                 <input type="text" class="inputStyle" name="coupons[]" />
                             </div>
                         </div>

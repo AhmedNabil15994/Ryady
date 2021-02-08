@@ -95,7 +95,7 @@ class Blog extends Model{
         $data->category = $source->category_id ? $source->Category->title : '';
         $data->views = $source->views != null ? $source->views : 0;
         $data->description = $source->description;
-        $data->description2 = str_split($source->description, 200)[0];
+        $data->description2 = str_split(strip_tags($source->description), 200)[0];
         $data->sort = $source->sort;
         $data->status = $source->status;
         $data->statusText = self::getStatus($source->status);
@@ -103,7 +103,7 @@ class Blog extends Model{
         $data->photo = self::getPhotoPath($source->id, $source->file);
         $data->photo_name = $source->file;
         $data->photo_size = $data->photo != '' ? self::getPhotoSize($data->photo) : '';
-        $data->creator = $source->created_by ? $source->Creator->username : '';
+        $data->creator = $source->created_by ? $source->Creator->name_ar : '';
         $data->creator_photo = $source->created_by ? User::getData($source->Creator)->photo : '';
         $data->created_at = \Helper::formatDate($source->created_at,'d - m - Y');
         return $data;

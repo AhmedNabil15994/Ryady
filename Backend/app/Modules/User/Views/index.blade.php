@@ -1,6 +1,6 @@
 {{-- Extends layout --}}
 @extends('Layouts.master')
-@section('title','المشرفين والاداريين')
+@section('title',$data->title)
 
 {{-- Content --}}
 @section('sub-header')
@@ -15,7 +15,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">المشرفين والاداريين</h3>
+                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">{{ $data->title }}</h3>
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -23,7 +23,7 @@
                         <a href="{{ URL::to('/') }}" class="text-muted"><i class="m-nav__link-icon la la-home"></i></a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ URL::to('/users') }}" class="text-muted">المشرفين والاداريين</a>
+                        <a href="{{ URL::to('/'.$data->url) }}" class="text-muted">{{ $data->title }}</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -40,19 +40,19 @@
                 </button>
                 <div class="dropdown-menu" dropdown-toggle="hover">
                     @if(\Helper::checkRules('add-user'))
-                    <a href="{{ URL::to('/users/add') }}" class="dropdown-item">
+                    <a href="{{ URL::to('/'.$data->url.'/add') }}" class="dropdown-item">
                         <i class="m-nav__link-icon fa fa-plus"></i>
                         <span class="m-nav__link-text">اضافة</span>
                     </a>
                     @endif
                     @if(\Helper::checkRules('sort-user'))
-                    <a href="{{ URL::to('/users/arrange') }}" class="dropdown-item">
+                    <a href="{{ URL::to('/'.$data->url.'/arrange') }}" class="dropdown-item">
                         <i class="m-nav__link-icon fa fa-sort-numeric-up"></i>
                         <span class="m-nav__link-text">ترتيب</span>
                     </a>
                     @endif
                     @if(\Helper::checkRules('charts-user'))
-                    <a href="{{ URL::to('/users/charts') }}" class="dropdown-item">
+                    <a href="{{ URL::to('/'.$data->url.'/charts') }}" class="dropdown-item">
                         <i class="m-nav__link-icon flaticon-graph"></i>
                         <span class="m-nav__link-text">الاحصائيات</span>
                     </a>
@@ -75,7 +75,7 @@
             <span class="card-icon">
                 <i class="menu-icon flaticon-users"></i>
             </span>
-            <h3 class="card-label">المشرفين والاداريين</h3>
+            <h3 class="card-label">{{ $data->title }}</h3>
         </div>
         <div class="card-toolbar">
             @if(\Helper::checkRules('edit-user'))
@@ -165,6 +165,7 @@
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <input type="hidden" class="url" value="{{ $data->url }}">
                                     <label>البريد الالكتروني:</label>
                                     <input type="email" class="form-control m-input" name="email" value="{{ Request::get('email') }}" data-col-index="4">
                                     <br>
@@ -200,7 +201,7 @@
                                         </span>
                                     </button>
                                     &nbsp;&nbsp;
-                                    <a href="{{ URL::to('/users') }}" class="btn btn-secondary m-btn m-btn--icon" id="m_reset">
+                                    <a href="{{ URL::to('/'.$data->url) }}" class="btn btn-secondary m-btn m-btn--icon" id="m_reset">
                                         <span>
                                             <i class="la la-close"></i>
                                             <span>الغاء</span>
@@ -226,7 +227,6 @@
                     <th>البريد الالكتروني</th>
                     <th>العنوان</th>
                     <th>رقم الجوال</th>
-                    <th>النوع</th>
                     <th>الاجراءات</th>
                 </tr>
             </thead>
@@ -239,7 +239,6 @@
                     <th>البريد الالكتروني</th>
                     <th>العنوان</th>
                     <th>رقم الجوال</th>
-                    <th>النوع</th>
                     <th>الاجراءات</th>
                 </tr>
             </tfoot>

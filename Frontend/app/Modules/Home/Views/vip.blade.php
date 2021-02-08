@@ -34,7 +34,7 @@
                     <div class="itemVip">
                         <img src="{{ $user->user->photo }}" alt="" />
                         <div class="mask">
-                            <h2 class="title">أ.{{ $user->user->name_ar }}</h2>
+                            <h2 class="title">{{ $user->user->name_ar }}</h2>
                         </div>
                     </div>
                 </div>

@@ -62,6 +62,11 @@ return [
         ],
         'UsersControllers@index' => [
             'title'=>'list-users',
+            'viewTitle'=>'المستخدمين',
+            'modulePermissions' => 'edit-user,add-user,delete-user,sort-user,charts-user,uploadImage-user,deleteImage-user',
+        ],
+        'UsersControllers@admins' => [
+            'title'=>'list-admins',
             'viewTitle'=>'المشرفين والاداريين',
             'modulePermissions' => 'edit-user,add-user,delete-user,sort-user,charts-user,uploadImage-user,deleteImage-user',
         ],
