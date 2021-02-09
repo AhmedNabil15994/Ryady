@@ -50,10 +50,6 @@ $(function(){
 	$('.perform-btn').on('click',function(e){
 		e.preventDefault();
 		e.stopPropagation();
-		var coupons = [];
-		$('input[name="coupons[]').each(function(index,item){
-			coupons.push($(item).val());
-		});
 
 		var formData = new FormData();
         formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
@@ -64,7 +60,7 @@ $(function(){
         formData.append('lat', $('input[name="lat"]').val());
         formData.append('lng', $('input[name="lng"]').val());
         formData.append('logo', logo);
-        formData.append('coupons', coupons);
+        formData.append('coupons', $('input[name="coupons"]').val());
         formData.append('brief', $('textarea[name="brief"]').val());
         formData.append('category_id', $('select[name="category_id"]').val());
         formData.append('city_id', $('select[name="city_id"]').val());

@@ -56,7 +56,6 @@ class ProjectControllers extends Controller {
         \Session::put('photos', []);
         $data['cities'] = City::dataList(1)['data'];
         $data['categories'] = ProjectCategory::dataList(1)['data'];
-        $data['coupons'] = Coupon::availableCoupons();
         return view('Project.Views.add')->with('data', (object) $data);
     }
 
@@ -72,7 +71,6 @@ class ProjectControllers extends Controller {
         $data['cities'] = City::dataList(1)['data'];
         $data['categories'] = ProjectCategory::dataList(1)['data'];
         $data['data'] = Project::getData($menuObj);
-        $data['coupons'] = Coupon::availableCoupons();
         return view('Project.Views.edit')->with('data', (object) $data);      
     }
 
@@ -99,9 +97,7 @@ class ProjectControllers extends Controller {
         $menuObj->city_id = $input['city_id'];
         $menuObj->category_id = $input['category_id'];
         $menuObj->brief = $input['brief'];
-        if(isset($input['coupons']) && !empty($input['coupons'])){
-            $menuObj->coupons = serialize($input['coupons']);
-        }
+        $menuObj->coupons = $input['coupons'];
         $menuObj->facebook_url = $input['facebook_url'];
         $menuObj->twitter_url = $input['twitter_url'];
         $menuObj->youtube_url = $input['youtube_url'];
@@ -172,9 +168,7 @@ class ProjectControllers extends Controller {
         $menuObj->brief = $input['brief'];
         $menuObj->lat = isset($input['lat']) ? $input['lat'] : '';
         $menuObj->lng = isset($input['lng']) ? $input['lng'] : '';
-        if(isset($input['coupons']) && !empty($input['coupons'])){
-            $menuObj->coupons = serialize($input['coupons']);
-        }
+        $menuObj->coupons = $input['coupons'];
         $menuObj->facebook_url = $input['facebook_url'];
         $menuObj->twitter_url = $input['twitter_url'];
         $menuObj->youtube_url = $input['youtube_url'];

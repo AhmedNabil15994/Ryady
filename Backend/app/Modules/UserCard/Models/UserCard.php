@@ -120,7 +120,7 @@ class UserCard extends Model{
 
     static function getNewCode(){
         $code = '001000';
-        $lastCode = self::orderBy('id','DESC')->first();
+        $lastCode = self::orderBy('code','DESC')->first();
         if($lastCode != null){
             $code = str_pad(intval($lastCode->code) + 1, strlen($lastCode->code), '0', STR_PAD_LEFT);
         }

@@ -14,5 +14,5 @@ Route::group(['prefix' => '/'] , function () {
     Route::get('/order', 'HomeControllers@order');
     Route::post('/order', 'HomeControllers@postOrder');
     Route::get('/signin', 'HomeControllers@login');
-
+    Route::get('/entrepreneur', 'HomeControllers@entrepreneur');
 });

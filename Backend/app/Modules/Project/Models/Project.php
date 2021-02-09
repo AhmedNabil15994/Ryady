@@ -110,7 +110,7 @@ class Project extends Model{
         $data->instagram_url = $source->instagram_url;
         $data->brief = $source->brief;
         $data->briefs = strip_tags(trim($source->brief));
-        $data->coupons =  $source->coupons != null ? unserialize($source->coupons) : [];
+        $data->coupons =  $source->coupons;
         $data->sort = $source->sort;
         $data->status = $source->status;
         $data->statusText = self::getStatus($source->status);

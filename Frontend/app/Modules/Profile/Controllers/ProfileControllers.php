@@ -123,15 +123,6 @@ class ProfileControllers extends Controller {
     public function update(){
         $input = \Request::all();
         $userObj = User::getOne(USER_ID);
-        if(isset($input['name_ar']) && !empty($input['name_ar'])){
-            $userObj->name_ar = $input['name_ar'];
-        }
-        if(isset($input['name_en']) && !empty($input['name_en'])){
-            $userObj->name_en = $input['name_en'];
-        }
-        if(isset($input['show_details']) && !empty($input['show_details'])){
-            $userObj->show_details = $input['show_details'];
-        }
         if(isset($input['brief']) && !empty($input['brief'])){
             $userObj->brief = $input['brief'];
         }
@@ -214,6 +205,31 @@ class ProfileControllers extends Controller {
         $ids = $membership->features;
         $data['features'] = Feature::dataList(1,$ids)['data'];
         return view('Profile.Views.profile')->with('data',(object) $data);
+    }
+
+    public function addRequest(){
+        // $userObj = User::getData(User::getOne(USER_ID));
+        $userCardObj = UserCard::getData(UserCard::getAvailableForUser(USER_ID));
+        if($userCardObj){
+            $userRequestObj = UserRequest::NotDeleted()->where('status',2)->where('user_id',USER_ID)->where('user_card_id',$userCardObj->id)->first();
+            if($userRequestObj != null){
+                \Session::flash('error', 'تم ارسال الطلب من قبل');
+            }else{
+                $userRequestObj = new UserRequest();
+                $userRequestObj->user_id = USER_ID;
+                $userRequestObj->membership_id = $userCardObj->membership_id;
+                $userRequestObj->user_card_id = $userCardObj->id;    
+                $userRequestObj->status = 2;
+                $userRequestObj->sort = UserRequest::newSortIndex();
+                $userRequestObj->created_by = USER_ID;
+                $userRequestObj->created_at = DATE_TIME;
+                $userRequestObj->save();
+                \Session::flash('success', 'تم ارسال الطلب بنجاح');
+            }
+        }
+        
+
+        return redirect()->back();
     }
 
     public function newProject(){
@@ -588,18 +604,6 @@ class ProfileControllers extends Controller {
         	return \TraitsFunc::ErrorMessage($validate->messages()->first());
         }
 
-        $availableCoupons = Coupon::availableCoupons();
-        $availableCoupons = reset($availableCoupons);
-        
-        $coupons = explode(',', $input['coupons']);
-        if(!empty($coupons[0])){
-            foreach ($coupons as $coupon) {
-            	if(!in_array($coupon, $availableCoupons)){
-            		return \TraitsFunc::ErrorMessage('هذا الكود ('.$coupon.') غير متاح حاليا');
-            	}
-            }
-        }
-
 
         $menuObj = new Project;
         $menuObj->title = $input['title'];
@@ -611,9 +615,7 @@ class ProfileControllers extends Controller {
         $menuObj->brief = $input['brief'];
         $menuObj->lat = isset($input['lat']) ? $input['lat'] : '';
         $menuObj->lng = isset($input['lng']) ? $input['lng'] : '';
-        if(isset($coupons) && !empty($coupons)){
-            $menuObj->coupons = serialize($coupons);
-        }
+        $menuObj->coupons = $input['coupons'];
         $menuObj->status = 2;
         $menuObj->sort = Project::newSortIndex();
         $menuObj->created_at = DATE_TIME;

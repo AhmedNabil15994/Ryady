@@ -1,5 +1,7 @@
 $(function(){
 
+	$('[data-toggle="tooltip"]').tooltip()
+	
 	$('#selectmenu[name="membership_id"]').on('selectmenuchange', function() {
 	    $id = $(this).val();
 	    var name_ar = $('input[name="name_ar"]').val();

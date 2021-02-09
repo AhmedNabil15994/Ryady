@@ -3,6 +3,7 @@
 @section('title','الملف الشخصي')
 
 @section('styles')
+<link href="{{ asset('/assets/css/summernote.css') }}" rel="stylesheet">
 <style type="text/css" media="screen">
     .cardStyle{
         height: 210px;
@@ -56,6 +57,10 @@
         color: #001C54;
         font-size: 18px;
     }
+    .profile .titleStyle{
+        width: auto;
+        padding: 0 10px;
+    }
 </style>
 @endsection
 
@@ -95,15 +100,18 @@
                             <li><a href="{{ URL::to('/profile/membership') }}" class="{{ Active( URL::to('/profile/membership')) }}">العضوية 
                                 <img src="{{ asset('/assets/images/024-name.svg') }}" />
                                 </a></li>
+                            @if($data->membership->membership_id == 3)
+                            <li><a href="{{ URL::to('/profile/download/'.$data->membership->id) }}" class="{{ Active( URL::to('/profile/certificate')) }}">شهادة العضوية 
+                                <img src="{{ asset('/assets/images/026-document.svg') }}" />
+                            </a></li>
+                            @endif
                             @if($data->membership->membership_id != 1)
                             <li><a href="{{ URL::to('/profile/addBlog') }}" class="{{ Active( URL::to('/profile/addBlog')) }}">اضف مقالة 
                                 <img src="{{ asset('/assets/images/025-content-writing.svg') }}" />
                             </a></li>
                             @endif
+                            
                             @if($data->membership->membership_id == 3)
-                            <li><a href="{{ URL::to('/profile/download/'.$data->membership->id) }}" class="{{ Active( URL::to('/profile/certificate')) }}">شهادة العضوية 
-                                <img src="{{ asset('/assets/images/026-document.svg') }}" />
-                            </a></li>
                             <li><a href="{{ URL::to('/profile/newProject') }}" class="{{ Active( URL::to('/profile/newProject')) }}">اضف مشروعك 
                                 <img src="{{ asset('/assets/images/027-add.svg') }}" />
                             </a></li>
@@ -125,11 +133,11 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="">الاسم عربي</label>
-                                            <input type="text" class="inputStyle" name="name_ar" placeholder="الاسم عربي" value="{{ $data->user->name_ar }}" />
+                                            <input type="text" class="inputStyle" readonly name="name_ar" placeholder="الاسم عربي" value="{{ $data->user->name_ar }}" />
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">الاسم إنجليزي</label>
-                                            <input type="text" class="inputStyle" name="name_en" placeholder="الاسم إنجليزي"  value="{{ $data->user->name_en }}" />
+                                            <input type="text" class="inputStyle" readonly name="name_en" placeholder="الاسم إنجليزي"  value="{{ $data->user->name_en }}" />
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">رقم الجوال</label>
@@ -139,19 +147,9 @@
                                             <label for="">البريد الالكتروني</label>
                                             <input type="email" class="inputStyle" name="email" placeholder="البريد الالكتروني" value="{{ $data->user->email }}" />
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <label for="">كلمة المرور</label>
                                             <input type="password" class="inputStyle" name="password" placeholder="كلمة المرور"/>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="">اظهار البيانات :</label>
-                                            <div class="selectStyle">
-                                                <select class="selectmenu" name="show_details" id="selectmenu">
-                                                    <option value="0" {{ $data->user->show_details == 0 ? 'selected' : '' }}>لا</option>
-                                                    <option value="1" {{ $data->user->show_details == 1 ? 'selected' : '' }}>نعم</option>
-                                                </select>
-                                                <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
-                                            </div>
                                         </div>
                                         <div class="col-md-12">
                                             <label for="">نبذة تعريفية</label>
@@ -221,7 +219,7 @@
                                     </div>
                                 </div>
                                 
-                                <form class="formStyle" method="POST" action="{{ URL::to('/profile/upgrade') }}">
+                                <form class="formStyle" method="POST" action="{{ URL::to('/profile/addRequest') }}">
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-6">
@@ -250,7 +248,8 @@
                                             <label for="">رقم البطاقة</label>
                                             <input type="text" class="inputStyle" name="code" placeholder="رقم البطاقة" readonly value="{{ $data->membership->code }}" />
                                         </div>
-                                    </div>                                    
+                                    </div>    
+                                    <button class="btnStyle">طلب بطاقة مطبوعة</button>                                
                                 </form>
                             </div>
                             <div class="tab4 tab">
@@ -287,7 +286,10 @@
                                         <div class="col-md-5">
                                             <center>
                                                 <div class="memberStyle">
-                                                    <h2 class="titleMem">عضوية {{ $data->membership->membership->title }}</h2>
+                                                    <h2 class="titleMem">الحالية : {{ $data->membership->membership->title }}</h2>
+                                                    <input type="hidden" name="oldPrice" value="{{ $data->membership->membership->price }}">
+                                                    <span class="time hidden">فرق الترقية</span>
+                                                    <span class="price hidden">0 ريال</span>
                                                 </div>
                                             </center>
                                         </div>
@@ -302,7 +304,9 @@
                                             <div class="selectStyle">
                                                 <select class="selectmenu" id="selectmenu" name="new_membership_id">
                                                     @foreach($data->memberships as $membership)
-                                                    <option value="{{ $membership->id }}" {{ $data->membership->membership_id == $membership->id ? 'selected' : '' }}>عضوية {{ $membership->title . ' ' . $membership->price }} ريال</option>
+                                                    @if($membership->id >= $data->membership->membership->id)
+                                                    <option data-area="{{ $membership->price }}" value="{{ $membership->id }}" {{ $data->membership->membership_id == $membership->id ? 'selected' : '' }}>عضوية {{ $membership->title . ' ' . $membership->price }} ريال</option>
+                                                    @endif
                                                     @endforeach
                                                 </select>
                                                 <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
@@ -409,7 +413,7 @@
                                         </div>
                                     </div>
                                     <label for="">الوصف عربي :</label>
-                                    <textarea class="textareaStyle" name="description" placeholder="الوصف عربي :"></textarea>
+                                    <textarea class="textareaStyle summernote" name="description" placeholder="الوصف عربي :"></textarea>
                                     
                                     <button class="btnStyle addBlog">ارسل الآن</button>
                                 </form>
@@ -480,7 +484,7 @@
                                             <label for="">كود الخصم :</label>
                                             <div class="coupons">
                                                 <div class="inputSt">
-                                                    <input type="text" class="inputStyle" name="coupons[]" placeholder="كود الخصم :" />
+                                                    <input type="text" class="inputStyle" name="coupons" placeholder="كود الخصم :" />
                                                 </div>
                                             </div>
                                         </div>
@@ -571,6 +575,7 @@
 
 @section('scripts')
 <script src='https://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
+<script src="{{ asset('/assets/js/summernote.js') }}"></script>
 <script src="{{ asset('/assets/js/locationpicker.jquery.js') }}"></script>
 <script src="{{ asset('/assets/js/profile.js') }}"></script>
 <script src="{{ asset('/assets/js/addProject.js') }}"></script>

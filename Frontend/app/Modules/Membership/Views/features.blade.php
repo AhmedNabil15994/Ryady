@@ -42,6 +42,8 @@
                                         <td>الكترونية</td>
                                         @elseif($membership->id == 3)
                                         <td>مطبوعة</td>
+                                        @else
+                                        <td><i class="flaticon-remove"></i></td>
                                         @endif
                                     @else
                                     <td><i class="fa fa-check"></i></td>

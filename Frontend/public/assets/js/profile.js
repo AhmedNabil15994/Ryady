@@ -1,5 +1,5 @@
 $(function(){
-
+      $('.summernote').summernote();
 	$('a[data-target="#profile"]').on('click',function(e){
 		e.preventDefault();
 		e.stopPropagation();
@@ -26,6 +26,20 @@ $(function(){
                   }
             });
 	});
+
+      $('select[name="new_membership_id"]').on('selectmenuchange',function(){
+            var newPrice = $(this).children('option:selected').data('area');
+            var oldPrice = $('input[name="oldPrice"]').val();
+            var diff = newPrice - oldPrice;
+            if(diff > 0){
+                  $('.memberStyle span.time').removeClass('hidden');
+                  $('.memberStyle span.price').removeClass('hidden');
+            }else{
+                  $('.memberStyle span.time').addClass('hidden');
+                  $('.memberStyle span.price').addClass('hidden');
+            }
+            $('.memberStyle span.price').html(diff + ' ريال');
+      });
 
       $('input[name="name_ar"]').on("blur",function(){
             $('h2.titleAr').html($(this).val());
@@ -133,6 +147,7 @@ $(function(){
                   success:function(data){
                         if(data.status.status == 1){
                               successNotification(data.status.message);
+                              location.reload();
                         }else{
                               errorNotification(data.status.message);
                         }

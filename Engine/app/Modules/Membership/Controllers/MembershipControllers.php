@@ -76,12 +76,14 @@ class MembershipControllers extends Controller {
 
 
     public function index(){
-        $data['advantages'] = Advantage::dataList(1)['data'];
-        $data['benefits'] = Benefit::dataList(1)['data'];
         $data['memberships'] = Membership::dataList(1)['data'];
-        $data['targets'] = Target::dataList(1)['data'];
-        $data['features'] = Feature::dataList(1)['data'];
         return view('Membership.Views.index')->with('data',(object) $data);
+    }
+
+    public function features($id){
+        $data['membership'] = Membership::getData(Membership::getOne($id));
+        $data['features'] = Feature::NotDeleted()->whereIn('id',$data['membership']->features)->get();
+        return view('Membership.Views.features')->with('data',(object) $data);
     }
 
     public function requestMemberShip($id){
@@ -119,6 +121,12 @@ class MembershipControllers extends Controller {
             return redirect()->back()->withInput();
         }
 
+        $userObj = User::checkUserByEmail($input['email']);
+        if($userObj != null){
+            \Session::flash('error', 'هذا البريد الالكتروني مستخدم من قبل');
+            return redirect()->back()->withInput();
+        }
+
         $userObj = User::checkUserByPhone($input['phone']);
         if($userObj != null){
             \Session::flash('error', 'هذا رقم التليفون مستخدم من قبل');
@@ -141,16 +149,20 @@ class MembershipControllers extends Controller {
         // dd($availableCoupons);
         
         $coupons = $input['coupons'];
-        foreach ($coupons as $coupon) {
-            if(count($availableCoupons) > 0 && !in_array($coupon, $availableCoupons)){
-                return \Session::flash('error', 'هذا الكود ('.$coupon.') غير متاح حاليا');
+        if(!empty($coupons[0])){
+            foreach ($coupons as $coupon) {
+                if(count($availableCoupons) > 0 && !in_array($coupon, $availableCoupons)){
+                    \Session::flash('error', 'هذا الكود ('.$coupon.') غير متاح حاليا');
+                    return redirect()->back()->withInput();
+                }
             }
         }
+
         $userObj = new User;
         $userObj->name_ar = $input['name_ar'];
         $userObj->name_en = $input['name_en'];
         $userObj->username = $username;
-        $userObj->email = $username.'@alshabalriyadi.com';
+        $userObj->email = $input['email'];
         $userObj->password = \Hash::make($input['password']);
         $userObj->group_id = 3;
         $userObj->phone = $input['phone'];
@@ -195,19 +207,21 @@ class MembershipControllers extends Controller {
         }
 
         $discounts = 0;
-        foreach ($coupons as $coupon) {
-            if(in_array($coupon, $availableCoupons)){
-                $couponObj = Coupon::getOneByCode($coupon);
-                if($couponObj->discount_type == 1){
-                    $couponVal = $couponObj->discount_value;
-                }else{
-                    $couponVal = round(($couponObj->discount_value * $membershipObj->price ) / 100, 2);
-                }
-                $discounts+= $couponVal;
-                if($couponObj->valid_type == 1){
-                    $oldVal = $couponObj->valid_value;
-                    $couponObj->valid_value = $oldVal - 1;
-                    $couponObj->save();
+        if(!empty($coupons[0])){
+            foreach ($coupons as $coupon) {
+                if(count($availableCoupons) > 0 && in_array($coupon, $availableCoupons)){
+                    $couponObj = Coupon::getOneByCode($coupon);
+                    if($couponObj->discount_type == 1){
+                        $couponVal = $couponObj->discount_value;
+                    }else{
+                        $couponVal = round(($couponObj->discount_value * $membershipObj->price ) / 100, 2);
+                    }
+                    $discounts+= $couponVal;
+                    if($couponObj->valid_type == 1){
+                        $oldVal = $couponObj->valid_value;
+                        $couponObj->valid_value = $oldVal - 1;
+                        $couponObj->save();
+                    }
                 }
             }
         }
@@ -217,12 +231,30 @@ class MembershipControllers extends Controller {
         \Session::put('user_card_id',$menuObj->id);
         WebActions::newType(1,'UserCard',$userObj->id);
         WebActions::newType(1,'User',$userObj->id);
-        \Session::flash('success', 'تنبيه! تم ارسال الطلب بنجاح');
-        // return redirect()->back();
+        // \Session::flash('success', 'تنبيه! تم ارسال طلب التأكيد الى بريدك الالكتروني');
+        \Session::flash('success', 'تنبيه! تم حفظ بيانات العضوية بنجاح');
         return redirect('/memberships/payment');
     }
 
     public function payment(){
+        $data['url'] = \URL::to('/memberships/payment');
+        return view('Membership.Views.payment')->with('data',(object) $data);
+    }
+
+    public function delayedPayment($id){
+        $id = decrypt($id);
+        $userObj = User::getOne($id);
+        if($userObj->status == 1){
+            \Session::flash('error', 'تنبيه! تم الدفع وتفعيل العضوية من قبل');
+            return redirect('/');
+        }
+        \Session::put('user_id',$id);
+        $userCardObj = UserCard::NotDeleted()->where('user_id',$userObj->id)->where('status',2)->orderBy('id','DESC')->first();
+        \Session::put('user_card_id',$userCardObj->id);
+        $userRequestObj = UserRequest::NotDeleted()->where('user_id',$userObj->id)->where('user_card_id',$userCardObj->id)->where('status',2)->orderBy('id','DESC')->first();
+        if($userRequestObj != null){
+            \Session::forget('user_request_id',$userRequestObj->id);
+        }
         $data['url'] = \URL::to('/memberships/payment');
         return view('Membership.Views.payment')->with('data',(object) $data);
     }
@@ -278,39 +310,16 @@ class MembershipControllers extends Controller {
         $paymentObj = new \PaymentHelper();
         $checkStatus = $paymentObj->payTabs($data);
         if(!isset($checkStatus['errors']) && empty($checkStatus['errors'])){
-            $userObj->status = 1;
-            $userObj->is_active = 1;
-            $userObj->save();
-            \Session::forget('user_id');
-
-            $userCardObj->status = 1;
-            $userCardObj->save();
-            \Session::forget('user_card_id');
             \Session::forget('discounts');
-
-            if(\Session::has('user_request_id')){
-                $userRequestObj->status = 1;
-                $userRequestObj->save();
-                \Session::forget('user_request_id');
-            }
-
-            $isAdmin = in_array($userObj->group_id, [1,]) ? true : false;
-            session(['group_id' => $userObj->group_id]);
-            session(['user_id' => $userObj->id]);
-            session(['email' => $userObj->email]);
-            session(['username' => $userObj->username]);
-            session(['is_admin' => $isAdmin]);
-            session(['group_name' => $userObj->Group->title]);
-
-            $userMemberObj = new UserMember;
-            $userMemberObj->user_id = $userObj->id;
-            $userMemberObj->status = 1;
-            $userMemberObj->sort = UserMember::newSortIndex();
-            $userMemberObj->created_at = DATE_TIME;
-            $userMemberObj->created_by = $userObj->id;
-            $userMemberObj->save();
-            \Session::flash('success', 'تم الدفع وتفعيل البطاقة بنجاح');
-            return redirect()->to('/profile');
+            $userCryptedID = encrypt($userObj->id);
+            $emailData['firstName'] = $userObj->name_ar;
+            $emailData['subject'] = 'تفعيل العضوية :';
+            $emailData['content'] = '<a href="'.\URL::to('/memberships/activate/'.$userCryptedID).'">تفعيل العضوية</a>';
+            $emailData['to'] = $userObj->email;
+            $emailData['template'] = "emailUsers.emailReplied";
+            \App\Helpers\MailHelper::SendMail($emailData);
+            \Session::flash('success', 'تم الدفع وتم ارسال رابط تأكيد التفعيل الي بريدك الالكتروني');
+            return redirect()->to('/');
         }else{
             $erros = [];
             foreach ($checkStatus['errors'] as $key => $error) {
@@ -320,10 +329,47 @@ class MembershipControllers extends Controller {
         }   
     }
 
-    public function features(){
-        $data['memberships'] = Membership::dataList(1)['data'];
-        $data['features'] = Feature::dataList(1)['data'];
-        return view('Membership.Views.features')->with('data',(object) $data);
+    public function activate($id){
+        $id = decrypt($id);
+        $userObj = User::getOne($id);
+        $userObj->status = 1;
+        $userObj->is_active = 1;
+        $userObj->save();
+        \Session::forget('user_id');
+
+        $userCardObj = UserCard::NotDeleted()->where('user_id',$userObj->id)->orderBy('id','DESC')->first();
+        $userCardObj->status = 1;
+        $userCardObj->save();
+        \Session::forget('user_card_id');
+
+        if(\Session::has('user_request_id')){
+            $userRequestObj = UserRequest::NotDeleted()->where('user_id',$userObj->id)->orderBy('id','DESC')->first();
+            $userRequestObj->status = 1;
+            $userRequestObj->save();
+            \Session::forget('user_request_id');
+        }
+
+        $isAdmin = in_array($userObj->group_id, [1,]) ? true : false;
+        session(['group_id' => $userObj->group_id]);
+        session(['user_id' => $userObj->id]);
+        session(['email' => $userObj->email]);
+        session(['username' => $userObj->username]);
+        session(['is_admin' => $isAdmin]);
+        session(['group_name' => $userObj->Group->title]);
+        session(['full_name' => $userObj->name_ar]);
+
+        $userMemberObj = new UserMember;
+        $userMemberObj->user_id = $userObj->id;
+        $userMemberObj->status = 1;
+        $userMemberObj->sort = UserMember::newSortIndex();
+        $userMemberObj->created_at = DATE_TIME;
+        $userMemberObj->created_by = $userObj->id;
+        $userMemberObj->save();
+        \Session::flash('success', 'تم تفعيل العضوية بنجاح');
+        return redirect()->to('/profile');
     }
+
+
+   
 
 }

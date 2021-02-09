@@ -30,10 +30,10 @@
                     <form class="formStyle" method="POST" action="{{ URL::current() }}">
                         @csrf
                         <h2 class="title">نموذج طلب عضوية</h2>
-                        <label for="">اسمك على البطاقة بالعربي</label>
-                        <input type="text" name="name_ar" value="{{ \Request::get('name_ar') }}" class="inputStyle"/>
-                        <label for="">اسمك على البطاقة بالإنجليزي</label>
-                        <input type="text" name="name_en" value="{{ \Request::get('name_en') }}" class="inputStyle"/>
+                        <label for="" data-toggle="tooltip" data-placement="top" title="يرجي ادخال الاسم ثلاثي">اسمك على البطاقة بالعربي</label>
+                        <input type="text" name="name_ar" value="{{ \Request::get('name_ar') }}" data-toggle="tooltip" data-placement="top" title="يرجي ادخال الاسم ثلاثي" class="inputStyle"/>
+                        <label for="" data-toggle="tooltip" data-placement="top" title="يرجي ادخال الاسم ثلاثي">اسمك على البطاقة بالإنجليزي</label>
+                        <input type="text" name="name_en" data-toggle="tooltip" data-placement="top" title="يرجي ادخال الاسم ثلاثي" value="{{ \Request::get('name_en') }}" class="inputStyle"/>
                         <label for="">اختر العضوية</label>
                         <div class="selectStyle">
                             <select class="selectmenu" id="selectmenu" name="membership_id">

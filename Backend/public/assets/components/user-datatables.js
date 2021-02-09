@@ -149,8 +149,9 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					render: function(data, type, full, meta) {
 						var editButton = '';
 						var deleteButton = '';
+						var myUrl = '/'+$('input.url').val();
 						if($('input[name="data-area"]').val() == 1){
-							editButton = '<a href="/"'+$('input.url').val()+'"/edit/'+data+'" class="dropdown-item">'+
+							editButton = '<a href="'+myUrl+'/edit/'+data+'" class="dropdown-item">'+
 		                                    '<i class="m-nav__link-icon fa fa-pencil-alt"></i>'+
 		                                    '<span class="m-nav__link-text">تعديل</span>'+
 		                                '</a>';

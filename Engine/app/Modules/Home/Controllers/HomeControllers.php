@@ -22,6 +22,7 @@ use App\Models\Order;
 use App\Models\WebActions;
 use App\Models\ContactUs;
 use App\Models\Advantage;
+use App\Models\Target;
 
 
 class HomeControllers extends Controller {
@@ -189,6 +190,13 @@ class HomeControllers extends Controller {
             return redirect('/profile');
         }
         return view('Auth.Views.login');
+    }
+
+    public function entrepreneur(){
+        $data['advantages'] = Advantage::dataList(1)['data'];
+        $data['benefits'] = Benefit::dataList(1)['data'];
+        $data['targets'] = Target::dataList(1)['data'];
+        return view('Home.Views.entrepreneur')->with('data',(object) $data);
     }
 
 }

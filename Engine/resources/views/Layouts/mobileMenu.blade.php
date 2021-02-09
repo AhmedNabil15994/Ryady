@@ -47,6 +47,7 @@
 		          	@endif
 		        @endif
 		    @endforeach
+		    <li><a href="{{ URL::to('/entrepreneur') }}">الشاب الريادي</a></li>
 		</ul>
 	</div>
 </div>

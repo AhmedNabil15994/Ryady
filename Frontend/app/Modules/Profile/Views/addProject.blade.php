@@ -71,7 +71,7 @@
                     <div class="col-md-6">
                         <div class="coupons">
                             <div class="inputSt">
-                                <input type="text" class="inputStyle" name="coupons[]" placeholder="كوبونات الخصم :" />
+                                <input type="text" class="inputStyle" name="coupons" placeholder="كوبونات الخصم :" />
                                 <i class="iconImg flaticon-plus iconAdd"></i>
                             </div>
                         </div>

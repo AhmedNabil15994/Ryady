@@ -6,7 +6,7 @@ class MailHelper
 
     static function prepareEmail($userObj){
         $emailData['firstName'] = $userObj->name;
-        $emailData['subject'] = 'الرد علي رسالتك : '.$userObj->address;
+        $emailData['subject'] = 'تأكيد العضوية :';
         $emailData['content'] = $userObj->reply;
         $emailData['to'] = $userObj->email;
         $emailData['template'] = "emailUsers.emailReplied";
@@ -17,7 +17,7 @@ class MailHelper
 
         \Mail::send($emailData['template'], $emailData, function ($message) use ($emailData) {
 
-            $fromEmailAddress = 'noreply@ryady.servers.com.sa';
+            $fromEmailAddress = 'noreply@alshabalriyadi.com';
             $fromDisplayName = 'الشاب الريادي';
 
             if(isset($emailData['fromEmailAddress'])){

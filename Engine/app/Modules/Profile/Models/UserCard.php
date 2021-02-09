@@ -16,14 +16,6 @@ class UserCard extends Model{
             ->first();
     }
 
-    static function getAvailableForUser($user_id){
-        $dataObj = self::NotDeleted()->where('status',1)->where('user_id',$user_id)->where('end_date','>=',now()->format('Y-m-d'))->first();
-        if($dataObj == null){
-            $dataObj = self::NotDeleted()->where('status',4)->where('user_id',$user_id)->where('end_date','>=',now()->format('Y-m-d'))->first();
-        }
-        return $dataObj;
-    }
-
     public function Creator(){
         return $this->hasOne('App\Models\User','id','created_by');
     }
@@ -36,10 +28,10 @@ class UserCard extends Model{
         return $this->hasOne('App\Models\Membership','id','membership_id');
     }
 
-    static function dataList($status=null,$membership_id=null) {
+    static function dataList($status=null) {
         $input = \Request::all();
 
-        $source = self::NotDeleted()->where(function ($query) use ($input,$status,$membership_id) {
+        $source = self::NotDeleted()->where(function ($query) use ($input,$status) {
                     if (isset($input['name_ar']) && !empty($input['name_ar'])) {
                         $query->where('name_ar', 'LIKE', '%' . $input['name_ar'] . '%');
                     } 
@@ -67,16 +59,13 @@ class UserCard extends Model{
                     if($status != null){
                         $query->where('status',$status);
                     }
-                    if($membership_id != null){
-                        $query->where('membership_id',$membership_id);
-                    }
                 })->orderBy('sort','ASC');
 
         return self::generateObj($source);
     }
 
     static function generateObj($source){
-        $sourceArr = $source->paginate(15);
+        $sourceArr = $source->get();
 
         $list = [];
         foreach($sourceArr as $key => $value) {
@@ -84,7 +73,7 @@ class UserCard extends Model{
             $list[$key] = self::getData($value);
         }
 
-        $data['pagination'] = \Helper::GeneratePagination($sourceArr);
+        // $data['pagination'] = \Helper::GeneratePagination($sourceArr);
         $data['data'] = $list;
 
         return $data;
@@ -95,14 +84,13 @@ class UserCard extends Model{
         $data->id = $source->id;
         $data->user_id = $source->user_id;
         $data->username = $source->user_id != null ? $source->User->username : '';
-        $data->user = $source->user_id != null ? User::getData($source->User) : '';
         $data->name_ar = $source->user_id != null ? $source->User->name_ar : '';
         $data->name_en = $source->user_id != null ? $source->User->name_en : '';
         $data->code = $source->code;
         $data->membership_id = $source->membership_id;
         $data->start_date = $source->start_date;
         $data->end_date = $source->end_date;
-        $data->membership = $source->membership_id != null ? Membership::getData($source->Membership) : '';
+        $data->membership_name = $source->membership_id != null ? $source->Membership->title : '';
         $data->sort = $source->sort;
         $data->status = $source->status;
         $data->statusText = self::getStatus($source->status);
@@ -132,7 +120,7 @@ class UserCard extends Model{
 
     static function getNewCode(){
         $code = '001000';
-        $lastCode = self::orderBy('id','DESC')->first();
+        $lastCode = self::orderBy('code','DESC')->first();
         if($lastCode != null){
             $code = str_pad(intval($lastCode->code) + 1, strlen($lastCode->code), '0', STR_PAD_LEFT);
         }

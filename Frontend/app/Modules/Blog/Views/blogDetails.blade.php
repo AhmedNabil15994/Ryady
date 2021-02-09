@@ -3,6 +3,13 @@
 @section('title','التفاصيل')
 
 @section('styles')
+<style type="text/css" media="screen">
+    .itemBlog .date span.moreDetails{
+        margin-right: 15px;
+        font-size: 16px;
+        margin-top: 5px;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -81,7 +88,7 @@
                             <div class="details">
                                 <div class="paddingTitle">
                                     <a href="{{ URL::to('/blogs/' . $blog->id) }}" class="titleItem">
-                                        {!! $blog->description2 !!}
+                                        {{ $blog->title2 }}
                                     </a>
                                 </div>
                                 <div class="userDetails">
@@ -90,6 +97,7 @@
                                 </div>
                                 <div class="date clearfix">
                                     <span class="time"><i class="flaticon-school-calendar"></i> {{ $blog->created_at }}</span>
+                                    <span class="moreDetails"><i class="fa fa-eye"></i> {{ $blog->views }}</span>
                                     <a href="{{ URL::to('/blogs/' . $blog->id) }}" class="moreDetails">التفاصيل</a>
                                 </div>
                             </div>

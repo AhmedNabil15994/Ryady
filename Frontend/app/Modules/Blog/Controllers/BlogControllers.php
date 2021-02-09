@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Models\Blog;
+use App\Models\BlogCategory;
 use App\Models\Page;
 
 
@@ -16,6 +17,7 @@ class BlogControllers extends Controller {
     public function index()
     {   
         $data['data'] = Blog::dataList(1);
+        $data['categories'] = BlogCategory::dataList(1)['data'];
         $data['pages'] = Page::dataList(1,[7])['data'];
         return view('Blog.Views.index')->with('data',(object) $data);
     }
@@ -26,6 +28,9 @@ class BlogControllers extends Controller {
         if(!$blogObj){
             return redirect('404');
         }
+        $blogObj->views = $blogObj->views + 3;
+        $blogObj->save();
+        
         $data['data'] = Blog::getData($blogObj);
         $data['related'] = Blog::dataList(1,null,$blogObj->category_id,[$id],4)->data;
         $data['pages'] = Page::dataList(1,[7])['data'];

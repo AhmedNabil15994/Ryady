@@ -3,6 +3,7 @@
 @section('title','المدونة')
 
 @section('styles')
+
 @endsection
 
 @section('content')
@@ -16,11 +17,24 @@
             </ul>
         </div>
     </div>
-        
+    
+    <div class="addProject projectsPageHead">
+        <div class="container-fluid">
+            <div id="OwlLinks" class="OwlLinks Owl">
+                @foreach($data->categories as $category)
+                <div class="item">
+                    <a href="{{ URL::current().'?category_id='.$category->id }}" class="itemProject">
+                        <h2 class="titleItem">{{ $category->title }}</h2>
+                    </a>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
     <div class="blog">
         <div class="container">
             <input type="hidden" name="cols" value="{{ \Session::has('user_id') ? \Session::get('user_id') : 0 }}">
-            <h2 class="titleBlog">مقالات الأعضاء</h2>
             <div class="row">
                 @foreach($data->data->data as $key => $blog)
                 @if($key != 0 && $key%3 == 0)
@@ -36,20 +50,20 @@
                                 @else
                                 <img src="{{ $blog->photo }}" alt="" />
                                 @endif
-                                <span>{{ $blog->category }}</span>
                             </a>
                             <div class="details">
+                                <div class="date clearfix">
+                                    <span class="time"><i class="fa fa-user"></i> {{ $blog->creator }}</span>
+                                    <span class="time"><i class="flaticon-school-calendar"></i> {{ $blog->created_at }}</span>
+                                    <span class="time"><i class="fa fa-eye"></i> {{ $blog->views }}</span>
+                                </div>
                                 <div class="paddingTitle">
-                                    <a href="{{ URL::to('/blogs/' . $blog->id) }}" class="titleItem"> {{ $blog->title }} </a>
+                                    <a href="{{ URL::to('/blogs/' . $blog->id) }}" class="titleItem"> {{ $blog->title2 }} </a>
                                 </div>
                                 <div class="userDetails">
-                                    <img src="{{ $blog->creator_photo }}" alt="" />
-                                    <h2 class="author">نشر بواسطة <span>{{ $blog->creator }}</span></h2>
+                                    <h2 class="author"><span>{{ $blog->category }}</span></h2>
                                 </div>
-                                <div class="date clearfix">
-                                    <span class="time"><i class="flaticon-school-calendar"></i> {{ $blog->created_at }}</span>
-                                    <a href="{{ URL::to('/blogs/' . $blog->id) }}" class="moreDetails">التفاصيل</a>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>

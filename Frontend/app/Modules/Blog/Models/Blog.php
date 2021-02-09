@@ -91,6 +91,7 @@ class Blog extends Model{
         $data = new  \stdClass();
         $data->id = $source->id;
         $data->title = $source->title;
+        $data->title2 = str_split($source->title, 50)[0].' ...';
         $data->category_id = $source->category_id;
         $data->category = $source->category_id ? $source->Category->title : '';
         $data->views = $source->views != null ? $source->views : 0;

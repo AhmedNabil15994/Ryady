@@ -4150,4 +4150,46 @@ input[name="gmaps"]{
 		height: 60px;
 	}
 }
+.itemBlog .date span.moreDetails{
+    margin-right: 15px;
+    font-size: 16px;
+    margin-top: 5px;
+}
+span.time{
+    display: inline-block;
+}
+span.time:first-of-type{
+    width: 50%;
+}
+span.time:last-of-type{
+    width: 20%;
+    text-align: left;
+}
+span.time:last-of-type i{
+	float: unset !important;
+}
+span.time:nth-of-type(2){
+    width: 30%;
+}
 
+.itemBlog .date,
+.itemBlog .paddingTitle{
+    padding: 10px;
+}
+.itemBlog .details{
+    padding-bottom: 25px;
+}
+.itemBlog .userDetails{
+    padding-right: 10px; 
+    width: fit-content;
+    margin-right: 15px;
+    padding: 7px;
+    background-color: #ee6b8d;
+}
+.itemBlog .userDetails .author span{
+    margin-top: 0;
+    color: #FFF;
+    width: 100px;
+    font-size: 16px;
+    text-align: center;
+}

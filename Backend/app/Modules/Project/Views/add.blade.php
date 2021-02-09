@@ -148,12 +148,7 @@
                     <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
                         <div class="col-lg-12">
                             <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">كوبونات الخصم</label>
-                            <select class="form-control m-input select2" name="coupons[]" multiple>
-                                <option value="" disabled>حدد اختيارك</option>
-                                @foreach($data->coupons as $coupon)
-                                <option value="{{ $coupon->id }}" {{ Request::has('coupons') && in_array($coupon->id, Request::get('coupons')) ? 'selected' : '' }}>{{ $coupon->code }}</option>
-                                @endforeach
-                            </select>
+                            <input class="form-control mb-5 m-input" type="text" name="coupons" value="{{ old('coupons') }}" maxlength="" placeholder="">
                         </div>
                     </div>
                     <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">

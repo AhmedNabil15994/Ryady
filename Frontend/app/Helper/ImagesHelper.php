@@ -92,7 +92,7 @@ class ImagesHelper {
         $extensionExplode = array_values($extensionExplode);
         $extension = $extensionExplode[0];
 
-        if (!in_array($extension, ['jpg', 'jpeg', 'JPG', 'JPEG', 'png', 'PNG', 'gif', 'GIF','zip','rar','docx','pdf','dwg'])) {
+        if (!in_array($extension, ['vnd.openxmlformats-officedocument.wordprocessingml.document','jpg', 'jpeg', 'JPG', 'JPEG', 'png', 'PNG', 'gif', 'GIF','zip','rar','docx','pdf','dwg'])) {
             return false;
         }
             
