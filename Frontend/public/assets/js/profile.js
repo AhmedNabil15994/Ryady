@@ -125,6 +125,20 @@ $(function(){
       });
 
       var file = '';
+      $(document).on('click','ul.imgs li i.fa-close',function(){
+            $(this).parents('li').remove();
+            file = '';
+      });
+
+      $('input[name="file"]').on('change',function(){
+            for (var i = 0; i < $(this)[0].files.length; i++) {
+                  var imageSrc = window.URL.createObjectURL($(this)[0].files[i]);
+                  file = $(this)[0].files[i];
+                  $('input[name="file"]').parent('label').siblings('ul.imgs').empty();
+                  $('input[name="file"]').parent('label').siblings('ul.imgs').append('<li><img src="'+window.URL.createObjectURL($(this)[0].files[0])+'" alt="" /><i class="fa fa-close" data-area="0"></i></li>');   
+            }
+      });
+
       $('.addBlog').on('click',function(e){
             e.preventDefault();
             e.stopPropagation();

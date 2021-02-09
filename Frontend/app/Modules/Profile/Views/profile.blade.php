@@ -61,6 +61,9 @@
         width: auto;
         padding: 0 10px;
     }
+    .labelFile .imgs{
+        background-color: transparent;
+    }
 </style>
 @endsection
 
@@ -409,6 +412,9 @@
                                                     <input type="file" name="file" />
                                                     <i class="fa fa-upload"></i>
                                                 </label>
+                                                <ul class="imgs">
+                                                    
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>

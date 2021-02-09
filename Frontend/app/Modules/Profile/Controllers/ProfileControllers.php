@@ -296,7 +296,7 @@ class ProfileControllers extends Controller {
         }
 
         WebActions::newType(1,'Blog');
-        Session::flash('success','تم الحفظ بنجاح');
+        Session::flash('success','تم الارسال بنجاح');
         return \TraitsFunc::SuccessResponse("تنبيه! تم الحفظ بنجاح");
     }
 
