@@ -5,7 +5,7 @@
     'IMAGE_BASE' => 'http://backend.ryady.loc/',
     'env' => 'local',
     'debug' => true,
-    'url' => 'http://localhost',
+    'url' => 'http://ryady.loc/',
     'asset_url' => NULL,
     'timezone' => 'UTC',
     'locale' => 'ar',
@@ -409,7 +409,7 @@
       array (
         'driver' => 'local',
         'root' => '/var/www/Server/Projects/Ryady/Frontend/storage/app/public',
-        'url' => 'http://localhost/storage',
+        'url' => 'http://ryady.loc//storage',
         'visibility' => 'public',
       ),
       's3' => 

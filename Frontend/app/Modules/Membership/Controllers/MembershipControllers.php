@@ -241,6 +241,20 @@ class MembershipControllers extends Controller {
         return view('Membership.Views.payment')->with('data',(object) $data);
     }
 
+    public function delayedPayment($id){
+        $id = decrypt($id);
+        $userObj = User::getOne($id);
+        \Session::put('user_id',$id);
+        $userCardObj = UserCard::NotDeleted()->where('user_id',$userObj->id)->where('status',2)->orderBy('id','DESC')->first();
+        \Session::put('user_card_id',$userCardObj->id);
+        $userRequestObj = UserRequest::NotDeleted()->where('user_id',$userObj->id)->where('user_card_id',$userCardObj->id)->where('status',2)->orderBy('id','DESC')->first();
+        if($userRequestObj != null){
+            \Session::forget('user_request_id',$userRequestObj->id);
+        }
+        $data['url'] = \URL::to('/memberships/payment');
+        return view('Membership.Views.payment')->with('data',(object) $data);
+    }
+
     public function postPayment(){
         $input = \Request::all();
 

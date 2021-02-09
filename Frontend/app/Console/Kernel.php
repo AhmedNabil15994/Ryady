@@ -4,6 +4,9 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Models\User;
+use App\Models\UserCard;
+use App\Models\UserRequest;
 
 class Kernel extends ConsoleKernel
 {
@@ -25,6 +28,25 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            $now = now()->format('Y-m-d H:i:s');
+            $firstTime = date('Y-m-d H:i:s',strtotime($now.' - 30 minutes'));
+            $secondTime = date('Y-m-d H:i:s',strtotime($firstTime.' + 2 hours'));
+            
+            $notPaidCards = UserCard::where('status',2)->where('end_date','>=',now()->format('Y-m-d'))->where('created_at','>=',$firstTime)->where('created_at','<=',$secondTime)->get();
+
+            foreach ($notPaidCards as $userCard) {
+                $userObj = User::getOne($userCard->user_id);
+                $userCryptedID = encrypt($userObj->id);
+                $emailData['firstName'] = $userObj->name_ar;
+                $emailData['subject'] = 'دفع العضوية :';
+                $emailData['content'] = '<a href="'.\URL::to('/memberships/delayedPayment/'.$userCryptedID).'">دفع العضوية</a>';
+                $emailData['to'] = $userObj->email;
+                $emailData['template'] = "emailUsers.emailReplied";
+                \App\Helpers\MailHelper::SendMail($emailData);
+            }
+
+        })->everyThirtyMinutes();
     }
 
     /**
