@@ -244,6 +244,10 @@ class MembershipControllers extends Controller {
     public function delayedPayment($id){
         $id = decrypt($id);
         $userObj = User::getOne($id);
+        if($userObj->status == 1){
+            \Session::flash('error', 'تنبيه! تم الدفع وتفعيل العضوية من قبل');
+            return redirect('/');
+        }
         \Session::put('user_id',$id);
         $userCardObj = UserCard::NotDeleted()->where('user_id',$userObj->id)->where('status',2)->orderBy('id','DESC')->first();
         \Session::put('user_card_id',$userCardObj->id);
