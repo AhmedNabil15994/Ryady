@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c52c4ccac57f723bf5a9bbadf4c8f007",
+    "content-hash": "961fa5357033816fd4f45b718b4cce32",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1734,6 +1734,54 @@
                 "type"
             ],
             "time": "2020-07-20T17:29:33+00:00"
+        },
+        {
+            "name": "pkpass/pkpass",
+            "version": "v1.2.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tschoffelen/php-pkpass.git",
+                "reference": "282b4076e3e046a94538e50e755d580f1b817a56"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tschoffelen/php-pkpass/zipball/282b4076e3e046a94538e50e755d580f1b817a56",
+                "reference": "282b4076e3e046a94538e50e755d580f1b817a56",
+                "shasum": ""
+            },
+            "require": {
+                "ext-zip": "*",
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PKPass\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thomas Schoffelen",
+                    "email": "thomas@scholica.com",
+                    "homepage": "http://thomasschoffelen.com/"
+                }
+            ],
+            "description": "PHP PKPass class for iOS Wallet",
+            "homepage": "https://github.com/tschoffelen/PHP-PKPass",
+            "keywords": [
+                "apple",
+                "ios",
+                "ipad",
+                "iphone",
+                "passbook",
+                "php",
+                "wallet"
+            ],
+            "time": "2020-07-27T11:25:48+00:00"
         },
         {
             "name": "psr/container",

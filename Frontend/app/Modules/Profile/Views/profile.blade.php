@@ -269,7 +269,7 @@
                                                 </div>
                                                 <span class="state {{ $class }}">{{ $data->membership->membership->title }}</span>
                                             </div>
-                                            <button class="btnStyle wallets"> <img src="{{ asset('/assets/images/wallet.svg') }}" alt=""></button>
+                                            <a href="#" class="btnStyle wallets"> <img src="{{ asset('/assets/images/wallet.svg') }}" alt=""></a>
                                         </div>
                                     </div>
                                 </div>
