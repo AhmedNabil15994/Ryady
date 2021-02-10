@@ -54,7 +54,9 @@
                                 <li><a href="{{ URL::current().'/shareBlog'.'/facebook' }}" target="_blank" class="facebook"><i class="fa fa-facebook"></i> Facebook</a></li>
                                 <li><a href="{{ URL::current().'/shareBlog'.'/twitter' }}" target="_blank" class="twitter"><i class="fa fa-twitter"></i> Twitter</a></li>
                                 <li><a href="{{ URL::current().'/shareBlog'.'/linkedin' }}" target="_blank" class="linkedin"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
-                                <li><a href="{{ URL::current().'/shareBlog'.'/reddit' }}" target="_blank" class="google-plus"><i class="fa fa-reddit"></i> Reddit</a></li>
+                                @if(\Session::has('user_id')  && Session::has('username'))
+                                <li><a href="https://api.whatsapp.com/send?phone={{ \App\Models\User::getOne(\Session::get('user_id'))->phone }}&text={{ URL::current() }}" target="_blank" class="whatsapp"><i class="fa fa-whatsapp"></i> Whatsapp</a></li>
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -88,7 +90,7 @@
                             <div class="details">
                                 <div class="paddingTitle">
                                     <a href="{{ URL::to('/blogs/' . $blog->id) }}" class="titleItem">
-                                        {{ $blog->title2 }}
+                                        {{ $blog->title }}
                                     </a>
                                 </div>
                                 <div class="userDetails">

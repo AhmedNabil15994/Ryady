@@ -64,7 +64,41 @@
     .labelFile .imgs{
         background-color: transparent;
     }
+    li.last a{
+        padding-right: 25px !important;
+    }
+    li.last a i{
+        font-size: 28px;
+        margin-left: 23px;
+    }
+    .wallets{
+        display: block;
+        margin: auto;
+        width: 200px;
+        height: fit-content;
+        height: -webkit-fit-content;
+        height: -moz-fit-content;
+        height: -o-fit-content;
+        padding: 0;
+        line-height: 0;
+        border-radius: 15px;
+        border: 0;
+        border-color: #F6F8FA;
+    }
+    .cardHead .row .col-md-7{
+        float: unset;
+        display: block;
+        margin: auto;
+    }
+    .profile .userProfile span{
+        margin-bottom: 10px;
+    }
+    .profile .userProfile p.name{
+        margin-bottom: 30px;
+        font-size: 18px;
+    }
 </style>
+<link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/font-awesome5.css') }}">
 @endsection
 
 @section('content')
@@ -80,7 +114,6 @@
     </div>
     
     <div class="profile">
-        <h2 class="titleStyle">{{ $data->user->name_ar }}</h2>
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
@@ -96,11 +129,12 @@
                         </center>
                         <h2 class="name">{{ $data->user->name_ar }}</h2>
                         <span style="color: {{ $data->membership->membership->color }}">{{ $data->membership->membership->title }}</span>
+                        <p class="name">لديك {{ $data->points }} نقطة</p>
                         <ul class="listProfile">
-                            <li><a href="{{ URL::to('/profile') }}" class="{{ Active( URL::to('/profile')) }}">البيانات الشخصية 
+                            <li><a href="{{ URL::to('/profile') }}" class="{{ Active( URL::to('/profile')) }}">العضوية 
                                 <img src="{{ asset('/assets/images/024-name.svg') }}" />
                                 </a></li>
-                            <li><a href="{{ URL::to('/profile/membership') }}" class="{{ Active( URL::to('/profile/membership')) }}">العضوية 
+                            <li><a href="{{ URL::to('/profile/personalInfo') }}" class="{{ Active( URL::to('/profile/personalInfo')) }}">البيانات الشخصية 
                                 <img src="{{ asset('/assets/images/024-name.svg') }}" />
                                 </a></li>
                             @if($data->membership->membership_id == 3)
@@ -122,10 +156,14 @@
                             <li><a href="{{ URL::to('/profile/newOrder') }}" class="{{ Active( URL::to('/profile/newOrder')) }}">اطلب خدمة 
                                 <img src="{{ asset('/assets/images/028-support.svg') }}" />    
                             </a></li>
+                            <li class="last"><a href="{{ URL::to('/profile/logout') }}" class="{{ Active( URL::to('/profile/logout')) }}">
+                                <i class="fa fa-sign-out fa-sign-out-alt"></i>
+                                تسجيل الخروج 
+                            </a></li>
                         </ul>
                     </div>
                 </div>
-                @if(Request::segment(2) == null)
+                @if(Request::segment(2) == 'personalInfo')
                 <div class="col-md-8">
                     <div class="profileDetails">
                         <div class="tabs">
@@ -144,15 +182,35 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">رقم الجوال</label>
-                                            <input type="text" class="inputStyle" name="phone" placeholder="رقم الجوال" value="{{ $data->user->phone }}" />
+                                            <input type="text" class="inputStyle" readonly name="phone" placeholder="رقم الجوال" value="{{ $data->user->phone }}" />
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">البريد الالكتروني</label>
                                             <input type="email" class="inputStyle" name="email" placeholder="البريد الالكتروني" value="{{ $data->user->email }}" />
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <label for="">كلمة المرور</label>
                                             <input type="password" class="inputStyle" name="password" placeholder="كلمة المرور"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">رابط فيسبوك</label>
+                                            <input type="text" class="inputStyle" name="facebook" placeholder="رابط فيسبوك" value="{{ $data->user->facebook }}" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">رابط سناب شات</label>
+                                            <input type="text" class="inputStyle" name="snapchat" placeholder="رابط سناب شات" value="{{ $data->user->snapchat }}" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">رابط تويتر</label>
+                                            <input type="text" class="inputStyle" name="twitter" placeholder="رابط تويتر" value="{{ $data->user->twitter }}" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">رابط يوتيوب</label>
+                                            <input type="text" class="inputStyle" name="youtube" placeholder="رابط يوتيوب" value="{{ $data->user->youtube }}" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">رابط انستجرام</label>
+                                            <input type="text" class="inputStyle" name="instagram" placeholder="رابط انستجرام" value="{{ $data->user->instagram }}" />
                                         </div>
                                         <div class="col-md-12">
                                             <label for="">نبذة تعريفية</label>
@@ -167,7 +225,7 @@
                         </div>
                     </div>
                 </div>
-                @elseif(Request::segment(2) == 'membership')
+                @elseif(Request::segment(2) == null)
                 <div class="col-md-8">
                     <div class="profileDetails">
                         <div class="tabsHead">
@@ -176,12 +234,12 @@
                                 @if($data->membership->membership_id != 3)
                                 <li id="tab4">ترقية العضوية</li>
                                 @endif
-                                <li id="tab2">النقاط</li>
+                                <li id="tab2" class="hidden">النقاط</li>
                                 <li id="tab3">مميزات العضوية</li>
                             </ul>
                         </div>
-                        <div class="tabs">
-                            <div class="tab1 tab">
+                        <div class="tabs" style="padding: 55px 15px 50px;">
+                            <div class="tab1 tab" style="padding-left: 25px;padding-right: 25px;">
                                 <div class="cardHead">
                                     <div class="row">
                                         <div class="col-md-7">
@@ -211,18 +269,12 @@
                                                 </div>
                                                 <span class="state {{ $class }}">{{ $data->membership->membership->title }}</span>
                                             </div>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <center>
-                                                <div class="memberStyle">
-                                                    <h2 class="titleMem">عضوية {{ $data->membership->membership->title }}</h2>
-                                                </div>
-                                            </center>
+                                            <button class="btnStyle wallets"> <img src="{{ asset('/assets/images/wallet.svg') }}" alt=""></button>
                                         </div>
                                     </div>
                                 </div>
                                 
-                                <form class="formStyle" method="POST" action="{{ URL::to('/profile/addRequest') }}">
+                                <form class="formStyle" method="get" action="{{ URL::to('/profile/addRequest') }}">
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-6">
@@ -251,8 +303,21 @@
                                             <label for="">رقم البطاقة</label>
                                             <input type="text" class="inputStyle" name="code" placeholder="رقم البطاقة" readonly value="{{ $data->membership->code }}" />
                                         </div>
-                                    </div>    
-                                    <button class="btnStyle">طلب بطاقة مطبوعة</button>                                
+                                        <div class="col-md-6">
+                                            <label for="">العضوية</label>
+                                            <div class="selectStyle">
+                                                <select class="selectmenu" disabled id="selectmenu2" name="membership_id">
+                                                    @foreach($data->memberships as $membership)
+                                                    <option data-area="{{ $membership->price }}" value="{{ $membership->id }}" {{ $data->membership->membership_id == $membership->id ? 'selected' : '' }}>عضوية {{ $membership->title . ' ' . $membership->price }} ريال</option>
+                                                    @endforeach
+                                                </select>
+                                                <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                    @if(\App\Models\Variable::getVar('PRINTED_CARDS') == 1)
+                                    <button class="btnStyle">طلب بطاقة مطبوعة</button>     
+                                    @endif                           
                                 </form>
                             </div>
                             <div class="tab4 tab">
@@ -323,6 +388,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @if(\App\Models\Variable::getVar('PRINTED_CARDS') == 1)
                                         <div class="col-md-6">
                                             <label class="checkStyle">
                                                 <input type="checkbox" checked name="user_request" />
@@ -330,6 +396,7 @@
                                                 بطاقة مطبوعة رسوم اضافية 100 ريال
                                             </label>
                                         </div>
+                                        @endif
                                         <div class="col-md-6">
                                             <label class="checkStyle">
                                                 <input type="checkbox" checked />
@@ -343,7 +410,7 @@
                                 </form>
 
                             </div>
-                            <div class="tab2 tab">
+                            <div class="tab2 tab hidden">
                                 <h2 class="titleMem">لديك {{ $data->points }} نقطة</h2>
                             </div>
                             <div class="tab3 tab">
@@ -580,7 +647,7 @@
 @endsection
 
 @section('scripts')
-<script src='https://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
+<script src='https://maps.google.com/maps/api/js?key=&sensor=false&libraries=places'></script>
 <script src="{{ asset('/assets/js/summernote.js') }}"></script>
 <script src="{{ asset('/assets/js/locationpicker.jquery.js') }}"></script>
 <script src="{{ asset('/assets/js/profile.js') }}"></script>

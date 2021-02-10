@@ -173,6 +173,11 @@ class UsersControllers extends Controller {
         }else{
             $groupObj->status = $input['status'];
         }
+        $groupObj->facebook = $input['facebook'];
+        $groupObj->twitter = $input['twitter'];
+        $groupObj->youtube = $input['youtube'];
+        $groupObj->snapchat = $input['snapchat'];
+        $groupObj->instagram = $input['instagram'];
         $groupObj->created_at = DATE_TIME;
         $groupObj->created_by = USER_ID;
         $groupObj->save();
@@ -245,6 +250,11 @@ class UsersControllers extends Controller {
         $groupObj->show_details = $input['show_details'];
         $groupObj->lang = $input['lang'];
         $groupObj->session_time = $input['session_time'];
+        $groupObj->facebook = $input['facebook'];
+        $groupObj->twitter = $input['twitter'];
+        $groupObj->youtube = $input['youtube'];
+        $groupObj->snapchat = $input['snapchat'];
+        $groupObj->instagram = $input['instagram'];
         $groupObj->password = \Hash::make($input['password']);
         $groupObj->sort = User::newSortIndex();
         $groupObj->is_active = $input['is_active'];

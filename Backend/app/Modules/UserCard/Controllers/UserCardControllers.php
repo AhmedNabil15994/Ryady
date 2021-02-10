@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\UserMember;
 use App\Models\Membership;
 use App\Models\WebActions;
+use App\Models\UserRequest;
 use Illuminate\Http\Request;
 use DataTables;
 
@@ -121,7 +122,10 @@ class UserCardControllers extends Controller {
                 $userMemberObj->created_by = $userObj->id;
                 $userMemberObj->save();
             }else{
-                UserMember::where('user_id',$userObj->user_id)->delete();
+                UserMember::where('user_id',$userObj->user_id)->update([
+                    'deleted_at' => DATE_TIME,
+                    'deleted_by' => USER_ID,
+                ]);
             }
 
         }
@@ -165,11 +169,18 @@ class UserCardControllers extends Controller {
     public function delete($id) {
         $id = (int) $id;
         $menuObj = UserCard::getOne($id);
-        UserMember::where('user_id',$menuObj->user_id)->delete();
-        $userObj = User::getOne($menuObj->user_id);
-        $userObj->status = 0;
-        $userObj->is_active = 0;
-        $userObj->save();
+        UserMember::NotDeleted()->where('user_id',$menuObj->user_id)->update([
+            'deleted_at' => DATE_TIME,
+            'deleted_by' => USER_ID,
+        ]);
+        $userObj = User::NotDeleted()->where('id',$menuObj->user_id)->update([
+            'deleted_at' => DATE_TIME,
+            'deleted_by' => USER_ID,
+        ]);
+        UserRequest::NotDeleted()->where('user_id',$menuObj->user_id)->where('user_card_id',$menuObj->id)->update([
+            'deleted_at' => DATE_TIME,
+            'deleted_by' => USER_ID,
+        ]);
         WebActions::newType(3,'UserCard');
         return \Helper::globalDelete($menuObj);
     }
@@ -191,7 +202,10 @@ class UserCardControllers extends Controller {
                 $userObj->save();
 
                 if($item[2] == 3){
-                    UserMember::where('user_id',$userObj->user_id)->delete();
+                    UserMember::where('user_id',$userObj->user_id)->update([
+                        'deleted_at' => DATE_TIME,
+                        'deleted_by' => USER_ID,
+                    ]);
                 }else{
                     $userMemberObj = UserMember::NotDeleted()->where('user_id',$userObj->id)->first();
                     if($userMemberObj == null){

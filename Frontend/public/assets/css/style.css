@@ -240,7 +240,9 @@ input[type="number"] {
 }
 
 #toast-container,.toast{
-	width: 99% !important;
+	width: 100% !important;
+	top: 0 !important;
+    right: 0 !important;
 }
 #toast-container >div {
     width: 100% !important;
@@ -689,7 +691,7 @@ input[type="number"] {
 	width:120px;
 	height:120px;
 	border-radius:50%;
-	border:5px solid transparent;
+	border:3px solid transparent;
 	margin:0 auto 15px;
 	-webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
@@ -1525,7 +1527,6 @@ input[type="number"] {
 	font-size:22px;
 	font-family: "STC-Bold";
 	display:inline-block;
-	max-width:263px
 }
 
 .itemBlog .userDetails
@@ -2378,6 +2379,9 @@ a.ui-button:active, .ui-button:active,
 {
 	background-color:#cc4326
 }
+.listSocial a.whatsapp{
+	background-color: #4CAF50;
+}
 
 .postDetails .titlePost
 {
@@ -2394,7 +2398,10 @@ a.ui-button:active, .ui-button:active,
 	color:#001C54;
 	font-size:22px;
 }
-
+.postDetails .descPost> div,
+.postDetails .descPost> div *{
+	font-family: "STC-Bold" !important;
+}
 .morePosts
 {
 	background-color:#F6F8FA;
@@ -4019,15 +4026,6 @@ input[name="gmaps"]{
 	align-content: center;
 	justify-items: center;
 }
-
-.payment-methods .method {
-	max-height: 60px;
-}
-
-.payment-methods .method.master-card img {
-	align-self: end;
-}
-
 .payment-methods .method.active {
 	border: solid 1px #707070;
 	border-radius: 8px;
@@ -4036,12 +4034,14 @@ input[name="gmaps"]{
 .payment-methods .method.visa.active{
 	padding: 0 24px;
 }
-.payment-methods .method.visa img {
+.payment-methods .method img {
 	height: 60px;
+	width: 60px;
 }
 
 .payment-form {
-	display: grid;
+	/*display: grid;*/
+	display: none;
 	grid-gap: 12px;
 	width: 100%;
 }
@@ -4060,6 +4060,7 @@ input[name="gmaps"]{
 	outline: none;
 	text-align: left;
 	font-family: 'Tajawal', sans-serif;
+	margin-bottom: 15px;
 }
 
 .payment-form select {
@@ -4171,7 +4172,6 @@ span.time:last-of-type i{
 span.time:nth-of-type(2){
     width: 30%;
 }
-
 .itemBlog .date,
 .itemBlog .paddingTitle{
     padding: 10px;
@@ -4180,7 +4180,10 @@ span.time:nth-of-type(2){
     padding-bottom: 25px;
 }
 .itemBlog .userDetails{
-    padding-right: 10px; 
+    padding-right: 10px;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: -o-fit-content; 
     width: fit-content;
     margin-right: 15px;
     padding: 7px;

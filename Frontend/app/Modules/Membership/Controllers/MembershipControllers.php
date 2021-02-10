@@ -261,6 +261,9 @@ class MembershipControllers extends Controller {
 
     public function postPayment(){
         $input = \Request::all();
+        $date = explode(' / ', $input['expire_date'], 2);
+        $input['expire_date'] = $date[0];
+        $input['year'] = '20'.$date[1];
 
         $validate = $this->validatePayment($input);
         if($validate->fails()){
@@ -274,6 +277,10 @@ class MembershipControllers extends Controller {
             $company = 'visa';
         }elseif($input['payment_type'] == 3){
             $company = 'mada';
+        }
+
+        if(!\Session::has('user_id') || !\Session::has('user_card_id')){
+            return redirect()->back()->withInput();
         }
 
         $userObj = User::getOne(\Session::get('user_id'));
@@ -292,8 +299,8 @@ class MembershipControllers extends Controller {
             'callback_url' => \URL::to('/profile'),
             'customer' => [
                 'name' => $userObj->name,
-                'first_name' => isset($name[0]) ? $name[0]  : '',
-                'last_name' => isset($name[1]) ? $name[1]  : '',
+                'first_name' => '', //isset($name[0]) ? $name[0]  : '',
+                'last_name' => '', //isset($name[1]) ? $name[1]  : '',
                 "email" => $userObj->email,
                 "phone" => $userObj->phone,
                 "ip" => \Request::ip(),

@@ -73,7 +73,7 @@ class Blog extends Model{
     }
 
     static function generateObj($source){
-        $sourceArr = $source->paginate(15);
+        $sourceArr = $source->paginate(PAGINATION);
 
         $list = [];
         foreach($sourceArr as $key => $value) {

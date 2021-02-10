@@ -1,6 +1,6 @@
 {{-- Extends layout --}}
 @extends('Layouts.master')
-@section('title','مميزات العضويات - اضافة')
+@section('title','مميزات البطاقات - اضافة')
 
 {{-- Content --}}
 @section('sub-header')
@@ -15,7 +15,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">مميزات العضويات</h3>
+                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">مميزات البطاقات</h3>
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -23,7 +23,7 @@
                         <a href="{{ URL::to('/') }}" class="text-muted"><i class="m-nav__link-icon la la-home"></i></a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ URL::to('/features') }}" class="text-muted">مميزات العضويات</a>
+                        <a href="{{ URL::to('/features') }}" class="text-muted">مميزات البطاقات</a>
                     </li>
                     <li class="breadcrumb-item">
                         <a href="{{ URL::to('/features/add') }}" class="text-muted">اضافة</a>

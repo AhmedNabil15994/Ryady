@@ -92,7 +92,12 @@ class User extends Model{
         $data->phone = $source->phone != null ? $source->phone : '';
         $data->brief = $source->brief;
         $data->show_details = $source->show_details;
-        $data->username = $source->username;
+        $data->username = $source->username != null ? $source->username : '';
+        $data->facebook = $source->facebook != null ? $source->facebook : '';
+        $data->twitter = $source->twitter != null ? $source->twitter : '';
+        $data->snapchat = $source->snapchat != null ? $source->snapchat : '';
+        $data->youtube = $source->youtube != null ? $source->youtube : '';
+        $data->instagram = $source->instagram != null ? $source->instagram : '';
         $data->session_time = $source->session_time;
         $data->lang = $source->lang;
         $data->is_active = $source->is_active;

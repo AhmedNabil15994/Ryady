@@ -98,11 +98,6 @@ class ProjectControllers extends Controller {
         $menuObj->category_id = $input['category_id'];
         $menuObj->brief = $input['brief'];
         $menuObj->coupons = $input['coupons'];
-        $menuObj->facebook_url = $input['facebook_url'];
-        $menuObj->twitter_url = $input['twitter_url'];
-        $menuObj->youtube_url = $input['youtube_url'];
-        $menuObj->snapchat_url = $input['snapchat_url'];
-        $menuObj->instagram_url = $input['instagram_url'];
         $menuObj->lat = isset($input['lat']) ? $input['lat'] : '';
         $menuObj->lng = isset($input['lng']) ? $input['lng'] : '';
         $menuObj->status = $input['status'];
@@ -169,11 +164,6 @@ class ProjectControllers extends Controller {
         $menuObj->lat = isset($input['lat']) ? $input['lat'] : '';
         $menuObj->lng = isset($input['lng']) ? $input['lng'] : '';
         $menuObj->coupons = $input['coupons'];
-        $menuObj->facebook_url = $input['facebook_url'];
-        $menuObj->twitter_url = $input['twitter_url'];
-        $menuObj->youtube_url = $input['youtube_url'];
-        $menuObj->snapchat_url = $input['snapchat_url'];
-        $menuObj->instagram_url = $input['instagram_url'];
         $menuObj->status = $input['status'];
         $menuObj->sort = Project::newSortIndex();
         $menuObj->created_at = DATE_TIME;

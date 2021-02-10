@@ -161,6 +161,41 @@
                     </div>  
                     <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
                         <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رابط فيسبوك</label>
+                            <input class="form-control mb-5 m-input" type="text" name="facebook" value="{{ $data->data->facebook }}" maxlength="" placeholder="">
+                            <span class="m-form__help LastUpdate">تم الحفظ فى :  {{ $data->data->created_at }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رابط تويتر</label>
+                            <input class="form-control mb-5 m-input" type="text" name="twitter" value="{{ $data->data->twitter }}" maxlength="" placeholder="">
+                            <span class="m-form__help LastUpdate">تم الحفظ فى :  {{ $data->data->created_at }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رابط يوتيوب</label>
+                            <input class="form-control mb-5 m-input" type="text" name="youtube" value="{{ $data->data->youtube }}" maxlength="" placeholder="">
+                            <span class="m-form__help LastUpdate">تم الحفظ فى :  {{ $data->data->created_at }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رابط سناب شات</label>
+                            <input class="form-control mb-5 m-input" type="text" name="snapchat" value="{{ $data->data->snapchat }}" maxlength="" placeholder="">
+                            <span class="m-form__help LastUpdate">تم الحفظ فى :  {{ $data->data->created_at }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رابط انستجرام</label>
+                            <input class="form-control mb-5 m-input" type="text" name="instagram" value="{{ $data->data->instagram }}" maxlength="" placeholder="">
+                            <span class="m-form__help LastUpdate">تم الحفظ فى :  {{ $data->data->created_at }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
                             <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">حالة التفعيل: </label>
                             <select name="is_active" class="form-control mb-5 select2" id="kt_select2_3">
                                 <option value="0" {{ $data->data->is_active == 0 ? 'selected' : '' }}>غير مفعل</option>

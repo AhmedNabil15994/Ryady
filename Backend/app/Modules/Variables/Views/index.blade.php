@@ -69,10 +69,15 @@
                             @elseif($variable->var_type == 2)
                             <input class="form-control tagify" id="kt_tagify_1" name='value{{ $variable->id }}' placeholder='type...' value='{{ $variable->value }}'/>
                             @elseif($variable->var_type == 3)
-                            <input class="form-control mb-5" type="text" name="value{{ $variable->id }}" value="{{ $variable->value }}" maxlength="" placeholder="">
-                            @if($variable->value != '')
-                            <iframe src="{{ $variable->value }}" frameborder="0" style="width: 100%;height: 300px;" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
-                            @endif
+                                <input class="form-control mb-5" type="text" name="value{{ $variable->id }}" value="{{ $variable->value }}" maxlength="" placeholder="">
+                                @if($variable->value != '')
+                                <iframe src="{{ $variable->value }}" frameborder="0" style="width: 100%;height: 300px;" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+                                @endif
+                            @elseif($variable->var_type == 5)
+                            <select name="value{{ $variable->id }}" class="form-control select2">
+                                <option value="0" {{ $variable->value == 0 ? 'selected' : '' }}>لا</option>
+                                <option value="1" {{ $variable->value == 1 ? 'selected' : '' }}>نعم</option>
+                            </select>
                             @endif
                             <span class="m-form__help LastUpdate">تم الحفظ فى :  {{ $variable->created_at }}</span>
                         </div>

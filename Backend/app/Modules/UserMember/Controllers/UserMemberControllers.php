@@ -76,6 +76,7 @@ class UserMemberControllers extends Controller {
 
 
         $menuObj->user_id = $input['user_id'];
+        $menuObj->shown = $input['shown'];
         $menuObj->status = $input['status'];
         $menuObj->updated_at = DATE_TIME;
         $menuObj->updated_by = USER_ID;
@@ -98,6 +99,7 @@ class UserMemberControllers extends Controller {
         $menuObj = new UserMember;
         $menuObj->user_id = $input['user_id'];
         $menuObj->status = $input['status'];
+        $menuObj->shown = $input['shown'];
         $menuObj->sort = UserMember::newSortIndex();
         $menuObj->created_at = DATE_TIME;
         $menuObj->created_by = USER_ID;

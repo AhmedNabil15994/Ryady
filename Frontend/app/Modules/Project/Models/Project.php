@@ -76,7 +76,7 @@ class Project extends Model{
     }
 
     static function generateObj($source){
-        $sourceArr = $source->paginate(15);
+        $sourceArr = $source->paginate(PAGINATION);
 
         $list = [];
         foreach($sourceArr as $key => $value) {
@@ -103,11 +103,6 @@ class Project extends Model{
         $data->category = $source->category_id ? $source->Category->title : '';
         $data->lat = $source->lat;
         $data->lng = $source->lng;
-        $data->facebook_url = $source->facebook_url;
-        $data->twitter_url = $source->twitter_url;
-        $data->youtube_url = $source->youtube_url;
-        $data->snapchat_url = $source->snapchat_url;
-        $data->instagram_url = $source->instagram_url;
         $data->brief = $source->brief;
         $data->briefs = strip_tags($source->brief);
         $data->coupons =  $source->coupons;
@@ -120,6 +115,7 @@ class Project extends Model{
         $data->images = $source->images != '' ? self::getImages(unserialize($source->images),$source->id) : [];
         $data->created_at = \Helper::formatDate($source->created_at);
         $data->creator = $source->created_by ? $source->Creator->username : '';
+        $data->created_by = $source->created_by;
         return $data;
     }
 

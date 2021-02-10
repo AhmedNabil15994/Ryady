@@ -57,18 +57,20 @@
                         {{-- <div class="dateStyle hidden">
                             <input type="text" class="inputStyle" id="toDate" name="end_date" value="{{ $data->end_date }}" placeholder="الانتهاء الي" />
                             <i class="flaticon-school-calendar"></i>
-                        </div>
-                        <label class="checkStyle hidden">
-                            <input type="checkbox" name="user_request" checked />
-                            <i></i>
-                            بطاقة مطبوعة رسوم اضافية 100 ريال
-                        </label> --}}
+                        </div>--}}
                         <div class="coupons">
                             <div class="inputSt">
                                 <label for="">كود الخصم :</label>
                                 <input type="text" class="inputStyle" name="coupons[]" />
                             </div>
                         </div>
+                        @if(\App\Models\Variable::getVar('PRINTED_CARDS') == 1)
+                        <label class="checkStyle">
+                            <input type="checkbox" name="user_request" checked />
+                            <i></i>
+                            بطاقة مطبوعة رسوم اضافية 100 ريال
+                        </label> 
+                        @endif
                         <label class="checkStyle">
                             <input type="checkbox" id="privcy" />
                             <i></i>

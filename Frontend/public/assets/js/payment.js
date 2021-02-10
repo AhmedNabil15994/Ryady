@@ -3,6 +3,7 @@ $(function(){
 	$('div.method a').on('click',function(e){
 		e.preventDefault();
 		e.stopPropagation();
+		$('.payment-form').slideDown(250);
 		if($(this).parent('.method').hasClass('master-card')){
 			$('input[name="payment_type"]').val(1);
 		}
@@ -21,6 +22,15 @@ $(function(){
 
 	$(window).scroll(function () {
 		$(".header").addClass("headerFixed");
+	});
+
+	$('input[name="expire_date"]').on('keyup',function(e){
+		var myLength = $(this).val().length;
+		if(e.which != 8) {
+			if(myLength >= 2 && myLength < 5){
+				$(this).val($(this).val() + ' / ');
+			}
+		}
 	});
 
 });

@@ -1,6 +1,6 @@
 {{-- Extends layout --}}
 @extends('Layouts.master')
-@section('title','اعضاء الشاب الريادي')
+@section('title','اعضاء مجتمع الشاب الريادي')
 
 {{-- Content --}}
 @section('sub-header')
@@ -15,7 +15,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">اعضاء الشاب الريادي</h3>
+                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">اعضاء مجتمع الشاب الريادي</h3>
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -23,7 +23,7 @@
                         <a href="{{ URL::to('/') }}" class="text-muted"><i class="m-nav__link-icon la la-home"></i></a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ URL::to('/userMembers') }}" class="text-muted">اعضاء الشاب الريادي</a>
+                        <a href="{{ URL::to('/userMembers') }}" class="text-muted">اعضاء مجتمع الشاب الريادي</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -75,7 +75,7 @@
             <span class="card-icon">
                 <i class="menu-icon fa fa-user-tie"></i>
             </span>
-            <h3 class="card-label">اعضاء الشاب الريادي</h3>
+            <h3 class="card-label">اعضاء مجتمع الشاب الريادي</h3>
         </div>
         <div class="card-toolbar">
             @if(\Helper::checkRules('edit-user-member'))
@@ -164,6 +164,15 @@
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <label>اظهار العضو:</label>
+                                    <select name="shown" class="form-control m-input">
+                                        <option value="">حدد اختيارك</option>
+                                        <option value="0">لا</option>
+                                        <option value="1">نعم</option>
+                                    </select>
+                                    <br>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>التاريخ:</label>
                                     <input type="text" class="form-control datetimepicker-input" id="kt_datetimepicker_7_3" placeholder="تاريخ التاريخ"  name="created_at" value="{{ Request::get('created_at') }}" data-col-index="3" data-toggle="datetimepicker" data-target="#kt_datetimepicker_7_3" />
                                     <br>
@@ -200,6 +209,7 @@
                 <tr>
                     <th>ID</th>
                     <th>اسم المستخدم</th>
+                    <th>اظهار العضو</th>
                     <th>الحالة</th>
                     <th>التاريخ</th>
                     <th>الاجراءات</th>
@@ -209,6 +219,7 @@
                 <tr>
                     <th>ID</th>
                     <th>اسم المستخدم</th>
+                    <th>اظهار العضو</th>
                     <th>الحالة</th>
                     <th>التاريخ</th>
                     <th>الاجراءات</th>

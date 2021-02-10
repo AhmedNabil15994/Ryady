@@ -5,7 +5,9 @@ body,html{
   opacity: 1 !important
 }
 #toast-container,.toast{
-  width: 99% !important;
+  width: 100% !important;
+  top: 0 !important;
+  right: 0 !important;
 }
 .toast{
   max-width: 100% !important;

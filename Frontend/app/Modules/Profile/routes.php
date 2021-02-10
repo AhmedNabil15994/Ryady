@@ -4,11 +4,12 @@
 Profile
 ----------------------------------------------------------*/
 Route::group(['prefix' => '/'] , function () {
-    Route::get('/', 'ProfileControllers@profile');
+    Route::get('/personalInfo', 'ProfileControllers@profile');
     Route::post('/update', 'ProfileControllers@update');
 
-    Route::get('/membership', 'ProfileControllers@membership');
-    Route::post('/addRequest', 'ProfileControllers@addRequest');
+    Route::get('/', 'ProfileControllers@membership');
+    Route::get('/addRequest', 'ProfileControllers@addRequest');
+    Route::post('/requestPayment', 'ProfileControllers@postRequestPayment');
 
     Route::post('/uploadLogo', 'ProfileControllers@uploadLogo');
     Route::post('/upgrade', 'ProfileControllers@upgrade');

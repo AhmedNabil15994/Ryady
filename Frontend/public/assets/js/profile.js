@@ -1,5 +1,7 @@
 $(function(){
-      $('.summernote').summernote();
+      $('.summernote').summernote({
+            height: 300
+      });
 	$('a[data-target="#profile"]').on('click',function(e){
 		e.preventDefault();
 		e.stopPropagation();

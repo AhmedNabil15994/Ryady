@@ -102,11 +102,21 @@
                             <a href="#">{{ $data->data->phone }}</a>
                         </div>
                         <ul class="socialProj clearfix">
-                            <li><a href="{{ $data->data->facebook_url }}" target="_blank" class="fa fa-facebook"></a></li>
-                            <li><a href="{{ $data->data->snapchat_url }}" target="_blank" class="fa fa-snapchat"></a></li>
-                            <li><a href="{{ $data->data->twitter_url }}" target="_blank" class="fa fa-twitter"></a></li>
-                            <li><a href="{{ $data->data->youtube_url }}" target="_blank" class="fa fa-youtube"></a></li>
-                            <li><a href="{{ $data->data->instagram_url }}" target="_blank" class="fa fa-instagram"></a></li>
+                            @if($data->user->facebook != '')
+                            <li><a href="{{ $data->user->facebook }}" target="_blank" class="fa fa-facebook"></a></li>
+                            @endif
+                            @if($data->user->snapchat != '')
+                            <li><a href="{{ $data->user->snapchat }}" target="_blank" class="fa fa-snapchat"></a></li>
+                            @endif
+                            @if($data->user->twitter != '')
+                            <li><a href="{{ $data->user->twitter }}" target="_blank" class="fa fa-twitter"></a></li>
+                            @endif
+                            @if($data->user->youtube != '')
+                            <li><a href="{{ $data->user->youtube }}" target="_blank" class="fa fa-youtube"></a></li>
+                            @endif
+                            @if($data->user->instagram != '')
+                            <li><a href="{{ $data->user->instagram }}" target="_blank" class="fa fa-instagram"></a></li>
+                            @endif
                         </ul>
                     </div>
                 </div>

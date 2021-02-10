@@ -629,7 +629,9 @@ div.ranges ul li:not(.active):hover{
 	}
 }
 #toast-container,.toast{
-	width: 99% !important;
+	width: 100% !important;
+	top: 0 !important;
+    right: 0 !important;
 }
 .toast-title{
   text-align: right;

@@ -1,6 +1,6 @@
 {{-- Extends layout --}}
 @extends('Layouts.master')
-@section('title','العضويات')
+@section('title','البطاقات')
 
 @section('styles')
 <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/default-skin.css') }}">
@@ -16,7 +16,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">العضويات</h3>
+                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">البطاقات</h3>
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -24,7 +24,7 @@
                         <a href="{{ URL::to('/') }}" class="text-muted"><i class="m-nav__link-icon la la-home"></i></a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ URL::to('/memberships') }}" class="text-muted">العضويات</a>
+                        <a href="{{ URL::to('/memberships') }}" class="text-muted">البطاقات</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -76,7 +76,7 @@
             <span class="card-icon">
                 <i class="menu-icon far fa-id-card"></i>
             </span>
-            <h3 class="card-label">العضويات</h3>
+            <h3 class="card-label">البطاقات</h3>
         </div>
         <div class="card-toolbar">
             @if(\Helper::checkRules('edit-membership'))

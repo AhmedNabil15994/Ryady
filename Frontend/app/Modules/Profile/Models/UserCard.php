@@ -76,7 +76,7 @@ class UserCard extends Model{
     }
 
     static function generateObj($source){
-        $sourceArr = $source->paginate(15);
+        $sourceArr = $source->paginate(16);
 
         $list = [];
         foreach($sourceArr as $key => $value) {

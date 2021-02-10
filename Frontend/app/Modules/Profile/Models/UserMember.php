@@ -24,7 +24,7 @@ class UserMember extends Model{
         return $this->hasOne('App\Models\User','id','user_id');
     }
 
-    static function dataList($status=null,$count=null) {
+    static function dataList($status=null,$count=null,$shown=null) {
         $input = \Request::all();
 
         $source = self::NotDeleted()->where(function ($query) use ($input,$status) {
@@ -41,7 +41,9 @@ class UserMember extends Model{
                         $query->where('status',$status);
                     }
                 });
-
+        if($shown != null){
+            $source->where('shown',$shown);
+        }
         if($count != null){
             $source->take($count)->inRandomOrder();
             return self::generateObj($source,'true');
@@ -54,7 +56,7 @@ class UserMember extends Model{
         if($withPaginate != null){
             $sourceArr = $source->get();
         }else{
-            $sourceArr = $source->paginate(15);
+            $sourceArr = $source->paginate(16);
         }
 
         $list = [];
@@ -85,6 +87,8 @@ class UserMember extends Model{
         }
         $data->sort = $source->sort;
         $data->status = $source->status;
+        $data->shown = $source->shown;
+        $data->shownText = $source->shown == 0 ? 'لا' : 'نعم';
         $data->statusText = self::getStatus($source->status);
         $data->created_at = \Helper::formatDate($source->created_at);
         return $data;

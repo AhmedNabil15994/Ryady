@@ -1,6 +1,6 @@
 {{-- Extends layout --}}
 @extends('Layouts.master')
-@section('title','بطاقات الاعضاء')
+@section('title','العضويات')
 
 {{-- Content --}}
 @section('sub-header')
@@ -15,7 +15,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">بطاقات الاعضاء</h3>
+                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">العضويات</h3>
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -23,7 +23,7 @@
                         <a href="{{ URL::to('/') }}" class="text-muted"><i class="m-nav__link-icon la la-home"></i></a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ URL::to('/userCards') }}" class="text-muted">بطاقات الاعضاء</a>
+                        <a href="{{ URL::to('/userCards') }}" class="text-muted">العضويات</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -75,7 +75,7 @@
             <span class="card-icon">
                 <i class="menu-icon far fa-credit-card"></i>
             </span>
-            <h3 class="card-label">بطاقات الاعضاء</h3>
+            <h3 class="card-label">العضويات</h3>
         </div>
         <div class="card-toolbar">
             @if(\Helper::checkRules('edit-user-card'))

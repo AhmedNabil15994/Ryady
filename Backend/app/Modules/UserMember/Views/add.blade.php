@@ -1,6 +1,6 @@
 {{-- Extends layout --}}
 @extends('Layouts.master')
-@section('title','اعضاء الشاب الريادي - اضافة')
+@section('title','اعضاء مجتمع الشاب الريادي - اضافة')
 
 {{-- Content --}}
 @section('sub-header')
@@ -15,7 +15,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">اعضاء الشاب الريادي</h3>
+                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">اعضاء مجتمع الشاب الريادي</h3>
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -23,7 +23,7 @@
                         <a href="{{ URL::to('/') }}" class="text-muted"><i class="m-nav__link-icon la la-home"></i></a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ URL::to('/userMembers') }}" class="text-muted">اعضاء الشاب الريادي</a>
+                        <a href="{{ URL::to('/userMembers') }}" class="text-muted">اعضاء مجتمع الشاب الريادي</a>
                     </li>
                     <li class="breadcrumb-item">
                         <a href="{{ URL::to('/userMembers/add') }}" class="text-muted">اضافة</a>
@@ -101,6 +101,15 @@
                                 @endforeach
                             </select>   
                             <input type="hidden" name="status" value="">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">اظهار العضو</label>
+                            <select name="shown" class="form-control select2">
+                                <option value="0" {{ old('shown') == 0 ? 'selected' : '' }}>لا</option>
+                                <option value="1" {{ old('shown') == 1 ? 'selected' : '' }}>نعم</option>
+                            </select>   
                         </div>
                     </div>
                 </form>

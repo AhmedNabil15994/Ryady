@@ -8,7 +8,7 @@ use App\Models\Project;
 use App\Models\City;
 use App\Models\ProjectCategory;
 use App\Models\Page;
-
+use App\Models\User;
 
 
 class ProjectControllers extends Controller {
@@ -31,6 +31,7 @@ class ProjectControllers extends Controller {
             return redirect('404');
         }
         $data['data'] = Project::getData($blogObj);
+        $data['user'] = User::getData(User::getOne($blogObj->created_by));
         return view('Project.Views.project')->with('data',(object) $data);
     }
 

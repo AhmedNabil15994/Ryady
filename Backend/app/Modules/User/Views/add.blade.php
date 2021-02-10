@@ -149,7 +149,37 @@
                             <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رقم الجوال: </label>
                             <input class="form-control mb-5" type="text" name="phone" value="{{ old('phone') }}" maxlength="" placeholder="">
                         </div>
-                    </div>  
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رابط فيسبوك</label>
+                            <input class="form-control mb-5 m-input" type="text" name="facebook" value="{{ old('facebook') }}" maxlength="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رابط تويتر</label>
+                            <input class="form-control mb-5 m-input" type="text" name="twitter" value="{{ old('twitter') }}" maxlength="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رابط يوتيوب</label>
+                            <input class="form-control mb-5 m-input" type="text" name="youtube" value="{{ old('youtube') }}" maxlength="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رابط سناب شات</label>
+                            <input class="form-control mb-5 m-input" type="text" name="snapchat" value="{{ old('snapchat') }}" maxlength="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رابط انستجرام</label>
+                            <input class="form-control mb-5 m-input" type="text" name="instagram" value="{{ old('instagram') }}" maxlength="" placeholder="">
+                        </div>
+                    </div>
                     <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
                         <div class="col-lg-12">
                             <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">حالة التفعيل: </label>

@@ -80,7 +80,7 @@ class HomeControllers extends Controller {
         $data['advantages'] = Advantage::dataList(1)['data'];
         $data['memberships'] = Membership::dataList(1)['data'];
         $data['projectCategories'] = ProjectCategory::dataList(1)['data'];
-        $data['userMembers'] = UserMember::dataList(1,8)['data'];
+        $data['userMembers'] = UserMember::dataList(1,8,1)['data'];
         $data['userMembers2'] = UserMember::dataList(1,5)['data'];
         return view('Home.Views.index')->with('data',(object) $data);
     }

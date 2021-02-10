@@ -87,6 +87,11 @@ class User extends Model{
         $data->address = $source->address != null ? $source->address : '';
         $data->phone = $source->phone != null ? $source->phone : '';
         $data->brief = $source->brief;
+        $data->facebook = $source->facebook != null ? $source->facebook : '';
+        $data->twitter = $source->twitter != null ? $source->twitter : '';
+        $data->snapchat = $source->snapchat != null ? $source->snapchat : '';
+        $data->youtube = $source->youtube != null ? $source->youtube : '';
+        $data->instagram = $source->instagram != null ? $source->instagram : '';
         $data->show_details = $source->show_details;
         $data->username = $source->username;
         $data->session_time = $source->session_time;

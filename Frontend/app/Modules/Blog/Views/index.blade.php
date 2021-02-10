@@ -58,7 +58,7 @@
                                     <span class="time"><i class="fa fa-eye"></i> {{ $blog->views }}</span>
                                 </div>
                                 <div class="paddingTitle">
-                                    <a href="{{ URL::to('/blogs/' . $blog->id) }}" class="titleItem"> {{ $blog->title2 }} </a>
+                                    <a href="{{ URL::to('/blogs/' . $blog->id) }}" class="titleItem"> {{ $blog->title }} </a>
                                 </div>
                                 <div class="userDetails">
                                     <h2 class="author"><span>{{ $blog->category }}</span></h2>

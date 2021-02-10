@@ -1,6 +1,6 @@
 {{-- Extends layout --}}
 @extends('Layouts.master')
-@section('title','اعضاء الشاب الريادي - ترتيب اعضاء الشاب الريادي')
+@section('title','اعضاء مجتمع الشاب الريادي - ترتيب اعضاء مجتمع الشاب الريادي')
 {{-- Content --}}
 @section('sub-header')
 
@@ -14,7 +14,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">اعضاء الشاب الريادي</h3>
+                <h3 class="text-dark font-weight-bold my-1 mr-5 m-subheader__title--separator">اعضاء مجتمع الشاب الريادي</h3>
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -22,10 +22,10 @@
                         <a href="{{ URL::to('/') }}" class="text-muted"><i class="m-nav__link-icon la la-home"></i></a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ URL::to('/userMembers') }}" class="text-muted">اعضاء الشاب الريادي</a>
+                        <a href="{{ URL::to('/userMembers') }}" class="text-muted">اعضاء مجتمع الشاب الريادي</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ URL::current() }}" class="text-muted">ترتيب اعضاء الشاب الريادي</a>
+                        <a href="{{ URL::current() }}" class="text-muted">ترتيب اعضاء مجتمع الشاب الريادي</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -77,7 +77,7 @@
             <span class="card-icon">
                 <i class="menu-icon la la-refresh"></i>
             </span>
-            <h3 class="card-label">ترتيب اعضاء الشاب الريادي</h3>
+            <h3 class="card-label">ترتيب اعضاء مجتمع الشاب الريادي</h3>
         </div>
     </div>
     <div class="card-body">

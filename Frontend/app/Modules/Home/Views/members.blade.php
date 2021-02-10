@@ -16,10 +16,10 @@
 	<div class="breadcrumbs">
         <img class="bg" src="{{ asset('/assets/images/breadBg.png') }}" alt="" />
         <div class="container">
-            <h2>أعضاء الشاب الريادي</h2>
+            <h2>أعضاء مجتمع الشاب الريادي</h2>
             <ul class="list-unstyled">
                 <li><a href="{{ URL::to('/') }}">الرئيسية</a></li>
-                <li class="active">أعضاء الشاب الريادي</li>
+                <li class="active">أعضاء مجتمع الشاب الريادي</li>
             </ul>
         </div>
     </div>

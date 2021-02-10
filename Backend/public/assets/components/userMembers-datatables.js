@@ -78,15 +78,17 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				type: 'GET',
 				data:function(dtParms){
 			       	dtParms.status = $('select[name="status"]').val();
+			       	dtParms.shown = $('select[name="shown"]').val();
 			       	dtParms.created_at = $('input[name="created_at"]').val();
 			        dtParms.columnsDef= [
-						'id' ,'username','statusText','created_at'];
+						'id' ,'username','shownText','statusText','created_at'];
 			        return dtParms
 			    }
 			},
 			columns: [
 				{data: 'id'},
 				{data: 'username'},
+				{data: 'shownText'},
 				{data: 'statusText'},
 				{data: 'created_at'},
 				{data: 'id', responsivePriority: -1},
@@ -107,6 +109,14 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				},
 				{
 					targets: 2,
+					title: 'اظهار العضو',
+					className: 'edits selects',
+					render: function(data, type, full, meta) {
+						return '<a class="editable" data-col="shown" data-id="'+full.id+'">'+data+'</a>';
+					},
+				},
+				{
+					targets: 3,
 					title: 'الحالة',
 					className: 'edits selects',
 					render: function(data, type, full, meta) {
@@ -120,7 +130,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					},
 				},
 				{
-					targets: 3,
+					targets: 4,
 					title: 'التاريخ',
 					className: 'edits dates',
 					render: function(data, type, full, meta) {

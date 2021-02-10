@@ -34,8 +34,11 @@ class UserMember extends Model{
                     if (isset($input['id']) && !empty($input['id'])) {
                         $query->where('id',  $input['id']);
                     } 
-                    if (isset($input['status']) && !empty($input['status'])) {
+                    if (isset($input['status']) && !empty($input['status']) && $input['status'] != null) {
                         $query->where('status',  $input['status']);
+                    } 
+                    if (isset($input['shown']) && !empty($input['shown']) && $input['shown'] != null) {
+                        $query->where('shown',  $input['shown']);
                     } 
                     if($status != null){
                         $query->where('status',$status);
@@ -68,6 +71,8 @@ class UserMember extends Model{
         $data->user = $source->user_id != null ? User::getData($source->User) : '';
         $data->sort = $source->sort;
         $data->status = $source->status;
+        $data->shown = $source->shown;
+        $data->shownText = $source->shown == 0 ? 'لا' : 'نعم';
         $data->statusText = self::getStatus($source->status);
         $data->created_at = \Helper::formatDate($source->created_at);
         return $data;

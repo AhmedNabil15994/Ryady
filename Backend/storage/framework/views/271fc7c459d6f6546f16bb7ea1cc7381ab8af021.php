@@ -179,7 +179,7 @@
                 <li class="menu-item menu-item-submenu <?php echo e(Active(URL::to('/memberships*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/features*'),'menu-item-open active')); ?>" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="#" class="menu-link menu-toggle">
                         <i class="menu-icon far fa-id-card"></i>
-                        <span class="menu-text">العضويات</span>
+                        <span class="menu-text">البطاقات</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="menu-submenu" kt-hidden-height="80">
@@ -187,14 +187,14 @@
                         <ul class="menu-subnav">
                             <li class="menu-item  menu-item-parent" aria-haspopup="true">
                                 <span class="menu-link">
-                                    <span class="menu-text">العضويات</span>
+                                    <span class="menu-text">البطاقات</span>
                                 </span>
                             </li>
                             <?php if(\Helper::checkRules('list-memberships')): ?>
                             <li class="menu-item <?php echo e(Active(URL::to('/memberships*'))); ?>" aria-haspopup="true">
                                 <a href="<?php echo e(URL::to('/memberships')); ?>" class="menu-link ">
                                     <i class="menu-bullet menu-bullet-dot"></i>
-                                    <span class="menu-text">العضويات</span>
+                                    <span class="menu-text">البطاقات</span>
                                 </a>
                             </li>
                             <?php endif; ?>
@@ -202,7 +202,7 @@
                             <li class="menu-item <?php echo e(Active(URL::to('/features*'))); ?>" aria-haspopup="true">
                                 <a href="<?php echo e(URL::to('/features')); ?>" class="menu-link ">
                                     <i class="menu-bullet menu-bullet-dot"></i>
-                                    <span class="menu-text">مميزات العضويات</span>
+                                    <span class="menu-text">مميزات البطاقات</span>
                                 </a>
                             </li>
                             <?php endif; ?>
@@ -215,7 +215,7 @@
                 <li class="menu-item menu-item-submenu <?php echo e(Active(URL::to('/userCards*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/userRequests*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/cardPromotions*'),'menu-item-open active')); ?> <?php echo e(Active(URL::to('/userCertificates*'),'menu-item-open active')); ?>" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="#" class="menu-link menu-toggle">
                         <i class="menu-icon far fa-credit-card"></i>
-                        <span class="menu-text">بطاقات الاعضاء</span>
+                        <span class="menu-text">العضويات</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="menu-submenu" kt-hidden-height="80">
@@ -223,18 +223,18 @@
                         <ul class="menu-subnav">
                             <li class="menu-item  menu-item-parent" aria-haspopup="true">
                                 <span class="menu-link">
-                                    <span class="menu-text">بطاقات الاعضاء</span>
+                                    <span class="menu-text">العضويات</span>
                                 </span>
                             </li>
                             <?php if(\Helper::checkRules('list-user-cards')): ?>
                             <li class="menu-item <?php echo e(Active(URL::to('/userCards*'))); ?>" aria-haspopup="true">
                                 <a href="<?php echo e(URL::to('/userCards')); ?>" class="menu-link ">
                                     <i class="menu-bullet menu-bullet-dot"></i>
-                                    <span class="menu-text">بطاقات الاعضاء</span>
+                                    <span class="menu-text">العضويات</span>
                                 </a>
                             </li>
                             <?php endif; ?>
-                            <?php if(\Helper::checkRules('list-user-requests')): ?>
+                            <?php if(\Helper::checkRules('list-user-requests') && \App\Models\Variable::getVar('PRINTED_CARDS') == 1): ?>
                             <li class="menu-item <?php echo e(Active(URL::to('/userRequests*'))); ?>" aria-haspopup="true">
                                 <a href="<?php echo e(URL::to('/userRequests')); ?>" class="menu-link ">
                                     <i class="menu-bullet menu-bullet-dot"></i>
@@ -267,7 +267,7 @@
                 <li class="menu-item menu-item-submenu <?php echo e(Active(URL::to('/userMembers*'),'menu-item-open active')); ?>" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="#" class="menu-link menu-toggle">
                         <i class="menu-icon fa fa-user-tie"></i>
-                        <span class="menu-text">اعضاء الشاب الريادي</span>
+                        <span class="menu-text">اعضاء مجتمع الشاب الريادي</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="menu-submenu" kt-hidden-height="80">
@@ -275,13 +275,13 @@
                         <ul class="menu-subnav">
                             <li class="menu-item  menu-item-parent" aria-haspopup="true">
                                 <span class="menu-link">
-                                    <span class="menu-text">اعضاء الشاب الريادي</span>
+                                    <span class="menu-text">اعضاء مجتمع الشاب الريادي</span>
                                 </span>
                             </li>
                             <li class="menu-item <?php echo e(Active(URL::to('/userMembers*'))); ?>" aria-haspopup="true">
                                 <a href="<?php echo e(URL::to('/userMembers')); ?>" class="menu-link ">
                                     <i class="menu-bullet menu-bullet-dot"></i>
-                                    <span class="menu-text">اعضاء الشاب الريادي</span>
+                                    <span class="menu-text">اعضاء مجتمع الشاب الريادي</span>
                                 </a>
                             </li>
                         </ul>
