@@ -16,7 +16,7 @@ $(function(){
 			$('input[name="payment_type"]').val(3);
 		}
 
-		$(this).parent('div.method').siblings('.method.active').removeClass('active');
+		$(this).parent('div.method').parent('.col-xs-4').siblings('.col-xs-4').children('.method.active').removeClass('active');
 		$(this).parent('div.method').addClass('active');
 	});
 

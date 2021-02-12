@@ -269,7 +269,10 @@
                                                 </div>
                                                 <span class="state {{ $class }}">{{ $data->membership->membership->title }}</span>
                                             </div>
-                                            <a href="#" class="btnStyle wallets"> <img src="{{ asset('/assets/images/wallet.svg') }}" alt=""></a>
+                                            <form action="{{ URL::to('/profile/addToWallet') }}" method="post" accept-charset="utf-8">
+                                                @csrf
+                                                <button type="submit" class="btnStyle wallets"> <img src="{{ asset('/assets/images/wallet.svg') }}" alt=""></button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

@@ -151,7 +151,9 @@
 	{
 		margin-top:0;
 	}
-	
+	.header.headerFixed .logo img{
+		height: 50px;
+	}
 	.header.headerFixed .iconMenu
 	{
 		margin-top:8px;

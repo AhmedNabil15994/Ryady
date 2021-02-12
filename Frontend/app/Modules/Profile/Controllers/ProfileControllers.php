@@ -21,10 +21,77 @@ use App\Models\Order;
 use App\Models\Photo;
 use App\Models\Variable;
 use PDF;
+use PKPass\PKPass;
 
 class ProfileControllers extends Controller {
 
     use \TraitsFunc;
+
+    public function addToWallet(){
+        $userObj = User::getData(User::getOne(USER_ID));
+        $cardObj = UserCard::getData(UserCard::getAvailableForUser(USER_ID));
+        setlocale(LC_MONETARY, 'en_US');
+
+        // Variables
+        $id = $cardObj->code;//rand(100000, 999999) . '-' . rand(100, 999) . '-' . rand(100, 999); // Every card should have a unique serialNumber
+        $balance = 'SAR ' . $cardObj->membership->price; // Create random balance
+        $name = $userObj->name_en;
+        dd($name);
+
+        // Create pass
+        // Set the path to your Pass Certificate (.p12 file)
+        $pass = new PKPass('../../Certificates.p12', 'password');
+        $pass->setData('{
+        "passTypeIdentifier": "pass.com.scholica.flights", 
+        "formatVersion": 1,
+        "organizationName": "AlshabAlriyadi",
+        "teamIdentifier": "KN44X8ZLNC",
+        "serialNumber": "' . $id . '",
+        "backgroundColor": "rgb(240,240,240)",
+        "logoText": "alshabalriyadi",
+        "description": "alshabalriyadi Card",
+        "storeCard": {
+            "secondaryFields": [
+                {
+                    "key": "balance",
+                    "label": "BALANCE",
+                    "value": "' . $balance . '"
+                },
+                {
+                    "key": "name",
+                    "label": "NICKNAME",
+                    "value": "' . $name . '"
+                }
+            ],
+            "backFields": [
+                {
+                    "key": "id",
+                    "label": "Card Number",
+                    "value": "' . $id . '"
+                }
+            ]
+        },
+        "barcode": {
+            "format": "PKBarcodeFormatPDF417",
+            "message": "' . $id . '",
+            "messageEncoding": "iso-8859-1",
+            "altText": "' . $id . '"
+        }
+        }');
+
+        // add files to the PKPass package
+        $pass->addFile('icon.png');
+        $pass->addFile('icon@2x.png');
+        $pass->addFile('logo.png');
+        $pass->addFile('background.png', 'strip.png');
+
+        if(!$pass->create(true)) { // Create and output the PKPass
+            echo 'Error: ' . $pass->getError();
+        }
+
+        \Session::flash('success', 'تم الاضافة الي المحفظة');
+        return redirect()->back();
+    }
 
     protected function validateObject($input){
         $rules = [
@@ -363,7 +430,6 @@ class ProfileControllers extends Controller {
         Session::flash('success','تم الارسال بنجاح');
         return \TraitsFunc::SuccessResponse("تنبيه! تم الحفظ بنجاح");
     }
-
 
     public function newOrder(){
         $data['user'] = User::getData(User::getOne(USER_ID));

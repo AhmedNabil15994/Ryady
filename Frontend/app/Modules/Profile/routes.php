@@ -6,6 +6,7 @@ Profile
 Route::group(['prefix' => '/'] , function () {
     Route::get('/personalInfo', 'ProfileControllers@profile');
     Route::post('/update', 'ProfileControllers@update');
+    Route::post('/addToWallet', 'ProfileControllers@addToWallet');
 
     Route::get('/', 'ProfileControllers@membership');
     Route::get('/addRequest', 'ProfileControllers@addRequest');

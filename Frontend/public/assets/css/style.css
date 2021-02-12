@@ -3985,28 +3985,18 @@ input[name="gmaps"]{
 /* ------------------------------------------ */
 /*         payment
 /* ------------------------------------------ */
-
-.payment--component {
-	height: 100vh;
-	background-color: #fff;
-	position: relative;
-	display: grid;
-	justify-content: center;
-	align-content: center;
-	justify-items: center;
-	padding-top: 5%;
-	padding-bottom: 5%;
+.payment{
+	margin: 0;
+	display: block;
+	margin-top: 200px;
+	margin-bottom: 200px;
+	padding: 30px;
 }
-
 .payment-app {
+	padding: 50px;
+	padding-bottom: 0;
 	background-color: #F6F8FA;
 	border-radius: 20px;
-	display: grid;
-	grid-auto-flow: row;
-	grid-template-columns: 100%;
-	justify-content: center;
-	align-content: center;
-	justify-items: center;
 }
 
 .payment-app h2 {
@@ -4014,93 +4004,61 @@ input[name="gmaps"]{
 	color: #001c54;
 	font-family: "STC-Bold";
 	width: 100%;
-	text-align: center;
+	margin-bottom: 20px;
 }
 
 .payment-methods {
 	width: 100%;
-	display: grid;
-	grid-auto-flow: column;
-	align-items: center;
-	justify-content: space-between;
-	align-content: center;
-	justify-items: center;
-}
-.payment-methods .method.active {
-	border: solid 1px #707070;
-	border-radius: 8px;
-	padding: 15px;
-}
-.payment-methods .method.visa.active{
-	padding: 0 24px;
-}
-.payment-methods .method img {
-	height: 60px;
-	width: 60px;
 }
 
+.payment-methods .method{
+    display: block;
+    width: 100%;
+}
+.payment .row{
+	margin-bottom: 25px;
+}
 .payment-form {
-	/*display: grid;*/
 	display: none;
-	grid-gap: 12px;
 	width: 100%;
 }
-
-.exp-area {
-	display: grid;
-	grid-auto-flow: column;
-	grid-template-columns: 30% calc(70% - 16px);
-	grid-gap: 16px;
-}
-
 .payment-form input {
 	background-color: #FFF;
 	width: 100%;
+	padding: 10px;
+	border-radius: 5px;
 	border-style: none;
 	outline: none;
 	text-align: left;
 	font-family: 'Tajawal', sans-serif;
 	margin-bottom: 15px;
 }
-
-.payment-form select {
-	background-color: #FFF;
-	width: 100%;
-	border-style: none;
-	outline: none;
-	text-align: left;
-	text-align: left;
+.exp-area {
+	display: block;
 }
-
 .payment-form input::placeholder {
-	color: #000;
+	color: #001c54;
 	font-size: 16px;
 }
-
-.payment-form .selectStyle .selectmenu {
-	margin: 0;
-
+.payment-form input[name="cvc"]{
+	display: inline-block;
+	float: right;
+	width: calc(30% - 30px);
 }
-
 .payment-form .dateStyle {
 	margin: 0;
 	font-size: 16px;
-	height: 55px;
-}
-
-.payment-form .dateStyle label {
-	position: absolute;
-	top: calc(50% - 8px);
-	right: 12px;
-	color: #000;
-	font-weight: bold;
+	background-color: unset;
+	display: inline-block;
+	float: left;
+	width: 70%;
 }
 
 .payment-form .btn {
 	font-size: 22px;
 	color: #A7ABAD;
 	background-color: #001c54;
-	height: 60px;
+	padding: 5px 30px;
 }
 
 .payment-form .btn:hover {
@@ -4109,46 +4067,56 @@ input[name="gmaps"]{
 	background-color: #A7ABAD;
 	border: 2px solid #001c54;
 }
-
-@media(max-width:660px) {
-	.payment-app {
-		width: 95%;
-		padding: 12px;
-		grid-gap: 24px;
-	}
-
-	.payment-form input {
-		padding: 12px;
-
-	}
-
-	.payment-form select {
-		padding: 12px;
-
-	}
+.payment-methods .method.active {
+	border: solid 1px #707070;
+	border-radius: 8px;
+	padding: 5px;
 }
-
-@media(min-width:661px) {
-	.payment-app {
-
-		width: 54.939vw;
-		padding: 42px 46px;
-		grid-gap: 32px;
-	}
-
-	.payment-form input {
-		padding: 17px;
-	}
-
-	.payment-form select {
-		padding: 17px;
-	}
+.payment-methods .method.visa.active,
+.payment-methods .method.master-card.active{
+	padding-right: 0;
+	padding-left: 0;
 }
-
-@media(max-width:991px) {
-	.headerFixed.header .logo img{
-		margin-top: -10px;
-		height: 60px;
+.payment-methods .method img {
+	height: 50px;
+	width: 100px;
+}
+.payment-methods .method.mada img{
+	width: 70px;
+} 
+.payment-methods .method.mada{
+	padding-left: 15px;
+	padding-right: 15px;
+}
+@media(max-width: 991px){
+	.payment-app{
+		padding: 20px 15px;
+		padding-bottom: 0;
+	}
+	.col-xs-4{
+		padding: 0;
+	}
+	.footer .footerDown .logoServers2,
+	.footer .footerDown .logoServers,
+	.footer .footerDown .copyRights{
+		width: 100%;
+	}
+	.footer .footerDown .logoServers2{
+		margin-bottom: 20px;
+	}
+	.footer .footerDown .logoServers{
+		text-align: center;
+	}
+	.footer .container .row .col-md-3{
+		text-align: center;
+	}
+	.footer .footerDown .container{
+		position: relative;
+	}
+	.footer .footerDown .copyRights{
+		position: absolute;
+	    left: 0;
+	    top: 120px;
 	}
 }
 .itemBlog .date span.moreDetails{
