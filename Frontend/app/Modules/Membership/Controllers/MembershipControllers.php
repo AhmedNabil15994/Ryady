@@ -291,7 +291,7 @@ class MembershipControllers extends Controller {
             $price += 100;
         }
 
-        $name = explode(' ', $userObj->name_en, 2);
+        $name = explode(' ', $input['card_holder'], 2);
         $data = [
             'type' => 'credit',
             'amount' =>  $price - \Session::get('discounts'),
@@ -317,7 +317,6 @@ class MembershipControllers extends Controller {
         $paymentObj = new \PaymentHelper();
         $checkStatus = $paymentObj->payTabs($data);
         if(!isset($checkStatus['errors']) && empty($checkStatus['errors'])){
-            \Session::forget('discounts');
             $userCryptedID = encrypt($userObj->id);
             $emailData['firstName'] = $userObj->name_ar;
             $emailData['subject'] = 'تفعيل العضوية :';
@@ -325,6 +324,12 @@ class MembershipControllers extends Controller {
             $emailData['to'] = $userObj->email;
             $emailData['template'] = "emailUsers.emailReplied";
             \App\Helpers\MailHelper::SendMail($emailData);
+            \Session::forget('discounts');
+            \Session::forget('user_id');
+            \Session::forget('user_card_id');           
+            if(\Session::has('user_request_id')){
+                \Session::forget('user_request_id');
+            }
             \Session::flash('success', 'تم الدفع وتم ارسال رابط تأكيد التفعيل الي بريدك الالكتروني');
             return redirect()->to('/');
         }else{

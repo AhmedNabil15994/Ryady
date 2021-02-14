@@ -2751,7 +2751,7 @@ a.ui-button:active,
 	bottom: 16.11374%;
 	right: 5.789473%;
 	font-size: 16px;
-
+	letter-spacing: 2px;
 }
 
 .card-exp {
@@ -3136,4 +3136,123 @@ a.ui-button:active,
 
 .tableMemb tbody tr:nth-of-type(odd) {
 	background-color:#F6F8FA
+}
+.card .member-lvl .bgPurple
+{
+	color:#E4B0FF;
+}
+
+.card .member-lvl .bgGreen
+{
+	color:#00E5B9;
+}
+
+.card .member-lvl .bgBlue
+{
+	color:#0074E8;
+}
+/* ------------------------------------------ */
+/*         payment
+/* ------------------------------------------ */
+.payment{
+	margin: 0;
+	display: block;
+	padding: 30px;
+}
+.payment-app {
+	padding: 50px;
+	padding-bottom: 0;
+	background-color: #F6F8FA;
+	border-radius: 20px;
+}
+
+.payment-app h2 {
+	font-size: 30px;
+	color: #001c54;
+	font-family: "STC-Bold";
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.payment-methods {
+	width: 100%;
+}
+
+.payment-methods .method{
+    display: block;
+    width: 100px;
+    margin: auto;
+}
+.payment .row{
+	margin-bottom: 25px;
+}
+.payment-form {
+	display: none;
+	width: 100%;
+}
+.payment-form input {
+	background-color: #FFF;
+	width: 100%;
+	padding: 10px;
+	border-radius: 5px;
+	border-style: none;
+	outline: none;
+	text-align: left;
+	font-family: 'Tajawal', sans-serif;
+	margin-bottom: 15px;
+}
+.exp-area {
+	display: block;
+}
+.payment-form input::placeholder {
+	color: #001c54;
+	font-size: 16px;
+}
+.payment-form input[name="cvc"]{
+	display: inline-block;
+	float: right;
+	width: calc(30% - 30px);
+}
+.payment-form .dateStyle {
+	margin: 0;
+	font-size: 16px;
+	background-color: unset;
+	display: inline-block;
+	float: left;
+	width: 70%;
+}
+
+.payment-form .btn {
+	font-size: 22px;
+	color: #A7ABAD;
+	background-color: #001c54;
+	padding: 5px 30px;
+}
+
+.payment-form .btn:hover {
+	font-size: 22px;
+	color: #001c54;
+	background-color: #A7ABAD;
+	border: 2px solid #001c54;
+}
+.payment-methods .method.active {
+	border: solid 1px #707070;
+	border-radius: 8px;
+	padding: 5px;
+}
+.payment-methods .method.visa.active,
+.payment-methods .method.master-card.active{
+	padding-right: 0;
+	padding-left: 0;
+}
+.payment-methods .method img {
+	height: 50px;
+	width: 100px;
+}
+.payment-methods .method.mada img{
+	width: 70px;
+} 
+.payment-methods .method.mada{
+	padding-left: 15px;
+	padding-right: 15px;
 }

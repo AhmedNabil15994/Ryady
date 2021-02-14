@@ -11,5 +11,5 @@
 <link rel="stylesheet" href="{{ asset('/assets/css/owl.theme.default.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}" />
 <link rel="stylesheet" href="{{ asset('/assets/css/responisve.css') }}" />
-<link rel="shortcut icon" href="{{ asset('/assets/images/favicon.ico') }}" />
+<link rel="shortcut icon" href="{{ asset('/assets/images/logo.png') }}" />
 @yield('styles')

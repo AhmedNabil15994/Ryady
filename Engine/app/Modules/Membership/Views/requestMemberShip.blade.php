@@ -41,78 +41,74 @@
             </div>
         </div>
         <div class="card-shape">
-           <div class="card">
-                @php 
-                    $img = '';
-                    $class = '';
-                    if($data->data->id == 1){
-                        $img = 'Purple_test.png';
-                        $class = 'bgPurple';
-                    }else if($data->data->id == 2){
-                        $img = 'green_test.png';
-                        $class = 'bgGreen';
-                    }else if($data->data->id == 3){
-                        $img = 'blue_test.png';
-                        $class = 'bgBlue';
-                    }
-                @endphp    
+            @php 
+                $img = '';
+                $class = '';
+                if($data->data->id == 1){
+                    $img = 'Purple_test.png';
+                    $class = 'bgPurple';
+                }else if($data->data->id == 2){
+                    $img = 'green_test.png';
+                    $class = 'bgGreen';
+                }else if($data->data->id == 3){
+                    $img = 'blue_test.png';
+                    $class = 'bgBlue';
+                }
+            @endphp  
+           <div class="card" style="background-image: url('{{ asset('/assets/images/'.$img) }}')">  
                <div class="card-logo">
-                   <img src="{{ asset('/assets/images/'.$img) }}" alt="">
+                   <img src="{{ asset('/assets/images/logo.svg') }}" alt="">
                </div>
-               <h2 class="ar-name" id="outputAr">خالد بن محمد</h2>
-               <h2 class="en-name" id="outputEn">khalid bin mohamed</h2>
+               <h2 class="ar-name titleAr" id="outputAr">{{ \Request::get('name_ar') }}</h2>
+               <h2 class="en-name titleEn" id="outputEn">{{ \Request::get('name_en') }}</h2>
                <div class="qr-code">
-                   <img src="./images/qr.png" alt="">
+                   {!! $data->qrCode !!}
                </div>
-               <h2 class="card-num">0008694</h2>
-               <p class="card-exp">09/2012</p>
-               <p class="member-lvl"> | منتسب</p>
+               <h2 class="card-num" style="color: {{ $data->data->color }}">{{ $data->code }}</h2>
+               <p class="card-exp">{{ $data->end_date2 }}</p>
+               <p class="member-lvl"> <span class="{{ $class }}">|</span> {{ $data->data->title }}</p>
            </div>
            <div class="card-price">
-               <p class="price-value">157 ريال</p>
-               <p class="price-exp">لمده سنه</p>
+               <p class="price-value">{{ $data->data->price }} ريال</p>
+               <p class="price-exp">لمده {{ $data->data->periodText }}</p>
            </div>
         </div>
         <div class="card-form">
             <div class="container">
-                <form action="" class="information-form">
+                <form class="information-form"  method="POST" action="{{ URL::current() }}">
+                    @csrf
                     <h2 class="text-center main__theme"> بيانات الشخصيه</h2>
-                    <input id="inputAr" type="text" onInput="fetchArInput()" placeholder="اسمك علي البطاقه بالعربي">
-                    <input id="inputEn" type="text" onInput="fetchEnInput()" placeholder="اسمك علي البطاقه بالانجليزي">
+                    <input name="name_ar" type="text" value="{{ \Request::get('name_ar') }}" placeholder="اسمك علي البطاقه بالعربي">
+                    <input name="name_en" type="text" value="{{ \Request::get('name_en') }}" placeholder="اسمك علي البطاقه بالانجليزي">
                     <div class="selectStyle marg-0">
-                        <select class="selectmenu" id="selectmenu">
-                            <option>نوع العضوية منتسب 175 ريال</option>
-                            <option>نوع العضوية منتسب 175 ريال</option>
-                            <option>نوع العضوية منتسب 175 ريال</option>
-                            <option>نوع العضوية منتسب 175 ريال</option>
+                        <select class="selectmenu" id="selectmenu" name="membership_id">
+                            @foreach($data->memberships as $membership)
+                            <option value="{{ $membership->id }}" {{ $data->data->id == $membership->id ? 'selected' : '' }}>عضوية {{ $membership->title . ' ' . $membership->price }} ريال</option>
+                            @endforeach
                         </select>
                         <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
                     </div>
-                    <input type="number" placeholder="رقم الجوال">
-                    <input type="number" placeholder="رقم البطاقه">
-                    <div class="dateStyle">
-                        <input type="text" class="datepicker" placeholder="بدايه من" />
-                        <i class="flaticon-school-calendar"></i>
+                    <input type="email" value="{{ \Request::get('email') }}" name="email" placeholder="البريد الالكتروني" />
+                    <input type="number" value="{{ \Request::get('phone') }}" name="phone" placeholder="رقم الجوال" />
+                    <input type="password" name="password" placeholder="كلمة المرور" />
+                    <div class="coupons">
+                        <div class="inputSt">
+                            <label for="">كود الخصم :</label>
+                            <input type="text" name="coupons[]" placeholder="كود الخصم" />
+                        </div>
                     </div>
-                    <div class="dateStyle">
-                        <input type="text" class="datepicker" placeholder="الانتهاء الي" />
-                        <i class="flaticon-school-calendar"></i>
-                    </div>
+                    @if(\App\Models\Variable::getVar('PRINTED_CARDS') == 1)
                     <label class="checkStyle">
-                        الشروط والحكام
-                        <input type="checkbox" checked />
-
-                    </label>
-                    <label class="checkStyle">
-
                         بطاقة مطبوعة رسوم اضافية 100 ريال
-                        <input type="checkbox" checked />
+                        <input type="checkbox" name="user_request"/>
                     </label>
-
-                    <button type="button" class="btn btn__dark--theme" data-toggle="modal" data-target="#exampleModal">حفظ التغييرات</button>
-
+                    @endif
+                    <label class="checkStyle">
+                        الشروط والاحكام
+                        <input type="checkbox" id="privacy"/>
+                    </label>
+                    <button type="submit" class="btn btn__dark--theme">حفظ التغييرات</button>
                 </form>
-
             </div>
         </div>
     </section>

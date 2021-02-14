@@ -305,7 +305,7 @@ class ProfileControllers extends Controller {
                 return redirect()->to('/profile');
             }
 
-            $name = explode(' ', $userObj->name_en, 2);
+            $name = explode(' ', $input['card_holder'], 2);
 
             $data = [
                 'type' => 'credit',
@@ -631,7 +631,7 @@ class ProfileControllers extends Controller {
             $price += 100;
         }
 
-        $name = explode(' ', $userObj->name_en, 2);
+        $name = explode(' ', $input['card_holder'], 2);
 
         $data = [
             'type' => 'credit',

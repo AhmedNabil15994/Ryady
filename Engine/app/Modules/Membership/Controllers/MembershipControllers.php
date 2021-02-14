@@ -95,7 +95,7 @@ class MembershipControllers extends Controller {
         $data['memberships'] = Membership::dataList(1)['data'];
         $data['data'] = Membership::getData($membershipObj);
         $data['code'] = '000000';//(string) UserCard::getNewCode(); 
-        $data['qrCode'] = \QrCode::size(80)->generate($data['code']);
+        $data['qrCode'] = \QrCode::size(50)->generate($data['code']);
         $data['end_date'] = date('d/m/Y',strtotime(date("Y-m-d", strtotime(now()->format('Y-m-d'))) . " + ".$membershipObj->period." year"));
         $data['end_date2'] = date('m/Y',strtotime(date("Y-m-d", strtotime(now()->format('Y-m-d'))) . " + ".$membershipObj->period." year"));
         return view('Membership.Views.requestMemberShip')->with('data',(object) $data);
@@ -261,6 +261,9 @@ class MembershipControllers extends Controller {
 
     public function postPayment(){
         $input = \Request::all();
+        $date = explode(' / ', $input['expire_date'], 2);
+        $input['expire_date'] = $date[0];
+        $input['year'] = '20'.$date[1];
 
         $validate = $this->validatePayment($input);
         if($validate->fails()){
@@ -276,6 +279,10 @@ class MembershipControllers extends Controller {
             $company = 'mada';
         }
 
+        if(!\Session::has('user_id') || !\Session::has('user_card_id')){
+            return redirect()->back()->withInput();
+        }
+
         $userObj = User::getOne(\Session::get('user_id'));
         $userCardObj = UserCard::getOne(\Session::get('user_card_id'));
         $price = $userCardObj->Membership->price;
@@ -284,7 +291,7 @@ class MembershipControllers extends Controller {
             $price += 100;
         }
 
-        $name = explode(' ', $userObj->name_en, 2);
+        $name = explode(' ', $input['card_holder'], 2);
         $data = [
             'type' => 'credit',
             'amount' =>  $price - \Session::get('discounts'),
@@ -310,7 +317,6 @@ class MembershipControllers extends Controller {
         $paymentObj = new \PaymentHelper();
         $checkStatus = $paymentObj->payTabs($data);
         if(!isset($checkStatus['errors']) && empty($checkStatus['errors'])){
-            \Session::forget('discounts');
             $userCryptedID = encrypt($userObj->id);
             $emailData['firstName'] = $userObj->name_ar;
             $emailData['subject'] = 'تفعيل العضوية :';
@@ -318,7 +324,12 @@ class MembershipControllers extends Controller {
             $emailData['to'] = $userObj->email;
             $emailData['template'] = "emailUsers.emailReplied";
             \App\Helpers\MailHelper::SendMail($emailData);
-            \Session::flash('success', 'تم الدفع وتم ارسال رابط تأكيد التفعيل الي بريدك الالكتروني');
+            \Session::forget('discounts');
+            \Session::forget('user_id');
+            \Session::forget('user_card_id');           
+            if(\Session::has('user_request_id')){
+                \Session::forget('user_request_id');
+            }            \Session::flash('success', 'تم الدفع وتم ارسال رابط تأكيد التفعيل الي بريدك الالكتروني');
             return redirect()->to('/');
         }else{
             $erros = [];
@@ -368,6 +379,7 @@ class MembershipControllers extends Controller {
         \Session::flash('success', 'تم تفعيل العضوية بنجاح');
         return redirect()->to('/profile');
     }
+
 
 
    
