@@ -652,3 +652,7 @@ div.ranges ul li:not(.active):hover{
 #toast-container >div:hover{
    box-shadow: none !important;
 }
+.w-100{
+	width: 100px !important;
+	display: block;
+}

@@ -51,6 +51,11 @@ class ImagesHelper {
                 $checkFile = $checkFile . '/memberships/' . $id . '/' . $filename;
                 return is_file($checkFile) ? URL::to($fullPath) : $default;
                 break;
+            case "events":
+                $fullPath = $path.'uploads' . '/events/' . $id . '/' . $filename;
+                $checkFile = $checkFile . '/events/' . $id . '/' . $filename;
+                return is_file($checkFile) ? URL::to($fullPath) : $default;
+                break;
             case "projects":
                 $fullPath = $path.'uploads' . '/projects/' . $id . '/' . $filename;
                 $checkFile = $checkFile . '/projects/' . $id . '/' . $filename;
@@ -111,6 +116,10 @@ class ImagesHelper {
 
         if ($strAction == 'sliders') {
             $directory = $path . 'sliders/' . $id;
+        }
+
+        if ($strAction == 'events') {
+            $directory = $path . 'events/' . $id;
         }
 
         if ($strAction == 'memberships') {

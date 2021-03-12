@@ -27,7 +27,7 @@
 		          	@elseif($item->id == 2)
 					<li><a href="{{ URL::to('/blogs') }}">{{ $item->title }}</a></li>
 		          	@elseif($item->id == 3)
-		          	<li><a href="{{ URL::to('/vip') }}">شبكة  VIP</a></li>
+		          	<li><a href="{{ URL::to('/vip') }}">{{ $item->title }}</a></li>
 		          	@elseif($item->id == 5)
 		          	<li><a href="{{ URL::to('/memberships') }}">{{ $item->title }}</a></li>
 		          	@elseif($item->id == 6)
@@ -44,6 +44,8 @@
 					<li><a href="{{ URL::to('/projects') }}">{{ $item->title }}</a></li>
 		          	@elseif($item->id == 11)
 		          	<li><a href="{{ URL::to('/members') }}">{{ $item->title }}</a></li>
+		          	@elseif($item->id == 13)
+		          	<li><a href="{{ URL::to('/whoUs') }}">{{ $item->title }}</a></li>
 		          	@endif
 		        @endif
 		    @endforeach

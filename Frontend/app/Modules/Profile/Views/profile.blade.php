@@ -52,6 +52,10 @@
     }
     .textareaStyle{
         padding-top: 20px;
+        min-width: 100%;
+        max-width: 100%;
+        min-height: 70px;
+        max-height: 150px;
     }
     label{
         color: #001C54;
@@ -95,6 +99,12 @@
     }
     .profile .userProfile p.name{
         margin-bottom: 30px;
+        font-size: 18px;
+    }
+    .PartProjects .item{
+        border: 1px solid #DDD;
+    }
+    p.noProjs{
         font-size: 18px;
     }
 </style>
@@ -152,10 +162,15 @@
                             <li><a href="{{ URL::to('/profile/newProject') }}" class="{{ Active( URL::to('/profile/newProject')) }}">اضف مشروعك 
                                 <img src="{{ asset('/assets/images/027-add.svg') }}" />
                             </a></li>
+                            <li><a href="{{ URL::to('/profile/projects') }}" class="{{ Active( URL::to('/profile/projects')) }}">استعرض مشروعاتك 
+                                <img src="{{ asset('/assets/images/027-add.svg') }}" />
+                            </a></li>
                             @endif
+                            @if(\App\Models\Variable::getVar('REQUEST_SERVICE') == 1)
                             <li><a href="{{ URL::to('/profile/newOrder') }}" class="{{ Active( URL::to('/profile/newOrder')) }}">اطلب خدمة 
                                 <img src="{{ asset('/assets/images/028-support.svg') }}" />    
                             </a></li>
+                            @endif
                             <li class="last"><a href="{{ URL::to('/profile/logout') }}" class="{{ Active( URL::to('/profile/logout')) }}">
                                 <i class="fa fa-sign-out fa-sign-out-alt"></i>
                                 تسجيل الخروج 
@@ -277,7 +292,7 @@
                                     </div>
                                 </div>
                                 
-                                <form class="formStyle" method="get" action="{{ URL::to('/profile/addRequest') }}">
+                                <form class="formStyle" method="post" action="{{ URL::to('/profile/addRequest') }}">
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-6">
@@ -308,17 +323,10 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">العضوية</label>
-                                            <div class="selectStyle">
-                                                <select class="selectmenu" disabled id="selectmenu2" name="membership_id">
-                                                    @foreach($data->memberships as $membership)
-                                                    <option data-area="{{ $membership->price }}" value="{{ $membership->id }}" {{ $data->membership->membership_id == $membership->id ? 'selected' : '' }}>عضوية {{ $membership->title . ' ' . $membership->price }} ريال</option>
-                                                    @endforeach
-                                                </select>
-                                                <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
-                                            </div>
+                                            <input type="text" class="inputStyle" name="membership" placeholder="العضوية" readonly value="{{ $data->membership->membership->title }}"/>
                                         </div>
                                     </div>  
-                                    @if(\App\Models\Variable::getVar('PRINTED_CARDS') == 1)
+                                    @if(\App\Models\Variable::getVar('PRINTED_CARDS') == 1 && $data->printCards == null)
                                     <button class="btnStyle">طلب بطاقة مطبوعة</button>     
                                     @endif                           
                                 </form>
@@ -422,7 +430,7 @@
                                         <thead>
                                           <tr>
                                             <th colspan="2">مزايا العضوية</th>
-                                            <th>{{ $data->mainMembership->title }} <span>{{ $data->mainMembership->price }}</span></th>
+                                            <th>{{ $data->mainMembership->title }}</th>
                                           </tr>
                                       </thead>
                                       <tbody>
@@ -509,18 +517,6 @@
                                             <input type="text" class="inputStyle" name="title" placeholder="اسم المشروع :" />
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="">رقم الجوال :</label>
-                                            <input type="text" class="inputStyle" name="phone" placeholder="رقم الجوال :" />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="">البريد الالكتروني :</label>
-                                            <input type="email" class="inputStyle" name="email" placeholder="البريد الالكتروني :" />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="">العنوان :</label>
-                                            <input type="text" class="inputStyle" name="address" placeholder="العنوان :" />
-                                        </div>
-                                        <div class="col-md-6">
                                             <label for="">التصنيف :</label>
                                             <div class="selectStyle">
                                                 <select class="selectmenu" name="category_id" id="selectmenu">
@@ -530,6 +526,33 @@
                                                     @endforeach
                                                 </select>
                                                 <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">نبذة عن المشروع :</label>
+                                            <textarea class="textareaStyle" name="brief" placeholder="نبذة عن المشروع :"></textarea>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">حالة المشروع :</label>
+                                            <div class="selectStyle">
+                                                <select class="selectmenu" name="type" id="selectmenu3">
+                                                    <option value="" disabled selected>اختر حالة المشروع :</option>
+                                                    <option value="تحت التأسيس">تحت التأسيس</option>
+                                                    <option value="قائم">قائم</option>
+                                                    <option value="متعثر">متعثر</option>
+                                                    <option value="@">أخري</option>
+                                                </select>
+                                            </div>
+                                            <input type="text" class="inputStyle hidden" name="type_text" placeholder="أخري :" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="">رأس مال المشروع :</label>
+                                            <div class="coupons">
+                                                <div class="inputSt">
+                                                    <input type="text" class="inputStyle" name="coupons" placeholder="رأس مال المشروع :" />
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -544,10 +567,8 @@
                                                 <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-md-6">
-                                            <label for="">حدد موقعك :</label>
+                                            <label for="">الموقع الجغرافي :</label>
                                             <div class="inputSt">
                                                 <input type="text" class="inputStyle" name="gmaps" placeholder="خرائط جوجل :" />
                                                 <img class="iconImg locations" data-toggle="modal" data-target=".modal-location" src="{{ asset('/assets/images/google-maps (2).png') }}" />
@@ -555,17 +576,6 @@
                                                 <input type="hidden" name="lng" value="46.738586">
                                             </div>
                                         </div>
-                                    
-                                        <div class="col-md-6">
-                                            <label for="">كود الخصم :</label>
-                                            <div class="coupons">
-                                                <div class="inputSt">
-                                                    <input type="text" class="inputStyle" name="coupons" placeholder="كود الخصم :" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-md-6">
                                             <label for="">شعار النشاط :</label>
                                             <div class="labelFile">
@@ -589,17 +599,53 @@
                                                 </ul>
                                             </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <label for="">رقم الجوال :</label>
+                                            <input type="text" class="inputStyle" name="phone" placeholder="رقم الجوال :" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">البريد الالكتروني :</label>
+                                            <input type="email" class="inputStyle" name="email" placeholder="البريد الالكتروني :" />
+                                        </div>
                                     </div>
-                                    <label for="">نبذة عن المشروع :</label>
-                                    <textarea class="textareaStyle" name="brief" placeholder="نبذة عن المشروع :"></textarea>
-                                    
-                                    <button class="btnStyle perform-btn">ارسل الآن</button>
+                                    <button class="btnStyle perform-btn pull-left">ارسل الآن</button>
+                                    <div class="clearfix"></div>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                @elseif(Request::segment(2) == 'newOrder')
+                @elseif(Request::segment(2) == 'projects' && $data->membership->membership_id == 3)
+                <div class="col-md-8">
+                    <div class="profileDetails">
+                        <div class="tabs PartProjects">
+                            <div class="tab1 tab">
+                                <div class="row">
+                                    @if(!empty($data->projects))
+                                        @foreach($data->projects as $project)
+                                        <div class="col-md-6">
+                                            <div class="item">
+                                                <a href="{{ URL::to('/projects/'.$project->id) }}" class="mask">
+                                                    <img src="{{ isset($project->images[0]) ? $project->images[0]->photo : $project->logo }}" alt="" />
+                                                </a>
+                                                <div class="details">
+                                                    <img class="imgDetails" src="{{ $project->logo }}" alt="" />
+                                                    <a href="{{ URL::to('/projects/'.$project->id) }}" class="title">{{ $project->title }}</a>
+                                                    <p class="location" dir="rtl"><i class="flaticon-flag pull-right"></i> {{ $project->typeMessage }} </p>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    @else
+                                    <p class="noProjs">عفوا لا تتوفر اي مشاريع لك حتي الان .!</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @elseif(Request::segment(2) == 'newOrder' && \App\Models\Variable::getVar('REQUEST_SERVICE') == 1)
                 <div class="col-md-8">
                     <div class="profileDetails">
                         <div class="tabs">
@@ -630,6 +676,10 @@
                                                 </select>
                                                 <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
                                             </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="">شرح الخدمة</label>
+                                            <textarea name="service_brief" class="textareaStyle" placeholder="شرح الخدمة" maxlength="140">{{ $data->user->brief }}</textarea>
                                         </div>
                                     </div>
                                     <button class="btnStyle">ارسل الآن</button>

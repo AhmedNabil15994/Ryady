@@ -68,7 +68,7 @@
                         <div class="details">
                             <img class="imgDetails" src="{{ $project->logo }}" alt="" />
                             <a href="{{ URL::to('/projects/'.$project->id) }}" class="title">{{ $project->title }}</a>
-                            <p class="location" dir="rtl"><i class="flaticon-place pull-right"></i> {{ $project->address }} </p>
+                            <p class="location" dir="rtl"><i class="flaticon-flag pull-right"></i> {{ $project->typeMessage }} </p>
                         </div>
                         <div class="clearfix"></div>
                     </div>

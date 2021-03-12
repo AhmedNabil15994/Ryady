@@ -22,6 +22,7 @@ use App\Models\Order;
 use App\Models\WebActions;
 use App\Models\ContactUs;
 use App\Models\Advantage;
+use App\Models\Event;
 
 
 class HomeControllers extends Controller {
@@ -80,8 +81,8 @@ class HomeControllers extends Controller {
         $data['advantages'] = Advantage::dataList(1)['data'];
         $data['memberships'] = Membership::dataList(1)['data'];
         $data['projectCategories'] = ProjectCategory::dataList(1)['data'];
-        $data['userMembers'] = UserMember::dataList(1,8,1)['data'];
-        $data['userMembers2'] = UserMember::dataList(1,5)['data'];
+        $data['events'] = Event::dataList(1)['data'];
+        $data['userMembers'] = UserMember::dataList(1,5)['data'];
         return view('Home.Views.index')->with('data',(object) $data);
     }
 
@@ -189,5 +190,9 @@ class HomeControllers extends Controller {
         $data['memberships'] = Membership::dataList(1)['data'];
         $data['features'] = Feature::dataList(1)['data'];
         return view('Home.Views.joinUs')->with('data',(object) $data);
+    }
+
+    public function whoUs(){
+        return view('Home.Views.whoUs');
     }
 }

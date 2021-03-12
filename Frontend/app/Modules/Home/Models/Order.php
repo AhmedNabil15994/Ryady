@@ -62,6 +62,7 @@ class Order extends Model{
         $dataObj = new \stdClass();
         $dataObj->id = $source->id;
         $dataObj->name = $source->name;
+        $dataObj->service_brief = $source->service_brief;
         $dataObj->phone = $source->phone;
         $dataObj->email = $source->email;
         $dataObj->category_id = $source->category_id;

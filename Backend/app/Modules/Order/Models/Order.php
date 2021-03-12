@@ -25,6 +25,9 @@ class Order extends Model{
                 if (isset($input['name']) && !empty($input['name'])) {
                     $query->where('name', 'LIKE', '%' . $input['name'] . '%');
                 }
+                if (isset($input['service_brief']) && !empty($input['service_brief'])) {
+                    $query->where('service_brief', 'LIKE', '%' . $input['service_brief'] . '%');
+                }
                 if (isset($input['id']) && !empty($input['id'])) {
                     $query->where('id', $input['id']);
                 }
@@ -63,6 +66,7 @@ class Order extends Model{
         $dataObj->id = $source->id;
         $dataObj->name = $source->name;
         $dataObj->phone = $source->phone;
+        $dataObj->service_brief = $source->service_brief != null ? $source->service_brief : '';
         $dataObj->email = $source->email;
         $dataObj->category_id = $source->category_id;
         $dataObj->categoryText = $source->category_id ? $source->Category->title : '';

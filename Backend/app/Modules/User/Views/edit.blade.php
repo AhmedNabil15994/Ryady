@@ -215,6 +215,16 @@
                     </div>     
                     <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
                         <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">اظهار الصور: </label>
+                            <select name="show_images" class="form-control mb-5 select2" id="kt_select2_12">
+                                <option value="0" {{ $data->data->show_images == 0 ? 'selected' : '' }}>لا</option>
+                                <option value="1" {{ $data->data->show_images == 1 ? 'selected' : '' }}>نعم</option>
+                            </select>
+                            <span class="m-form__help LastUpdate">تم الحفظ فى :  {{ $data->data->created_at }}</span>
+                        </div>  
+                    </div> 
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
                             <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">نبذة تعريفية</label>
                             <textarea class="summernote mb-5" id="kt_summernote_1" name="brief">{{ $data->data->brief }}</textarea>
                             <span class="m-form__help LastUpdate">تم الحفظ فى :  {{ $data->data->created_at }}</span>

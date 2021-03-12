@@ -163,6 +163,11 @@
                                     <br>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <label>شرح الخدمة:</label>
+                                    <input type="text" class="form-control m-input" data-col-index="6" name="service_brief" value="{{ Request::get('service_brief') }}">
+                                    <br>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
                                     <input type="hidden" class="url" value="{{ $data->url }}">
                                     <label>الحالة:</label>
                                     <select name="status" class="form-control m-input">
@@ -221,6 +226,7 @@
                     <th>البريد الالكتروني</th>
                     <th>رقم الجوال</th>
                     <th>التصنيف</th>
+                    <th>شرح الخدمة</th>
                     <th>الحالة</th>
                     <th>تاريخ الارسال</th>
                     <th>الاجراءات</th>
@@ -234,6 +240,7 @@
                     <th>البريد الالكتروني</th>
                     <th>رقم الجوال</th>
                     <th>التصنيف</th>
+                    <th>شرح الخدمة</th>
                     <th>الحالة</th>
                     <th>تاريخ الارسال</th>
                     <th>الاجراءات</th>

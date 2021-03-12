@@ -103,12 +103,25 @@
                     </div>  
                     <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
                         <div class="col-lg-12">
-                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">العنوان</label>
-                            <input type="hidden" name="status" value="">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">حالة المشروع</label>
+                            <select class="form-control m-input select2" name="type">
+                                <option value="" disabled selected>حدد اختيارك</option>
+                                <option value="تحت التأسيس" {{ old('type') == 'تحت التأسيس' ? 'selected' : '' }}>تحت التأسيس</option>
+                                <option value="قائم" {{ old('type') == 'قائم' ? 'selected' : '' }}>قائم</option>
+                                <option value="متعثر" {{ old('type') == 'متعثر' ? 'selected' : '' }}>متعثر</option>
+                                <option value="@" {{ old('type') == '@' ? 'selected' : '' }}>أخري</option>
+                            </select>
+                            <input type="text" class="form-control mt-5 hidden" value="{{ old('type_text') }}" name="type_text" placeholder="أخري :" />
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">الموقع الجغرافي</label>
+                            <br>
+                            <p class="label label-dark locations label-wide label-inline" data-toggle="modal" data-target=".modal-location">تحديد الموقع</p>
                             <input type="hidden" name="lat" value="{{ Request::has('lat') ? Request::get('lat') : 24.774265 }}">
                             <input type="hidden" name="lng" value="{{ Request::has('lng') ? Request::get('lng') : 46.738586 }}">
-                            <input class="form-control mb-5 m-input" type="text" name="address" value="{{ old('address') }}" maxlength="" placeholder="">
-                            <p class="label label-dark locations label-wide label-inline" data-toggle="modal" data-target=".modal-location">تحديد الموقع</p>
+                            <input type="hidden" name="status" value="">
                         </div>
                     </div>
                     <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
@@ -147,7 +160,16 @@
                     </div>
                     <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
                         <div class="col-lg-12">
-                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">كوبونات الخصم</label>
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">اظهار الصور: </label>
+                            <select name="show_images" class="form-control mb-5 select2" id="kt_select2_12">
+                                <option value="0" {{ old('show_images') == 0 ? 'selected' : '' }}>لا</option>
+                                <option value="1" {{ old('show_images') == 1 ? 'selected' : '' }}>نعم</option>
+                            </select>
+                        </div>
+                    </div>     
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">رأس مال المشروع</label>
                             <input class="form-control mb-5 m-input" type="text" name="coupons" value="{{ old('coupons') }}" maxlength="" placeholder="">
                         </div>
                     </div>
@@ -207,4 +229,5 @@
 <script src="{{ asset('/assets/js/pages/crud/forms/editors/summernote.js') }}"></script>
 <script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
 <script src="{{ asset('/assets/js/locationpicker.jquery.js') }}"></script>
+<script src="{{ asset('/assets/components/projects.js') }}"></script>
 @endsection

@@ -20,20 +20,20 @@ class ProjectControllers extends Controller {
     protected function validateObject($input){
         $rules = [
             'title' => 'required',
-            'address' => 'required',
+            'type' => 'required',
             'phone' => 'required',
-            'email' => 'required',
+            // 'email' => 'required',
             'city_id' => 'required',
             'category_id' => 'required',
         ];
 
         $message = [
-            'title.required' => "يرجي ادخال العنوان",
-            'address.required' => "يرجي ادخال العنوان",
-            'phone.required' => "يرجي ادخال العنوان",
-            'email.required' => "يرجي ادخال البريد الالكتروني",
-            'city_id.required' => "يرجي ادخال العنوان",
-            'category_id.required' => "يرجي ادخال العنوان",
+            'title.required' => "يرجي ادخال اسم المشروع",
+            'type.required' => "يرجي اختيار نوع المشروع",
+            'phone.required' => "يرجي ادخال رقم الجوال",
+            // 'email.required' => "يرجي ادخال البريد الالكتروني",
+            'city_id.required' => "يرجي ادخال المدينة",
+            'category_id.required' => "يرجي اختيار التصنيف",
         ];
 
         $validate = \Validator::make($input, $rules, $message);
@@ -91,10 +91,12 @@ class ProjectControllers extends Controller {
         }
 
         $menuObj->title = $input['title'];
-        $menuObj->address = $input['address'];
+        $menuObj->type = $input['type'] == '@' ? 'أخري' : $input['type'];
+        $menuObj->type_text = $input['type'] == '@' ? $input['type_text'] : '';
         $menuObj->email = $input['email'];
         $menuObj->phone = $input['phone'];
         $menuObj->city_id = $input['city_id'];
+        $menuObj->show_images = $input['show_images'];
         $menuObj->category_id = $input['category_id'];
         $menuObj->brief = $input['brief'];
         $menuObj->coupons = $input['coupons'];
@@ -155,12 +157,14 @@ class ProjectControllers extends Controller {
 
         $menuObj = new Project;
         $menuObj->title = $input['title'];
-        $menuObj->address = $input['address'];
+        $menuObj->type = $input['type'] == '@' ? 'أخري' : $input['type'];
+        $menuObj->type_text = $input['type'] == '@' ? $input['type_text'] : '';
         $menuObj->email = $input['email'];
         $menuObj->phone = $input['phone'];
         $menuObj->city_id = $input['city_id'];
         $menuObj->category_id = $input['category_id'];
         $menuObj->brief = $input['brief'];
+        $menuObj->show_images = $input['show_images'];
         $menuObj->lat = isset($input['lat']) ? $input['lat'] : '';
         $menuObj->lng = isset($input['lng']) ? $input['lng'] : '';
         $menuObj->coupons = $input['coupons'];

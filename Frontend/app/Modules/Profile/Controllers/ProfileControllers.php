@@ -96,20 +96,20 @@ class ProfileControllers extends Controller {
     protected function validateObject($input){
         $rules = [
             'title' => 'required',
-            'address' => 'required',
+            'type' => 'required',
             'phone' => 'required',
-            'email' => 'required',
+            // 'email' => 'required',
             'city_id' => 'required',
             'category_id' => 'required',
         ];
 
         $message = [
-            'title.required' => "يرجي ادخال العنوان",
-            'address.required' => "يرجي ادخال العنوان",
-            'phone.required' => "يرجي ادخال العنوان",
-            'email.required' => "يرجي ادخال البريد الالكتروني",
-            'city_id.required' => "يرجي ادخال العنوان",
-            'category_id.required' => "يرجي ادخال العنوان",
+            'title.required' => "يرجي ادخال اسم المشروع",
+            'type.required' => "يرجي اختيار نوع المشروع",
+            'phone.required' => "يرجي ادخال رقم الجوال",
+            // 'email.required' => "يرجي ادخال البريد الالكتروني",
+            'city_id.required' => "يرجي ادخال المدينة",
+            'category_id.required' => "يرجي اختيار التصنيف",
         ];
 
         $validate = \Validator::make($input, $rules, $message);
@@ -183,7 +183,8 @@ class ProfileControllers extends Controller {
     public function profile(){
         $data['user'] = User::getData(User::getOne(USER_ID));
         $data['points'] = User::getPoints();
-        $data['membership'] = UserCard::getData(UserCard::getAvailableForUser(USER_ID));
+        $cardObj = UserCard::getAvailableForUser(USER_ID);
+        $data['membership'] = UserCard::getData($cardObj);
         $data['memberships'] = Membership::dataList(1)['data'];
         return view('Profile.Views.profile')->with('data',(object) $data);
     }
@@ -257,7 +258,8 @@ class ProfileControllers extends Controller {
 
     public function membership(){
         $data['user'] = User::getData(User::getOne(USER_ID));
-        $data['membership'] = UserCard::getData(UserCard::getAvailableForUser(USER_ID));
+        $cardObj = UserCard::getAvailableForUser(USER_ID);
+        $data['membership'] = UserCard::getData($cardObj);
         $data['memberships'] = Membership::dataList(1)['data'];
         $data['qrCode'] = \QrCode::size(50)->generate($data['membership']->code);
         $data['points'] = User::getPoints();
@@ -266,12 +268,49 @@ class ProfileControllers extends Controller {
         $data['mainMembership'] = $membership;
         $ids = $membership->features;
         $data['features'] = Feature::dataList(1,$ids)['data'];
+        $data['printCards'] = UserRequest::NotDeleted()->where('user_id',USER_ID)->where('status',1)->where('user_card_id',$cardObj->id)->first();
         return view('Profile.Views.profile')->with('data',(object) $data);
     }
 
     public function addRequest(){
-        $data['url'] = \URL::to('/profile/requestPayment');
-        return view('Membership.Views.payment')->with('data',(object) $data);
+        $userObj = User::getData(User::getOne(USER_ID));
+        $menuObj = UserCard::getAvailableForUser(USER_ID);
+        $membershipObj = $menuObj->Membership;
+        $menuObj = UserCard::getData($menuObj);
+        // dd($membershipObj);
+        // Create Invoice
+        $invoiceData =[
+            'amount' => 100 * 100 ,
+            'currency' => 'SAR',
+            'description' => 'بطاقة مطبوعة لعضوية '.$membershipObj->title . ' بطاقة رقم '.$menuObj->code,
+            'callback_url' => \URL::to('/memberships/activate'),
+            'expired_at' => date("Y-m-d", strtotime(now()->format('Y-m-d'). " + 1 day")),
+        ];
+        $paymentObj = new \PaymentHelper();        
+        $createPayment = $paymentObj->moyasar('invoices',$invoiceData);
+        $invoiceResult = $createPayment->json();
+
+        $checkResult = $paymentObj->formatResponse($invoiceResult);
+        if($checkResult[0] == 0){
+            \Session::flash('error', $checkResult[1]);
+            return redirect()->back();
+        }
+
+        $userRequestObj = new UserRequest();
+        $userRequestObj->user_id = USER_ID;
+        $userRequestObj->membership_id = $menuObj->membership_id;
+        $userRequestObj->user_card_id = $menuObj->id;    
+        $userRequestObj->status = 2;
+        $userRequestObj->sort = UserRequest::newSortIndex();
+        $userRequestObj->invoice_id = $invoiceResult['id'];
+        $userRequestObj->created_by = USER_ID;
+        $userRequestObj->created_at = DATE_TIME;
+        $userRequestObj->save();
+
+        \Session::put('new_user_id',$userObj->id);
+        \Session::put('user_request_id',$userRequestObj->id);
+        WebActions::newType(1,'UserRequest',$userRequestObj->id);
+        return redirect()->away($invoiceResult['url']);
     }
 
     public function postRequestPayment(){
@@ -370,6 +409,14 @@ class ProfileControllers extends Controller {
         return view('Profile.Views.profile')->with('data',(object) $data);
     }
 
+    public function projects(){
+        $data['user'] = User::getData(User::getOne(USER_ID));
+        $data['points'] = User::getPoints();
+        $data['projects'] = Project::dataList(null,null,USER_ID)['data'];
+        $data['membership'] = UserCard::getData(UserCard::getAvailableForUser(USER_ID));
+        return view('Profile.Views.profile')->with('data',(object) $data);
+    }
+
     public function addBlog(){
         $data['user'] = User::getData(User::getOne(USER_ID));
         $data['points'] = User::getPoints();
@@ -432,6 +479,9 @@ class ProfileControllers extends Controller {
     }
 
     public function newOrder(){
+        if(Variable::getVar('REQUEST_SERVICE') == 0){
+            return redirect(404);
+        }
         $data['user'] = User::getData(User::getOne(USER_ID));
         $data['points'] = User::getPoints();
         $data['membership'] = UserCard::getData(UserCard::getAvailableForUser(USER_ID));
@@ -440,6 +490,9 @@ class ProfileControllers extends Controller {
     }
 
     public function postOrder() {
+        if(Variable::getVar('REQUEST_SERVICE') == 0){
+            return redirect(404);
+        }
         $input = \Request::all();
 
         $validate = $this->validateOrder($input);
@@ -447,6 +500,8 @@ class ProfileControllers extends Controller {
             \Session::flash('error', $validate->messages()->first());
             return redirect()->back()->withInput();
         }
+
+        $brief = str_split($input['service_brief'],140);
 
         $categoryObj = OrderCategory::getOne($input['category_id']);
         if(!$categoryObj){
@@ -459,6 +514,7 @@ class ProfileControllers extends Controller {
         $menuObj->phone = $input['phone'];
         $menuObj->email = $input['email'];
         $menuObj->category_id = $input['category_id'];
+        $menuObj->service_brief = $brief[0];
         $menuObj->sort = Order::newSortIndex();
         $menuObj->status = 1;
         $menuObj->created_at = DATE_TIME;
@@ -529,8 +585,8 @@ class ProfileControllers extends Controller {
             }
         }
 
-        $start_date = date('Y-m-d',strtotime(str_replace('/', '-', $avail->start_date)));
-        $end_date = date('Y-m-d',strtotime(str_replace('/', '-', $avail->end_date)));
+        $start_date = date('Y-m-d');
+        $end_date = date('Y-m-d',strtotime(date('Y-m-d',strtotime($start_date)).'+1 year'));
 
         $avail->status = 4;
         $avail->updated_at = DATE_TIME;
@@ -589,103 +645,124 @@ class ProfileControllers extends Controller {
                 }
             }
         }
-        \Session::put("must_paid", $membershipObj->price - $discounts);
 
-        WebActions::newType(1,'UserCard',$user_id);
-        WebActions::newType(2,'User',$user_id);
-        \Session::flash('success', 'تنبيه! تم ارسال الطلب بنجاح');
-        return redirect('/profile/payment');
-        // return redirect()->back();
-    }
-
-    public function payment(){
-        $data['url'] = \URL::to('/profile/payment');
-        return view('Membership.Views.payment')->with('data',(object) $data);
-    }
-
-    public function postPayment(){
-        $input = \Request::all();
-        $date = explode(' / ', $input['expire_date'], 2);
-        $input['expire_date'] = $date[0];
-        $input['year'] = '20'.$date[1];
-        
-        $validate = $this->validatePayment($input);
-        if($validate->fails()){
-            \Session::flash('error', $validate->messages()->first());
-            return redirect()->back()->withInput();
-        }
-
-        if($input['payment_type'] == 1){
-            $company = 'master';
-        }elseif($input['payment_type'] == 2){
-            $company = 'visa';
-        }elseif($input['payment_type'] == 3){
-            $company = 'mada';
-        }
-
-        $userObj = User::getOne(USER_ID);
-        $userCardObj = UserCard::getOne(\Session::get('user_card_id'));
-        $price = \Session::get('must_paid');
-        if(\Session::has('user_request_id')){
-            $userRequestObj = UserRequest::getOne(\Session::get('user_request_id'));
-            $price += 100;
-        }
-
-        $name = explode(' ', $input['card_holder'], 2);
-
-        $data = [
-            'type' => 'credit',
-            'amount' =>  $price,
+        // Create Invoice
+        $invoiceData =[
+            'amount' => $membershipObj->price * 100 - $discounts,
             'currency' => 'SAR',
-            'callback_url' => \URL::to('/profile'),
-            'customer' => [
-                'name' => $userObj->name_en,
-                'first_name' => '',//isset($name[0]) ? $name[0]  : '',
-                'last_name' => '',//isset($name[1]) ? $name[1]  : '',
-                "email" => $userObj->email,
-                "phone" => $userObj->phone,
-                "ip" => \Request::ip(),
-            ],
-            "source" => [
-                "company" => $company,
-                "card_number" => $input['card_no'],
-                "cvc" =>  $input['cvc'],
-                "month" =>  $input['expire_date'],
-                "year" =>  $input['year'],
-            ]
+            'description' => 'ترقية من عضوية '.$avail->Membership->title.' الي عضوية '.$membershipObj->title . ' بطاقة رقم '.$menuObj->code,
+            'callback_url' => \URL::to('/memberships/activate'),
+            'expired_at' => date("Y-m-d", strtotime(now()->format('Y-m-d'). " + 1 day")),
         ];
+        $paymentObj = new \PaymentHelper();        
+        $createPayment = $paymentObj->moyasar('invoices',$invoiceData);
+        $invoiceResult = $createPayment->json();
 
-        $paymentObj = new \PaymentHelper();
-        $checkStatus = $paymentObj->payTabs($data);
-        // return $checkStatus;
-        // dd($checkStatus);
-        if(!isset($checkStatus['errors']) && empty($checkStatus['errors'])){
-            // dd($checkStatus);
-            $userObj->status = 1;
-            $userObj->is_active = 1;
-            $userObj->save();
-
-            $userCardObj->status = 1;
-            $userCardObj->save();
-            \Session::forget('user_card_id');
-            \Session::forget('must_paid');
-
-            if(\Session::has('user_request_id')){
-                $userRequestObj->status = 1;
-                $userRequestObj->save();
-                \Session::forget('user_request_id');
-            }
-
-            \Session::flash('success', 'تم الدفع وترقية البطاقة بنجاح');
-            return redirect()->to('/profile');
-        }else{
-            $erros = [];
-            foreach ($checkStatus['errors'] as $key => $error) {
-                \Session::flash('error', $key . ' '. $error[0]);   
-            }
+        $checkResult = $paymentObj->formatResponse($invoiceResult);
+        if($checkResult[0] == 0){
+            \Session::flash('error', $checkResult[1]);
             return redirect()->back();
         }
+
+        $menuObj->invoice_id = $invoiceResult['id'];
+        $menuObj->save();
+
+        \Session::put('new_user_id',$userObj->id);
+        \Session::put('user_card_id',$menuObj->id);
+        \Session::put('upgrade',1);
+        WebActions::newType(1,'UserCard',$menuObj->id);
+        WebActions::newType(2,'UserCard',$avail->id);
+        return redirect()->away($invoiceResult['url']);
     }
+
+    // public function payment(){
+    //     $data['url'] = \URL::to('/profile/payment');
+    //     return view('Membership.Views.payment')->with('data',(object) $data);
+    // }
+
+    // public function postPayment(){
+    //     $input = \Request::all();
+    //     $date = explode(' / ', $input['expire_date'], 2);
+    //     $input['expire_date'] = $date[0];
+    //     $input['year'] = '20'.$date[1];
+        
+    //     $validate = $this->validatePayment($input);
+    //     if($validate->fails()){
+    //         \Session::flash('error', $validate->messages()->first());
+    //         return redirect()->back()->withInput();
+    //     }
+
+    //     if($input['payment_type'] == 1){
+    //         $company = 'master';
+    //     }elseif($input['payment_type'] == 2){
+    //         $company = 'visa';
+    //     }elseif($input['payment_type'] == 3){
+    //         $company = 'mada';
+    //     }
+
+    //     $userObj = User::getOne(USER_ID);
+    //     $userCardObj = UserCard::getOne(\Session::get('user_card_id'));
+    //     $price = \Session::get('must_paid');
+    //     if(\Session::has('user_request_id')){
+    //         $userRequestObj = UserRequest::getOne(\Session::get('user_request_id'));
+    //         $price += 100;
+    //     }
+
+    //     $name = explode(' ', $input['card_holder'], 2);
+
+    //     $data = [
+    //         'type' => 'credit',
+    //         'amount' =>  $price,
+    //         'currency' => 'SAR',
+    //         'callback_url' => \URL::to('/profile'),
+    //         'customer' => [
+    //             'name' => $userObj->name_en,
+    //             'first_name' => '',//isset($name[0]) ? $name[0]  : '',
+    //             'last_name' => '',//isset($name[1]) ? $name[1]  : '',
+    //             "email" => $userObj->email,
+    //             "phone" => $userObj->phone,
+    //             "ip" => \Request::ip(),
+    //         ],
+    //         "source" => [
+    //             "company" => $company,
+    //             "card_number" => $input['card_no'],
+    //             "cvc" =>  $input['cvc'],
+    //             "month" =>  $input['expire_date'],
+    //             "year" =>  $input['year'],
+    //         ]
+    //     ];
+
+    //     $paymentObj = new \PaymentHelper();
+    //     $checkStatus = $paymentObj->payTabs($data);
+    //     // return $checkStatus;
+    //     // dd($checkStatus);
+    //     if(!isset($checkStatus['errors']) && empty($checkStatus['errors'])){
+    //         // dd($checkStatus);
+    //         $userObj->status = 1;
+    //         $userObj->is_active = 1;
+    //         $userObj->save();
+
+    //         $userCardObj->status = 1;
+    //         $userCardObj->save();
+    //         \Session::forget('user_card_id');
+    //         \Session::forget('must_paid');
+
+    //         if(\Session::has('user_request_id')){
+    //             $userRequestObj->status = 1;
+    //             $userRequestObj->save();
+    //             \Session::forget('user_request_id');
+    //         }
+
+    //         \Session::flash('success', 'تم الدفع وترقية البطاقة بنجاح');
+    //         return redirect()->to('/profile');
+    //     }else{
+    //         $erros = [];
+    //         foreach ($checkStatus['errors'] as $key => $error) {
+    //             \Session::flash('error', $key . ' '. $error[0]);   
+    //         }
+    //         return redirect()->back();
+    //     }
+    // }
 
     public function download($id){
 
@@ -741,7 +818,8 @@ class ProfileControllers extends Controller {
 
         $menuObj = new Project;
         $menuObj->title = $input['title'];
-        $menuObj->address = $input['address'];
+        $menuObj->type = $input['type'] == '@' ? 'أخري' : $input['type'];
+        $menuObj->type_text = $input['type'] == '@' ? $input['type_text'] : '';
         $menuObj->email = $input['email'];
         $menuObj->phone = $input['phone'];
         $menuObj->city_id = $input['city_id'];

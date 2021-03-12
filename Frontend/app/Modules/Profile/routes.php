@@ -9,7 +9,8 @@ Route::group(['prefix' => '/'] , function () {
     Route::post('/addToWallet', 'ProfileControllers@addToWallet');
 
     Route::get('/', 'ProfileControllers@membership');
-    Route::get('/addRequest', 'ProfileControllers@addRequest');
+    Route::post('/addRequest', 'ProfileControllers@addRequest');
+    
     Route::post('/requestPayment', 'ProfileControllers@postRequestPayment');
 
     Route::post('/uploadLogo', 'ProfileControllers@uploadLogo');
@@ -23,6 +24,7 @@ Route::group(['prefix' => '/'] , function () {
     Route::get('/newProject', 'ProfileControllers@newProject');
     Route::get('/addProject', 'ProfileControllers@addProject');
     Route::post('/addProject', 'ProfileControllers@postAddProject');
+    Route::get('/projects', 'ProfileControllers@projects');
 
     Route::get('/newOrder', 'ProfileControllers@newOrder');
     Route::post('/postOrder', 'ProfileControllers@postOrder');

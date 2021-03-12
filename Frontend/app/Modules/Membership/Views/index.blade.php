@@ -70,8 +70,9 @@
                     <div class="item">
                         <img src="{{ $membership->photo }}" />
                         <h2 class="title">{{ $membership->title }}</h2>
-                        <span class="price">{{ $membership->price }} ريال</span>
-                        <span class="time">لمدة {{ $membership->periodText }}</span>
+                        <span class="price"><span class="value">{{ $membership->price }}</span> ريال</span>
+                        <span class="price discPrice">بعد الخصم: <span class="value">{{ $membership->discount_price }}</span> ريال</span>
+                        <span class="time text-center">لمدة {{ $membership->periodText }}</span>
                         <a href="{{ URL::to('/memberships/requestMemberShip/'.$membership->id) }}" class="btnStyle">اطلبها الآن</a>
                     </div>
                 </div>

@@ -35,6 +35,11 @@ return [
             'viewTitle'=>'الاسلايدر',
             'modulePermissions' => 'edit-slider,add-slider,delete-slider,sort-slider,charts-slider,uploadImage-slider,deleteImage-slider',
         ],
+        'EventControllers@index' => [
+            'title'=>'list-events',
+            'viewTitle'=>'الفعاليات',
+            'modulePermissions' => 'edit-event,add-event,delete-event,sort-event,charts-event,uploadImage-event,deleteImage-event',
+        ],
         'AdvantageControllers@index' => [
             'title'=>'list-advantages',
             'viewTitle'=>'مميزاتنا',

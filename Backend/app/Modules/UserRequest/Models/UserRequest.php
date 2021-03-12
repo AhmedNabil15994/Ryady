@@ -79,6 +79,7 @@ class UserRequest extends Model{
         $dataObj->username = $source->user_id != null ? $source->User->username : '';
         $dataObj->membership_name = $source->membership_id != null ? $source->Membership->title : '';
         $dataObj->status = $source->status;
+        $dataObj->invoice_id = $source->invoice_id;
         $dataObj->statusText = self::getStatus($source->status);
         $dataObj->sort = $source->sort;
         $dataObj->created_at = \Helper::formatDate($source->created_at,'Y-m-d H:i:s');

@@ -1,7 +1,19 @@
 $(function(){
-      $('.summernote').summernote({
-            height: 300
-      });
+
+  if($('.summernote').length){
+    $('.summernote').summernote({
+          height: 300,
+          toolbar: [
+              // [groupName, [list of button]]
+              ['style', ['bold', 'italic', 'underline', 'clear']],
+              ['font', ['strikethrough', 'superscript', 'subscript']],
+              ['fontsize', ['fontsize']],
+              ['color', ['color']],
+              ['para', ['ul', 'ol', 'paragraph']],
+              ['height', ['height']]
+            ]
+    });
+  }
 	$('a[data-target="#profile"]').on('click',function(e){
 		e.preventDefault();
 		e.stopPropagation();
@@ -32,7 +44,7 @@ $(function(){
       $('select[name="new_membership_id"]').on('selectmenuchange',function(){
             var newPrice = $(this).children('option:selected').data('area');
             var oldPrice = $('input[name="oldPrice"]').val();
-            var diff = newPrice - oldPrice;
+            var diff = newPrice;
             if(diff > 0){
                   $('.memberStyle span.time').removeClass('hidden');
                   $('.memberStyle span.price').removeClass('hidden');
@@ -169,6 +181,13 @@ $(function(){
                         }
                   },
             });
+      });
+
+      $('textarea[name="service_brief"]').keyup(function(){
+        var myText = $(this).val();
+        if(myText.length >= 140){
+          $(this).attr('maxlength',140);
+        }
       });
 
 });

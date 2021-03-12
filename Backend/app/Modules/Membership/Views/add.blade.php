@@ -116,6 +116,12 @@
                     </div>
                     <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
                         <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">السعر بعد الخصم</label>
+                            <input class="form-control mb-5" type="text" name="discount_price" value="{{ old('discount_price') }}" maxlength="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
                             <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">اللون</label>
                             <input id="example-color-input" class="form-control m-input" type="color" name="color" value="{{ old('color') }}">
                         </div>

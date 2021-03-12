@@ -85,7 +85,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 			       	dtParms.status = $('select[name="status"]').val();
 			       	dtParms.category_id = $('select[name="category_id"]').val();
 			        dtParms.columnsDef= [
-						'id', 'name','email','phone','categoryText','statusText','created_at'];
+						'id', 'name','email','phone','categoryText','service_brief','statusText','created_at'];
 			        return dtParms
 			    }
 			},
@@ -96,6 +96,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				{data: 'email',},
 				{data: 'phone',},
 				{data: 'categoryText',},
+				{data: 'service_brief',},
 				{data: 'statusText',},
 				{data: 'created_at', type: 'date'},
 				{data: 'id', responsivePriority: -1},
@@ -150,6 +151,15 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				},
 				{
 					targets: 6,
+					width: '75px',
+					title: 'شرح الخدمة',
+					className: 'edits',
+					render: function(data, type, full, meta) {
+						return '<a class="editable w-100" data-col="service_brief" data-id="'+full.id+'">'+data+'</a>';
+					},
+				},
+				{
+					targets: 7,
 					title: 'الحالة',
 					className: 'edits selects',
 					render: function(data, type, full, meta) {
@@ -157,7 +167,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 					},
 				},
 				{
-					targets: 7,
+					targets: 8,
 					title: 'تاريخ الارسال',
 					className: 'edits dates',
 					render: function(data, type, full, meta) {

@@ -78,6 +78,7 @@ class UserRequest extends Model{
         $dataObj->code = $source->user_card_id != null ? $source->UserCard->code : '';
         $dataObj->username = $source->user_id != null ? $source->User->username : '';
         $dataObj->membership_name = $source->membership_id != null ? $source->Membership->title : '';
+        $dataObj->invoice_id = $source->invoice_id;
         $dataObj->status = $source->status;
         $dataObj->statusText = self::getStatus($source->status);
         $dataObj->sort = $source->sort;

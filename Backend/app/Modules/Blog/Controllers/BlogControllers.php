@@ -78,6 +78,7 @@ class BlogControllers extends Controller {
         $menuObj->title = $input['title'];
         $menuObj->category_id = $input['category_id'];
         $menuObj->description = $input['description'];
+        $menuObj->show_images = $input['show_images'];
         $menuObj->status = $input['status'];
         $menuObj->updated_at = DATE_TIME;
         $menuObj->updated_by = USER_ID;
@@ -129,6 +130,7 @@ class BlogControllers extends Controller {
         $menuObj->category_id = $input['category_id'];
         $menuObj->views = 0;
         $menuObj->description = $input['description'];
+        $menuObj->show_images = $input['show_images'];
         $menuObj->status = $input['status'];
         $menuObj->sort = Blog::newSortIndex();
         $menuObj->created_at = DATE_TIME;

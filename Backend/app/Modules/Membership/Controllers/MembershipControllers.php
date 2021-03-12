@@ -78,6 +78,7 @@ class MembershipControllers extends Controller {
 
         $menuObj->title = $input['title'];
         $menuObj->price = doubleval($input['price']);
+        $menuObj->discount_price = doubleval($input['discount_price']);
         $menuObj->period = (int) $input['period'];
         $menuObj->features = isset($input['features']) ? serialize($input['features']) : ''; 
         $menuObj->color = $input['color'];
@@ -121,6 +122,7 @@ class MembershipControllers extends Controller {
         $menuObj = new Membership;
         $menuObj->title = $input['title'];
         $menuObj->price = doubleval($input['price']);
+        $menuObj->discount_price = doubleval($input['discount_price']);
         $menuObj->period = (int) $input['period'];
         $menuObj->features = isset($input['features']) ? serialize($input['features']) : ''; 
         $menuObj->color = $input['color'];

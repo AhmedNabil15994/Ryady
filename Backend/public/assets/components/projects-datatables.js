@@ -78,9 +78,10 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				type: 'GET',
 				data:function(dtParms){
 			       	dtParms.status = $('select[name="status"]').val();
+			       	dtParms.type = $('select[name="type"]').val();
 			       	dtParms.created_at = $('input[name="created_at"]').val();
 			        dtParms.columnsDef= [
-						'id', 'logo' ,'title','address','email','phone','city','category','creator','statusText','created_at'];
+						'id', 'logo' ,'title','typeMessage','email','phone','city','category','creator','statusText','created_at'];
 			        return dtParms
 			    }
 			},
@@ -88,7 +89,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				{data: 'id'},
 				{data: 'logo'},
 				{data: 'title'},
-				{data: 'address'},
+				{data: 'typeMessage'},
 				{data: 'email'},
 				{data: 'phone'},
 				{data: 'city'},
@@ -132,10 +133,10 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				},
 				{
 					targets: 3,
-					title: 'العنوان',
-					className: 'edits',
+					title: 'حالة المشروع',
+					className: '',
 					render: function(data, type, full, meta) {
-						return '<a class="editable" data-col="address" data-id="'+full.id+'">'+data+'</a>';
+						return '<a class="" data-col="type" data-id="'+full.id+'">'+data+'</a>';
 					},
 				},
 				{

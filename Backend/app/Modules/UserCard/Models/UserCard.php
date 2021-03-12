@@ -91,6 +91,7 @@ class UserCard extends Model{
         $data->start_date = $source->start_date;
         $data->end_date = $source->end_date;
         $data->membership_name = $source->membership_id != null ? $source->Membership->title : '';
+        $data->invoice_id = $source->invoice_id;
         $data->sort = $source->sort;
         $data->status = $source->status;
         $data->statusText = self::getStatus($source->status);

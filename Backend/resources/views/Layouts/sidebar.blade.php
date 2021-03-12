@@ -175,6 +175,32 @@
                 </li>
                 @endif
 
+                @if(\Helper::checkRules('list-events'))
+                <li class="menu-item menu-item-submenu {{ Active(URL::to('/events*'),'menu-item-open active') }}" aria-haspopup="true" data-menu-toggle="hover">
+                    <a href="#" class="menu-link menu-toggle">
+                        <i class="menu-icon flaticon-event-calendar-symbol"></i>
+                        <span class="menu-text">الفعاليات</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="menu-submenu" kt-hidden-height="80">
+                        <span class="menu-arrow"></span>
+                        <ul class="menu-subnav">
+                            <li class="menu-item  menu-item-parent" aria-haspopup="true">
+                                <span class="menu-link">
+                                    <span class="menu-text">الفعاليات</span>
+                                </span>
+                            </li>
+                            <li class="menu-item {{ Active(URL::to('/events*')) }}" aria-haspopup="true">
+                                <a href="{{ URL::to('/events') }}" class="menu-link ">
+                                    <i class="menu-bullet menu-bullet-dot"></i>
+                                    <span class="menu-text">الفعاليات</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                @endif
+
                 @if(\Helper::checkRules('list-memberships,list-features'))
                 <li class="menu-item menu-item-submenu {{ Active(URL::to('/memberships*'),'menu-item-open active') }} {{ Active(URL::to('/features*'),'menu-item-open active') }}" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="#" class="menu-link menu-toggle">

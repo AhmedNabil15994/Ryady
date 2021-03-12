@@ -89,9 +89,10 @@ class Blog extends Model{
         $data->status = $source->status;
         $data->statusText = self::getStatus($source->status);
         $data->fileType = $source->fileType;
-        $data->photo = self::getPhotoPath($source->id, $source->file);
+        $data->photo = $source->show_images == 1 ? self::getPhotoPath($source->id, $source->file) : '';
         $data->photo_name = $source->file;
         $data->photo_size = $data->photo != '' ? self::getPhotoSize($data->photo) : '';
+        $data->show_images = $source->show_images;
         $data->creator = $source->created_by ? $source->Creator->username : '';
         $data->created_at = \Helper::formatDate($source->created_at);
         return $data;

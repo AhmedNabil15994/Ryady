@@ -19,6 +19,12 @@ $(function(){
 	    $('input[name="gmaps"]').val( $('input[name="lat"]').val() + ' -- ' + $('input[name="lng"]').val())
 	});
 
+    $('select[name="type"]').on('selectmenuchange',function(){
+        if($(this).val() == '@'){
+            $('input[name="type_text"]').toggleClass('hidden');
+        }
+    });
+
 	var selecImgs=[];
     $(document).on('click','ul.imgs li i.fa-close',function(){
         var input = $(this).parents('ul.imgs').siblings('label').find('input[name="images[]"]');
@@ -56,7 +62,8 @@ $(function(){
         formData.append('title', $('input[name="title"]').val());
         formData.append('phone', $('input[name="phone"]').val());
         formData.append('email', $('input[name="email"]').val());
-        formData.append('address', $('input[name="address"]').val());
+        formData.append('type_text', $('input[name="type_text"]').val());
+        formData.append('type', $('select[name="type"] option:selected').val());
         formData.append('lat', $('input[name="lat"]').val());
         formData.append('lng', $('input[name="lng"]').val());
         formData.append('logo', logo);

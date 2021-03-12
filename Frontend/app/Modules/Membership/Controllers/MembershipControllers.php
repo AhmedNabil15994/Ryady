@@ -86,6 +86,12 @@ class MembershipControllers extends Controller {
         return view('Membership.Views.index')->with('data',(object) $data);
     }
 
+    public function features(){
+        $data['memberships'] = Membership::dataList(1)['data'];
+        $data['features'] = Feature::dataList(1)['data'];
+        return view('Membership.Views.features')->with('data',(object) $data);
+    }
+
     public function requestMemberShip($id){
         $id = (int) $id;
         $membershipObj = Membership::getOne($id);
@@ -130,6 +136,18 @@ class MembershipControllers extends Controller {
         $userObj = User::checkUserByPhone($input['phone']);
         if($userObj != null){
             \Session::flash('error', 'هذا رقم التليفون مستخدم من قبل');
+            return redirect()->back()->withInput();
+        }
+
+        $nameArArr = explode(' ', $input['name_ar']);
+        if(count($nameArArr) != 3){
+            \Session::flash('error', 'يرجي ادخال الاسم العربي ثلاثي');
+            return redirect()->back()->withInput();
+        }
+
+        $nameEnArr = explode(' ', $input['name_en']);
+        if(count($nameEnArr) != 3){
+            \Session::flash('error', 'يرجي ادخال الاسم الانجليزي ثلاثي');
             return redirect()->back()->withInput();
         }
 
@@ -226,15 +244,89 @@ class MembershipControllers extends Controller {
             }
         }
 
-        \Session::put('discounts',$discounts);
-        \Session::put('user_id',$userObj->id);
+        // Create Invoice
+        $invoiceData =[
+            'amount' => $membershipObj->price * 100 - $discounts,
+            'currency' => 'SAR',
+            'description' => 'عضوية '.$membershipObj->title . ' بطاقة رقم '.$menuObj->code,
+            'callback_url' => \URL::to('/memberships/activate'),
+            'expired_at' => date("Y-m-d", strtotime(now()->format('Y-m-d'). " + 1 day")),
+        ];
+        $paymentObj = new \PaymentHelper();        
+        $createPayment = $paymentObj->moyasar('invoices',$invoiceData);
+        $invoiceResult = $createPayment->json();
+
+        $checkResult = $paymentObj->formatResponse($invoiceResult);
+        if($checkResult[0] == 0){
+            \Session::flash('error', $checkResult[1]);
+            return redirect()->back();
+        }
+
+        $menuObj->invoice_id = $invoiceResult['id'];
+        $menuObj->save();
+
+        \Session::put('new_user_id',$userObj->id);
         \Session::put('user_card_id',$menuObj->id);
         WebActions::newType(1,'UserCard',$userObj->id);
         WebActions::newType(1,'User',$userObj->id);
-        // \Session::flash('success', 'تنبيه! تم ارسال طلب التأكيد الى بريدك الالكتروني');
-        \Session::flash('success', 'تنبيه! تم حفظ بيانات العضوية بنجاح');
-        return redirect('/memberships/payment');
+        return redirect()->away($invoiceResult['url']);
     }
+
+    public function activate(){
+        $id = \Session::get('new_user_id');//decrypt($id);
+        if(!$id){
+            return redirect('404');
+        }
+        $userObj = User::getOne($id);
+        $userObj->status = 1;
+        $userObj->is_active = 1;
+        $userObj->save();
+        \Session::forget('new_user_id');
+
+        if(\Session::has('user_card_id')){
+            $userCardObj = UserCard::NotDeleted()->where('user_id',$userObj->id)->orderBy('id','DESC')->first();
+            $userCardObj->status = 1;
+            $userCardObj->save();
+            \Session::forget('user_card_id');
+        }
+
+        if(\Session::has('user_request_id')){
+            $userRequestObj = UserRequest::NotDeleted()->where('user_id',$userObj->id)->orderBy('id','DESC')->first();
+            $userRequestObj->status = 1;
+            $userRequestObj->save();
+            \Session::forget('user_request_id');
+        }
+
+
+        $isAdmin = in_array($userObj->group_id, [1,]) ? true : false;
+        session(['group_id' => $userObj->group_id]);
+        session(['user_id' => $userObj->id]);
+        session(['email' => $userObj->email]);
+        session(['username' => $userObj->username]);
+        session(['is_admin' => $isAdmin]);
+        session(['group_name' => $userObj->Group->title]);
+        session(['full_name' => $userObj->name_ar]);
+        \Session::flash('success', 'تم تفعيل العضوية بنجاح');
+
+        if(!\Session::has('user_id')){
+            $userMemberObj = new UserMember;
+            $userMemberObj->user_id = $userObj->id;
+            $userMemberObj->status = 1;
+            $userMemberObj->sort = UserMember::newSortIndex();
+            $userMemberObj->created_at = DATE_TIME;
+            $userMemberObj->created_by = $userObj->id;
+            $userMemberObj->save();
+            \Session::flash('success', 'تم الدفع للبطاقة المطبوعة بنجاح');
+        }
+
+        if(\Session::has('upgrade')){
+            \Session::forget('upgrade');
+            \Session::flash('success', 'تم الدفع وترقية البطاقة بنجاح');
+        }
+        
+        return redirect()->to('/profile');
+    }
+
 
     public function payment(){
         $data['url'] = \URL::to('/memberships/payment');
@@ -271,13 +363,6 @@ class MembershipControllers extends Controller {
             return redirect()->back()->withInput();
         }
 
-        if($input['payment_type'] == 1){
-            $company = 'master';
-        }elseif($input['payment_type'] == 2){
-            $company = 'visa';
-        }elseif($input['payment_type'] == 3){
-            $company = 'mada';
-        }
 
         if(!\Session::has('user_id') || !\Session::has('user_card_id')){
             return redirect()->back()->withInput();
@@ -285,106 +370,79 @@ class MembershipControllers extends Controller {
 
         $userObj = User::getOne(\Session::get('user_id'));
         $userCardObj = UserCard::getOne(\Session::get('user_card_id'));
+
+        $cardCode = $userCardObj->code;
+        $membershipTitle = $userCardObj->Membership->title;
+
         $price = $userCardObj->Membership->price;
         if(\Session::has('user_request_id')){
             $userRequestObj = UserRequest::getOne(\Session::get('user_request_id'));
             $price += 100;
         }
 
-        $name = explode(' ', $input['card_holder'], 2);
-        $data = [
-            'type' => 'credit',
-            'amount' =>  $price - \Session::get('discounts'),
-            'currency' => 'SAR',
-            'callback_url' => \URL::to('/profile'),
-            'customer' => [
-                'name' => $userObj->name,
-                'first_name' => '', //isset($name[0]) ? $name[0]  : '',
-                'last_name' => '', //isset($name[1]) ? $name[1]  : '',
-                "email" => $userObj->email,
-                "phone" => $userObj->phone,
-                "ip" => \Request::ip(),
-            ],
-            "source" => [
-                "company" => $company,
-                "card_number" => $input['card_no'],
-                "cvc" =>  $input['cvc'],
-                "month" =>  $input['expire_date'],
-                "year" =>  $input['year'],
-            ]
-        ];
+        $paymentData['amount'] = (int) $price - \Session::get('discounts');
+        $paymentData['currency'] = 'SAR';
+        $paymentData['description'] = 'عضوية '.$membershipTitle . ' بطاقة رقم '.$cardCode;
+        $paymentData['callback_url']  = \URL::to('/profile');
+        $paymentData['source'] = [
+                    'type' => 'creditcard',
+                    "name" => $input['card_holder'],
+                    "number" => $input['card_no'],
+                    "cvc" =>  $input['cvc'],
+                    "month" =>  $input['expire_date'],
+                    "year" =>  $input['year'],
+                ];
 
         $paymentObj = new \PaymentHelper();
-        $checkStatus = $paymentObj->payTabs($data);
-        if(!isset($checkStatus['errors']) && empty($checkStatus['errors'])){
-            $userCryptedID = encrypt($userObj->id);
-            $emailData['firstName'] = $userObj->name_ar;
-            $emailData['subject'] = 'تفعيل العضوية :';
-            $emailData['content'] = '<a href="'.\URL::to('/memberships/activate/'.$userCryptedID).'">تفعيل العضوية</a>';
-            $emailData['to'] = $userObj->email;
-            $emailData['template'] = "emailUsers.emailReplied";
-            \App\Helpers\MailHelper::SendMail($emailData);
-            \Session::forget('discounts');
-            \Session::forget('user_id');
-            \Session::forget('user_card_id');           
-            if(\Session::has('user_request_id')){
-                \Session::forget('user_request_id');
-            }
-            \Session::flash('success', 'تم الدفع وتم ارسال رابط تأكيد التفعيل الي بريدك الالكتروني');
-            return redirect()->to('/');
-        }else{
-            $erros = [];
-            foreach ($checkStatus['errors'] as $key => $error) {
-                \Session::flash('error', $key . ' '. $error[0]);   
-            }
+        
+        // Create Payment
+        $createPayment = $paymentObj->moyasar('payments',$paymentData);
+        $result = $createPayment->json();
+
+        $checkResult = $this->formatResponse($result);
+        if($checkResult[0] == 0){
+            \Session::flash('error', $checkResult[1]);
             return redirect()->back();
-        }   
-    }
-
-    public function activate($id){
-        $id = decrypt($id);
-        $userObj = User::getOne($id);
-        $userObj->status = 1;
-        $userObj->is_active = 1;
-        $userObj->save();
-        \Session::forget('user_id');
-
-        $userCardObj = UserCard::NotDeleted()->where('user_id',$userObj->id)->orderBy('id','DESC')->first();
-        $userCardObj->status = 1;
-        $userCardObj->save();
-        \Session::forget('user_card_id');
-
-        if(\Session::has('user_request_id')){
-            $userRequestObj = UserRequest::NotDeleted()->where('user_id',$userObj->id)->orderBy('id','DESC')->first();
-            $userRequestObj->status = 1;
-            $userRequestObj->save();
-            \Session::forget('user_request_id');
         }
 
-        $isAdmin = in_array($userObj->group_id, [1,]) ? true : false;
-        session(['group_id' => $userObj->group_id]);
-        session(['user_id' => $userObj->id]);
-        session(['email' => $userObj->email]);
-        session(['username' => $userObj->username]);
-        session(['is_admin' => $isAdmin]);
-        session(['group_name' => $userObj->Group->title]);
-        session(['full_name' => $userObj->name_ar]);
+        $userCardObj->payment_id = $result['id'];
+        $userCardObj->save();
 
-        $userMemberObj = new UserMember;
-        $userMemberObj->user_id = $userObj->id;
-        $userMemberObj->status = 1;
-        $userMemberObj->sort = UserMember::newSortIndex();
-        $userMemberObj->created_at = DATE_TIME;
-        $userMemberObj->created_by = $userObj->id;
-        $userMemberObj->save();
-        \Session::flash('success', 'تم تفعيل العضوية بنجاح');
-        return redirect()->to('/profile');
-    }
+        // Create Invoice
+        $invoiceData =[
+            'amount' => (int) $price - \Session::get('discounts'),
+            'currency' => 'SAR',
+            'description' => 'عضوية '.$membershipTitle . ' بطاقة رقم '.$cardCode,
+            'expired_at' => date("Y-m-d", strtotime(now()->format('Y-m-d'). " + 1 day")),
+        ];
 
-    public function features(){
-        $data['memberships'] = Membership::dataList(1)['data'];
-        $data['features'] = Feature::dataList(1)['data'];
-        return view('Membership.Views.features')->with('data',(object) $data);
+        $createPayment = $paymentObj->moyasar('invoices',$invoiceData);
+        $invoiceResult = $createPayment->json();
+        // dd($invoiceResult);
+        $checkResult = $this->formatResponse($invoiceResult);
+        if($checkResult[0] == 0){
+            \Session::flash('error', $checkResult[1]);
+            return redirect()->back();
+        }
+        
+        $userCardObj->invoice_id = $invoiceResult['id'];
+        $userCardObj->save();
+
+        $userCryptedID = encrypt($userObj->id);
+        $emailData['firstName'] = $userObj->name_ar;
+        $emailData['subject'] = 'تفعيل العضوية :';
+        $emailData['content'] = '<a href="'.\URL::to('/memberships/activate/'.$userCryptedID).'">تفعيل العضوية</a>';
+        $emailData['to'] = $userObj->email;
+        $emailData['template'] = "emailUsers.emailReplied";
+        \App\Helpers\MailHelper::SendMail($emailData);
+        \Session::forget('discounts');
+        \Session::forget('user_id');
+        \Session::forget('user_card_id');           
+        if(\Session::has('user_request_id')){
+            \Session::forget('user_request_id');
+        }
+        \Session::flash('success', 'تم الدفع وتم ارسال رابط تأكيد التفعيل الي بريدك الالكتروني');
+        return redirect()->to('/');
     }
 
 }

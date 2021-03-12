@@ -27,7 +27,11 @@ class UserMember extends Model{
     static function dataList($status=null,$count=null,$shown=null) {
         $input = \Request::all();
 
-        $source = self::NotDeleted()->where(function ($query) use ($input,$status) {
+        $source = self::NotDeleted()->whereHas('User',function($userQuery){
+                    $userQuery->whereHas('UserCard',function($userCardQuery){
+                        $userCardQuery->where('membership_id',3)->where('status',1)->where('end_date','>=',date('Y-m-d'));
+                    });
+                })->where(function ($query) use ($input,$status) {
                     if (isset($input['user_id']) && !empty($input['user_id'])) {
                         $query->where('user_id',  $input['user_id']);
                     } 

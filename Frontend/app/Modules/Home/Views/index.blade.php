@@ -74,8 +74,9 @@
                     <div class="item">
                         <img src="{{ $membership->photo }}" />
                         <h2 class="title">عضوية {{ $membership->title }}</h2>
-                        <span class="price">{{ $membership->price }} ريال</span>
-                        <span class="time">لمدة {{ $membership->periodText }}</span>
+                        <span class="price"><span class="value">{{ $membership->price }}</span> ريال</span>
+                        <span class="price discPrice">بعد الخصم: <span class="value">{{ $membership->discount_price }}</span> ريال</span>
+                        <span class="time text-center">لمدة {{ $membership->periodText }}</span>
                         <a href="{{ URL::to('/memberships/requestMemberShip/'.$membership->id) }}" class="btnStyle">اطلبها الآن</a>
                     </div>
                 </div>
@@ -88,11 +89,12 @@
     	<div class="container">
     		<h2 class="title">{{ $data->pages[1]->title }}</h2>
     		<div class="row">
-                @foreach($data->userMembers as $key => $userMember)
+                @foreach($data->events as $key => $event)
     			<div class="col-md-3 wow fadeInUp">
     				<div class="memb">
-    					<img src="{{ $userMember->user->photo }}" class="membership{{ $userMember->membership_id }}" />
-    					<h2 class="name">{{ $userMember->user->name_ar }}</h2>
+    					<img src="{{ $event->photo }}"/>
+    					<h2 class="name">{{ $event->title }}</h2>
+                        <p class="price"><i class="flaticon-school-calendar"></i> {{ $event->date }}</p>
     				</div>
     			</div>
                 @endforeach
@@ -110,8 +112,8 @@
     			<div class="desc">{!! $data->pages[2]->description !!}</div>
     			<div class="divImgs">
     				<ul class="imgs clearfix">
-                        @foreach($data->userMembers2 as $userMember2)
-    					<li><img src="{{ $userMember2->user->photo }}" alt="" /></li>
+                        @foreach($data->userMembers as $userMember)
+    					<li><img src="{{ $userMember->user->photo }}" alt="" /></li>
                         @endforeach
     				</ul>
     				<a href="{{ URL::to('/members') }}" class="flaticon-plus iconPlus"></a>
@@ -126,14 +128,18 @@
     		<h2 class="title">{{ $data->pages[3]->title }}</h2>
     		<div class="desc">{!! $data->pages[3]->description !!}</div>
     		<div class="clearfix hidden-sm hidden-xs wow bounceIn">
-                @foreach($data->projectCategories as $key => $category)
-                @if(in_array($key, [0,1,2,3,4]))
-    			<a class="itemProject">
-    				<i class="{{ $category->icon }}"></i>
-    				<h2 class="titleItem">{{ $category->title }}</h2>
-    			</a>
-                @endif
-                @endforeach
+                <div id="OwlCards" class="OwlCards2 Owl wow zoomIn">
+                    @foreach($data->projectCategories as $key => $category)
+                    <div class="item">
+                        @if(in_array($key, [0,1,2,3,4]))
+                        <a class="itemProject">
+                            <i class="{{ $category->icon }}"></i>
+                            <h2 class="titleItem">{{ $category->title }}</h2>
+                        </a>
+                        @endif
+                    </div>
+                    @endforeach
+                </div>
     		</div>
 			
 	        <div id="OwlProj" class="OwlProj visible-sm visible-xs Owl wow zoomIn">

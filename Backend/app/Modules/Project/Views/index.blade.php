@@ -151,9 +151,14 @@
                                     <br>
                                 </div>  
                                 <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <label>اسم المشروع:</label>
-                                    <input type="text" class="form-control m-input" data-col-index="2" name="title" value="{{ Request::get('title') }}">
-                                    <br>
+                                    <label>حالة المشروع:</label>
+                                    <select class="form-control m-input" name="type">
+                                        <option value="" disabled selected>حدد اختيارك</option>
+                                        <option value="تحت التأسيس">تحت التأسيس</option>
+                                        <option value="قائم">قائم</option>
+                                        <option value="متعثر">متعثر</option>
+                                        <option value="أخري">أخري</option>
+                                    </select>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <label>العنوان:</label>
@@ -246,7 +251,7 @@
                     <th>ID</th>
                     <th>الصورة</th>
                     <th>اسم المشروع</th>
-                    <th>العنوان</th>
+                    <th>حالة المشروع</th>
                     <th>البريد الالكتروني</th>
                     <th>رقم الجوال</th>
                     <th>المدينة</th>
@@ -262,7 +267,7 @@
                     <th>ID</th>
                     <th>الصورة</th>
                     <th>اسم المشروع</th>
-                    <th>العنوان</th>
+                    <th>حالة المشروع</th>
                     <th>البريد الالكتروني</th>
                     <th>رقم الجوال</th>
                     <th>المدينة</th>

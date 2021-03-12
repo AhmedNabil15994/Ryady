@@ -56,14 +56,15 @@
                         <img src="{{ $data->data->logo }}" alt="" />
                         <h2 class="title">{{ $data->data->title }}</h2>
                         <span class="new">{{ $data->data->category }}</span>
-                        <p><i class="flaticon-place"></i>  {{ $data->data->address }}</p>
+                        <p><i class="flaticon-flag"></i> {{ $data->data->typeMessage }}</p>
+                        {{-- <p><i class="flaticon-place"></i>  {{ $data->data->type_text }}</p> --}}
                     </div>
                     
                     <div class="projectDetails">
                         <div class="tabsHead">
                             <ul class="btnsTabs clearfix" id="tabs">
                                 <li id="tab1" class="active">التفاصيل</li>
-                                <li id="tab2">كوبونات الخصم</li>
+                                <li id="tab2">رأس مال المشروع</li>
                             </ul>
                         </div>
                         <div class="tabs">
@@ -74,12 +75,9 @@
                             </div>
                             <div class="tab2 tab">
                                 @if(!empty($data->data->coupons))
-                                @foreach($data->data->coupons as $coupon)
                                 <div class="discount clearfix">
-                                    <span>خصم {{ $coupon->discount_value }} {{ $coupon->discount_type == 1 ? 'ريال' : '%' }} على اجمالي الفاتورة</span>
-                                    <a href="#">اطلب الآن</a>
+                                    <span>{{ $data->data->coupons }}</span>
                                 </div>
-                                @endforeach
                                 @endif
                             </div>
                         </div>

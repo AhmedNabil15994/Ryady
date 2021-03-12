@@ -11,6 +11,6 @@ Route::group(['prefix' => '/memberships'] , function () {
     Route::get('/payment', 'MembershipControllers@payment');
     Route::get('/delayedPayment/{id}', 'MembershipControllers@delayedPayment');
     Route::post('/payment', 'MembershipControllers@postPayment');
-    Route::get('/activate/{id}', 'MembershipControllers@activate');
+    Route::get('/activate', 'MembershipControllers@activate');
 
 });

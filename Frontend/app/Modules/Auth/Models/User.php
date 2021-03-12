@@ -23,6 +23,10 @@ class User extends Model{
         return \ImagesHelper::GetImagePath('users', $id, $photo);
     }
 
+    public function UserCard(){
+        return $this->hasMany('App\Models\UserCard','user_id','id');
+    }
+
     static function dataList($status=null,$userIds= null) {
         $input = \Request::all();
 
@@ -60,7 +64,7 @@ class User extends Model{
 
     static function selectImage($source){
         
-        if($source->image != null){
+        if($source->image != null && $source->show_images == 1){
             return self::getPhotoPath($source->id, $source->image);
         }else{
             return Variable::getVar('الصورة الافتراضية للمشرفين:');
@@ -69,7 +73,7 @@ class User extends Model{
 
     static function getPoints(){
         $userRequestsPrice = UserRequest::NotDeleted()->where('user_id',USER_ID)->where('status',1)->count() * 100;
-        $userCard = UserCard::NotDeleted()->where('user_id',USER_ID)->whereIn('status',[1,4])->get();
+        $userCard = UserCard::NotDeleted()->where('user_id',USER_ID)->whereIn('status',[1])->get();
         $cardsPrice = 0;
         foreach ($userCard as $value) {
             $cardsPrice+= $value->Membership->price;
@@ -103,6 +107,7 @@ class User extends Model{
         $data->is_active = $source->is_active;
         $data->status = $source->status;
         $data->sort = $source->sort;
+        $data->show_images = $source->show_images;
         $data->created_at = \Helper::formatDateForDisplay($source->created_at,true);
         return $data;
     }

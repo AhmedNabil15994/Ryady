@@ -65,7 +65,7 @@ class User extends Model{
 
     static function selectImage($source){
         
-        if($source->image != null){
+        if($source->image != null && $source->show_images == 1){
             return self::getPhotoPath($source->id, $source->image);
         }else{
             return Variable::getVar('الصورة الافتراضية للمشرفين:');
@@ -99,6 +99,7 @@ class User extends Model{
         $data->is_active = $source->is_active;
         $data->status = $source->status;
         $data->sort = $source->sort;
+        $data->show_images = $source->show_images;
         $data->created_at = \Helper::formatDateForDisplay($source->created_at,true);
         return $data;
     }

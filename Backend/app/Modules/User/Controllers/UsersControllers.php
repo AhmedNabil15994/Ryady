@@ -164,6 +164,7 @@ class UsersControllers extends Controller {
         $groupObj->phone = $input['phone'];
         $groupObj->brief = $input['brief'];
         $groupObj->show_details = $input['show_details'];
+        $groupObj->show_images = $input['show_images'];
         $groupObj->lang = $input['lang'];
         $groupObj->session_time = $input['session_time'];
         $groupObj->sort = User::newSortIndex();
@@ -248,6 +249,7 @@ class UsersControllers extends Controller {
         $groupObj->phone = $input['phone'];
         $groupObj->brief = $input['brief'];
         $groupObj->show_details = $input['show_details'];
+        $groupObj->show_images = $input['show_images'];
         $groupObj->lang = $input['lang'];
         $groupObj->session_time = $input['session_time'];
         $groupObj->facebook = $input['facebook'];

@@ -21,5 +21,7 @@ $(function(){
 	});
 
 	
-	
+	$('#kt_datetimepicker_120').datetimepicker({
+        format: 'YYYY-MM-DD',
+    });
 });

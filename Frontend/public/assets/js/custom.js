@@ -39,9 +39,9 @@ $(function(){
 		
 	});
 	
-  	var OwlCards = $('#OwlCards');
+  	var OwlCards = $('.OwlCards');
 	 
-	  OwlCards.owlCarousel({
+	  	OwlCards.owlCarousel({
 	      
 	      items : 1, //10 items above 1000px browser width
 	      itemsDesktop : [1200,1], //5 items between 1000px and 901px
@@ -54,7 +54,23 @@ $(function(){
 	      navigation:true,
 	      autoPlay:true,
 	      navigationText:["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"]
-	  });
+	  	});
+
+  	var OwlCards2 = $('.OwlCards2');
+	OwlCards2.owlCarousel({
+	      
+      items : 4, //10 items above 1000px browser width
+      itemsDesktop : [4], //5 items between 1000px and 901px
+      itemsDesktopSmall : [3], // betweem 900px and 601px
+      itemsTablet: [2], //2 items between 600 and 0
+      itemsMobile : [479,1],// itemsMobile disabled - inherit from itemsTablet option
+      slideSpeed : 500,
+      paginationSpeed : 400,
+      pagination:false,
+      navigation:true,
+      autoPlay:true,
+      navigationText:["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"]
+  	});
 	  
   	var OwlProj = $('#OwlProj');
 	 
@@ -198,5 +214,43 @@ $(function(){
         }
     });
 	
-	  
+
+	// Don't open Images
+	// $(document).on('contextmenu','img',function(e){
+ //        errorNotification("Images you are attempting to download are copyrighted material.");
+	//    	e.preventDefault();
+	// });
+
+	// // Disable Cut + Copy 
+	// $(document).ready(function () {
+	//     var ambit = $(document);
+	//     ambit.on('copy cut', function (e) {
+	//         e.preventDefault();
+	//         return false;
+	//     });
+	// });  
+
+	// // Disable Inspect Element
+	// document.addEventListener('contextmenu', function(e) {
+	//   e.preventDefault();
+	// });
+
+	// document.onkeydown = function(e) {
+	//   if(event.keyCode == 123) {
+	//      return false;
+	//   }
+	//   if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+	//      return false;
+	//   }
+	//   if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
+	//      return false;
+	//   }
+	//   if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+	//      return false;
+	//   }
+	//   if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+	//      return false;
+	//   }
+	// }
+
 });

@@ -43,8 +43,8 @@ class Project extends Model{
                     if (isset($input['title']) && !empty($input['title'])) {
                         $query->where('title', 'LIKE', '%' . $input['title'] . '%');
                     }
-                    if (isset($input['address']) && !empty($input['address'])) {
-                        $query->where('address', 'LIKE', '%' . $input['address'] . '%');
+                    if (isset($input['type']) && !empty($input['type'])) {
+                        $query->where('type', 'LIKE', '%' . $input['type'] . '%');
                     } 
                     if (isset($input['id']) && !empty($input['id'])) {
                         $query->where('id',  $input['id']);
@@ -94,7 +94,9 @@ class Project extends Model{
         $data = new  \stdClass();
         $data->id = $source->id;
         $data->title = $source->title;
-        $data->address = $source->address;
+        $data->type = $source->type;
+        $data->typeMessage = $source->type == 'أخري' ? $source->type . ' - ' . $source->type_text : $source->type ;
+        $data->type_text = $source->type_text;
         $data->email = $source->email;
         $data->phone = $source->phone;
         $data->city_id = $source->city_id;
@@ -109,10 +111,11 @@ class Project extends Model{
         $data->sort = $source->sort;
         $data->status = $source->status;
         $data->statusText = self::getStatus($source->status);
-        $data->logo = self::getPhotoPath($source->id, $source->logo);
+        $data->logo = $source->show_images == 1 ? self::getPhotoPath($source->id, $source->logo) : '';
         $data->logo_name = $source->logo;
         $data->logo_size = $data->logo != '' ? self::getPhotoSize($data->logo) : '';
-        $data->images = $source->images != '' ? self::getImages(unserialize($source->images),$source->id) : [];
+        $data->images = $source->images != '' && $source->show_images == 1 ? self::getImages(unserialize($source->images),$source->id) : [];
+        $data->show_images = $source->show_images;
         $data->created_at = \Helper::formatDate($source->created_at);
         $data->creator = $source->created_by ? $source->Creator->username : '';
         return $data;
