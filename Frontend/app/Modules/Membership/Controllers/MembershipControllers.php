@@ -249,7 +249,7 @@ class MembershipControllers extends Controller {
             'amount' => $membershipObj->price * 100 - $discounts,
             'currency' => 'SAR',
             'description' => 'عضوية '.$membershipObj->title . ' بطاقة رقم '.$menuObj->code,
-            'callback_url' => \URL::to('/memberships/activate'),
+            'callback_url' => \URL::to('/memberships/pushInvoice/'.$userObj->id),
             'expired_at' => date("Y-m-d", strtotime(now()->format('Y-m-d'). " + 1 day")),
         ];
         $paymentObj = new \PaymentHelper();        
@@ -262,14 +262,36 @@ class MembershipControllers extends Controller {
             return redirect()->back();
         }
 
-        $menuObj->invoice_id = $invoiceResult['id'];
-        $menuObj->save();
-
         \Session::put('new_user_id',$userObj->id);
         \Session::put('user_card_id',$menuObj->id);
         WebActions::newType(1,'UserCard',$userObj->id);
         WebActions::newType(1,'User',$userObj->id);
         return redirect()->away($invoiceResult['url']);
+    }
+
+    public function pushInvoice($id){
+        $input = \Request::all();
+        $status = $input['status'];
+        $invoice_id = $input['id'];
+        if($status == 'paid'){
+            $userCardObj = UserCard::NotDeleted()->where('status',2)->where('user_id',$id)->orderBy('id','DESC')->first();
+            $userCardObj->invoice_id = $invoice_id;
+            $userCardObj->save();
+            // $userRequestObj = UserRequest::NotDeleted()->where('status',2)->where('user_id',$id)->orderBy('id','DESC')->first();
+            // $userRequestObj->invoice_id = $invoice_id;
+            // $userRequestObj->save();
+        }
+    }
+
+    public function pushRequest($id){
+        $input = \Request::all();
+        $status = $input['status'];
+        $invoice_id = $input['id'];
+        if($status == 'paid'){
+            $userRequestObj = UserRequest::NotDeleted()->where('status',2)->where('user_id',$id)->orderBy('id','DESC')->first();
+            $userRequestObj->invoice_id = $invoice_id;
+            $userRequestObj->save();
+        }
     }
 
     public function activate(){
@@ -278,13 +300,12 @@ class MembershipControllers extends Controller {
             return redirect('404');
         }
         $userObj = User::getOne($id);
-        $userObj->status = 1;
-        $userObj->is_active = 1;
-        $userObj->save();
-        \Session::forget('new_user_id');
 
         if(\Session::has('user_card_id')){
             $userCardObj = UserCard::NotDeleted()->where('user_id',$userObj->id)->orderBy('id','DESC')->first();
+            if($userCardObj->invoice_id == null){
+                return redirect('404');
+            }
             $userCardObj->status = 1;
             $userCardObj->save();
             \Session::forget('user_card_id');
@@ -292,11 +313,18 @@ class MembershipControllers extends Controller {
 
         if(\Session::has('user_request_id')){
             $userRequestObj = UserRequest::NotDeleted()->where('user_id',$userObj->id)->orderBy('id','DESC')->first();
+            if($userRequestObj->invoice_id == null){
+                return redirect('404');
+            }
             $userRequestObj->status = 1;
             $userRequestObj->save();
             \Session::forget('user_request_id');
         }
 
+        $userObj->status = 1;
+        $userObj->is_active = 1;
+        $userObj->save();
+        \Session::forget('new_user_id');
 
         $isAdmin = in_array($userObj->group_id, [1,]) ? true : false;
         session(['group_id' => $userObj->group_id]);
@@ -326,123 +354,4 @@ class MembershipControllers extends Controller {
         
         return redirect()->to('/profile');
     }
-
-
-    public function payment(){
-        $data['url'] = \URL::to('/memberships/payment');
-        return view('Membership.Views.payment')->with('data',(object) $data);
-    }
-
-    public function delayedPayment($id){
-        $id = decrypt($id);
-        $userObj = User::getOne($id);
-        if($userObj->status == 1){
-            \Session::flash('error', 'تنبيه! تم الدفع وتفعيل العضوية من قبل');
-            return redirect('/');
-        }
-        \Session::put('user_id',$id);
-        $userCardObj = UserCard::NotDeleted()->where('user_id',$userObj->id)->where('status',2)->orderBy('id','DESC')->first();
-        \Session::put('user_card_id',$userCardObj->id);
-        $userRequestObj = UserRequest::NotDeleted()->where('user_id',$userObj->id)->where('user_card_id',$userCardObj->id)->where('status',2)->orderBy('id','DESC')->first();
-        if($userRequestObj != null){
-            \Session::forget('user_request_id',$userRequestObj->id);
-        }
-        $data['url'] = \URL::to('/memberships/payment');
-        return view('Membership.Views.payment')->with('data',(object) $data);
-    }
-
-    public function postPayment(){
-        $input = \Request::all();
-        $date = explode(' / ', $input['expire_date'], 2);
-        $input['expire_date'] = $date[0];
-        $input['year'] = '20'.$date[1];
-
-        $validate = $this->validatePayment($input);
-        if($validate->fails()){
-            \Session::flash('error', $validate->messages()->first());
-            return redirect()->back()->withInput();
-        }
-
-
-        if(!\Session::has('user_id') || !\Session::has('user_card_id')){
-            return redirect()->back()->withInput();
-        }
-
-        $userObj = User::getOne(\Session::get('user_id'));
-        $userCardObj = UserCard::getOne(\Session::get('user_card_id'));
-
-        $cardCode = $userCardObj->code;
-        $membershipTitle = $userCardObj->Membership->title;
-
-        $price = $userCardObj->Membership->price;
-        if(\Session::has('user_request_id')){
-            $userRequestObj = UserRequest::getOne(\Session::get('user_request_id'));
-            $price += 100;
-        }
-
-        $paymentData['amount'] = (int) $price - \Session::get('discounts');
-        $paymentData['currency'] = 'SAR';
-        $paymentData['description'] = 'عضوية '.$membershipTitle . ' بطاقة رقم '.$cardCode;
-        $paymentData['callback_url']  = \URL::to('/profile');
-        $paymentData['source'] = [
-                    'type' => 'creditcard',
-                    "name" => $input['card_holder'],
-                    "number" => $input['card_no'],
-                    "cvc" =>  $input['cvc'],
-                    "month" =>  $input['expire_date'],
-                    "year" =>  $input['year'],
-                ];
-
-        $paymentObj = new \PaymentHelper();
-        
-        // Create Payment
-        $createPayment = $paymentObj->moyasar('payments',$paymentData);
-        $result = $createPayment->json();
-
-        $checkResult = $this->formatResponse($result);
-        if($checkResult[0] == 0){
-            \Session::flash('error', $checkResult[1]);
-            return redirect()->back();
-        }
-
-        $userCardObj->payment_id = $result['id'];
-        $userCardObj->save();
-
-        // Create Invoice
-        $invoiceData =[
-            'amount' => (int) $price - \Session::get('discounts'),
-            'currency' => 'SAR',
-            'description' => 'عضوية '.$membershipTitle . ' بطاقة رقم '.$cardCode,
-            'expired_at' => date("Y-m-d", strtotime(now()->format('Y-m-d'). " + 1 day")),
-        ];
-
-        $createPayment = $paymentObj->moyasar('invoices',$invoiceData);
-        $invoiceResult = $createPayment->json();
-        // dd($invoiceResult);
-        $checkResult = $this->formatResponse($invoiceResult);
-        if($checkResult[0] == 0){
-            \Session::flash('error', $checkResult[1]);
-            return redirect()->back();
-        }
-        
-        $userCardObj->invoice_id = $invoiceResult['id'];
-        $userCardObj->save();
-
-        $userCryptedID = encrypt($userObj->id);
-        $emailData['firstName'] = $userObj->name_ar;
-        $emailData['subject'] = 'تفعيل العضوية :';
-        $emailData['content'] = '<a href="'.\URL::to('/memberships/activate/'.$userCryptedID).'">تفعيل العضوية</a>';
-        $emailData['to'] = $userObj->email;
-        $emailData['template'] = "emailUsers.emailReplied";
-        \App\Helpers\MailHelper::SendMail($emailData);
-        \Session::forget('discounts');
-        \Session::forget('user_id');
-        \Session::forget('user_card_id');           
-        if(\Session::has('user_request_id')){
-            \Session::forget('user_request_id');
-        }
-        \Session::flash('success', 'تم الدفع وتم ارسال رابط تأكيد التفعيل الي بريدك الالكتروني');
-        return redirect()->to('/');
-    }
-
 }

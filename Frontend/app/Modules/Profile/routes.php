@@ -11,8 +11,6 @@ Route::group(['prefix' => '/'] , function () {
     Route::get('/', 'ProfileControllers@membership');
     Route::post('/addRequest', 'ProfileControllers@addRequest');
     
-    Route::post('/requestPayment', 'ProfileControllers@postRequestPayment');
-
     Route::post('/uploadLogo', 'ProfileControllers@uploadLogo');
     Route::post('/upgrade', 'ProfileControllers@upgrade');
 
@@ -28,7 +26,4 @@ Route::group(['prefix' => '/'] , function () {
 
     Route::get('/newOrder', 'ProfileControllers@newOrder');
     Route::post('/postOrder', 'ProfileControllers@postOrder');
-
-    Route::get('/payment', 'ProfileControllers@payment');
-    Route::post('/payment', 'ProfileControllers@postPayment');
 });

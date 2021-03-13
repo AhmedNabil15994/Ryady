@@ -12,23 +12,8 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
-        '/backend/pages/add/uploadImage',
-        '/backend/pages/edit/*/editImage',
 
-        '/backend/sliders/add/uploadImage',
-        '/backend/sliders/edit/*/editImage',
-
-        '/backend/panelSettings/editImage/*/',
-        
-        '/backend/photos/add/uploadImage',
-        '/backend/photos/edit/*/editImage',
-
-        '/backend/files/add/uploadImage',
-        '/backend/files/edit/*/editImage',
-
-        '/backend/users/add/uploadImage',
-        '/backend/users/edit/*/editImage',
-
+        '/memberships/pushInvoice/*',
+        '/memberships/pushRequest/*',
     ];
 }
