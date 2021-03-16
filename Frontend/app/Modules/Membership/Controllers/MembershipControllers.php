@@ -128,6 +128,12 @@ class MembershipControllers extends Controller {
         }
 
         $userObj = User::checkUserByEmail($input['email']);
+        $userCardObj = UserCard::where('user_id', $userObj->id)->where('membership_id',$input['membership_id'])->first();
+        if($userCardObj != null){
+            \Session::flash('error', 'عفوا انت مشترك بالفعل في هذه العضوية!');
+            return redirect()->back()->withInput();
+        }
+        
         if($userObj != null){
             \Session::flash('error', 'هذا البريد الالكتروني مستخدم من قبل');
             return redirect()->back()->withInput();

@@ -20,7 +20,7 @@ class ProjectControllers extends Controller {
         $data['data'] = (object) Project::dataList(1);
         $data['categories'] = ProjectCategory::dataList(1)['data'];
         $data['cities'] = City::dataList(1)['data'];
-        $data['pages'] = Page::dataList(1,[7])['data'];
+        $data['pages'] = Page::dataList(1,[8])['data'];
         return view('Project.Views.index')->with('data',(object) $data);
     }
 

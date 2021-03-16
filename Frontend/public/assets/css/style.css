@@ -4576,3 +4576,36 @@ span.price.discPrice{
     right: auto;
     left: -60px;
 }
+.members.actions .memb{
+	padding-top: 0;
+}
+
+.members.actions .memb img{
+	border-radius: 20px;
+	width: 100%;
+	height: 260px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+.plans .item .price{
+	position: relative;
+}
+.price.hasDisc:not(.discPrice):before{
+	content: '';
+    position: absolute;
+    top: 45%;
+    width: 50%;
+    left: 25%;
+    border-bottom: 4px solid #657780;
+}
+#login a.reset{
+	margin-bottom: 20px;
+    display: block;
+    color: #001C54;
+    font-size: 18px;
+    text-decoration: none;
+    cursor: pointer;
+}
+.hiddens{
+	display: none;
+}

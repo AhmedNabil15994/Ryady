@@ -185,7 +185,101 @@ $(function(){
 	      navigationText:["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"]
 	  });
 
-	  $('#login .btnModal').on('click',function(e){
+  	$('#login .reset').on('click',function(e){
+  		e.preventDefault();
+    	e.stopPropagation();
+    	$('#login').modal('hide');
+    	$('#reset').modal('show');
+  	});
+
+  	$(document).on('click','#reset .reset',function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var phone = $('#reset input[name="phone"].inputStyle').val();
+        
+        if(phone){
+            $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+            $.ajax({
+                type: 'POST',
+                url: '/profile/sendResetCode',
+                data:{
+                    '_token': $('meta[name="csrf-token"]').attr('content'),
+                    'phone': phone,
+                },
+                success:function(data){
+                    if(data.status.status == 1){
+                        successNotification(data.status.message);
+                        $('#reset .hidden').removeClass('hidden');
+                        $('#reset .reset').text('التحقق من الكود');
+                        $('#reset .reset').addClass('seePasswords').removeClass('reset');
+                    }else{
+                        errorNotification(data.status.message);
+                    }
+                },
+            });
+        }
+    });
+
+    $(document).on('click','#reset .seePasswords',function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var code = $('#reset input[name="code"].inputStyle').val();
+        
+        if(code){
+            $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+            $.ajax({
+                type: 'POST',
+                url: '/profile/checkCode',
+                data:{
+                    '_token': $('meta[name="csrf-token"]').attr('content'),
+                    'code': code,
+                },
+                success:function(data){
+                    if(data.status.status == 1){
+                        successNotification(data.status.message);
+                        $('#reset input[name="phone"]').addClass('hidden');
+                        $('#reset input[name="code"]').addClass('hidden');
+                        $('#reset .hiddens').removeClass('hiddens');
+                        $('#reset .seePasswords').text('تغيير كلمة المرور');
+                        $('#reset .seePasswords').addClass('newPasswords').removeClass('seePasswords');
+                    }else{
+                        errorNotification(data.status.message);
+                    }
+                },
+            });
+        }
+    });
+
+    $(document).on('click','#reset .newPasswords',function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var password = $('#reset input[name="password"].inputStyle').val();
+        var password_confirmation = $('#reset input[name="password_confirmation"].inputStyle').val();
+        
+        if(password && password_confirmation){
+            $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+            $.ajax({
+                type: 'POST',
+                url: '/profile/resetPassword',
+                data:{
+                    '_token': $('meta[name="csrf-token"]').attr('content'),
+                    'password': password,
+                    'password_confirmation': password_confirmation,
+                },
+                success:function(data){
+                    if(data.status.status == 1){
+                        successNotification(data.status.message);
+                       	$('#reset').modal('hide')
+                        window.location.href = "/profile";
+                    }else{
+                        errorNotification(data.status.message);
+                    }
+                },
+            });
+        }
+    });
+
+	$('#login .btnModal.login').on('click',function(e){
         e.preventDefault();
         e.stopPropagation();
         var password = $('#login input[name="password"]').val();

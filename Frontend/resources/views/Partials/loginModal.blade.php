@@ -9,7 +9,8 @@
                 <h2 class="title">تسجيل الدخول</h2>
                 <input type="number" class="inputStyle" name="phone" placeholder="رقم الجوال" />
                 <input type="password" class="inputStyle" name="password" placeholder="كلمة المرور" />
-                <button class="btnModal">الدخول الآن</button>
+                <a class="reset">نسيت كلمة المرور ؟! </a>
+                <button class="btnModal login">الدخول الآن</button>
             </div>
         </div>
     </div>

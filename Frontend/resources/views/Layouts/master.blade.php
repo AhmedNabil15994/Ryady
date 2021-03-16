@@ -27,6 +27,7 @@
         </div>
 
         @include('Partials.loginModal')
+        @include('Partials.resetModal')
         @include('Partials.privacyModal')
         @include('Partials.profileModal')
 

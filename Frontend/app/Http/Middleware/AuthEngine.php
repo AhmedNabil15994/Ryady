@@ -16,7 +16,7 @@ class AuthEngine {
         }
 
         if (in_array($request->segment(1), ['profile'])) {
-            if (in_array($request->segment(2), ['login','logout'])) {
+            if (in_array($request->segment(2), ['login','logout','sendResetCode','checkCode','resetPassword'])) {
                 return $next($request);
             }
         }
