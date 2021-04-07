@@ -15,7 +15,9 @@
 						          	<li><a href="#" data-toggle="modal" data-target="{{ $item->link }}">{{ $item->title }}</a></li>
 				        		@endif
 				        	@else
-				          	<li><a href="#" data-toggle="modal" data-target="{{ $item->link }}">{{ $item->title }}</a></li>
+				        	@if(Request::segment(2) == 'requestMemberShip')
+				          		<li><a href="#" data-toggle="modal" data-target="{{ $item->link }}">{{ $item->title }}</a></li>
+				        	@endif
 				        	@endif
 				        @else
 				          	@if($item->id == 1)
@@ -40,6 +42,8 @@
 							<li><a href="{{ URL::to('/projects') }}">{{ $item->title }}</a></li>
 				          	@elseif($item->id == 11)
 				          	<li><a href="{{ URL::to('/members') }}">{{ $item->title }}</a></li>
+				          	@elseif($item->id == 13)
+				          	<li><a href="{{ URL::to('/whoUs') }}">{{ $item->title }}</a></li>
 				          	@endif
 				        @endif
 				    @endforeach
@@ -47,7 +51,7 @@
 			</div>
 			<div class="col-md-3">
 				<div class="followUs">
-					<h2 class="titleFollow">تابعنا هنا</h2>
+					<h2 class="titleFollow text-center">تابعنا هنا</h2>
 					<ul class="socialFooter clearfix">
 						<li><a href="{{ \App\Models\Variable::getVar('رابط الفيس بوك:') }}" target="_blank" class="fa fa-facebook"></a></li>
 						<li><a href="{{ \App\Models\Variable::getVar('رابط السناب شات:') }}" target="_blank" class="fa fa-snapchat"></a></li>
@@ -55,9 +59,9 @@
 						<li><a href="{{ \App\Models\Variable::getVar('رابط يوتيوب:') }}" target="_blank" class="fa fa-youtube"></a></li>
 						<li><a href="{{ \App\Models\Variable::getVar('رابط انستجرام:') }}" target="_blank" class="fa fa-instagram"></a></li>
 					</ul>
+					<a href="{{ \App\Models\Variable::getVar('رابط ال ios:') }}" target="_blank" class="mob"><img src="{{ asset('/assets/images/logoApple.png') }}" /></a>
+					<a href="{{ \App\Models\Variable::getVar('رابط الاندرويد:') }}" target="_blank" class="mob"><img src="{{ asset('/assets/images/logoGoogle.png') }}" /></a>
 				</div>
-				<a href="{{ \App\Models\Variable::getVar('رابط ال ios:') }}" target="_blank" class="mob"><img src="{{ asset('/assets/images/logoApple.png') }}" /></a>
-				<a href="{{ \App\Models\Variable::getVar('رابط الاندرويد:') }}" target="_blank" class="mob"><img src="{{ asset('/assets/images/logoGoogle.png') }}" /></a>
 			</div>
 		</div>
 	</div>

@@ -9,11 +9,13 @@
 			@php
 			$sideMenu = \App\Models\SideMenu::NotDeleted()->where('status',1)->orderBy('sort','ASC')->get();
 			@endphp
+			@if(\Session::has('user_id')  && Session::has('username'))
+		        <li><a href="{{ URL::to('/profile') }}" >{{ \App\Models\User::getOne(\Session::get('user_id'))->name_ar }}</a></li>
+		    @endif
 			@foreach($sideMenu as $key => $item)
 		        @if($item->link != '')
 		          	@if($item->link == '#login')
 		        		@if(\Session::has('user_id')  && Session::has('username'))
-		        			<li><a href="{{ URL::to('/profile') }}" >{{ \App\Models\User::getOne(\Session::get('user_id'))->name_ar }}</a></li>
 		        			<li><a href="{{ URL::to('/profile/logout') }}" >تسجيل الخروج</a></li>
 		        		@else
 				          	<li><a href="#" data-toggle="modal" data-target="{{ $item->link }}">{{ $item->title }}</a></li>
@@ -30,6 +32,8 @@
 		          	<li><a href="{{ URL::to('/vip') }}">{{ $item->title }}</a></li>
 		          	@elseif($item->id == 5)
 		          	<li><a href="{{ URL::to('/memberships') }}">{{ $item->title }}</a></li>
+		          	@elseif($item->id == 14)
+		          	<li><a href="{{ URL::to('/events') }}">{{ $item->title }}</a></li>
 		          	@elseif($item->id == 6)
 		          		@if(\Session::has('user_id')  && Session::has('username') )
 		          		<li><a href="{{ URL::to('/profile/addProject') }}">{{ $item->title }}</a></li>

@@ -20,6 +20,7 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\Photo;
 use App\Models\Variable;
+use App\Models\Message;
 use PDF;
 use PKPass\PKPass;
 
@@ -209,6 +210,9 @@ class ProfileControllers extends Controller {
         }
         if(isset($input['instagram']) && !empty($input['instagram'])){
             $userObj->instagram = $input['instagram'];
+        }
+        if(isset($input['gender']) && !empty($input['gender'])){
+            $userObj->gender = $input['gender'];
         }
         if(isset($input['password']) && !empty($input['password'])){
             $rules = [
@@ -717,5 +721,27 @@ class ProfileControllers extends Controller {
     	}
         $menuObj->save();
         return 1;
+    }
+
+    public function messages(){
+        $data['user'] = User::getData(User::getOne(USER_ID));
+        $data['points'] = User::getPoints();
+        $data['membership'] = UserCard::getData(UserCard::getAvailableForUser(USER_ID));
+        $data['messages'] = Message::dataList(1)['data'];
+        return view('Profile.Views.profile')->with('data',(object) $data);
+    }
+
+    public function newMessage(Request $request){
+        $input = \Request::all();
+        $menuObj = new Message;
+        $menuObj->user_id = $input['user_id'];
+        $menuObj->message = $input['message'];
+        $menuObj->created_at = DATE_TIME;
+        $menuObj->created_by = USER_ID;
+        $menuObj->save();
+
+        WebActions::newType(1,'Message');
+        Session::flash('success','تم الارسال بنجاح');
+        return \TraitsFunc::SuccessResponse("تنبيه! تم الارسال بنجاح");
     }
 }

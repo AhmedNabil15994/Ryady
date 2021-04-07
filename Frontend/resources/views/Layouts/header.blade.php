@@ -38,10 +38,8 @@
           <li><a href="{{ URL::to('/blogs') }}">{{ $item->title }}</a></li>
           @elseif($item->id == 5)
           <li><a href="{{ URL::to('/contactUs') }}">{{ $item->title }}</a></li>
-          @elseif($item->id == 6)
-            @if(\Session::has('user_id') && Session::has('username'))
-            <li><a href="{{ URL::to('/projects') }}">مشاريع الشاب الريادي</a></li>
-            @endif
+          @elseif($item->id == 8)
+            <li><a href="{{ URL::to('/projects') }}">{{ $item->title }}</a></li>
           @endif
         @endif
       @endforeach

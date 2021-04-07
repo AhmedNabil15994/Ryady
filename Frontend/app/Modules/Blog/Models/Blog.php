@@ -101,7 +101,7 @@ class Blog extends Model{
         $data->status = $source->status;
         $data->statusText = self::getStatus($source->status);
         $data->fileType = $source->fileType;
-        $data->photo = $source->show_images == 1 ? self::getPhotoPath($source->id, $source->file) : Variable::getVar('الصورة الافتراضية للمشرفين:');
+        $data->photo = $source->show_images == 1 ? self::getPhotoPath($source->id, $source->file) : asset('/assets/images/blog.jpg');
         $data->photo_name = $source->file;
         $data->photo_size = $data->photo != '' ? self::getPhotoSize($data->photo) : '';
         $data->show_images = $source->show_images;

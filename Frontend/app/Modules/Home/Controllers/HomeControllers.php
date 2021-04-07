@@ -86,6 +86,12 @@ class HomeControllers extends Controller {
         return view('Home.Views.index')->with('data',(object) $data);
     }
 
+    public function events(){
+        $data['data'] = Event::dataList(1)['data'];
+        $data['pages'] = Page::dataList(1,[3])['data'];
+        return view('Home.Views.events')->with('data',(object) $data);
+    }
+
     public function getOneEvent($id){
         $id = (int) $id;
         $eventObj = Event::getOne($id);

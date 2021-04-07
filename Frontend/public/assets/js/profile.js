@@ -190,4 +190,47 @@ $(function(){
         }
       });
 
+
+      $('.itemVip').on('click',function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var user_id = $(this).data('area');
+        var userName = $(this).children('.mask').children('h2.title').text();
+        if(user_id){
+          $('#profile .receiverName').html('');
+          $('#profile .receiverId').val('');
+          $('#profile').modal('show');
+          $('#profile .receiverName').html(userName);
+          $('#profile .receiverId').val(user_id);
+        }
+      });
+
+      $('#profile .sendNow').on('click',function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var user_id = $('#profile .receiverId').val();
+        var message = $('#profile .textareaStyle').val();
+        if(user_id && message){
+            
+            $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+            $.ajax({
+                  type:'POST',
+                  url: '/profile/newMessage',
+                  data:{
+                    'user_id': user_id,
+                    'message' : message,
+                  },
+                  success:function(data){
+                        if(data.status.status == 1){
+                              successNotification(data.status.message);
+                              $('#profile .receiverId').val('');
+                              $('#profile .textareaStyle').val('');
+                              $('#profile').modal('hide');
+                        }else{
+                              errorNotification(data.status.message);
+                        }
+                  },
+            });
+        }
+      })
 });

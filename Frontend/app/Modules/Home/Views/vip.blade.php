@@ -6,6 +6,7 @@
 <style type="text/css" media="screen">
     .vipPage .itemVip{
         height: 250px;
+        cursor: pointer;
     }
     .vipPage .itemVip .mask{
         padding-top: 190px;
@@ -31,7 +32,7 @@
             <div class="row">
                 @foreach($data->data->data as $user)
                 <div class="col-md-4">
-                    <div class="itemVip">
+                    <div class="itemVip" data-area="{{ \Session::has('user_id') ?  $user->id : '' }}">
                         <img src="{{ $user->user->photo }}" alt="" />
                         <div class="mask">
                             <h2 class="title">{{ $user->user->name_ar }}</h2>

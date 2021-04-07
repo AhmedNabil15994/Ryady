@@ -34,6 +34,15 @@
                         <input type="text" name="name_ar" value="{{ \Request::get('name_ar') }}" data-toggle="tooltip" data-placement="top" title="يرجي ادخال الاسم ثلاثي" class="inputStyle"/>
                         <label for="" data-toggle="tooltip" data-placement="top" title="يرجي ادخال الاسم ثلاثي">اسمك على البطاقة بالإنجليزي</label>
                         <input type="text" name="name_en" data-toggle="tooltip" data-placement="top" title="يرجي ادخال الاسم ثلاثي" value="{{ \Request::get('name_en') }}" class="inputStyle"/>
+                        <label for="">حدد النوع</label>
+                        <div class="selectStyle">
+                            <select class="selectmenu" id="selectmenu2" name="gender">
+                                <option value="1">ذكر</option>
+                                <option value="2">انثي</option>
+                            </select>
+                            <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
+                        </div>
+
                         <label for="">اختر العضوية</label>
                         <div class="selectStyle">
                             <select class="selectmenu" id="selectmenu" name="membership_id">

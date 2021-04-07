@@ -240,11 +240,11 @@ input[type="number"] {
 }
 
 #toast-container,.toast{
-	width: 100% !important;
-	top: 0 !important;
-    right: 0 !important;
+	/*width: 100% !important;*/
+	top: 50px !important;
+    /*right: 0 !important;*/
 }
-#toast-container >div {
+/*#toast-container >div {
     width: 100% !important;
    	opacity: 1;
    	box-shadow: none;
@@ -255,7 +255,7 @@ input[type="number"] {
 }
 #toast-container >div:hover{
    box-shadow: none !important;
-}
+}*/
 
 .transformPage
 {
@@ -1020,7 +1020,7 @@ input[type="number"] {
 
 .socialFooter li:not(:last-of-type)
 {
-	margin-left:20px;
+	margin-left:30px;
 }
 
 .socialFooter li a
@@ -1254,10 +1254,8 @@ input[type="number"] {
 
 .profile-modal .infoUser
 {
-	float:right;
 	padding-right:45px;
 	position: relative;
-	margin-bottom:30px;
 }
 
 .profile-modal .infoUser i
@@ -1275,11 +1273,6 @@ input[type="number"] {
 	color:#000;
 	margin-bottom:10px;
 	display:block
-}
-
-.profile-modal .infoUser:first-of-type
-{
-	margin-left:40px;
 }
 
 .profile-modal .infoUser a
@@ -1665,7 +1658,6 @@ input[type="number"] {
 	font-size:40px;
 	margin-bottom:40px;
 }
-
 .inputStyle,
 .selectStyle .ui-selectmenu-button.ui-button,
 .textareaStyle,
@@ -1685,7 +1677,14 @@ input[type="number"] {
 	-o-transition:all 0.3s;
 	transition:all 0.3s;
 }
-
+.textareaStyle{
+	width: unset !important; 
+	min-width: 100%;
+	max-width: 100%;
+	min-height: 150px;
+	max-height: 250px;
+	padding: 15px;
+}
 .selectStyle,
 .inputSt,
 .labelFile
@@ -2896,13 +2895,14 @@ a.ui-button:active, .ui-button:active,
 {
 	color:#000;
 	font-family: "STC-Bold";
-	margin-bottom:20px;
 	font-size:20px;
 	display:inline-block;
 	-webkit-transition:all 0.3s;
 	-moz-transition:all 0.3s;
 	-o-transition:all 0.3s;
 	transition:all 0.3s;
+	direction: rtl;
+	min-height: 55px;
 }
 
 .PartProjects .item:hover .details .title
@@ -2931,8 +2931,8 @@ a.ui-button:active, .ui-button:active,
 	border:10px solid #fff;
 	border-radius:50%;
 	position:absolute;
-	top:-57.5px;
-	left:20px;
+	top:-85px;
+	left:10px;
 }
 
 .PartProjects .pagiDiv
@@ -4617,6 +4617,9 @@ span.price.hasDisc{
 .hiddens{
 	display: none;
 }
+.memb.event{
+	display: block;
+}
 .memb.event:hover {
 	cursor: pointer;
     transform: translateY(-6px);
@@ -4633,4 +4636,11 @@ span.price.hasDisc{
 }
 .mb-25{
 	margin-bottom: 25px;
+}
+.footer a.mob{
+	display: inline-block;
+	margin-top: 20px;
+}
+.footer a.mob img{
+	width: 110px;
 }

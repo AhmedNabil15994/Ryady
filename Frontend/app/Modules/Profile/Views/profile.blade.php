@@ -4,7 +4,26 @@
 
 @section('styles')
 <link href="{{ asset('/assets/css/summernote.css') }}" rel="stylesheet">
+{{-- <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/font-awesome5.css') }}"> --}}
 <style type="text/css" media="screen">
+    .messages .PartProjects .item .details img{
+        top: 20px;
+        left: unset;
+        right: 5px;
+    }
+    .messages .PartProjects .item .details .location{
+        white-space: pre-wrap;
+    }
+    .messages .PartProjects .item .details .date{
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+    .messages .PartProjects .item .details .title,
+    .messages .PartProjects .item .details .location{
+        display: block;
+        margin-right: 100px;
+        min-height: unset;
+    }
     .cardStyle{
         height: 210px;
         padding: 50px 40px;
@@ -107,8 +126,15 @@
     p.noProjs{
         font-size: 18px;
     }
+    .fa{
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 </style>
-<link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/font-awesome5.css') }}">
 @endsection
 
 @section('content')
@@ -147,11 +173,15 @@
                             <li><a href="{{ URL::to('/profile/personalInfo') }}" class="{{ Active( URL::to('/profile/personalInfo')) }}">البيانات الشخصية 
                                 <img src="{{ asset('/assets/images/024-name.svg') }}" />
                                 </a></li>
-                            @if($data->membership->membership_id == 3)
+                            <li><a href="{{ URL::to('/profile/messages') }}" class="{{ Active( URL::to('/profile/messages')) }}">صندوق الرسائل 
+                                <img src="{{ asset('/assets/images/026-document.svg') }}" />
+                                </a></li>
+
+                            {{-- @if($data->membership->membership_id == 3)
                             <li><a href="{{ URL::to('/profile/download/'.$data->membership->id) }}" class="{{ Active( URL::to('/profile/certificate')) }}">شهادة العضوية 
                                 <img src="{{ asset('/assets/images/026-document.svg') }}" />
                             </a></li>
-                            @endif
+                            @endif --}}
                             @if($data->membership->membership_id != 1)
                             <li><a href="{{ URL::to('/profile/addBlog') }}" class="{{ Active( URL::to('/profile/addBlog')) }}">اضف مقالة 
                                 <img src="{{ asset('/assets/images/025-content-writing.svg') }}" />
@@ -172,7 +202,7 @@
                             </a></li>
                             @endif
                             <li class="last"><a href="{{ URL::to('/profile/logout') }}" class="{{ Active( URL::to('/profile/logout')) }}">
-                                <i class="fa fa-sign-out fa-sign-out-alt"></i>
+                                <i class="fa fa-sign-out"></i>
                                 تسجيل الخروج 
                             </a></li>
                         </ul>
@@ -206,6 +236,16 @@
                                         <div class="col-md-6">
                                             <label for="">كلمة المرور</label>
                                             <input type="password" class="inputStyle" name="password" placeholder="كلمة المرور"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">النوع</label>
+                                            <div class="selectStyle">
+                                                <select class="selectmenu" id="selectmenu2" name="gender">
+                                                    <option value="1"{{ $data->user->gender == 1 ? 'selected' : '' }}>ذكر</option>
+                                                    <option value="2"{{ $data->user->gender == 2 ? 'selected' : '' }}>انثي</option>
+                                                </select>
+                                                <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
+                                            </div>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">رابط فيسبوك</label>
@@ -684,6 +724,35 @@
                                     </div>
                                     <button class="btnStyle">ارسل الآن</button>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @elseif(Request::segment(2) == 'messages')
+                <div class="col-md-8 messages">
+                    <div class="profileDetails">
+                        <div class="tabs PartProjects">
+                            <div class="tab1 tab">
+                                <div class="row">
+                                    @if(!empty($data->messages))
+                                        @foreach($data->messages as $message)
+                                        <div class="col">
+                                            <div class="item">
+                                                <div class="details">
+                                                    <img class="imgDetails" src="{{ $message->creator->photo }}" alt="" />
+                                                    <a  class="title">{{ $message->creator->name_ar }}</a>
+                                                    <div class="clearfix"></div>
+                                                    <span class="location date" dir="rtl"><i class="flaticon-school-calendar pull-right"></i> {{ $message->creator->created_at }}</span>
+                                                    <p class="location" dir="rtl"><i class="flaticon-email pull-right"></i> {{ $message->message }} </p>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    @else
+                                    <p class="noProjs">عفوا لا تتوفر اي رسائل في الصندوق حتي الان .!</p>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>

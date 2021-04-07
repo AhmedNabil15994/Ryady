@@ -3,25 +3,18 @@
         <div class="modal-content">
             <div class="modal-body">
                 <button type="button" class="close fa fa-close" data-dismiss="modal"></button>
-                <div class="notFound hidden">عفواً لا يتوفر أي معلومات</div>
                 <div class="data">
-                    <img src="" alt="" />
-                    <h2 class="name"></h2>
-                    <h2 class="title">نبذة تعريفية</h2>
-                    <div class="desc"></div>
+                    <h2 class="title">تواصل مع <span class="receiverName"></span> : </h2>
+                    <input type="hidden" class="receiverId" value="">
                     <div class="clearfix">
                         <div class="infoUser">
                             <i class="flaticon-email"></i>
-                            <span class="titleInfo">البريد الإلكتروني</span>
-                            <a class="email" href=""></a>
-                        </div>
-                        <div class="infoUser">
-                            <i class="flaticon-phone-call"></i>
-                            <span class="titleInfo">رقم الجوال</span>
-                            <a class="phone" href="">012345678912345</a>
+                            <textarea class="textareaStyle" placeholder="اكتب رسالتك"></textarea>
                         </div>
                     </div>
                 </div>
+                <button class="btnModal btnStyle sendNow pull-left">ارسل الآن</button>
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>

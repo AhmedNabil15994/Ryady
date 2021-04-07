@@ -68,7 +68,11 @@ class User extends Model{
         if($source->image != null && $source->show_images == 1){
             return self::getPhotoPath($source->id, $source->image);
         }else{
-            return Variable::getVar('الصورة الافتراضية للمشرفين:');
+            if(in_array($source->gender, [1,2])){
+                return asset('/assets/images/'.$source->gender.'.png');
+            }else{
+                return Variable::getVar('الصورة الافتراضية للمشرفين:');
+            }
         }
     }
 
@@ -81,6 +85,8 @@ class User extends Model{
         $data->photo_size = $data->photo != '' ? self::getPhotoSize($data->photo) : '';
         $data->group = $source->Group != null ? $source->Group->title : '';
         $data->group_id = $source->group_id;
+        $data->gender = $source->gender;
+        $data->genderText = ($source->gender == 1 && $source->gender != null) ? 'ذكر' : 'انثي';
         $data->email = $source->email;
         $data->name_ar = $source->name_ar != null ? $source->name_ar : '';
         $data->name_en = $source->name_en != null ? $source->name_en : '';

@@ -3,6 +3,30 @@
 @section('title','مشاريع الشاب الريادي')
 
 @section('styles')
+<style type="text/css" media="screen">
+    .select2-container{
+        width: 100% !important;
+        text-align: right;
+        display: block;
+        height: 65px;
+    }
+    .selection,
+    .select2-container--default .select2-selection--single{
+        display: block;
+        height: 100%;
+    }
+    .select2-container[dir="rtl"] .select2-selection--single .select2-selection__rendered{
+        border: none;
+        float: right;
+        width: 50%;
+        font-size: 22px;
+        color: #000;
+        padding-top: 15px;
+    }
+    .select2-container--default[dir="rtl"] .select2-selection--single .select2-selection__arrow{
+        top: 16px;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -26,13 +50,13 @@
                         <div class="searchStyle clearfix">
                             <input type="text" name="title" value="{{ \Request::get('title') }}" placeholder="ابحث عن مزود الخدمة" />
                             <div class="selectStyle">
-                                <select class="selectmenu" name="city_id">
+                                <select class="select2" name="city_id">
                                     <option value="" selected disabled>حدد المدينة</option>
                                     @foreach($data->cities as $city)
                                     <option value="{{ $city->id }}" {{ $city->id == \Request::get('city_id') ? 'selected' : '' }}>{{ $city->title }}</option>
                                     @endforeach
                                 </select>
-                                <i class="fa fa-angle-down iconLeft"></i>
+                                {{-- <i class="fa fa-angle-down iconLeft"></i> --}}
                             </div>
                             <button type="submit" class="btnSearch">البحث</button>
                         </div>
@@ -59,7 +83,7 @@
     <div class="PartProjects">
         <div class="container">
             <div class="row">
-                <div id="OwlCards" class="OwlCards2 Owl wow zoomIn">
+                <div id="OwlAdvisors" class="OwlAdvisors Owl owl-carousel owl-theme wow zoomIn">
                     @foreach($data->data->data as $project)
                     <div class="item">
                         <a href="{{ URL::to('/projects/'.$project->id) }}" class="mask">

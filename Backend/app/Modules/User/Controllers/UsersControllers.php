@@ -159,6 +159,7 @@ class UsersControllers extends Controller {
         $groupObj->name_en = $input['name_en'];
         $groupObj->username = $input['username'];
         $groupObj->group_id = $input['group_id'];
+        $groupObj->gender = $input['gender'];
         $groupObj->email = $input['email'];
         $groupObj->address = $input['address'];
         $groupObj->phone = $input['phone'];
@@ -247,6 +248,7 @@ class UsersControllers extends Controller {
         $groupObj->email = $input['email'];
         $groupObj->address = $input['address'];
         $groupObj->phone = $input['phone'];
+        $groupObj->gender = $input['gender'];
         $groupObj->brief = $input['brief'];
         $groupObj->show_details = $input['show_details'];
         $groupObj->show_images = $input['show_images'];

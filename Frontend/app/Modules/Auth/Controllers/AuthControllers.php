@@ -203,7 +203,7 @@ class AuthControllers extends Controller {
             'to_date' => now()->format('Y-m-d H:i:s'),
         ]);
         session()->flush();
-        \Session::flash('success', "نراك قريبا ;)");
+        \Session::flash('error', "نراك قريبا ;)");
         return redirect('/');
 	}
 }

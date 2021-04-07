@@ -127,23 +127,17 @@ class MembershipControllers extends Controller {
             return redirect()->back()->withInput();
         }
 
-        $userObj = User::checkUserByEmail($input['email']);
-        $userCardObj = UserCard::where('user_id', $userObj->id)->where('membership_id',$input['membership_id'])->first();
-        if($userCardObj != null){
-            \Session::flash('error', 'عفوا انت مشترك بالفعل في هذه العضوية!');
-            return redirect()->back()->withInput();
-        }
+        // $userObj = User::checkUserByEmail($input['email']);
+        // if($userObj != null){
+        //     $userCardObj = UserCard::where('user_id', $userObj->id)->where('membership_id',$input['membership_id'])->first();
+        //     \Session::flash('error', 'عفوا انت مشترك بالفعل في هذه العضوية!');
+        //     return redirect()->back()->withInput();
+        // }
         
-        if($userObj != null){
-            \Session::flash('error', 'هذا البريد الالكتروني مستخدم من قبل');
-            return redirect()->back()->withInput();
-        }
-
-        $userObj = User::checkUserByPhone($input['phone']);
-        if($userObj != null){
-            \Session::flash('error', 'هذا رقم التليفون مستخدم من قبل');
-            return redirect()->back()->withInput();
-        }
+        // if($userObj != null){
+        //     \Session::flash('error', 'هذا البريد الالكتروني مستخدم من قبل');
+        //     return redirect()->back()->withInput();
+        // }
 
         $nameArArr = explode(' ', $input['name_ar']);
         if(count($nameArArr) != 3){
@@ -160,13 +154,7 @@ class MembershipControllers extends Controller {
         $start_date = now()->format('Y-m-d');
         $end_date = date("Y-m-d", strtotime(now()->format('Y-m-d'). " + ".$membershipObj->period." year"));
 
-        $rand = rand(100,100000);
-        $username = str_replace(' ', '', $input['name_en']) . '-' . $rand;
-        $checkUser = User::checkUserByUserName($username);
-        while ($checkUser != null) {
-            $rand = rand(1000,1000000);
-            $username = str_replace(' ', '', $input['name_en']) . '-' . $rand;
-        }
+        $username = $input['name_en'];
 
         $availableCoupons = Coupon::availableCoupons();
         $availableCoupons = reset($availableCoupons);
@@ -182,23 +170,28 @@ class MembershipControllers extends Controller {
             }
         }
 
-        $userObj = new User;
-        $userObj->name_ar = $input['name_ar'];
-        $userObj->name_en = $input['name_en'];
-        $userObj->username = $username;
-        $userObj->email = $input['email'];
-        $userObj->password = \Hash::make($input['password']);
-        $userObj->group_id = 3;
-        $userObj->phone = $input['phone'];
-        $userObj->show_details = 0;
-        $userObj->lang = 0;
-        $userObj->status = 0;
-        $userObj->is_active = 0;
-        $userObj->sort = User::newSortIndex();
-        $userObj->created_at = DATE_TIME;
-        $userObj->created_by = 0;
-        $userObj->save();
+        $userObj = User::checkUserByPhone($input['phone']);
+        if($userObj == null){
+            $userObj = new User;
+            $userObj->name_ar = $input['name_ar'];
+            $userObj->name_en = $input['name_en'];
+            $userObj->username = $username;
+            $userObj->email = $input['email'];
+            $userObj->password = \Hash::make($input['password']);
+            $userObj->group_id = 3;
+            $userObj->gender = $input['gender'];
+            $userObj->phone = $input['phone'];
+            $userObj->show_details = 0;
+            $userObj->lang = 0;
+            $userObj->status = 0;
+            $userObj->is_active = 0;
+            $userObj->sort = User::newSortIndex();
+            $userObj->created_at = DATE_TIME;
+            $userObj->created_by = 0;
+            $userObj->save();
+        }
 
+        
         $menuObj = new UserCard;
         $menuObj->user_id = $userObj->id;
         $menuObj->code = UserCard::getNewCode();

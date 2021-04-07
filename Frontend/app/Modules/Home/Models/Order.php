@@ -67,6 +67,8 @@ class Order extends Model{
         $dataObj->email = $source->email;
         $dataObj->category_id = $source->category_id;
         $dataObj->categoryText = $source->category_id ? $source->Category->title : '';
+        $dataObj->auto_reply = $source->auto_reply != null ? $source->auto_reply : '';
+        $dataObj->interactive_reply = $source->interactive_reply != null ? $source->interactive_reply : '';
         $dataObj->status = $source->status;
         $dataObj->statusText = self::getStatus($source->status);
         $dataObj->sort = $source->sort;
