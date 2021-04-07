@@ -125,6 +125,16 @@
                     </div>
                     <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
                         <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">حدد النوع: </label>
+                            <select name="gender" class="form-control mb-5 select2" id="kt_select2_13">
+                                <option value="1" {{ $data->data->gender == 1 ? 'selected' : '' }}>ذكر</option>
+                                <option value="2" {{ $data->data->gender == 2 ? 'selected' : '' }}>انثي</option>
+                            </select>
+                            <span class="m-form__help LastUpdate">تم الحفظ فى :  {{ $data->data->created_at }}</span>
+                        </div>
+                    </div> 
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
                             <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">اسم المستخدم</label>
                             <input type="hidden" name="status" value="">
                             <input class="form-control mb-5" type="text" name="username" value="{{ $data->data->username }}" maxlength="" placeholder="">

@@ -23,6 +23,7 @@ use App\Models\WebActions;
 use App\Models\ContactUs;
 use App\Models\Advantage;
 use App\Models\Event;
+use App\Models\UserEvent;
 
 
 class HomeControllers extends Controller {
@@ -210,5 +211,105 @@ class HomeControllers extends Controller {
 
     public function whoUs(){
         return view('Home.Views.whoUs');
+    }
+
+    public function joinEvent($id){
+        $id = (int) $id;
+        $eventObj = Event::getOne($id);
+        if(!$eventObj){
+            return redirect('404');
+        }
+
+        if(\Session::has('user_id')){
+            $user_id = \Session::get('user_id');
+        }
+        
+        $userObj = User::getOne($user_id);
+        if(!$userObj){
+            return redirect('404');
+        }
+
+        $userEventObj = UserEvent::getOneByData($user_id,$id);
+        if($userEventObj){
+            \Session::flash('error','انت مشترك بالفعل في هذه الفعالية');
+            return redirect()->back();
+
+        }
+
+        $userEventObj = new UserEvent;
+        $userEventObj->user_id = $user_id;
+        $userEventObj->event_id = $id;
+        $userEventObj->status = 2;
+        $userEventObj->sort = UserEvent::newSortIndex();
+        $userEventObj->created_at = DATE_TIME;
+        $userEventObj->created_by = $user_id;
+        $userEventObj->save();
+
+        $names = explode(' ', $userObj->name_en ,2);
+        $invoiceData = [
+            'title' => $userObj->name_en,
+            'cc_first_name' => $names[0],
+            'cc_last_name' => isset($names[1]) ? $names[1] : '',
+            'email' => $userObj->email,
+            'cc_phone_number' => '',
+            'phone_number' => $userObj->phone,
+            'products_per_title' => 'Joining Event',
+            'reference_no' => 'user-'.$userObj->id.'-'.$id,
+            'unit_price' => $eventObj->price,
+            'quantity' => 1,
+            'amount' => $eventObj->price,
+            'other_charges' => 'VAT',
+            'discount' => '',
+            'payment_type' => 'mastercard',
+            'OrderID' => 'user-'.$userObj->id.'-'.$id,
+            'SiteReturnURL' => \URL::to('/memberships/pushInvoice/'.$userObj->id.'/event'),
+        ];
+        // dd($invoiceData);
+        $paymentObj = new \PaymentHelper();        
+        return $paymentObj->RedirectWithPostForm($invoiceData);
+    }
+
+    public function postNewEventUser($id){
+        $id = (int) $id;
+        $input = \Request::all();
+        $nameArArr = explode(' ', $input['name_ar']);
+        if(count($nameArArr) != 3){
+            \Session::flash('error', 'يرجي ادخال الاسم العربي ثلاثي');
+            return redirect()->back()->withInput();
+        }
+
+        $nameEnArr = explode(' ', $input['name_en']);
+        if(count($nameEnArr) != 3){
+            \Session::flash('error', 'يرجي ادخال الاسم الانجليزي ثلاثي');
+            return redirect()->back()->withInput();
+        }
+
+        $userObj = User::checkUserByEmail($input['email']);
+        if(!$userObj){
+            $userObj = User::checkUserByPhone($input['phone']);
+        }
+
+        if(!$userObj){
+            $userObj = new User;
+            $userObj->name_ar = $input['name_ar'];
+            $userObj->name_en = $input['name_en'];
+            $userObj->username = $input['name_en'];
+            $userObj->email = $input['email'];
+            $userObj->password = \Hash::make($input['password']);
+            $userObj->group_id = 3;
+            $userObj->gender = $input['gender'];
+            $userObj->phone = $input['phone'];
+            $userObj->show_details = 0;
+            $userObj->lang = 0;
+            $userObj->status = 0;
+            $userObj->is_active = 0;
+            $userObj->sort = User::newSortIndex();
+            $userObj->created_at = DATE_TIME;
+            $userObj->created_by = 0;
+            $userObj->save();
+        }
+
+        \Session::put('user_id',$userObj->id);
+        return $this->joinEvent($id);
     }
 }

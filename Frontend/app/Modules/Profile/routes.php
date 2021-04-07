@@ -20,9 +20,13 @@ Route::group(['prefix' => '/'] , function () {
     Route::get('/download/{id}', 'ProfileControllers@download');
 
     Route::get('/newProject', 'ProfileControllers@newProject');
+    Route::get('/projects', 'ProfileControllers@projects');
+
     Route::get('/addProject', 'ProfileControllers@addProject');
     Route::post('/addProject', 'ProfileControllers@postAddProject');
-    Route::get('/projects', 'ProfileControllers@projects');
+
+    Route::get('/editProject/{id}', 'ProfileControllers@editProject');
+    Route::post('/updateProject/{id}', 'ProfileControllers@updateProject');
 
     Route::get('/newOrder', 'ProfileControllers@newOrder');
     Route::post('/postOrder', 'ProfileControllers@postOrder');

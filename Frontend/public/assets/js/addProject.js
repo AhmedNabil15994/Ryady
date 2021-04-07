@@ -57,7 +57,21 @@ $(function(){
 		e.preventDefault();
 		e.stopPropagation();
 
-		var formData = new FormData();
+		sendData('/profile/addProject');
+
+	});
+
+
+    $('.update-btn').on('click',function(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        sendData('/profile/updateProject/'+$('input[name="areas"]').val());
+
+    });
+
+    function sendData($url){
+        var formData = new FormData();
         formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
         formData.append('title', $('input[name="title"]').val());
         formData.append('phone', $('input[name="phone"]').val());
@@ -71,33 +85,30 @@ $(function(){
         formData.append('brief', $('textarea[name="brief"]').val());
         formData.append('category_id', $('select[name="category_id"]').val());
         formData.append('city_id', $('select[name="city_id"]').val());
-		if (selecImgs.length > 0) {
+        if (selecImgs.length > 0) {
             for (var i = 0; i < selecImgs.length; i++) {
                 formData.append('images[]', selecImgs[i]);
             }
         }
 
-		$.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
-	    $.ajax({
-	    	type:'POST',
-            url: '/profile/addProject',
-	        data:formData,
+        $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+        $.ajax({
+            type:'POST',
+            url: $url,
+            data:formData,
             cache:false,
             contentType: false,
             processData: false,
             success:function(data){
-	            if(data.status.status == 1){
-	                successNotification(data.status.message);
-	                location.reload();
-	                // window.location.href = "/profile";
-	            }else{
-	                errorNotification(data.status.message);
-	            }
-	        },
-	    });
-
-
-	});
-
+                if(data.status.status == 1){
+                    successNotification(data.status.message);
+                    location.reload();
+                    // window.location.href = "/profile";
+                }else{
+                    errorNotification(data.status.message);
+                }
+            },
+        });
+    }
  
 });

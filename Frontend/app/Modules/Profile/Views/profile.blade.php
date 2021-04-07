@@ -6,6 +6,19 @@
 <link href="{{ asset('/assets/css/summernote.css') }}" rel="stylesheet">
 {{-- <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/font-awesome5.css') }}"> --}}
 <style type="text/css" media="screen">
+    a.edit{
+        position: absolute;
+        z-index: 99;
+        right: 30px;
+        top: 10px;
+        font-size: 20px;
+        color: #777;
+        background: #FFF;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        padding: 1px 2px;
+    }
     .messages .PartProjects .item .details img{
         top: 20px;
         left: unset;
@@ -164,7 +177,9 @@
                             </form>
                         </center>
                         <h2 class="name">{{ $data->user->name_ar }}</h2>
+                        @if($data->membership != null)
                         <span style="color: {{ $data->membership->membership->color }}">{{ $data->membership->membership->title }}</span>
+                        @endif
                         <p class="name">لديك {{ $data->points }} نقطة</p>
                         <ul class="listProfile">
                             <li><a href="{{ URL::to('/profile') }}" class="{{ Active( URL::to('/profile')) }}">العضوية 
@@ -182,13 +197,13 @@
                                 <img src="{{ asset('/assets/images/026-document.svg') }}" />
                             </a></li>
                             @endif --}}
-                            @if($data->membership->membership_id != 1)
+                            @if($data->membership != null && $data->membership->membership_id != 1)
                             <li><a href="{{ URL::to('/profile/addBlog') }}" class="{{ Active( URL::to('/profile/addBlog')) }}">اضف مقالة 
                                 <img src="{{ asset('/assets/images/025-content-writing.svg') }}" />
                             </a></li>
                             @endif
                             
-                            @if($data->membership->membership_id == 3)
+                            @if($data->membership != null && $data->membership->membership_id == 3)
                             <li><a href="{{ URL::to('/profile/newProject') }}" class="{{ Active( URL::to('/profile/newProject')) }}">اضف مشروعك 
                                 <img src="{{ asset('/assets/images/027-add.svg') }}" />
                             </a></li>
@@ -280,7 +295,7 @@
                         </div>
                     </div>
                 </div>
-                @elseif(Request::segment(2) == null)
+                @elseif(Request::segment(2) == null && $data->membership != null)
                 <div class="col-md-8">
                     <div class="profileDetails">
                         <div class="tabsHead">
@@ -665,6 +680,7 @@
                                         @foreach($data->projects as $project)
                                         <div class="col-md-6">
                                             <div class="item">
+                                                <a href="{{ URL::to('/profile/editProject/'.$project->id) }}" class="edit"><i class="fa fa-pencil"></i></a>
                                                 <a href="{{ URL::to('/projects/'.$project->id) }}" class="mask">
                                                     <img src="{{ isset($project->images[0]) ? $project->images[0]->photo : $project->logo }}" alt="" />
                                                 </a>
@@ -757,9 +773,130 @@
                         </div>
                     </div>
                 </div>
+                @elseif(Request::segment(2) == 'editProject' && $data->membership->membership_id == 3)
+                <div class="col-md-8">
+                    <div class="profileDetails">
+                        <div class="tabs">
+                            <div class="tab1 tab">
+                                <form class="center-block">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="">اسم المشروع :</label>
+                                            <input type="text" class="inputStyle" name="title" value="{{ $data->data->title }}" placeholder="اسم المشروع :" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">التصنيف :</label>
+                                            <div class="selectStyle">
+                                                <select class="selectmenu" name="category_id" id="selectmenu">
+                                                    <option value="" disabled selected>اختر التصنيف :</option>
+                                                    @foreach($data->categories as $category)
+                                                    <option value="{{ $category->id }}" {{ $data->data->category_id == $category->id ? 'selected' : '' }}>{{ $category->title }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">نبذة عن المشروع :</label>
+                                            <textarea class="textareaStyle" name="brief" placeholder="نبذة عن المشروع :">{{ $data->data->brief }}</textarea>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">حالة المشروع :</label>
+                                            <div class="selectStyle">
+                                                <select class="selectmenu" name="type" id="selectmenu3">
+                                                    <option value="" disabled selected>اختر حالة المشروع :</option>
+                                                    <option value="تحت التأسيس" {{ $data->data->type == "تحت التأسيس" ? 'selected' : '' }}>تحت التأسيس</option>
+                                                    <option value="قائم" {{ $data->data->type == "قائم" ? 'selected' : '' }}>قائم</option>
+                                                    <option value="متعثر" {{ $data->data->type == "متعثر" ? 'selected' : '' }}>متعثر</option>
+                                                    <option value="@" {{ $data->data->type == "أخري" ? 'selected' : '' }}>أخري</option>
+                                                </select>
+                                            </div>
+                                            <input type="text" class="inputStyle {{ $data->data->type != 'أخري' ? 'hidden' : '' }}" name="type_text" value="{{ $data->data->type == 'أخري' ? $data->data->type_text : "" }}" placeholder="أخري :" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="">رأس مال المشروع :</label>
+                                            <div class="coupons">
+                                                <div class="inputSt">
+                                                    <input type="text" class="inputStyle" name="coupons" value="{{ $data->data->coupons }}" placeholder="رأس مال المشروع :" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">المدينة :</label>
+                                            <div class="selectStyle">
+                                                <select class="selectmenu" name="city_id" id="selectmenu2">
+                                                    <option value="" disabled selected>اختر المدينة :</option>
+                                                    @foreach($data->cities as $city)
+                                                    <option value="{{ $city->id }}" {{ $data->data->city_id == $city->id ? 'selected' : '' }}>{{ $city->title }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">الموقع الجغرافي :</label>
+                                            <div class="inputSt">
+                                                <input type="text" class="inputStyle" name="gmaps" placeholder="خرائط جوجل :" />
+                                                <img class="iconImg locations" data-toggle="modal" data-target=".modal-location" src="{{ asset('/assets/images/google-maps (2).png') }}" />
+                                                <input type="hidden" name="lat" value="{{ $data->data->lat }}">
+                                                <input type="hidden" name="lng" value="{{ $data->data->lng }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">شعار النشاط :</label>
+                                            <div class="labelFile">
+                                                <label>
+                                                    <span>شعار النشاط :</span>
+                                                    <input type="file" name="logo" />
+                                                    <i class="fa fa-upload"></i>
+                                                </label>
+                                                <ul class="imgs">
+                                                    <li>
+                                                        <img src="{{ $data->data->logo }}" alt="">
+                                                        <i class="fa fa-close" data-area="0"></i>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">صور عن النشاط :</label>
+                                            <div class="labelFile">
+                                                <label>
+                                                    <span>صور عن النشاط :</span>
+                                                    <input type="file" name="images[]" />
+                                                    <i class="fa fa-upload"></i>
+                                                </label>
+                                                <ul class="imgs">
+                                                    @foreach($data->data->images as $key=> $image)
+                                                    <li>
+                                                        <img src="{{ $image->photo }}" alt="">
+                                                        <i class="fa fa-close" data-area="{{ $key }}"></i>
+                                                    </li>
+                                                    @endforeach 
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">رقم الجوال :</label>
+                                            <input type="text" class="inputStyle" value="{{ $data->data->phone }}" name="phone" placeholder="رقم الجوال :" />
+                                        </div>
+                                        <input type="hidden" name="areas" value="{{ $data->data->id }}">
+                                        <div class="col-md-6">
+                                            <label for="">البريد الالكتروني :</label>
+                                            <input type="email" class="inputStyle" value="{{ $data->data->email }}" name="email" placeholder="البريد الالكتروني :" />
+                                        </div>
+                                    </div>
+                                    <button class="btnStyle update-btn pull-left">تعديل البيانات</button>
+                                    <div class="clearfix"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 @endif
             </div>
-
         </div>
     </div> 
 @endsection

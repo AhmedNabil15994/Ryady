@@ -10,6 +10,5 @@ Route::group(['prefix' => '/memberships'] , function () {
 
     Route::get('/activate', 'MembershipControllers@activate');
 
-    Route::post('/pushInvoice/{id}','MembershipControllers@pushInvoice');
-    Route::post('/pushRequest/{id}','MembershipControllers@pushRequest');
+    Route::post('/pushInvoice/{id}/{type}','MembershipControllers@pushInvoice');
 });

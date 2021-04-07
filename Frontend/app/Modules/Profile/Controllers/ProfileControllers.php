@@ -185,7 +185,7 @@ class ProfileControllers extends Controller {
         $data['user'] = User::getData(User::getOne(USER_ID));
         $data['points'] = User::getPoints();
         $cardObj = UserCard::getAvailableForUser(USER_ID);
-        $data['membership'] = UserCard::getData($cardObj);
+        $data['membership'] = $cardObj != null ? UserCard::getData($cardObj) : null;
         $data['memberships'] = Membership::dataList(1)['data'];
         return view('Profile.Views.profile')->with('data',(object) $data);
     }
@@ -263,16 +263,16 @@ class ProfileControllers extends Controller {
     public function membership(){
         $data['user'] = User::getData(User::getOne(USER_ID));
         $cardObj = UserCard::getAvailableForUser(USER_ID);
-        $data['membership'] = UserCard::getData($cardObj);
+        $data['membership'] = $cardObj != null ? UserCard::getData($cardObj) : null;
         $data['memberships'] = Membership::dataList(1)['data'];
-        $data['qrCode'] = \QrCode::size(50)->generate($data['membership']->code);
+        $data['qrCode'] = $cardObj != null ? \QrCode::size(50)->generate($data['membership']->code) : null;
         $data['points'] = User::getPoints();
-        $membership_id = $data['membership']->membership_id;
-        $membership = Membership::getData(Membership::getOne($membership_id));
+        $membership_id = $cardObj != null ? $data['membership']->membership_id : null;
+        $membership = $cardObj != null ? Membership::getData(Membership::getOne($membership_id)) : null;
         $data['mainMembership'] = $membership;
-        $ids = $membership->features;
+        $ids = $cardObj != null ? $membership->features : null;
         $data['features'] = Feature::dataList(1,$ids)['data'];
-        $data['printCards'] = UserRequest::NotDeleted()->where('user_id',USER_ID)->where('status',1)->where('user_card_id',$cardObj->id)->first();
+        $data['printCards'] = $cardObj != null ? UserRequest::NotDeleted()->where('user_id',USER_ID)->where('status',1)->where('user_card_id',$cardObj->id)->first() : null;
         return view('Profile.Views.profile')->with('data',(object) $data);
     }
 
@@ -283,22 +283,22 @@ class ProfileControllers extends Controller {
         $menuObj = UserCard::getData($menuObj);
         // dd($membershipObj);
         // Create Invoice
-        $invoiceData =[
-            'amount' => 100 * 100 ,
-            'currency' => 'SAR',
-            'description' => 'بطاقة مطبوعة لعضوية '.$membershipObj->title . ' بطاقة رقم '.$menuObj->code,
-            'callback_url' => \URL::to('/memberships/pushRequest/'.$userObj->id),
-            'expired_at' => date("Y-m-d", strtotime(now()->format('Y-m-d'). " + 1 day")),
-        ];
-        $paymentObj = new \PaymentHelper();        
-        $createPayment = $paymentObj->moyasar('invoices',$invoiceData);
-        $invoiceResult = $createPayment->json();
+        // $invoiceData =[
+        //     'amount' => 100 * 100 ,
+        //     'currency' => 'SAR',
+        //     'description' => 'بطاقة مطبوعة لعضوية '.$membershipObj->title . ' بطاقة رقم '.$menuObj->code,
+        //     'callback_url' => \URL::to('/memberships/pushRequest/'.$userObj->id),
+        //     'expired_at' => date("Y-m-d", strtotime(now()->format('Y-m-d'). " + 1 day")),
+        // ];
+        // $paymentObj = new \PaymentHelper();        
+        // $createPayment = $paymentObj->moyasar('invoices',$invoiceData);
+        // $invoiceResult = $createPayment->json();
 
-        $checkResult = $paymentObj->formatResponse($invoiceResult);
-        if($checkResult[0] == 0){
-            \Session::flash('error', $checkResult[1]);
-            return redirect()->back();
-        }
+        // $checkResult = $paymentObj->formatResponse($invoiceResult);
+        // if($checkResult[0] == 0){
+        //     \Session::flash('error', $checkResult[1]);
+        //     return redirect()->back();
+        // }
 
         $userRequestObj = new UserRequest();
         $userRequestObj->user_id = USER_ID;
@@ -314,13 +314,36 @@ class ProfileControllers extends Controller {
         \Session::put('new_user_id',$userObj->id);
         \Session::put('user_request_id',$userRequestObj->id);
         WebActions::newType(1,'UserRequest',$userRequestObj->id);
-        return redirect()->away($invoiceResult['url']);
+
+        $names = explode(' ', $userObj->name_en ,2);
+        $invoiceData = [
+            'title' => $userObj->name_en,
+            'cc_first_name' => $names[0],
+            'cc_last_name' => isset($names[1]) ? $names[1] : '',
+            'email' => $userObj->email,
+            'cc_phone_number' => '',
+            'phone_number' => $userObj->phone,
+            'products_per_title' => 'Printed Card',
+            'reference_no' => 'user-'.$userObj->id.'-'.$userRequestObj->id,
+            'unit_price' => 100,
+            'quantity' => 1,
+            'amount' => 100,
+            'other_charges' => 'VAT',
+            'discount' => '',
+            'payment_type' => 'mastercard',
+            'OrderID' => 'user-'.$userObj->id.'-'.$userRequestObj->id,
+            'SiteReturnURL' => \URL::to('/memberships/pushInvoice/'.$userObj->id.'/card'),
+        ];
+        // dd($invoiceData);
+        $paymentObj = new \PaymentHelper();        
+        return $paymentObj->RedirectWithPostForm($invoiceData);
     }
 
     public function newProject(){
         $data['user'] = User::getData(User::getOne(USER_ID));
         $data['points'] = User::getPoints();
-        $data['membership'] = UserCard::getData(UserCard::getAvailableForUser(USER_ID));
+        $cardObj = UserCard::getAvailableForUser(USER_ID);
+        $data['membership'] = $cardObj != null ? UserCard::getData($cardObj) : null;
         $data['categories'] = ProjectCategory::dataList(1)['data'];
         $data['cities'] = City::dataList(1)['data'];
         return view('Profile.Views.profile')->with('data',(object) $data);
@@ -330,14 +353,16 @@ class ProfileControllers extends Controller {
         $data['user'] = User::getData(User::getOne(USER_ID));
         $data['points'] = User::getPoints();
         $data['projects'] = Project::dataList(null,null,USER_ID)['data'];
-        $data['membership'] = UserCard::getData(UserCard::getAvailableForUser(USER_ID));
+         $cardObj = UserCard::getAvailableForUser(USER_ID);
+        $data['membership'] = $cardObj != null ? UserCard::getData($cardObj) : null;
         return view('Profile.Views.profile')->with('data',(object) $data);
     }
 
     public function addBlog(){
         $data['user'] = User::getData(User::getOne(USER_ID));
         $data['points'] = User::getPoints();
-        $data['membership'] = UserCard::getData(UserCard::getAvailableForUser(USER_ID));
+        $cardObj = UserCard::getAvailableForUser(USER_ID);
+        $data['membership'] = $cardObj != null ? UserCard::getData($cardObj) : null;
         $data['categories'] = BlogCategory::dataList(1)['data'];
         return view('Profile.Views.profile')->with('data',(object) $data);
     }
@@ -401,7 +426,8 @@ class ProfileControllers extends Controller {
         }
         $data['user'] = User::getData(User::getOne(USER_ID));
         $data['points'] = User::getPoints();
-        $data['membership'] = UserCard::getData(UserCard::getAvailableForUser(USER_ID));
+        $cardObj = UserCard::getAvailableForUser(USER_ID);
+        $data['membership'] = $cardObj != null ? UserCard::getData($cardObj) : null;
         $data['data'] = OrderCategory::dataList(1)['data'];
         return view('Profile.Views.profile')->with('data',(object) $data);
     }
@@ -564,29 +590,53 @@ class ProfileControllers extends Controller {
         }
 
         // Create Invoice
-        $invoiceData =[
-            'amount' => $membershipObj->price * 100 - $discounts,
-            'currency' => 'SAR',
-            'description' => 'ترقية من عضوية '.$avail->Membership->title.' الي عضوية '.$membershipObj->title . ' بطاقة رقم '.$menuObj->code,
-            'callback_url' => \URL::to('/memberships/pushInvoice/'.$userObj->id),
-            'expired_at' => date("Y-m-d", strtotime(now()->format('Y-m-d'). " + 1 day")),
-        ];
-        $paymentObj = new \PaymentHelper();        
-        $createPayment = $paymentObj->moyasar('invoices',$invoiceData);
-        $invoiceResult = $createPayment->json();
+        // $invoiceData =[
+        //     'amount' => $membershipObj->price * 100 - $discounts,
+        //     'currency' => 'SAR',
+        //     'description' => 'ترقية من عضوية '.$avail->Membership->title.' الي عضوية '.$membershipObj->title . ' بطاقة رقم '.$menuObj->code,
+        //     'callback_url' => \URL::to('/memberships/pushInvoice/'.$userObj->id),
+        //     'expired_at' => date("Y-m-d", strtotime(now()->format('Y-m-d'). " + 1 day")),
+        // ];
+        // $paymentObj = new \PaymentHelper();        
+        // $createPayment = $paymentObj->moyasar('invoices',$invoiceData);
+        // $invoiceResult = $createPayment->json();
 
-        $checkResult = $paymentObj->formatResponse($invoiceResult);
-        if($checkResult[0] == 0){
-            \Session::flash('error', $checkResult[1]);
-            return redirect()->back();
-        }
+        // $checkResult = $paymentObj->formatResponse($invoiceResult);
+        // if($checkResult[0] == 0){
+        //     \Session::flash('error', $checkResult[1]);
+        //     return redirect()->back();
+        // }
 
         \Session::put('new_user_id',$userObj->id);
         \Session::put('user_card_id',$menuObj->id);
         \Session::put('upgrade',1);
         WebActions::newType(1,'UserCard',$menuObj->id);
         WebActions::newType(2,'UserCard',$avail->id);
-        return redirect()->away($invoiceResult['url']);
+
+        $names = explode(' ', $userObj->name_en ,2);
+        $invoiceData = [
+            'title' => $userObj->name_en,
+            'cc_first_name' => $names[0],
+            'cc_last_name' => isset($names[1]) ? $names[1] : '',
+            'email' => $userObj->email,
+            'cc_phone_number' => '',
+            'phone_number' => $userObj->phone,
+            'products_per_title' => 'New Membership',
+            'reference_no' => 'user-'.$userObj->id.'-'.$menuObj->id,
+            'unit_price' => $membershipObj->price - $discounts,
+            'quantity' => 1,
+            'amount' => $membershipObj->price - $discounts,
+            'other_charges' => 'VAT',
+            'discount' => '',
+            'payment_type' => 'mastercard',
+            'OrderID' => 'user-'.$userObj->id.'-'.$menuObj->id,
+            'SiteReturnURL' => \URL::to('/memberships/pushInvoice/'.$userObj->id.'/membership'),
+        ];
+        // dd($invoiceData);
+        $paymentObj = new \PaymentHelper();        
+        return $paymentObj->RedirectWithPostForm($invoiceData);
+
+        // return redirect()->away($invoiceResult['url']);
     }
 
     public function download($id){
@@ -679,6 +729,72 @@ class ProfileControllers extends Controller {
         return \TraitsFunc::SuccessResponse("تنبيه! تم الحفظ بنجاح");
     }
 
+    public function editProject($id){
+        $id = (int) $id;
+        $blogObj = Project::getOne($id);
+        if(!$blogObj || $blogObj->created_by != USER_ID){
+            return redirect('404');
+        }
+        $data['data'] = Project::getData($blogObj);
+        $data['categories'] = ProjectCategory::dataList(1)['data'];
+        $data['cities'] = City::dataList(1)['data'];
+        $data['membership'] = UserCard::getData(UserCard::getAvailableForUser(USER_ID));
+        $data['user'] = User::getData(User::getOne(USER_ID));
+        $data['points'] = User::getPoints();
+        return view('Profile.Views.profile')->with('data',(object) $data);
+    }
+
+    public function updateProject($id,Request $request){
+        $id = (int) $id;
+        $input = \Request::all();
+
+        $validate = $this->validateObject($input);
+        if($validate->fails()){
+            return \TraitsFunc::ErrorMessage($validate->messages()->first());
+        }
+
+        $menuObj = Project::getOne($id);
+        if(!$menuObj || $menuObj->created_by != USER_ID){
+            return \TraitsFunc::ErrorMessage("تنبيه! هذا المشروع غير موجود");
+        }
+
+        $menuObj->title = $input['title'];
+        $menuObj->type = $input['type'] == '@' ? 'أخري' : $input['type'];
+        $menuObj->type_text = $input['type'] == '@' ? $input['type_text'] : '';
+        $menuObj->email = $input['email'];
+        $menuObj->phone = $input['phone'];
+        $menuObj->city_id = $input['city_id'];
+        $menuObj->category_id = $input['category_id'];
+        $menuObj->brief = $input['brief'];
+        $menuObj->lat = isset($input['lat']) ? $input['lat'] : '';
+        $menuObj->lng = isset($input['lng']) ? $input['lng'] : '';
+        $menuObj->coupons = $input['coupons'];
+        $menuObj->status = 2;
+        $menuObj->sort = Project::newSortIndex();
+        $menuObj->created_at = DATE_TIME;
+        $menuObj->created_by = USER_ID;
+        $menuObj->save();
+
+
+        if(!empty($input['logo'])){
+            $check = $this->uploadImage($menuObj->id,$input['logo'],'logo',$request);
+            if($check != 1){
+                return $check;
+            }
+        }
+
+        if(!empty($input['images'])){
+            $check = $this->uploadImage($menuObj->id,$input['images'],'images',$request);
+            if($check != 1){
+                return $check;
+            }
+        }
+
+        WebActions::newType(2,'Project');
+        Session::flash('success','تم التعديل بنجاح');
+        return \TraitsFunc::SuccessResponse("تنبيه! تم التعديل بنجاح");
+    }
+
     public function uploadImage($id,$images,$type,$request){
         $menuObj = Project::getOne($id);
     	$otherImages = [];
@@ -726,7 +842,8 @@ class ProfileControllers extends Controller {
     public function messages(){
         $data['user'] = User::getData(User::getOne(USER_ID));
         $data['points'] = User::getPoints();
-        $data['membership'] = UserCard::getData(UserCard::getAvailableForUser(USER_ID));
+        $cardObj = UserCard::getAvailableForUser(USER_ID);
+        $data['membership'] = $cardObj != null ? UserCard::getData($cardObj) : null;
         $data['messages'] = Message::dataList(1)['data'];
         return view('Profile.Views.profile')->with('data',(object) $data);
     }
