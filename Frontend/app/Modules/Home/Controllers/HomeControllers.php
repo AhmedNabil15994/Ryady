@@ -86,6 +86,16 @@ class HomeControllers extends Controller {
         return view('Home.Views.index')->with('data',(object) $data);
     }
 
+    public function getOneEvent($id){
+        $id = (int) $id;
+        $eventObj = Event::getOne($id);
+        if(!$eventObj){
+            return redirect('404');
+        }
+        $data['data'] = Event::getData($eventObj);
+        return view('Home.Views.event')->with('data',(object) $data);
+    }
+
     public function getUserData($id){
         $id = (int) $id;
         $userObj = User::getOne($id);

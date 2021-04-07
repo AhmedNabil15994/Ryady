@@ -70,6 +70,8 @@ class Event extends Model{
         $data->date = $source->date;
         $data->sort = $source->sort;
         $data->status = $source->status;
+        $data->type = $source->type != null ? $source->type : '';
+        $data->price = $source->price;
         $data->statusText = $source->status == 0 ? 'مسودة' : 'مفعلة';
         $data->photo = self::getPhotoPath($source->id, $source->image);
         $data->photo_name = $source->image;

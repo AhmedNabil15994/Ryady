@@ -59,21 +59,22 @@
     <div class="PartProjects">
         <div class="container">
             <div class="row">
-                @foreach($data->data->data as $project)
-                <div class="col-md-4">
+                <div id="OwlCards" class="OwlCards2 Owl wow zoomIn">
+                    @foreach($data->data->data as $project)
                     <div class="item">
                         <a href="{{ URL::to('/projects/'.$project->id) }}" class="mask">
-                            <img src="{{ isset($project->images[0]) ? $project->images[0]->photo : $project->logo }}" alt="" />
+                            <img src="{{ !empty($project->images) ? $project->images[array_rand($project->images)]->photo : $project->logo }}" alt="" />
                         </a>
                         <div class="details">
                             <img class="imgDetails" src="{{ $project->logo }}" alt="" />
-                            <a href="{{ URL::to('/projects/'.$project->id) }}" class="title">{{ $project->title }}</a>
+                            <a href="{{ URL::to('/projects/'.$project->id) }}" class="title pull-right">{{ $project->title }}</a>
+                            <div class="clearfix"></div>
                             <p class="location" dir="rtl"><i class="flaticon-flag pull-right"></i> {{ $project->typeMessage }} </p>
                         </div>
                         <div class="clearfix"></div>
                     </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
             
             @include('Partials.pagination')

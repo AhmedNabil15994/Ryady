@@ -72,11 +72,11 @@
     			@foreach($data->memberships as $membership)
                 <div class="col-md-4">
                     <div class="item">
+                        <h2 class="title mb-25">اشتراك سنوي للعضوية</h2>
                         <img src="{{ $membership->photo }}" />
                         <h2 class="title">عضوية {{ $membership->title }}</h2>
                         <span class="price {{ $membership->discount_price != null ? 'hasDisc' : '' }}"><span class="value">{{ $membership->price }}</span> ر.س</span>
                         <span class="price discPrice"> @if($membership->discount_price != null)<span class="value">{{ $membership->discount_price }}</span> ر.س @endif</span>
-                        <span class="time text-center">لمدة {{ $membership->periodText }}</span>
                         <a href="{{ URL::to('/memberships/requestMemberShip/'.$membership->id) }}" class="btnStyle">اطلبها الآن</a>
                     </div>
                 </div>
@@ -90,13 +90,16 @@
     		<h2 class="title">{{ $data->pages[1]->title }}</h2>
     		<div class="row">
                 @foreach($data->events as $key => $event)
-    			<div class="col-md-4 wow fadeInUp">
-    				<div class="memb">
+    			<div class="col-md-5 wow fadeInUp">
+    				<a href="{{ URL::to('/events/'.$event->id) }}" class="memb event">
     					<img src="{{ $event->photo }}"/>
-    					<h2 class="name">{{ $event->title }}</h2>
-                        <p class="price"><i class="flaticon-school-calendar"></i> {{ $event->date }}</p>
-    				</div>
+                        <p class="price pull-left mb-2"> {{ $event->date }}</p>
+                        <p class="price pull-right mb-2"> {{ $event->type }}</p>
+    					<div class="clearfix"></div>
+                        <h2 class="name">{{ $event->title }}</h2>
+    				</a>
     			</div>
+                <div class="col-md-1"></div>
                 @endforeach
     		</div>
     	</div>
@@ -106,17 +109,17 @@
     	<div class="container">
     		<div class="details">
 	    		<h2 class="title">{{ $data->pages[2]->title }}</h2>
-	    		<a href="{{ URL::to('/joinUs') }}" class="btnStyle">انضم الينا الآن</a>
+	    		<a href="{{ URL::to('/memberships/requestMemberShip/3') }}" class="btnStyle">انضم الينا الآن</a>
     		</div>
     		<div class="left  wow fadeInLeft">
     			<div class="desc">{!! $data->pages[2]->description !!}</div>
     			<div class="divImgs">
     				<ul class="imgs clearfix">
                         @foreach($data->userMembers as $userMember)
-    					<li><img src="{{ $userMember->user->photo }}" alt="" /></li>
+    					<li><a href="{{ URL::to('/vip') }}"><img src="{{ $userMember->user->photo }}" alt="" /></a></li>
                         @endforeach
     				</ul>
-    				<a href="{{ URL::to('/members') }}" class="flaticon-plus iconPlus"></a>
+    				<a href="{{ URL::to('/vip') }}" class="flaticon-plus iconPlus"></a>
     			</div>
     		</div>
     		

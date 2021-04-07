@@ -104,6 +104,18 @@
                     </div>
                     <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
                         <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2 mt-15" style="margin-bottom: 20px;">نوع الفعالية</label>
+                            <input class="form-control mb-5" type="text" name="type" value="{{ old('type') }}" maxlength="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
+                            <label class="label label-danger label-pill label-inline mr-2 mt-15" style="margin-bottom: 20px;">سعر الفعالية</label>
+                            <input class="form-control mb-5" type="number" name="price" value="{{ old('price') }}" maxlength="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="padding-right: 0;padding-left: 0;padding-bottom: 10px;">
+                        <div class="col-lg-12">
                             <label class="label label-danger label-pill label-inline mr-2" style="margin-bottom: 20px;">التاريخ</label>
                             <input class="form-control mb-5 datetimepicker-input" id="kt_datetimepicker_120" data-toggle="datetimepicker" data-target="#kt_datetimepicker_120" type="text" name="date" value="{{ old('date') }}" maxlength="" placeholder="">
                         </div>

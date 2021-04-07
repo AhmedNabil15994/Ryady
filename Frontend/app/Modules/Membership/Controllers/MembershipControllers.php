@@ -78,8 +78,8 @@ class MembershipControllers extends Controller {
 
 
     public function index(){
-        $data['advantages'] = Advantage::dataList(1)['data'];
-        $data['benefits'] = Benefit::dataList(1)['data'];
+        // $data['advantages'] = Advantage::dataList(1)['data'];
+        // $data['benefits'] = Benefit::dataList(1)['data'];
         $data['memberships'] = Membership::dataList(1)['data'];
         $data['targets'] = Target::dataList(1)['data'];
         $data['features'] = Feature::dataList(1)['data'];

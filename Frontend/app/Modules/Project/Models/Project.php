@@ -79,7 +79,7 @@ class Project extends Model{
     }
 
     static function generateObj($source){
-        $sourceArr = $source->paginate(PAGINATION);
+        $sourceArr = $source->paginate(10);
 
         $list = [];
         foreach($sourceArr as $key => $value) {

@@ -3,6 +3,18 @@
 @section('title','مشاريع الاعضاء')
 
 @section('styles')
+<style type="text/css" media="screen">
+    .listSocial{
+        left: 0;
+        right: 15px;
+    }
+    .openShare{
+        font-size: 16px;
+        color: #001C54;
+        font-family: "STC-Bold";
+        cursor: pointer;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -56,6 +68,7 @@
                         <img src="{{ $data->data->logo }}" alt="" />
                         <h2 class="title">{{ $data->data->title }}</h2>
                         <span class="new">{{ $data->data->category }}</span>
+                        <a class="new new2" href="https://api.whatsapp.com/send?phone={{ $data->mobile }}&text=مرحبا" target="_blank"> <i class="fa fa-whatsapp"></i> تحدث الينا </a>
                         <p><i class="flaticon-flag"></i> {{ $data->data->typeMessage }}</p>
                         {{-- <p><i class="flaticon-place"></i>  {{ $data->data->type_text }}</p> --}}
                     </div>
@@ -65,6 +78,7 @@
                             <ul class="btnsTabs clearfix" id="tabs">
                                 <li id="tab1" class="active">التفاصيل</li>
                                 <li id="tab2">رأس مال المشروع</li>
+                                <li id="tab3">ملف تعريفي عن المشروع</li>
                             </ul>
                         </div>
                         <div class="tabs">
@@ -80,6 +94,21 @@
                                 </div>
                                 @endif
                             </div>
+                            <div class="tab3 tab">
+                                <div class="desc">
+                                    <button class="download btnStyle">تحميل الملف</button>                          
+                                </div>                              
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="authorDetails clearfix">                        
+                        <div class="share">
+                            <button class="openShare btnStyle"><i class="fa fa-share"></i> شارك المشروع</button>
+                            <ul class="listSocial">
+                                <li><a href="{{ URL::current().'/shareProject'.'/twitter' }}" target="_blank" class="twitter"><i class="fa fa-twitter"></i> Twitter</a></li>
+                                <li><a href="{{ URL::current().'/shareProject'.'/linkedin' }}" target="_blank" class="whatsapp"><i class="fa fa-whatsapp"></i> WhatsApp</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -117,6 +146,7 @@
                             @endif
                         </ul>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -125,5 +155,5 @@
 @endsection
 
 @section('scripts')
-
+<script src="{{ asset('/assets/js/project.js') }}" type="text/javascript" ></script>
 @endsection

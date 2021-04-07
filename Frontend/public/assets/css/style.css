@@ -2848,6 +2848,8 @@ a.ui-button:active, .ui-button:active,
 	-moz-transition:all 0.3s;
 	-o-transition:all 0.3s;
 	transition:all 0.3s;
+	width: 95%;
+	margin-left: 5%;
 }
 
 .PartProjects .item .mask
@@ -3541,7 +3543,12 @@ a.ui-button:active, .ui-button:active,
 	text-align:center;
 	font-family: "STC-Bold";
 }
-
+.project .author .new.new2{
+	top: 60px;
+	background-color: #169689;
+	color: #FFF;
+	cursor: pointer;
+}
 .project .author p
 {
 	overflow: hidden;
@@ -3570,9 +3577,9 @@ a.ui-button:active, .ui-button:active,
 	background-color:#EBF0F3
 }
 
-.projectDetails .tabsHead .btnsTabs li:first-of-type
+.projectDetails .tabsHead .btnsTabs li
 {
-	margin-left:120px;
+	margin-left:40px;
 }
 
 .projectDetails .tabsHead .btnsTabs li
@@ -4167,7 +4174,7 @@ span.time:nth-of-type(2){
 span.price span.value{
 	color: #657780;
 }
-span.price.discPrice{
+span.price.hasDisc{
 	font-size: 25px !important;
 }
 .ui-selectmenu-menu .ui-menu{
@@ -4594,9 +4601,10 @@ span.price.discPrice{
 	content: '';
     position: absolute;
     top: 45%;
-    width: 50%;
-    left: 25%;
+    width: 25%;
+    left: 40%;
     border-bottom: 4px solid #657780;
+    transform: rotate3d(1, 1, 1, -45deg);
 }
 #login a.reset{
 	margin-bottom: 20px;
@@ -4608,4 +4616,21 @@ span.price.discPrice{
 }
 .hiddens{
 	display: none;
+}
+.memb.event:hover {
+	cursor: pointer;
+    transform: translateY(-6px);
+    box-shadow: 0 22px 43px rgb(0 0 0 / 15%);
+    -webkit-box-shadow: 0 22px 43px rgb(0 0 0 / 15%);
+}
+.mb-2{
+	margin-bottom: 20px;
+	padding: 0 15px;
+	font-weight: bold;
+}
+.members .memb.event .name{
+	font-size: 32px;
+}
+.mb-25{
+	margin-bottom: 25px;
 }

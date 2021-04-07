@@ -72,6 +72,8 @@ class Event extends Model{
         $data->status = $source->status;
         $data->statusText = $source->status == 0 ? 'مسودة' : 'مفعلة';
         $data->photo = self::getPhotoPath($source->id, $source->image);
+        $data->type = $source->type != null ? $source->type : '';
+        $data->price = $source->price;
         $data->photo_name = $source->image;
         $data->photo_size = $data->photo != '' ? self::getPhotoSize($data->photo) : '';
         $data->created_at = \Helper::formatDateForDisplay($source->created_at,true);

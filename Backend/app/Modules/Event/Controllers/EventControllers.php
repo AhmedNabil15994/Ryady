@@ -71,6 +71,8 @@ class EventControllers extends Controller {
 
         $menuObj->title = $input['title'];
         $menuObj->date = $input['date'];
+        $menuObj->type = $input['type'];
+        $menuObj->price = $input['price'];
         $menuObj->status = $input['status'];
         $menuObj->updated_at = DATE_TIME;
         $menuObj->updated_by = USER_ID;
@@ -111,6 +113,8 @@ class EventControllers extends Controller {
         $menuObj = new Event;
         $menuObj->title = $input['title'];
         $menuObj->date = $input['date'];
+        $menuObj->type = $input['type'];
+        $menuObj->price = $input['price'];
         $menuObj->status = $input['status'];
         $menuObj->sort = Event::newSortIndex();
         $menuObj->created_at = DATE_TIME;

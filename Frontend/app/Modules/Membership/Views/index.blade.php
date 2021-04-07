@@ -16,7 +16,7 @@
             </ul>
         </div>
     </div>
-       
+{{--        
     <div class="AboutSection">
         <div class="container">
             @foreach($data->advantages as $key => $oneAdvantage)
@@ -46,7 +46,7 @@
                     @endforeach
                 </ul>
             </div>
-        </div>
+        </div --}}>
     </div>
     
     <div class="groupMembers">
@@ -68,11 +68,11 @@
                 @foreach($data->memberships as $membership)
                 <div class="col-md-4">
                     <div class="item">
+                        <h2 class="title mb-25">اشتراك سنوي للعضوية</h2>
                         <img src="{{ $membership->photo }}" />
                         <h2 class="title">{{ $membership->title }}</h2>
                         <span class="price {{ $membership->discount_price != null ? 'hasDisc' : '' }}"><span class="value">{{ $membership->price }}</span> ر.س</span>
                         <span class="price discPrice"> @if($membership->discount_price != null)<span class="value">{{ $membership->discount_price }}</span> ر.س @endif</span>
-                        <span class="time text-center">لمدة {{ $membership->periodText }}</span>
                         <a href="{{ URL::to('/memberships/requestMemberShip/'.$membership->id) }}" class="btnStyle">اطلبها الآن</a>
                     </div>
                 </div>
