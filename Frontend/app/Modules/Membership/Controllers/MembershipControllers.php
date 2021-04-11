@@ -187,6 +187,7 @@ class MembershipControllers extends Controller {
         $userObj->gender = $input['gender'];
         $userObj->phone = $input['phone'];
         $userObj->show_details = 0;
+        $userObj->show_images = 0;
         $userObj->lang = 0;
         $userObj->status = 0;
         $userObj->is_active = 0;

@@ -1,6 +1,12 @@
 <?php $__env->startSection('title','الصفحة الرئيسية'); ?>
 <?php $__env->startSection('styles'); ?>
 <style type="text/css" media="screen">
+    .label{
+        cursor: pointer;
+    }
+    .label:hover{
+        color: #FFF !important;
+    }
     #kt_daterangepicker_6{
         display: inline-block;
         border-radius: 2rem;
@@ -260,7 +266,7 @@
                         </div>
                         <!--end::Badge-->
                         <!--begin::Text-->
-                        <div class="font-weight-mormal font-size-lg timeline-content text-muted pl-3"><?php echo e($action->username); ?> قام <?php echo e($action->typeText); ?> بيانات في <?php echo e($action->module_page); ?> <label class="label label-<?php echo e($action->label); ?> label-wide label-inline"><?php echo e($action->typeText); ?></label></div>
+                        <div class="font-weight-mormal font-size-lg timeline-content text-muted pl-3"><?php echo e($action->username); ?> قام <?php echo e($action->typeText); ?> بيانات في <?php echo e($action->module_page); ?> <a  <?php echo e($action->url != '' ? 'href='.$action->url.''  : ''); ?>  class="label label-<?php echo e($action->label); ?> label-wide label-inline"><?php echo e($action->typeText); ?></a></div>
                         <!--end::Text-->
                         <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg text-muted"><?php echo e($action->created_at2); ?></div>
                     </div>

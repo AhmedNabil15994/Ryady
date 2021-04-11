@@ -256,6 +256,7 @@ class ProfileControllers extends Controller {
         $userObj->updated_at = DATE_TIME;
         $userObj->save();
 
+        WebActions::newType(2,'User');
         \Session::flash('success', 'تم تحديث البيانات الشخصية');
         return redirect()->back();
     }
@@ -488,8 +489,10 @@ class ProfileControllers extends Controller {
 
         $userObj = User::getOne(USER_ID);
         $userObj->image = $image;
+        $userObj->show_images = 0;
         $userObj->save();
 
+        WebActions::newType(2,'User');
         return \TraitsFunc::SuccessResponse("تنبيه! تم رفع الصورة");
     }
 
@@ -771,8 +774,8 @@ class ProfileControllers extends Controller {
         $menuObj->coupons = $input['coupons'];
         $menuObj->status = 2;
         $menuObj->sort = Project::newSortIndex();
-        $menuObj->created_at = DATE_TIME;
-        $menuObj->created_by = USER_ID;
+        $menuObj->updated_at = DATE_TIME;
+        $menuObj->updated_by = USER_ID;
         $menuObj->save();
 
 

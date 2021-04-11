@@ -63,6 +63,7 @@ class WebActions extends Model{
 
     static function getData($source) {
         $types = self::getType($source->type);
+        $moduleData = self::getPageTitle($source);
         $data = new  \stdClass();
         $data->id = $source->id;
         $data->type = $source->type;
@@ -70,14 +71,18 @@ class WebActions extends Model{
         $data->label = $types[1];
         $data->username = $source->created_by != 0 || $source->created_by != null ? $source->User->username: '';
         $data->module_name = $source->module_name;
-        $data->module_page = self::getPageTitle($source->module_name);
+        $data->module_page = $moduleData[0];
+        $data->url = $moduleData[1];
         $data->created_at = \Helper::formatDateForDisplay($source->created_at,true);
         $data->created_at2 = \Carbon\Carbon::createFromTimeStamp(strtotime($source->created_at))->diffForHumans();
         return $data;
     }
 
-    static function getPageTitle($name){
+    static function getPageTitle($source){
+        $name = $source->module_name;
+        $user = $source->created_by;
         $text = '';
+        $url = '';
         if($name == 'TopMenu'){
             $text = 'القوائم العلوية';
         }elseif($name == 'BottomMenu'){
@@ -104,6 +109,10 @@ class WebActions extends Model{
             $text = 'مجموعات المشرفين';
         }elseif($name == 'User'){
             $text = 'المشرفين والاداريين';
+            if($user != 1){
+                $text = 'البيانات الشخصية';
+                $url = \URL::to('/users/edit/'.$user);
+            }
         }elseif($name == 'Log'){
             $text = 'سجلات الدخول للنظام';
         }elseif($name == 'BlockedUser'){
@@ -122,10 +131,32 @@ class WebActions extends Model{
             $text = 'تصنيفات المشاريع';
         }elseif($name == 'Project'){
             $text = 'مشاريع الاعضاء';
+            if($source->type == 2){
+                $projectObj = Project::NotDeleted()->where('updated_at',$source->created_at)->where('updated_by',$source->created_by)->orderBy('id','DESC')->first();
+                if($projectObj){
+                    $url = \URL::to('/projects/edit/'.$projectObj->id);
+                }
+            }elseif($source->type == 1){
+                $projectObj = Project::NotDeleted()->where('created_at',$source->created_at)->where('created_by',$source->created_by)->orderBy('id','DESC')->first();
+                if($projectObj){
+                    $url = \URL::to('/projects/edit/'.$projectObj->id);
+                }
+            }
         }elseif($name == 'BlogCategory'){
             $text = 'تصنيفات المدونة';
         }elseif($name == 'Blog'){
             $text = 'المدونة';
+            if($source->type == 2){
+                $blogObj = Blog::NotDeleted()->where('updated_at',$source->created_at)->where('updated_by',$source->created_by)->orderBy('id','DESC')->first();
+                if($blogObj){
+                    $url = \URL::to('/blogs/edit/'.$blogObj->id);
+                }
+            }elseif($source->type == 1){
+                $blogObj = Blog::NotDeleted()->where('created_at',$source->created_at)->where('created_by',$source->created_by)->orderBy('id','DESC')->first();
+                if($blogObj){
+                    $url = \URL::to('/blogs/edit/'.$blogObj->id);
+                }
+            }
         }elseif($name == 'Membership'){
             $text = 'العضويات';
         }elseif($name == 'Feature'){
@@ -137,7 +168,7 @@ class WebActions extends Model{
         }
 
 
-        return $text;
+        return [$text,$url];
     }
 
     static function getType($type){

@@ -2,6 +2,12 @@
 @section('title','الصفحة الرئيسية')
 @section('styles')
 <style type="text/css" media="screen">
+    .label{
+        cursor: pointer;
+    }
+    .label:hover{
+        color: #FFF !important;
+    }
     #kt_daterangepicker_6{
         display: inline-block;
         border-radius: 2rem;
@@ -261,7 +267,7 @@
                         </div>
                         <!--end::Badge-->
                         <!--begin::Text-->
-                        <div class="font-weight-mormal font-size-lg timeline-content text-muted pl-3">{{ $action->username }} قام {{ $action->typeText }} بيانات في {{ $action->module_page }} <label class="label label-{{ $action->label }} label-wide label-inline">{{ $action->typeText }}</label></div>
+                        <div class="font-weight-mormal font-size-lg timeline-content text-muted pl-3">{{ $action->username }} قام {{ $action->typeText }} بيانات في {{ $action->module_page }} <a  {{ $action->url != '' ? 'href='.$action->url.''  : '' }}  class="label label-{{ $action->label }} label-wide label-inline">{{ $action->typeText }}</a></div>
                         <!--end::Text-->
                         <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg text-muted">{{ $action->created_at2 }}</div>
                     </div>
