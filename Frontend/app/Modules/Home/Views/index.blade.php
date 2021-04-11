@@ -68,11 +68,11 @@
     
     <div class="plans">
     	<div class="container">
+            <h2 class="titleStyle">اشتراك سنوي للعضوية</h2>
     		<div class="row wow zoomInDown">
     			@foreach($data->memberships as $membership)
                 <div class="col-md-4">
                     <div class="item">
-                        <h2 class="title mb-25">اشتراك سنوي للعضوية</h2>
                         <img src="{{ $membership->photo }}" />
                         <h2 class="title">عضوية {{ $membership->title }}</h2>
                         <span class="price {{ $membership->discount_price != null ? 'hasDisc' : '' }}"><span class="value">{{ $membership->price }}</span> ر.س</span>

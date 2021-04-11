@@ -114,7 +114,7 @@ class HomeControllers extends Controller {
     }
     
     public function members(){
-        $data['data'] = (object) UserMember::dataList(1);
+        $data['data'] = (object) UserMember::dataList(1,null,1);
         $data['pages'] = Page::dataList(1,[6])['data'];
         $data['memberships'] = Membership::dataList(1)['data'];
         return view('Home.Views.members')->with('data',(object) $data);

@@ -35,9 +35,9 @@
                         <h2 class="title">{{ $data->data->title }}</h2>
                         <span class="new">{{ $data->data->price }} ر.س</span>
                         @if(Session::has('user_id') && Session::has('username'))
-                        <a href="{{ URL::current().'/joinEvent' }}" class="new new2">انضم الي الفعالية</a>
+                        <a href="{{ URL::current().'/joinEvent' }}" class="new new2">انضم إلى الفعالية</a>
                         @else
-                        <a class="new new2 new3">انضم الي الفعالية</a>
+                        <a class="new new2 new3">انضم إلى الفعالية</a>
                         @endif
                         <p><i class="flaticon-flag"></i>  {{ $data->data->type }}</p>
                         <p><i class="flaticon-school-calendar"></i> {{ $data->data->date }}</p>
@@ -47,7 +47,7 @@
                     <div class="formMembers">
                         <form class="formStyle" method="POST" action="{{ URL::current() }}">
                             @csrf
-                            <h2 class="title">نموذج انضمام الي الفعالية</h2>
+                            <h2 class="title">نموذج انضمام إلى الفعالية</h2>
 
                             <label for="" data-toggle="tooltip" data-placement="top" title="يرجي ادخال الاسم ثلاثي">اسمك بالعربي</label>
                             <input type="text" name="name_ar" value="{{ \Request::get('name_ar') }}" data-toggle="tooltip" data-placement="top" title="يرجي ادخال الاسم ثلاثي" class="inputStyle"/>
@@ -59,7 +59,7 @@
                             <div class="selectStyle">
                                 <select class="selectmenu" id="selectmenu2" name="gender">
                                     <option value="1">ذكر</option>
-                                    <option value="2">انثي</option>
+                                    <option value="2">انثى</option>
                                 </select>
                                 <label for="selectmenu" class="iconLeft fa fa-angle-down"></label>
                             </div>

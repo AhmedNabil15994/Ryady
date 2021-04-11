@@ -106,7 +106,7 @@
         </div>
     </div>
     
-    <div class="join">
+    {{-- <div class="join">
         <img src="{{ asset('/assets/images/bgJoin.png') }}" class="bg" alt="" />
         <div class="container">
             <div class="desc">
@@ -114,7 +114,7 @@
             </div>
             <a href="{{ URL::to('/joinUs') }}" class="btnStyle">انضم الينا</a>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('modals')

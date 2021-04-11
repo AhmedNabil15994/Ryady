@@ -44,6 +44,8 @@
 				          	<li><a href="{{ URL::to('/members') }}">{{ $item->title }}</a></li>
 				          	@elseif($item->id == 13)
 				          	<li><a href="{{ URL::to('/whoUs') }}">{{ $item->title }}</a></li>
+				          	@elseif($item->id == 14)
+				          	<li><a href="{{ URL::to('/events') }}">{{ $item->title }}</a></li>
 				          	@endif
 				        @endif
 				    @endforeach

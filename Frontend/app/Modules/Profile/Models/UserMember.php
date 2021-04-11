@@ -29,7 +29,7 @@ class UserMember extends Model{
 
         $source = self::NotDeleted()->whereHas('User',function($userQuery){
                     $userQuery->whereHas('UserCard',function($userCardQuery){
-                        $userCardQuery->where('membership_id',3)->where('status',1)->where('end_date','>=',date('Y-m-d'));
+                        $userCardQuery->where('status',1)->where('end_date','>=',date('Y-m-d'));
                     });
                 })->where(function ($query) use ($input,$status) {
                     if (isset($input['user_id']) && !empty($input['user_id'])) {
@@ -112,4 +112,16 @@ class UserMember extends Model{
         return $text;
     }
 
+    static function newRecord($user_id){
+        $dataObj = self::NotDeleted()->where('user_id',$user_id)->where('status',1)->first();
+        if($dataObj == null){
+            $userMemberObj = new self;
+            $userMemberObj->user_id = $user_id;
+            $userMemberObj->status = 1;
+            $userMemberObj->sort = self::newSortIndex();
+            $userMemberObj->created_at = DATE_TIME;
+            $userMemberObj->created_by = $user_id;
+            $userMemberObj->save();
+        }
+    }
 }

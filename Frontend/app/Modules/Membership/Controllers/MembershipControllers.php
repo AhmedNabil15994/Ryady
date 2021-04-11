@@ -123,13 +123,13 @@ class MembershipControllers extends Controller {
         }
 
         $nameArArr = explode(' ', $input['name_ar']);
-        if(count($nameArArr) != 3){
+        if(count($nameArArr) < 3){
             \Session::flash('error', 'يرجي ادخال الاسم العربي ثلاثي');
             return redirect()->back()->withInput();
         }
 
         $nameEnArr = explode(' ', $input['name_en']);
-        if(count($nameEnArr) != 3){
+        if(count($nameEnArr) < 3){
             \Session::flash('error', 'يرجي ادخال الاسم الانجليزي ثلاثي');
             return redirect()->back()->withInput();
         }
@@ -293,6 +293,63 @@ class MembershipControllers extends Controller {
         return $paymentObj->RedirectWithPostForm($invoiceData);
     }
 
+    public function delayedPayment($id){
+        $id = decrypt($id);
+        $userObj = User::getOne($id);
+        if($userObj->status == 1){
+            \Session::flash('error', 'تنبيه! تم الدفع وتفعيل العضوية من قبل');
+            return redirect('/');
+        }
+        $userCardObj = UserCard::NotDeleted()->where('user_id',$userObj->id)->where('status',2)->orderBy('id','DESC')->first();
+        $membershipObj = Membership::getOne($userCardObj->membership_id);
+        $coupons = $userCardObj->coupons != null ? unserialize($userCardObj->coupons) : [];
+        $discounts = 0;
+        if(!empty($coupons[0])){
+            foreach ($coupons as $coupon) {
+                if(count($availableCoupons) > 0 && in_array($coupon, $availableCoupons)){
+                    $couponObj = Coupon::getOneByCode($coupon);
+                    if($couponObj->discount_type == 1){
+                        $couponVal = $couponObj->discount_value;
+                    }else{
+                        $couponVal = round(($couponObj->discount_value * $membershipObj->price ) / 100, 2);
+                    }
+                    $discounts+= $couponVal;
+                    if($couponObj->valid_type == 1){
+                        $oldVal = $couponObj->valid_value;
+                        $couponObj->valid_value = $oldVal - 1;
+                        $couponObj->save();
+                    }
+                }
+            }
+        }
+
+        \Session::put('new_user_id',$userObj->id);
+        \Session::put('user_card_id',$userCardObj->id);
+
+        $names = explode(' ', $userObj->name_en ,2);
+        $invoiceData = [
+            'title' => $userObj->name_en,
+            'cc_first_name' => $names[0],
+            'cc_last_name' => isset($names[1]) ? $names[1] : '',
+            'email' => $userObj->email,
+            'cc_phone_number' => '',
+            'phone_number' => $userObj->phone,
+            'products_per_title' => 'New Membership',
+            'reference_no' => 'user-'.$userObj->id.'-'.$userCardObj->id,
+            'unit_price' => $membershipObj->price - $discounts,
+            'quantity' => 1,
+            'amount' => $membershipObj->price - $discounts,
+            'other_charges' => 'VAT',
+            'discount' => '',
+            'payment_type' => 'mastercard',
+            'OrderID' => 'user-'.$userObj->id.'-'.$userCardObj->id,
+            'SiteReturnURL' => \URL::to('/memberships/pushInvoice/'.$userObj->id.'/membership'),
+        ];
+        // dd($invoiceData);
+        $paymentObj = new \PaymentHelper();        
+        return $paymentObj->RedirectWithPostForm($invoiceData);
+    }
+
     // public function pushInvoice($id){
     //     $input = \Request::all();
     //     $status = $input['status'];
@@ -309,6 +366,7 @@ class MembershipControllers extends Controller {
 
     public function pushInvoice($id,$type='membership'){
         $input = \Request::all();
+        $id = (int) $id;
         // dd($input);
         if (isset($input['cartId']) && !empty($input['cartId'])) {
             $postData['OrderID'] = $input['cartId'];
@@ -318,6 +376,14 @@ class MembershipControllers extends Controller {
         
             if ($CreateaPage['Code'] == "1001") {
                 if ($CreateaPage['Data']['Status'] == "Success") {
+                    $userObj = User::getOne($id);
+                    $emailData['firstName'] = $userObj->name_ar;
+                    $emailData['subject'] = 'تم الدفع وتفعيل الحساب بنجاح';
+                    $emailData['content'] = '<a href="'.\URL::to('/profile').'">الملف الشخصي</a>';
+                    $emailData['to'] = $userObj->email;
+                    $emailData['template'] = "emailUsers.emailReplied";
+                    \App\Helpers\MailHelper::SendMail($emailData);
+
                     if($type == 'membership'){
                         $userCardObj = UserCard::NotDeleted()->where('status',2)->where('user_id',$id)->orderBy('id','DESC')->first();
                         $userCardObj->invoice_id = $CreateaPage['Data']['OrderID'];
@@ -422,7 +488,7 @@ class MembershipControllers extends Controller {
                 }
                 $userRequestObj->status = 1;
                 $userRequestObj->save();
-                $message = 'تم طلب بطاقة مطبوعة بنجاح';
+                $message = 'تم الدفع للبطاقة المطبوعة بنجاح';
                 \Session::forget('user_request_id');
             }
         }
@@ -453,22 +519,13 @@ class MembershipControllers extends Controller {
         session(['group_name' => $userObj->Group->title]);
         session(['full_name' => $userObj->name_ar]);
 
-        if(!\Session::has('user_id')){
-            $userMemberObj = new UserMember;
-            $userMemberObj->user_id = $userObj->id;
-            $userMemberObj->status = 1;
-            $userMemberObj->sort = UserMember::newSortIndex();
-            $userMemberObj->created_at = DATE_TIME;
-            $userMemberObj->created_by = $userObj->id;
-            $userMemberObj->save();
-            \Session::flash('success', 'تم الدفع للبطاقة المطبوعة بنجاح');
-        }
         \Session::forget('upgrade');
         
         if($type == 'event'){
             \Session::flash('success','لقد قمت بانضمام الي الفعالية.');
             return redirect()->to('/events/'.$userEventObj->event_id.'/');
         }else{
+            UserMember::newRecord($userObj->id);
             \Session::flash('success', $message);
             return redirect()->to('/profile');
         }

@@ -712,6 +712,7 @@ input[type="number"] {
 	display:block;
 	font-size:25px;
 	margin-bottom:10px;
+	min-height: 55px;
 }
 
 .members .memb .btnStyle
