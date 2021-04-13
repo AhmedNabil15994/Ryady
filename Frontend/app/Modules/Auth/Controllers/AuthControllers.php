@@ -121,7 +121,7 @@ class AuthControllers extends Controller {
 
     public function sendResetCode(){
         $input = \Request::all();
-        $userObj = User::getLoginUser($input['phone']);
+        $userObj = User::getLoginUserForReset($input['phone']);
         if ($userObj == null) {
             return \TraitsFunc::ErrorMessage("هذا المستخدم غير موجود او غير مفعل");
         }
@@ -131,15 +131,13 @@ class AuthControllers extends Controller {
         $userObj->code = $code;
         $userObj->save();
 
-        $whatsLoopObj =  new \WhatsLoop();
-        $test = $whatsLoopObj->sendMessage('كود التحقق الخاص بك هو : '.$code,$input['phone']);
+        $emailData['firstName'] = $userObj->name_ar;
+        $emailData['subject'] = 'رسالة تغيير كلمة المرور';
+        $emailData['content'] = '<p>مرحبا '.$userObj->name_ar.'</p><br> <p> لقد قمت مؤخرا بطلب تغيير كلمة المرور لحساب عضويتك في مجتمع الشاب الريادي</p><br><p>لاعادة كود التحقق الخاص هو '.$code.' بك لتعيين كلمة المرور الخاصة بك</p>';
+        $emailData['to'] = $userObj->email;
+        $emailData['template'] = "emailUsers.emailReplied";
+        \App\Helpers\MailHelper::SendMail($emailData);
 
-        if(json_decode($test)->Code == 'OK'){
-            \Session::put('check_user_id',$userObj->id);
-            return \TraitsFunc::SuccessResponse('تم ارسال كود التحقق بنجاح');
-        }else{
-            return \TraitsFunc::ErrorMessage('يرجي التأكد من الرقم الصحيح مسبوقا بكود الدولة');
-        }
         \Session::put('check_user_id',$userObj->id);
         return \TraitsFunc::SuccessResponse('تم ارسال كود التحقق بنجاح');
     }

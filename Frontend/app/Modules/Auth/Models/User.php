@@ -145,6 +145,20 @@ class User extends Model{
         return $userObj;
     }
 
+    static function getLoginUserForReset($email){
+        $userObj = self::NotDeleted()
+            ->where('email', $email)
+            ->where('is_active', 1)
+            ->where('status', 1)
+            ->first();
+
+        if($userObj == null ) { //  || $userObj->Profile->group_id != 1
+            return false;
+        }
+
+        return $userObj;
+    }
+
     static function getPhotoSize($url){
         if($url == "" || !is_file($url)){
             return '';

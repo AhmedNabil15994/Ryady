@@ -379,8 +379,8 @@ class MembershipControllers extends Controller {
                 if ($CreateaPage['Data']['Status'] == "Success") {
                     $userObj = User::getOne($id);
                     $emailData['firstName'] = $userObj->name_ar;
-                    $emailData['subject'] = 'تم الدفع وتفعيل الحساب بنجاح';
-                    $emailData['content'] = '<a href="'.\URL::to('/profile').'">الملف الشخصي</a>';
+                    $emailData['subject'] = 'رسالة تفعيل العضوية';
+                    $emailData['content'] = '<p>مرحبا '.$userObj->name_ar.' في مجتمع الشاب الريادي</p><br><p>لتفعيل عضويتك الرجاء الضغط على الرابط </p><a href="'.\URL::to('/profile').'">(اضغط هنا)</a>';
                     $emailData['to'] = $userObj->email;
                     $emailData['template'] = "emailUsers.emailReplied";
                     \App\Helpers\MailHelper::SendMail($emailData);

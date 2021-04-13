@@ -41,8 +41,8 @@ class Kernel extends ConsoleKernel
                 $userObj = User::getOne($userCard->user_id);
                 $userCryptedID = encrypt($userObj->id);
                 $emailData['firstName'] = $userObj->name_ar;
-                $emailData['subject'] = 'دفع العضوية :';
-                $emailData['content'] = '<a href="'.\URL::to('/memberships/delayedPayment/'.$userCryptedID).'">دفع العضوية</a>';
+                $emailData['subject'] = 'رسالة تذكير بعملية الدفع';
+                $emailData['content'] = '<p>مرحبا '.$userObj->name_ar.'</p><br><p>لاكمال عملية تفعيل عضوية الشاب الريادي الخاصة بك</p><br><p>يرجى اتمام عملية الدفع بالضغط على الرابط</p><a href="'.\URL::to('/memberships/delayedPayment/'.$userCryptedID).'">(اضغط هنا)</a>';
                 $emailData['to'] = $userObj->email;
                 $emailData['template'] = "emailUsers.emailReplied";
                 \App\Helpers\MailHelper::SendMail($emailData);
