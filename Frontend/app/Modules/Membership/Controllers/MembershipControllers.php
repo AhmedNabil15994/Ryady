@@ -279,7 +279,7 @@ class MembershipControllers extends Controller {
             'cc_phone_number' => '',
             'phone_number' => $userObj->phone,
             'products_per_title' => 'New Membership',
-            'reference_no' => 'user-'.$userObj->id.'-'.$menuObj->id,
+            'reference_no' => 'alshabalriyadi-'.$userObj->id,
             'unit_price' => $membershipObj->price - $discounts,
             'quantity' => 1,
             'amount' => $membershipObj->price - $discounts,

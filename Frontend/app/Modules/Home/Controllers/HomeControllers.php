@@ -254,7 +254,7 @@ class HomeControllers extends Controller {
             'cc_phone_number' => '',
             'phone_number' => $userObj->phone,
             'products_per_title' => 'Joining Event',
-            'reference_no' => 'user-'.$userObj->id.'-'.$id,
+            'reference_no' => 'alshabalriyadi-'.$userObj->id,
             'unit_price' => $eventObj->price,
             'quantity' => 1,
             'amount' => $eventObj->price,
