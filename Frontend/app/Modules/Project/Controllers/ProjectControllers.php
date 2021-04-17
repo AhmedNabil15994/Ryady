@@ -31,7 +31,7 @@ class ProjectControllers extends Controller {
         if(!$blogObj){
             return redirect('404');
         }
-        $data['mobile'] = Variable::getVar('رقم الواتس اب:');
+        $data['mobile'] = $blogObj->phone;
         $data['data'] = Project::getData($blogObj);
         $data['user'] = User::getData(User::getOne($blogObj->created_by));
         return view('Project.Views.project')->with('data',(object) $data);

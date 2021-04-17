@@ -303,8 +303,12 @@ class MembershipControllers extends Controller {
         }
         $userCardObj = UserCard::NotDeleted()->where('user_id',$userObj->id)->where('status',2)->orderBy('id','DESC')->first();
         $membershipObj = Membership::getOne($userCardObj->membership_id);
+
+        $availableCoupons = Coupon::availableCoupons();
+        $availableCoupons = reset($availableCoupons);
         $coupons = $userCardObj->coupons != null ? unserialize($userCardObj->coupons) : [];
         $discounts = 0;
+        
         if(!empty($coupons[0])){
             foreach ($coupons as $coupon) {
                 if(count($availableCoupons) > 0 && in_array($coupon, $availableCoupons)){
