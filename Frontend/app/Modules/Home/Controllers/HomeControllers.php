@@ -261,7 +261,7 @@ class HomeControllers extends Controller {
             'other_charges' => 'VAT',
             'discount' => '',
             'payment_type' => 'mastercard',
-            'OrderID' => 'user-'.$userObj->id.'-'.$id,
+            'OrderID' => 'alshabalriyadi-'.$userObj->id,
             'SiteReturnURL' => \URL::to('/memberships/pushInvoice/'.$userObj->id.'/event'),
         ];
         // dd($invoiceData);

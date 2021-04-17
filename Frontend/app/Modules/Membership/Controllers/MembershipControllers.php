@@ -286,7 +286,7 @@ class MembershipControllers extends Controller {
             'other_charges' => 'VAT',
             'discount' => '',
             'payment_type' => 'mastercard',
-            'OrderID' => 'user-'.$userObj->id.'-'.$menuObj->id,
+            'OrderID' => 'alshabalriyadi-'.$userObj->id,
             'SiteReturnURL' => \URL::to('/memberships/pushInvoice/'.$userObj->id.'/membership'),
         ];
         // dd($invoiceData);
@@ -347,7 +347,7 @@ class MembershipControllers extends Controller {
             'other_charges' => 'VAT',
             'discount' => '',
             'payment_type' => 'mastercard',
-            'OrderID' => 'user-'.$userObj->id.'-'.$userCardObj->id,
+            'OrderID' => 'alshabalriyadi-'.$userObj->id,
             'SiteReturnURL' => \URL::to('/memberships/pushInvoice/'.$userObj->id.'/membership'),
         ];
         // dd($invoiceData);
