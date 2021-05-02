@@ -394,9 +394,9 @@ class MembershipControllers extends Controller {
                         $userCardObj->invoice_id = $CreateaPage['Data']['OrderID'];
                         $userCardObj->save();
                     }
-
                     return $this->activate($id,$type);
                 }
+                $UpdateOrder = [];
                 if ($CreateaPage['Data']['Status'] == "Rejected") {
                     $UpdateOrder['Status'] = "تم رفض العملية";
                 }
