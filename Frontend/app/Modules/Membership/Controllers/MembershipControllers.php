@@ -482,6 +482,23 @@ class MembershipControllers extends Controller {
                     $message = 'تم الدفع وترقية البطاقة بنجاح';
                 }
                 \Session::forget('user_card_id');
+
+                $nameArr = explode(' ', $userObj->name_ar);
+                $name = $nameArr[0];
+                $content = 'مرحبا ('.$name.") \n \n نهنئك بانضمامك لمجتمع الشاب الريادي عضوية (".$userCardObj->MemberShip->title.") \n \n ونتطلع للمساهمة معا لتحقيق أهداف رؤية المملكة في ريادة الاعمال 2030. \n \n للاستفادة من مزايا العضوية نرجو الدخول لحساب العضوية الخاص بك من تسجيل الدخول. \n \n http://alshabalriyadi.com/";
+                $whatsLoopObj =  new \WhatsLoop();
+                $phone = $userObj->phone;
+                $phonesArr = str_split($phone,1);
+                if($phonesArr[0] == 0){
+                    $phonesArr[0] = 966;
+                    $phone = implode('', $phonesArr);
+                }
+                $test = $whatsLoopObj->sendMessage(strip_tags($content),$phone);
+
+                if(!json_decode($test)->Code == 'OK'){
+                    \Session::flash('error',"حدث مشكلة في رسالة الواتس اب");
+                    return redirect()->back()->withInput();
+                }
             }    
         }
         

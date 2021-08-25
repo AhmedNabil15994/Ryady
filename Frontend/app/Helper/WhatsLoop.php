@@ -15,8 +15,8 @@ class WhatsLoop {
      * @param string $Token
      */
     public function __construct() {
-        $this->InstanceId = '1002';
-        $this->Token = 'a8924830787bd9c55fb58c1ace37f83d';
+        $this->InstanceId = '1246';
+        $this->Token = '4bc07311d1941d1ecaadd9ac39ccd305';
     }
 
     /**
